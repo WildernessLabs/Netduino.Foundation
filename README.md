@@ -10,7 +10,7 @@ Netduino.Foundation  uses reactive-like design patterns, in that it consists of 
 
 For example, the following program blinks the Netduino's onboard LED when the onboard button is pressed:
  
-```csharp
+```CSharp
 public class Program
 {
 	// create our pin references.
