@@ -1,0 +1,6 @@
+<Namespace Name="Robotics.Micro.Sensors.Motion">
+  <Docs>
+    <summary>Contains classes that support location motion sensors such as accelerometers.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Namespace>

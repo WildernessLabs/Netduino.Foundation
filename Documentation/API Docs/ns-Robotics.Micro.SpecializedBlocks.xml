@@ -1,0 +1,6 @@
+<Namespace Name="Robotics.Micro.SpecializedBlocks">
+  <Docs>
+    <summary>Contains specialized block classes that support conversions, transformations, etc.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Namespace>

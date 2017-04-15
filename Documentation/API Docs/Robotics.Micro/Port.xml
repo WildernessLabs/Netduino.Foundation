@@ -1,0 +1,243 @@
+<Type Name="Port" FullName="Robotics.Micro.Port">
+  <TypeSignature Language="C#" Value="public class Port" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit Port extends System.Object" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Micro.Core</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>Represents a connectable input or output on a block.</summary>
+    <remarks>
+      <para>
+        Ports allow blocks to be bound together such that the output from one port can be directly piped to the input 
+        of another port. This allows a reactive programming style paradigm in which the app code more closesly resembles 
+        the composability of the underlying circuits.
+      </para>
+      <para>
+        Ports can come in two different flavors, Input and Output, which indicate the direction of data flow. An InputPort
+        on a Block receives signal data, and an OutputPort sends signal data.
+        (additional type of port called a config port)
+      </para>
+      <para>
+        Additionally, there is one more specialized Port called a ConfigPort. Certain Blocks can be configured to modify
+        their output based on parameters specified by a ConfigPort. The beauty of ConfigPorts is that as opposed to having
+        set-and-forget parameters, a ConfigPort is itself a port, meaning it can modify configuration in real-time, over time.
+        For example, you could use the SineWave Generator Block to generate a Sine Wave signal, and then feed that into the 
+        ConfigPort, so that the configuration values would be constantly changing, in synch with the sine wave.
+      </para>
+      <para>
+        The following example illustrates creating Digital Pin Blocks that are bound to physical pins on the Netduino hardware
+        (in this case pins that correspond to the onboard button and onboard LED), and then connecting the OutputPort of the 
+        Button to the InputPort on the LED, such that when the button is pressed (signal goes high), its output is sent directly
+        to the LED and it also goes high (on):
+      </para>
+      <example>
+        <code lang="C#"><![CDATA[
+public class Program
+{
+  static H.Cpu.Pin buttonHardware = Pins.ONBOARD_BTN;
+  static H.Cpu.Pin ledHardware = Pins.ONBOARD_LED;
+
+  public static void Main()
+  {
+    // Create the blocks
+    var button = new DigitalInputPin (buttonHardware);
+    var led = new DigitalOutputPin (ledHardware);
+
+    button.Output.ConnectTo (led.Input);
+
+    // keep the program alive
+    while (true) {
+      System.Threading.Thread.Sleep (1000);
+    }
+  }
+}
+        ]]></code>
+      </example>
+    </remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Port (Robotics.Micro.BlockBase block, string name, Robotics.Micro.Units units, double initialValue = 0);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(class Robotics.Micro.BlockBase block, string name, valuetype Robotics.Micro.Units units, float64 initialValue) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="block" Type="Robotics.Micro.BlockBase" />
+        <Parameter Name="name" Type="System.String" />
+        <Parameter Name="units" Type="Robotics.Micro.Units" />
+        <Parameter Name="initialValue" Type="System.Double" />
+      </Parameters>
+      <Docs>
+        <param name="block">To be added.</param>
+        <param name="name">To be added.</param>
+        <param name="units">To be added.</param>
+        <param name="initialValue">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ConnectTo">
+      <MemberSignature Language="C#" Value="public void ConnectTo (Robotics.Micro.Port other);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void ConnectTo(class Robotics.Micro.Port other) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="other" Type="Robotics.Micro.Port" />
+      </Parameters>
+      <Docs>
+        <param name="other">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ConnectTo">
+      <MemberSignature Language="C#" Value="public void ConnectTo (Robotics.Messaging.ControlServer server, bool writeable = false, string name = null);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void ConnectTo(class Robotics.Messaging.ControlServer server, bool writeable, string name) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="server" Type="Robotics.Messaging.ControlServer" />
+        <Parameter Name="writeable" Type="System.Boolean" />
+        <Parameter Name="name" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="server">To be added.</param>
+        <param name="writeable">To be added.</param>
+        <param name="name">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="DisconnectFrom">
+      <MemberSignature Language="C#" Value="public void DisconnectFrom (Robotics.Micro.Port other);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void DisconnectFrom(class Robotics.Micro.Port other) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="other" Type="Robotics.Micro.Port" />
+      </Parameters>
+      <Docs>
+        <param name="other">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="FullName">
+      <MemberSignature Language="C#" Value="public string FullName { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string FullName" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="FullNameWithUnits">
+      <MemberSignature Language="C#" Value="public string FullNameWithUnits { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string FullNameWithUnits" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Name">
+      <MemberSignature Language="C#" Value="public string Name { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance string Name" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Value">
+      <MemberSignature Language="C#" Value="public double Value { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float64 Value" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Double</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ValueChanged">
+      <MemberSignature Language="C#" Value="public event Microsoft.SPOT.EventHandler ValueChanged;" />
+      <MemberSignature Language="ILAsm" Value=".event class Microsoft.SPOT.EventHandler ValueChanged" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Microsoft.SPOT.EventHandler</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ValueUnits">
+      <MemberSignature Language="C#" Value="public Robotics.Micro.Units ValueUnits { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Robotics.Micro.Units ValueUnits" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Robotics.Micro.Units</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

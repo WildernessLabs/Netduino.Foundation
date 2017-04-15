@@ -1,0 +1,6 @@
+<Namespace Name="Robotics.Micro.Generators">
+  <Docs>
+    <summary>Contains various software signal generators to create things like Sinewaves, Pulse-width-modulation, etc.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Namespace>

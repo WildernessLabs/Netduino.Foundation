@@ -1,0 +1,6 @@
+<Namespace Name="Robotics.Micro.Sensors.Buttons">
+  <Docs>
+    <summary>Contains classes that represent various buttons, such as Push Buttons, etc.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Namespace>

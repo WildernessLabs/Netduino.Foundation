@@ -1,0 +1,37 @@
+<Type Name="IScope" FullName="Robotics.Micro.IScope">
+  <TypeSignature Language="C#" Value="public interface IScope" />
+  <TypeSignature Language="ILAsm" Value=".class public interface auto ansi abstract IScope" />
+  <AssemblyInfo>
+    <AssemblyName>Robotics.Micro.Core</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Interfaces />
+  <Docs>
+    <summary>Represents a Scope.</summary>
+    <remarks>A Scope is a listener. Scopes are used to listen to any kind of signal going through a port and do interesting things with that
+      signal. For instance, the DebugScope is a simple scope that listens to a port and writes the signal (at specific
+      time intervals) to the debug console. You could, for instance, write a custom scope called Oscilliscope that took
+      the output from a block and graphed it.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="Connect">
+      <MemberSignature Language="C#" Value="public void Connect (Robotics.Micro.Port port);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig newslot virtual instance void Connect(class Robotics.Micro.Port port) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="port" Type="Robotics.Micro.Port" />
+      </Parameters>
+      <Docs>
+        <param name="port">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

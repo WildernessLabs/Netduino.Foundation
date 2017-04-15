@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<monodoc>
+  <node label="Monkey.Robotics" name="Monkey.Robotics" parent="libraries"/>
+  <source provider="ecma" basefile="Monkey.Robotics" path="Monkey.Robotics"/>
+</monodoc>
