@@ -62,7 +62,7 @@ In Netduino.Foundation, nearly everything is a block. But they generally fall in
 In practice, the way this works is that nearly every thing derives from the Block class. A block can have Input and Output ports which are bound to each other via the `ConnectTo()` method. For instance, the following micro framework app binds the *Output* from the Netduino's onboard button to the *Input* of the onboard LED. This results in the LED lighting up when the button is pressed:
 
 
-```
+```CSharp
 public class Program
 {
 	// create our pin references.
