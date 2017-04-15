@@ -40,7 +40,7 @@ public class Program
 }
 ``` 
 
-## Understanding the Micro Stack Architecture and Programing Model
+## Understanding the Architecture and Programing Model
 
 Netduino.Foundation loosely follows a [Reactive Programming](http://en.wikipedia.org/wiki/Reactive_programming) pattern. This means that instead of an event-driven model (which works well in tradition UI apps), components within any paritcular hardware configuration are actually bound to each other and represented by *Blocks*; such that an output signal from one block is automatically passed to another block.
 
@@ -48,7 +48,7 @@ This reactive pattern works incredibly well for circuits because signals tend to
 
 ### Types of Blocks
 
-In the Micro Stack, nearly everything is a block. But they generally fall into various categories (which roughly translate to namespaces):
+In Netduino.Foundation, nearly everything is a block. But they generally fall into various categories (which roughly translate to namespaces):
 
  * **Sensors** - Sensors are peripherals that typically have outputs and are sometimes configurable. Sensors include buttons, light sensors, infrared distancing, accelerometers, compasses, temperature, etc. We have bound many commonly available sensors sold in Maker stores.
  * **Motors** - These include not only the electric motors themselves, but also the drivers such as driver boards, and H-Bridges.
@@ -59,7 +59,7 @@ In the Micro Stack, nearly everything is a block. But they generally fall into v
 
 ### Connecting Blocks
 
-In practice, the way this works is that nearly every thing in the Micro Stack derives from the Block class. A block can have Input and Output ports which are bound to each other via the `ConnectTo()` method. For instance, the following micro framework app binds the *Output* from the Netduino's onboard button to the *Input* of the onboard LED. This results in the LED lighting up when the button is pressed:
+In practice, the way this works is that nearly every thing derives from the Block class. A block can have Input and Output ports which are bound to each other via the `ConnectTo()` method. For instance, the following micro framework app binds the *Output* from the Netduino's onboard button to the *Input* of the onboard LED. This results in the LED lighting up when the button is pressed:
 
 
 ```
