@@ -26,8 +26,8 @@
 -->
   </metadata>
   <files>
-    <file src="../Source/Netduino.Foundation/bin/Release/Netduino.Foundation.*" target="lib/netmf" />
-    <file src="../Source/Netduino.Foundation/bin/Release/le/Netduino.Foundation.*" target="lib/netmf" />
-    <file src="../Source/Netduino.Foundation/bin/Release/be/Netduino.Foundation.*" target="lib/netmf" />
+    <file src="../Source/Netduino.Foundation/bin/Release/Netduino.Foundation.*" target="lib/netmf43" />
+    <file src="../Source/Netduino.Foundation/bin/Release/le/Netduino.Foundation.*" target="lib/netmf43/le" />
+    <file src="../Source/Netduino.Foundation/bin/Release/be/Netduino.Foundation.*" target="lib/netmf43/be" />
   </files>
 </package>
