@@ -1,0 +1,52 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.Memsic2125", "Netduino.Foundation.Sensors.Motion.Memsic2125\Netduino.Foundation.Sensors.Motion.Memsic2125.csproj", "{831CCCF7-8F8D-434D-809A-F2995A5B5730}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation", "..\Netduino.Foundation\Netduino.Foundation.csproj", "{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Foundation Source", "Foundation Source", "{82E59041-71D9-420E-B3FE-836243B81E1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Motors.AdafruitMotorShield", "Netduino.Foundation.Motors.AdafruitMotorShield\Netduino.Foundation.Motors.AdafruitMotorShield.csproj", "{72D2D0F4-3E30-46E3-8EF9-392DDAF77EBE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.Bmp085", "Netduino.Foundation.Sensors.Barometric.Bmp085\Netduino.Foundation.Sensors.Barometric.Bmp085.csproj", "{29261BF0-47B8-48FA-851F-E24158069228}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass", "Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass\Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass.csproj", "{8CD6A83E-A425-417E-BD8E-8C2CFB0B4CB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.SharpGP2D12", "Netduino.Foundation.Sensors.SharpGP2D12\Netduino.Foundation.Sensors.SharpGP2D12.csproj", "{105B4678-62F3-49BC-AE86-9ED8F0A00D1F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{831CCCF7-8F8D-434D-809A-F2995A5B5730}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{831CCCF7-8F8D-434D-809A-F2995A5B5730}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{831CCCF7-8F8D-434D-809A-F2995A5B5730}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{831CCCF7-8F8D-434D-809A-F2995A5B5730}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72D2D0F4-3E30-46E3-8EF9-392DDAF77EBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72D2D0F4-3E30-46E3-8EF9-392DDAF77EBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72D2D0F4-3E30-46E3-8EF9-392DDAF77EBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72D2D0F4-3E30-46E3-8EF9-392DDAF77EBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29261BF0-47B8-48FA-851F-E24158069228}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29261BF0-47B8-48FA-851F-E24158069228}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29261BF0-47B8-48FA-851F-E24158069228}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29261BF0-47B8-48FA-851F-E24158069228}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CD6A83E-A425-417E-BD8E-8C2CFB0B4CB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CD6A83E-A425-417E-BD8E-8C2CFB0B4CB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CD6A83E-A425-417E-BD8E-8C2CFB0B4CB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CD6A83E-A425-417E-BD8E-8C2CFB0B4CB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{105B4678-62F3-49BC-AE86-9ED8F0A00D1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{105B4678-62F3-49BC-AE86-9ED8F0A00D1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{105B4678-62F3-49BC-AE86-9ED8F0A00D1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{105B4678-62F3-49BC-AE86-9ED8F0A00D1F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0} = {82E59041-71D9-420E-B3FE-836243B81E1E}
+	EndGlobalSection
+EndGlobal

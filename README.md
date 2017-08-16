@@ -1,10 +1,14 @@
 # Netduino.Foundation
 
-Netduino.Foundation greatly simplifies the task of building complex .NET Microframework (MF) powered connected things with Netduino, and include:
+Netduino.Foundation greatly simplifies the task of building complex .NET Microframework (MF) powered connected things with Netduino, and includes:
 
 
- * **Low-level Hardware Abstraction** - This is a modular/compositable based on the concept of _Blocks_ and _Scopes_ that represent devices and listeners, accordingly.
+ * **Low-level Hardware Abstraction** - This is a modular/composable based on the concept of _Blocks_ and _Scopes_ that represent devices and listeners, accordingly.
  * **Sensor and Peripheral Library** - Strongly typed libraries that do the heavy lifting of integration with hundreds of popular sensors spanning the gamut from Alcohol Sensors to 3-axis Accelerometers.
+
+ 
+[also a plugable library to organize and house peripheral code/suppoort]
+ 
  
 Netduino.Foundation  uses reactive-like design patterns, in that it consists of composable **Blocks** that can be connected together to automatically bind output from one item into another. It also includes the notion of **Scopes**, which take the output from a block and do interesting things with it, such as transform it.
 
@@ -52,9 +56,9 @@ In Netduino.Foundation, nearly everything is a block. But they generally fall in
 
  * **Sensors** - Sensors are peripherals that typically have outputs and are sometimes configurable. Sensors include buttons, light sensors, infrared distancing, accelerometers, compasses, temperature, etc. We have bound many commonly available sensors sold in Maker stores.
  * **Motors** - These include not only the electric motors themselves, but also the drivers such as driver boards, and H-Bridges.
- * **Generators** - These are specialized blocks that genearate signals. For example, there is a sine-wave generator, Pulse-width modulation (PWM) generator, constant generator, etc.
+ * **Generators** - These are specialized blocks that generate signals. For example, there is a sine-wave generator, Pulse-width modulation (PWM) generator, constant generator, etc.
  * **Scopes** - Scopes are blocks that are meant to listen in on signals and do interesting things with the signal. For example, we have a DebugScope which can be configured to sample a signal at specific time intervals and write the signal value out to the debug console.
- * **Specialized Blocks** - Specialized Blocks are blocks that don't fit into the previous categories. Some of them are used for signal transformation; for instance, converting a signal that carries Celsius temperature data into a signal that carries Farenheit temperature data.
+ * **Specialized Blocks** - Specialized Blocks are blocks that don't fit into the previous categories. Some of them are used for signal transformation; for instance, converting a signal that carries Celsius temperature data into a signal that carries Fahrenheit temperature data.
 
 
 ### Connecting Blocks
@@ -91,13 +95,22 @@ public class Program
 
 ### Advanced Block Usage
 
-Because Blocks are composible, they can be strung together to create complex integrations. When you connect two blocks up, a `Connector` class is created internally that does the plumbing for you, so you don't have to. By connecting these blocks, interesting work can be accomplished easily. For example, let's say we have a temperature sensor that outputs the temperate in Celsius, but we actually want to get the temperature in Fahrenheit. Additionally, we want to add debug scope along the way to see that things are working properly, we would wire things up as follows:
+Because Blocks are composable, they can be strung together to create complex integrations. When you connect two blocks up, a `Connector` class is created internally that does the plumbing for you, so you don't have to. By connecting these blocks, interesting work can be accomplished easily. For example, let's say we have a temperature sensor that outputs the temperate in Celsius, but we actually want to get the temperature in Fahrenheit. Additionally, we want to add debug scope along the way to see that things are working properly, we would wire things up as follows:
 
 ![Block Architecture](Support_Files/Images/Block_Flow.png)
 
 By using this architecture, it also helps us to think of our apps using the same conceptual framework as the underlying circuits themselves.
 
+# Creating Peripheral Libraries
 
+[inherit from block or scope]
+
+[put them in namespace of Netduino.Foundation.x]
+
+ * **Buttons**
+ * 
+
+[publish them as nugets]
 
 
 # Documentation and Guides
