@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.SharpGP2D12", "Netduino.Foundation.Sensors.SharpGP2D12\Netduino.Foundation.Sensors.SharpGP2D12.csproj", "{105B4678-62F3-49BC-AE86-9ED8F0A00D1F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.BME280", "Netduino.Foundation.Sensors.Barometric.BME280\Netduino.Foundation.Sensors.Barometric.BME280.csproj", "{565DC80C-9F37-4FF4-9E39-A06BF880C64C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{105B4678-62F3-49BC-AE86-9ED8F0A00D1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{105B4678-62F3-49BC-AE86-9ED8F0A00D1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{105B4678-62F3-49BC-AE86-9ED8F0A00D1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{565DC80C-9F37-4FF4-9E39-A06BF880C64C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{565DC80C-9F37-4FF4-9E39-A06BF880C64C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{565DC80C-9F37-4FF4-9E39-A06BF880C64C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{565DC80C-9F37-4FF4-9E39-A06BF880C64C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0} = {82E59041-71D9-420E-B3FE-836243B81E1E}
