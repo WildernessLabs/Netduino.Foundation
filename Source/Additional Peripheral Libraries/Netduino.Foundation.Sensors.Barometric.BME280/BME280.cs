@@ -14,6 +14,31 @@ namespace Netduino.Foundation.Sensors.Barometric
     public class BME280
     {
         /// <summary>
+        /// Address of the humidity control register.
+        /// </summary>
+        private const byte CTRL_HUMIDITY_REGISTER = 0xf2;
+
+        /// <summary>
+        /// Address of the status register.
+        /// </summary>
+        private const byte STATUS_REGISTER = 0xf3;
+
+        /// <summary>
+        /// Address of the temperature and pressure measurement register.
+        /// </summary>
+        private const byte CTRL_MEASUSREMENT_REGISTER = 0xf4;
+
+        /// <summary>
+        /// Address of the configuration register.
+        /// </summary>
+        private const byte CONFIG_REGISTER = 0xF5;
+
+        /// <summary>
+        /// Address of the reset register.
+        /// </summary>
+        private const byte RESET_REGISTER = 0xe0;
+
+        /// <summary>
         /// Compensation data.
         /// </summary>
         private struct CompensationData
@@ -104,6 +129,34 @@ namespace Netduino.Foundation.Sensors.Barometric
         public float Humidity { get; private set; }
 
         /// <summary>
+        /// Temperature over sampling configuration.
+        /// </summary>
+        public byte TemperatureOverSampling { get; set; }
+
+        /// <summary>
+        /// Pressure over sampling configuration.
+        /// </summary>
+        public byte PressureOversampling { get; set; }
+
+        /// <summary>
+        /// Humidity over sampling configuration.
+        /// </summary>
+        public byte HumidityOverSampling { get; set; }
+
+        /// <summary>
+        /// Set the operating mode for the sensor.
+        /// </summary>
+        public byte Mode { get; set; }
+
+        /// <summary>
+        /// </summary>
+        public byte Standby { get; set; }
+
+        /// <summary>
+        /// </summary>
+        public byte Filter { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="T:Netduino.Foundation.Sensors.Barometric.BME280"/> class.
         /// </summary>
         /// <remarks>
@@ -124,18 +177,58 @@ namespace Netduino.Foundation.Sensors.Barometric
             Address = address;
             Speed = speed;
             Device = new I2CDevice(new I2CDevice.Configuration(address, speed));
+            ReadCompensationData();
+            //
+            //  Update the configuration information and start sampling.
+            //
+            TemperatureOverSampling = 1;
+            PressureOversampling = 1;
+            HumidityOverSampling = 1;
+            Mode = 3;
+            Filter = 0;
+            Standby = 0;
+            UpdateConfiguration();
+        }
+
+        /// <summary>
+        /// Update the configuration for the BME280.
+        /// </summary>
+        /// <remarks>
+        /// This method uses the data in the configuration properties in order to set up the
+        /// BME280.  Ensure that the following are set correctly before calling this method:
+        ///     - Standby
+        ///     - Filter
+        ///     - HumidityOverSampling
+        ///     - TemperatureOverSampling
+        ///     - PressureOverSampling
+        ///     - Mode
+        /// </remarks>
+        public void UpdateConfiguration()
+        {
+            //
+            //  Put to sleep to allow the configuration to be changed.
+            //
+            WriteRegister(CTRL_MEASUSREMENT_REGISTER, 0x00);
+    
+            byte data = (byte) (((Standby << 5) & 0xe0) | ((Filter << 2) & 0x1c));
+            WriteRegister(CONFIG_REGISTER, data);
+            data = (byte) (HumidityOverSampling & 0x07);
+            WriteRegister(CTRL_HUMIDITY_REGISTER, data);
+            data = (byte) (((TemperatureOverSampling << 5) & 0xe0) | ((PressureOversampling << 2) & 0x1c) |
+                    (Mode & 0x03));
+            WriteRegister(CTRL_MEASUSREMENT_REGISTER, data);
         }
 
         /// <summary>
         /// Reset the sensor.
         /// </summary>
         /// <remarks>
-        /// Perform a full power-on-reset of the sensor.
+        /// Perform a full power-on-reset of the sensor and reset the configuration of the sensor.
         /// </remarks>
         public void Reset()
         {
-            // Write 0xb6 to register 0xe0.
-            // Re-read the compensation data ?
+            WriteRegister(RESET_REGISTER, 0xb6);
+            UpdateConfiguration();
         }
 
         /// <summary>
@@ -145,19 +238,50 @@ namespace Netduino.Foundation.Sensors.Barometric
         /// <param name="length">Number of bytes to read.</param>
         private byte[] ReadRegisters(byte address, int length)
         {
-            byte[] compensationRegisters = new byte[length];
+            byte[] registers = new byte[length];
             byte[] registerAddress = { address };
             I2CDevice.I2CTransaction[] readCompensationData =
             {
-                new I2CDevice.CreateWriteTransaction(registerAddress),       
-                new I2CDevice.CreateReadTransaction(compensationRegisters)
+                I2CDevice.CreateWriteTransaction(registerAddress),       
+                I2CDevice.CreateReadTransaction(registers)
             };
-            int bytesRead = 0;
-            while (bytesRead != length)
+            int bytesTransferred = 0;
+            int retryCount = 0;
+            while (bytesTransferred != (length + 1))
             {
-                bytesRead = Device.Execute(readCompensationData, 100);
+                if (retryCount > 3)
+                {
+                    throw new Exception("ReadRegisters: Retry count exceeded.");
+                }
+                retryCount++;
+                bytesTransferred = Device.Execute(readCompensationData, 100);
             }
-            return compensationRegisters;
+            return registers;
+        }
+
+        /// <summary>
+        /// Write the specified value to the registers in the sensor.
+        /// </summary>
+        /// <param name="address">Register address.</param>
+        /// <param name="value">Value to write into the register.</param>
+        private void WriteRegister(byte address, byte value)
+        {
+            byte[] data = new byte[2];
+            data[0] = address;
+            data[1] = value;
+            I2CDevice.I2CTransaction[] writeRegisters =
+            {
+                I2CDevice.CreateWriteTransaction(data)
+            };
+            int retryCount = 0;
+            while (Device.Execute(writeRegisters, 100) != 2)
+            {
+                if (retryCount > 3)
+                {
+                    throw new Exception("WriteRegister: Retry count exceeded.");
+                }
+                retryCount++;
+            }
         }
 
         /// <summary>
@@ -179,25 +303,25 @@ namespace Netduino.Foundation.Sensors.Barometric
             byte[] humidityData1 = ReadRegisters(0xa1, 1);
             byte[] humidityData2To6 = ReadRegisters(0xe1, 8);
 
-            _compensationData.T1 = (ushort) (temperatureAndPressureData[0] | (temperatureAndPressureData[1] << 8));
-            _compensationData.T2 = (short) (temperatureAndPressureData[2] | (temperatureAndPressureData[3] << 8));
-            _compensationData.T3 = (short) (temperatureAndPressureData[4] | (temperatureAndPressureData[5] << 8));
+            _compensationData.T1 = (ushort) (temperatureAndPressureData[0] + (temperatureAndPressureData[1] << 8));
+            _compensationData.T2 = (short) (temperatureAndPressureData[2] + (temperatureAndPressureData[3] << 8));
+            _compensationData.T3 = (short) (temperatureAndPressureData[4] + (temperatureAndPressureData[5] << 8));
             //
-            _compensationData.P1 = (ushort) (temperatureAndPressureData[6] | (temperatureAndPressureData[7] << 8));
-            _compensationData.P2 = (short) (temperatureAndPressureData[8] | (temperatureAndPressureData[9] << 8));
-            _compensationData.P3 = (short) (temperatureAndPressureData[10] | (temperatureAndPressureData[11] << 8));
-            _compensationData.P4 = (short) (temperatureAndPressureData[12] | (temperatureAndPressureData[13] << 8));
-            _compensationData.P5 = (short) (temperatureAndPressureData[14] | (temperatureAndPressureData[15] << 8));
-            _compensationData.P6 = (short) (temperatureAndPressureData[16] | (temperatureAndPressureData[17] << 8));
-            _compensationData.P7 = (short) (temperatureAndPressureData[18] | (temperatureAndPressureData[19] << 8));
-            _compensationData.P8 = (short) (temperatureAndPressureData[20] | (temperatureAndPressureData[21] << 8));
-            _compensationData.P9 = (short) (temperatureAndPressureData[22] | (temperatureAndPressureData[23] << 8));
+            _compensationData.P1 = (ushort) (temperatureAndPressureData[6] + (temperatureAndPressureData[7] << 8));
+            _compensationData.P2 = (short) (temperatureAndPressureData[8] + (temperatureAndPressureData[9] << 8));
+            _compensationData.P3 = (short) (temperatureAndPressureData[10] + (temperatureAndPressureData[11] << 8));
+            _compensationData.P4 = (short) (temperatureAndPressureData[12] + (temperatureAndPressureData[13] << 8));
+            _compensationData.P5 = (short) (temperatureAndPressureData[14] + (temperatureAndPressureData[15] << 8));
+            _compensationData.P6 = (short) (temperatureAndPressureData[16] + (temperatureAndPressureData[17] << 8));
+            _compensationData.P7 = (short) (temperatureAndPressureData[18] + (temperatureAndPressureData[19] << 8));
+            _compensationData.P8 = (short) (temperatureAndPressureData[20] + (temperatureAndPressureData[21] << 8));
+            _compensationData.P9 = (short) (temperatureAndPressureData[22] + (temperatureAndPressureData[23] << 8));
             //
             _compensationData.H1 = humidityData1[0];
-            _compensationData.H2 = (short) (humidityData2To6[0] | (humidityData2To6[1] << 8));
+            _compensationData.H2 = (short) (humidityData2To6[0] + (humidityData2To6[1] << 8));
             _compensationData.H3 = humidityData2To6[2];
-            _compensationData.H4 = (short) (humidityData2To6[3] | (humidityData2To6[4] << 8));
-            _compensationData.H5 = (short) (humidityData2To6[5] | (humidityData2To6[6] << 8));
+            _compensationData.H4 = (short) (humidityData2To6[3] + (humidityData2To6[4] << 8));
+            _compensationData.H5 = (short) (humidityData2To6[5] + (humidityData2To6[6] << 8));
             _compensationData.H6 = (sbyte) humidityData2To6[7];
         }
 
@@ -217,10 +341,9 @@ namespace Netduino.Foundation.Sensors.Barometric
         /// 
         /// The integer formulas have been used to try and keep the calcuations performant.
         /// </remarks>
-        private void Read()
+        public void Read()
         {
             byte[] readings = ReadRegisters(0xf7, 8);
-
             //
             //  Temperature calculation from section 4.2.3 of the datasheet.
             //
@@ -231,8 +354,8 @@ namespace Netduino.Foundation.Sensors.Barometric
             // BME280_S32_t BME280_compensate_T_int32(BME280_S32_t adc_T)
             // {
             //     BME280_S32_t var1, var2, T;
-            //     var1 = ((((adc_T>>3) – ((BME280_S32_t)dig_T1<<1))) * ((BME280_S32_t)dig_T2)) >> 11;
-            //     var2 = (((((adc_T>>4) – ((BME280_S32_t)dig_T1)) * ((adc_T>>4) – ((BME280_S32_t)dig_T1))) >> 12) *
+            //     var1 = ((((adc_T>>3) - ((BME280_S32_t)dig_T1<<1))) * ((BME280_S32_t)dig_T2)) >> 11;
+            //     var2 = (((((adc_T>>4) - ((BME280_S32_t)dig_T1)) * ((adc_T>>4) - ((BME280_S32_t)dig_T1))) >> 12) *
             //     ((BME280_S32_t)dig_T3)) >> 14;
             //     t_fine = var1 + var2;
             //     T = (t_fine * 5 + 128) >> 8;
@@ -241,9 +364,10 @@ namespace Netduino.Foundation.Sensors.Barometric
             //
             int adcTemperature = (readings[3] << 8) | readings[4];
             int tvar1 = ((adcTemperature >> 3) - (_compensationData.T1 << 1)) * _compensationData.T2 >> 11;
-            int tvar2 = (((((adcTemperature >> 4) – _compensationData.T1) * 
-                        ((adcTemperature >> 4) – _compensationData.T1)) >> 12) * _compensationData.T3) >> 14;
+            int tvar2 = (((((adcTemperature >> 4) - _compensationData.T1) * 
+                        ((adcTemperature >> 4) - _compensationData.T1)) >> 12) * _compensationData.T3) >> 14;
             int tfine = tvar1 + tvar2;
+            //
             Temperature = ((tfine * 5 + 128) >> 8) / 100;
             //
             // Pressure calculation from section 4.2.3 of the datasheet.
@@ -254,7 +378,7 @@ namespace Netduino.Foundation.Sensors.Barometric
             // BME280_U32_t BME280_compensate_P_int64(BME280_S32_t adc_P)
             // {
             //     BME280_S64_t var1, var2, p;
-            //     var1 = ((BME280_S64_t)t_fine) – 128000;
+            //     var1 = ((BME280_S64_t)t_fine) - 128000;
             //     var2 = var1 * var1 * (BME280_S64_t)dig_P6;
             //     var2 = var2 + ((var1*(BME280_S64_t)dig_P5)<<17);
             //     var2 = var2 + (((BME280_S64_t)dig_P4)<<35);
@@ -284,12 +408,13 @@ namespace Netduino.Foundation.Sensors.Barometric
             }
             else
             {
-                int adcPressure = readings[0] << 8 | reading[1];
+                int adcPressure = (readings[0] << 8) | readings[1];
                 long pressure = 1048576 - adcPressure;
                 pressure = (((pressure << 31) - pvar2) * 3125) / pvar1;
-                pvar1 = (((long) _compensationData.P9) * (pressure >> 13) * (pressure >> 13) >> 25;
+                pvar1 = (((long) _compensationData.P9) * (pressure >> 13) * (pressure >> 13)) >> 25;
                 pvar2 = (((long) _compensationData.P8) * pressure) >> 19;
                 pressure = ((pressure + pvar1 + pvar2) >> 8) + (((long) _compensationData.P7) << 4);
+                //
                 Pressure = (pressure / 256);
             }
             //
@@ -301,26 +426,30 @@ namespace Netduino.Foundation.Sensors.Barometric
             // BME280_U32_t bme280_compensate_H_int32(BME280_S32_t adc_H)
             // {
             //     BME280_S32_t v_x1_u32r;
-            //     v_x1_u32r = (t_fine – ((BME280_S32_t)76800));
-            //     v_x1_u32r = (((((adc_H << 14) – (((BME280_S32_t)dig_H4) << 20) – (((BME280_S32_t)dig_H5) * v_x1_u32r)) +
+            //     v_x1_u32r = (t_fine - ((BME280_S32_t)76800));
+            //     v_x1_u32r = (((((adc_H << 14) - (((BME280_S32_t)dig_H4) << 20) - (((BME280_S32_t)dig_H5) * v_x1_u32r)) +
             //         ((BME280_S32_t)16384)) >> 15) * (((((((v_x1_u32r * ((BME280_S32_t)dig_H6)) >> 10) * (((v_x1_u32r *
             //         ((BME280_S32_t)dig_H3)) >> 11) + ((BME280_S32_t)32768))) >> 10) + ((BME280_S32_t)2097152)) *
             //         ((BME280_S32_t)dig_H2) + 8192) >> 14));
-            //     v_x1_u32r = (v_x1_u32r – (((((v_x1_u32r >> 15) * (v_x1_u32r >> 15)) >> 7) * ((BME280_S32_t)dig_H1)) >> 4));
+            //     v_x1_u32r = (v_x1_u32r - (((((v_x1_u32r >> 15) * (v_x1_u32r >> 15)) >> 7) * ((BME280_S32_t)dig_H1)) >> 4));
             //     v_x1_u32r = (v_x1_u32r < 0 ? 0 : v_x1_u32r);
             //     v_x1_u32r = (v_x1_u32r > 419430400 ? 419430400 : v_x1_u32r);
             //     return (BME280_U32_t)(v_x1_u32r>>12);
             // }
             //
             int adcHumidity = (readings[6] << 8) | readings[7];
-            int v_x1_u32r = (tfine – ((int) 76800));
-            v_x1_u32r = (((((adcHumidity << 14) – (((int) _compensationData.H4) << 20) – (((int) _compensationData.H5) * v_x1_u32r)) +
+            int v_x1_u32r = (tfine - ((int) 76800));
+            v_x1_u32r = (((((adcHumidity << 14) - (((int) _compensationData.H4) << 20) - (((int) _compensationData.H5) * v_x1_u32r)) +
                         ((int) 16384)) >> 15) * (((((((v_x1_u32r * ((int) _compensationData.H6)) >> 10) * (((v_x1_u32r *
                         ((int) _compensationData.H3)) >> 11) + ((int) 32768))) >> 10) + ((int) 2097152)) *
                         ((int) _compensationData.H2) + 8192) >> 14));
-            v_x1_u32r = (v_x1_u32r – (((((v_x1_u32r >> 15) * (v_x1_u32r >> 15)) >> 7) * ((int) _compensationData.H1)) >> 4));
+            v_x1_u32r = (v_x1_u32r - (((((v_x1_u32r >> 15) * (v_x1_u32r >> 15)) >> 7) * ((int) _compensationData.H1)) >> 4));
+            //
+            //  Makes sure the humidity reading is in the range [0..100].
+            //
             v_x1_u32r = (v_x1_u32r < 0 ? 0 : v_x1_u32r);
             v_x1_u32r = (v_x1_u32r > 419430400 ? 419430400 : v_x1_u32r);
+            //
             Humidity = ((ushort) (v_x1_u32r >> 12)) / 1024;
         }
     }
