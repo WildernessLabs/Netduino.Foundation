@@ -31,7 +31,7 @@ namespace Netduino.Foundation.Sensors.Barometric
         /// <summary>
         /// Address of the configuration register.
         /// </summary>
-        private const byte CONFIG_REGISTER = 0xF5;
+        private const byte CONFIG_REGISTER = 0xf5;
 
         /// <summary>
         /// Address of the reset register.
@@ -362,10 +362,10 @@ namespace Netduino.Foundation.Sensors.Barometric
             //     return T;
             // }
             //
-            int adcTemperature = (readings[3] << 8) | readings[4];
-            int tvar1 = ((adcTemperature >> 3) - (_compensationData.T1 << 1)) * _compensationData.T2 >> 11;
-            int tvar2 = (((((adcTemperature >> 4) - _compensationData.T1) * 
-                        ((adcTemperature >> 4) - _compensationData.T1)) >> 12) * _compensationData.T3) >> 14;
+            int adcTemperature = (readings[3] << 12) | (readings[4] << 4) | ((readings[5] >> 4) & 0x0f);
+            int tvar1 = (((adcTemperature >> 3) - (((int) _compensationData.T1) << 1)) * ((int) _compensationData.T2)) >> 11;
+            int tvar2 = (((((adcTemperature >> 4) - ((int) _compensationData.T1)) * 
+                        ((adcTemperature >> 4) - _compensationData.T1)) >> 12) * ((int) _compensationData.T3)) >> 14;
             int tfine = tvar1 + tvar2;
             //
             Temperature = ((tfine * 5 + 128) >> 8) / 100;
@@ -408,7 +408,7 @@ namespace Netduino.Foundation.Sensors.Barometric
             }
             else
             {
-                int adcPressure = (readings[0] << 8) | readings[1];
+                int adcPressure = (readings[0] << 12) | (readings[1] << 4) | ((readings[2] >> 4) & 0x0f);
                 long pressure = 1048576 - adcPressure;
                 pressure = (((pressure << 31) - pvar2) * 3125) / pvar1;
                 pvar1 = (((long) _compensationData.P9) * (pressure >> 13) * (pressure >> 13)) >> 25;
@@ -450,7 +450,7 @@ namespace Netduino.Foundation.Sensors.Barometric
             v_x1_u32r = (v_x1_u32r < 0 ? 0 : v_x1_u32r);
             v_x1_u32r = (v_x1_u32r > 419430400 ? 419430400 : v_x1_u32r);
             //
-            Humidity = ((ushort) (v_x1_u32r >> 12)) / 1024;
+            Humidity = ((float) (v_x1_u32r >> 12)) / 1024;
         }
     }
 }
