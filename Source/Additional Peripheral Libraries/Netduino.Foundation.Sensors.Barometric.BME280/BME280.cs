@@ -390,7 +390,7 @@ namespace Netduino.Foundation.Sensors.Barometric
                         ((adcTemperature >> 4) - _compensationData.T1)) >> 12) * ((int) _compensationData.T3)) >> 14;
             int tfine = tvar1 + tvar2;
             //
-            Temperature = ((tfine * 5 + 128) >> 8) / 100;
+            Temperature = ((float) ((tfine * 5 + 128) >> 8)) / 100;
             //
             // Pressure calculation from section 4.2.3 of the datasheet.
             //
@@ -437,7 +437,7 @@ namespace Netduino.Foundation.Sensors.Barometric
                 pvar2 = (((long) _compensationData.P8) * pressure) >> 19;
                 pressure = ((pressure + pvar1 + pvar2) >> 8) + (((long) _compensationData.P7) << 4);
                 //
-                Pressure = (pressure / 256);
+                Pressure = ((float) pressure) / 256;
             }
             //
             // Humidity calculations from section 4.2.3 of the datasheet.
