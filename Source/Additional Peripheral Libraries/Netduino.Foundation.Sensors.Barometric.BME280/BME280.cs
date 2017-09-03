@@ -28,7 +28,7 @@ namespace Netduino.Foundation.Sensors.Barometric
         /// <summary>
         /// Address of the temperature and pressure measurement register.
         /// </summary>
-        private const byte CTRL_MEASUSREMENT_REGISTER = 0xf4;
+        private const byte CTRL_MEASUREMENT_REGISTER = 0xf4;
 
         /// <summary>
         /// Address of the configuration register.
@@ -230,7 +230,7 @@ namespace Netduino.Foundation.Sensors.Barometric
             //
             //  Put to sleep to allow the configuration to be changed.
             //
-            WriteRegister(CTRL_MEASUSREMENT_REGISTER, 0x00);
+            WriteRegister(CTRL_MEASUREMENT_REGISTER, 0x00);
     
             byte data = (byte) (((Standby << 5) & 0xe0) | ((Filter << 2) & 0x1c));
             WriteRegister(CONFIG_REGISTER, data);
@@ -238,7 +238,7 @@ namespace Netduino.Foundation.Sensors.Barometric
             WriteRegister(CTRL_HUMIDITY_REGISTER, data);
             data = (byte) (((TemperatureOverSampling << 5) & 0xe0) | ((PressureOversampling << 2) & 0x1c) |
                     (Mode & 0x03));
-            WriteRegister(CTRL_MEASUSREMENT_REGISTER, data);
+            WriteRegister(CTRL_MEASUREMENT_REGISTER, data);
         }
 
         /// <summary>
