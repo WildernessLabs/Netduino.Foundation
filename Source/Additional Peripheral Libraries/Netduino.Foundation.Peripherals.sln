@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.BME280", "Netduino.Foundation.Sensors.Barometric.BME280\Netduino.Foundation.Sensors.Barometric.BME280.csproj", "{565DC80C-9F37-4FF4-9E39-A06BF880C64C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Light.TSL2561", "TSL2561\Netduino.Foundation.Sensors.Light.TSL2561.csproj", "{AC24642E-E6DA-47D7-B4F5-9F12F35BE78A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{565DC80C-9F37-4FF4-9E39-A06BF880C64C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{565DC80C-9F37-4FF4-9E39-A06BF880C64C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{565DC80C-9F37-4FF4-9E39-A06BF880C64C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC24642E-E6DA-47D7-B4F5-9F12F35BE78A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC24642E-E6DA-47D7-B4F5-9F12F35BE78A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC24642E-E6DA-47D7-B4F5-9F12F35BE78A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC24642E-E6DA-47D7-B4F5-9F12F35BE78A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0} = {82E59041-71D9-420E-B3FE-836243B81E1E}
