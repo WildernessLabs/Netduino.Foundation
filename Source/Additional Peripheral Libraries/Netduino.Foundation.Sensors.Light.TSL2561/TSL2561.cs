@@ -144,10 +144,6 @@ namespace Netduino.Foundation.Sensors.Light
         /// </summary>
         public IntegrationTiming Timing
         {
-            get
-            {
-
-            }
             set
             {
                 byte timing = ReadByte(Registers.Timing);
