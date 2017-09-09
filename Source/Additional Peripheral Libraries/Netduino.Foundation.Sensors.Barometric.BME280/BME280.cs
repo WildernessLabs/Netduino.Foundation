@@ -71,6 +71,20 @@ namespace Netduino.Foundation.Sensors.Barometric
 
         #endregion Internal Structures
 
+        #region Enumerators
+
+        /// <summary>
+        /// Oversampling rate for the sensors.
+        /// </summary>
+        public enum Oversampling { Skipped = 0, Times1, Times2, Times4, Times8, Times16 };
+
+        /// <summary>
+        /// Run mode for the BME280.
+        /// </summary>
+        public enum RunMode {  Sleep = 0, Forced = 1, Normal = 3 };
+
+        #endregion Enumerators
+
         #region Member Variables
 
         /// <summary>
@@ -145,17 +159,17 @@ namespace Netduino.Foundation.Sensors.Barometric
         /// <summary>
         /// Temperature over sampling configuration.
         /// </summary>
-        public byte TemperatureOverSampling { get; set; }
+        public Oversampling TemperatureOverSampling { get; set; }
 
         /// <summary>
         /// Pressure over sampling configuration.
         /// </summary>
-        public byte PressureOversampling { get; set; }
+        public Oversampling PressureOversampling { get; set; }
 
         /// <summary>
         /// Humidity over sampling configuration.
         /// </summary>
-        public byte HumidityOverSampling { get; set; }
+        public Oversampling HumidityOverSampling { get; set; }
 
         /// <summary>
         /// Set the operating mode for the sensor.
@@ -192,6 +206,10 @@ namespace Netduino.Foundation.Sensors.Barometric
         /// <param name="speed">Speed of the I2C bus (default = 100KHz).</param>
         public BME280(byte address = 0x77, ushort speed = 100)
         {
+            //
+            // No need to check the address and speed parameters as they will be checked when
+            // the properties are set.
+            //
             Address = address;
             Speed = speed;
             Device = new I2CDevice(new I2CDevice.Configuration(address, speed));
@@ -199,10 +217,10 @@ namespace Netduino.Foundation.Sensors.Barometric
             //
             //  Update the configuration information and start sampling.
             //
-            TemperatureOverSampling = 1;
-            PressureOversampling = 1;
-            HumidityOverSampling = 1;
-            Mode = 3;
+            TemperatureOverSampling = Times1;
+            PressureOversampling = Times1;
+            HumidityOverSampling = Times1
+            Mode = Normal;
             Filter = 0;
             Standby = 0;
             UpdateConfiguration();
