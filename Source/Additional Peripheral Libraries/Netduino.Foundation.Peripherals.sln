@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.BME280", "Netduino.Foundation.Sensors.Barometric.BME280\Netduino.Foundation.Sensors.Barometric.BME280.csproj", "{565DC80C-9F37-4FF4-9E39-A06BF880C64C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Light.TSL2561", "TSL2561\Netduino.Foundation.Sensors.Light.TSL2561.csproj", "{AC24642E-E6DA-47D7-B4F5-9F12F35BE78A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Light.TSL2561", "Netduino.Foundation.Sensors.Light.TSL2561\Netduino.Foundation.Sensors.Light.TSL2561.csproj", "{AC24642E-E6DA-47D7-B4F5-9F12F35BE78A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
