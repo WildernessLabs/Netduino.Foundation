@@ -6,7 +6,7 @@
 
 ### Output (what to call this? should it include LED stuff?)
 
-#### LEDs
+#### LEDs (core lib)
 
 #### LCDs
 
@@ -175,8 +175,6 @@ Note: should we just combine altimeters with barometers? It includes all the one
 ### Multipurpose
 
 (breakout boards, shields, etc.)
-
-### Servo
 
 ### Switches
 
