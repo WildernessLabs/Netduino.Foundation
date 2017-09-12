@@ -4,6 +4,37 @@
 
 ## Drivers
 
+### Output (what to call this? should it include LED stuff?)
+
+#### LEDs
+
+#### LCDs
+
+#### Piezo (core lib)
+
+### Input/HID (what to call this?)
+
+#### Joystick
+
+#### Keypad
+
+ * VKEY
+   * [SparkFun](https://www.sparkfun.com/products/12080)
+ * Waveshare AD (Analog)
+   * [Amazon](http://www.amazon.com/Waveshare-Accessory-buttons-controlled-keyboard/dp/B00KM6UXVS)
+ * MPR121
+   * [SparkFun (Breakout)](https://www.sparkfun.com/products/9695)
+   * [SparkFun (Keypad)](https://www.sparkfun.com/products/12017)
+   * [Adafruit (Breakout)](https://www.adafruit.com/products/1982)
+   * [Adafruit (Shield)](https://www.adafruit.com/products/2024)
+ * MPR121QR2
+  * [SparkFun](https://www.sparkfun.com/products/12013)
+ * Grove QTouch (AT42QT1070)
+  * [Seeed Studio](http://www.seeedstudio.com/depot/Grove-Touch-Sensor-p-747.html)
+ * 12 Button Keypad (requires I2C backpack) [Note: may not be true for Netduino]
+  * [Adafruit](https://www.adafruit.com/products/1824)
+  * [SparkFun](https://www.sparkfun.com/products/8653)
+
 ### Sensors
 
 #### Accelerometers
@@ -111,48 +142,44 @@ Note: should we just combine altimeters with barometers? It includes all the one
    * [Adafruit](https://www.adafruit.com/products/2472)
    * [Atmel](http://www.atmel.com/tools/ATBNO055-XPRO.aspx)
    * [Tindie](https://www.tindie.com/products/onehorse/bno-055-9-axis-motion-sensor-with-hardware-sensor-fusion/)
-
-#### Joystick
-
-#### Keypad
-
- * VKEY
-   * [SparkFun](https://www.sparkfun.com/products/12080)
- * Waveshare AD (Analog)
-   * [Amazon](http://www.amazon.com/Waveshare-Accessory-buttons-controlled-keyboard/dp/B00KM6UXVS)
- * MPR121
-   * [SparkFun (Breakout)](https://www.sparkfun.com/products/9695)
-   * [SparkFun (Keypad)](https://www.sparkfun.com/products/12017)
-   * [Adafruit (Breakout)](https://www.adafruit.com/products/1982)
-   * [Adafruit (Shield)](https://www.adafruit.com/products/2024)
- * MPR121QR2
-  * [SparkFun](https://www.sparkfun.com/products/12013)
- * Grove QTouch (AT42QT1070)
-  * [Seeed Studio](http://www.seeedstudio.com/depot/Grove-Touch-Sensor-p-747.html)
- * 12 Button Keypad (requires I2C backpack) [Note: may not be true for Netduino]
-  * [Adafruit](https://www.adafruit.com/products/1824)
-  * [SparkFun](https://www.sparkfun.com/products/8653)
    
 #### Light
 
+ * Photoreistors
+   * [SparkFun Mini Photocell](https://www.sparkfun.com/products/9088)
+ * TSL2561
+   * [Adafruit](https://www.adafruit.com/product/439)
+   * [SparkFun](https://www.sparkfun.com/products/12055)
+ * [Lego EV3 Color & Light Sensor](http://shop.lego.com/en-US/EV3-Color-Sensor-45506)
+ * [Lego NXT Color Sensor](http://shop.lego.com/en-US/Light-Sensor-9844)
+
 #### Motion
+
+ * [Passive Infra-Red by Parallax](http://www.parallax.com/tabid/768/productid/83/default.aspx)
+ * [Generic Passive Infra-Red, HC-SR501](http://www.amazon.com/HC-SR501-Sensor-Module-Pyroelectric-Infrared/dp/B007XQRKD4)
+ * [OSEPP IR Proximity Sensor](http://osepp.com/products/sensors-arduino-compatible/osepp-ir-proximity-sensor-module/) (Note: despite its name, this is not a proximity sensor that outputs a measured distance to an obstruction.)
+ * Sharp IR Motion Detection
+   * [GP2Y0D810Z0F](https://www.pololu.com/product/1134)
+   * [GP2Y0D815Z0F](https://www.pololu.com/product/1133)
 
 #### Proximity
 
 #### Temperature
 
-### Servo
-
 ### Motors
 
-### LCD
+#### Servo (core lib)
+
+#### Stepper (core lib)
+
+### Multipurpose
+
+(breakout boards, shields, etc.)
+
+### Servo
 
 ### Switches
 
 #### Buttons
 
 #### Relays
-
-### Multipurpose
-
-(breakout boards, shields, etc.)
