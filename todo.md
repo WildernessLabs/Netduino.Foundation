@@ -167,23 +167,23 @@ Note: should we just combine altimeters with barometers? It includes all the one
 #### Temperature
 
  * LM35
-   * Mouser
-   * TI
+   * [Mouser](http://www.mouser.com/search/ProductDetail.aspx?R=0virtualkey0virtualkeyLM35DZ-NOPB)
+   * [TI](http://www.ti.com/product/lm35)
  * TMP36
-   * Adafruit
-   * Analog Devices
-   * SparkFun
+   * [Adafruit](https://www.adafruit.com/products/165)
+   * [Analog Devices](http://www.analog.com/en/mems-sensors/digital-temperature-sensors/tmp36/products/product.html)
+   * [SparkFun](https://www.sparkfun.com/products/10988)
  * TMP102
-   * SparkFun
+   * [SparkFun](https://www.sparkfun.com/products/11931)
  * DS18B20 (requires Firmata)
-   * Adafruit
-   * Maxim Integrated
-   * SparkFun
+   * [Adafruit](https://www.adafruit.com/products/374)
+   * [Maxim Integrated](http://www.maximintegrated.com/en/products/analog/sensors-and-sensor-interface/DS18B20.html)
+   * [SparkFun](https://www.sparkfun.com/products/245)
  * MPU6050 [also in accelerometer; maybe move to boards]
    * [Invensense](http://www.invensense.com/products/motion-tracking/6-axis/mpu-6050/)
    * [SparkFun](https://www.sparkfun.com/products/11028)
  * Grove Thermometer
-   * Seeed Studio
+   * [Seeed Studio](http://www.seeedstudio.com/depot/Grove-Thermometer-Sensor-p-774.html)
  * BMP180 [also in altimeters, consider unifying]
    * [Adafruit](https://www.adafruit.com/products/1603)
    * [SparkFun](https://www.sparkfun.com/products/11824)
