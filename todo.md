@@ -224,6 +224,17 @@ Note: should we just combine altimeters with barometers? It includes all the one
  * SHT31D
    * [Adafruit](https://www.adafruit.com/products/2857)
 
+#### Power
+
+ * INA169
+   * [SparkFun](https://www.sparkfun.com/products/12040)
+ * INA219 (I2C)
+   * [Adafruit](https://www.adafruit.com/product/904)
+ * LTC4150
+   * [SparkFun Couloub Counter](https://www.sparkfun.com/products/12052)
+ * ACS712
+   * [SparkFun](https://www.sparkfun.com/products/8883)
+
 ### Motors
 
 #### Servo (core lib)
