@@ -135,7 +135,7 @@ Note: should we just combine altimeters with barometers? It includes all the one
 
 #### InertialMeasurement
 
- * MPU6050
+ * MPU6050 [also in accelerometer; maybe move to boards]
    * [Invensense](http://www.invensense.com/products/motion-tracking/6-axis/mpu-6050/)
    * [SparkFun](https://www.sparkfun.com/products/11028)
  * BNO055
@@ -165,6 +165,64 @@ Note: should we just combine altimeters with barometers? It includes all the one
 #### Proximity
 
 #### Temperature
+
+ * LM35
+   * Mouser
+   * TI
+ * TMP36
+   * Adafruit
+   * Analog Devices
+   * SparkFun
+ * TMP102
+   * SparkFun
+ * DS18B20 (requires Firmata)
+   * Adafruit
+   * Maxim Integrated
+   * SparkFun
+ * MPU6050 [also in accelerometer; maybe move to boards]
+   * [Invensense](http://www.invensense.com/products/motion-tracking/6-axis/mpu-6050/)
+   * [SparkFun](https://www.sparkfun.com/products/11028)
+ * Grove Thermometer
+   * Seeed Studio
+ * BMP180 [also in altimeters, consider unifying]
+   * [Adafruit](https://www.adafruit.com/products/1603)
+   * [SparkFun](https://www.sparkfun.com/products/11824)
+   * [Grove](http://www.seeedstudio.com/depot/Grove-Barometer-Sensor-BMP180-p-1840.html)
+ * BMP280 [also in altimeters, consider unifying]
+   * [Adafruit](https://www.adafruit.com/products/2651)
+ * BME280 [also in altimeters, consider unifying]
+   * [Adafruit](https://www.adafruit.com/products/2652)
+   * [SparkFun](https://www.sparkfun.com/products/13676)
+ * MPL3115A2 [also in altimeters, consider unifying]
+   * [Adafruit](https://www.adafruit.com/products/1893)
+   * [SparkFun](https://www.sparkfun.com/products/11084)
+      * [SparkFun Weather Shield](https://www.sparkfun.com/products/12081)
+      * [SparkFun Photon Weather Shield](https://www.sparkfun.com/products/13630)
+ * MS5611 [also in altimeters, consider unifying]
+   * [Amazon](http://www.amazon.com/MS5611-High-resolution-Atmospheric-Pressure-Module/dp/B00F4P6LKE)
+ * HTU21D
+   * [Adafruit](https://www.adafruit.com/product/1899)
+   * [Sparkfun](https://www.sparkfun.com/products/12064)
+ * HIH6130
+   * [Sparkfun](https://www.sparkfun.com/products/11295)
+ * MCP9808
+   * [Adafruit](https://www.adafruit.com/product/1782)
+ * SI7020
+   * [Tessel Climate](http://www.seeedstudio.com/depot/Tessel-Climate-Module-p-2225.html)
+ * SI7021
+   * [Sparkfun](https://www.sparkfun.com/products/13763)
+ * MS5611
+   * [Amazon](http://www.amazon.com/MS5611-High-resolution-Atmospheric-Pressure-Module/dp/B00F4P6LKE)
+ * TH02
+   * [Grove](http://www.seeedstudio.com/depot/Grove-TemperatureHumidity-Sensor-HighAccuracy-Mini-p-1921.html)
+ * DHT11 (Via I2C Backpack)
+   * [Google](https://www.google.com/search?q=DHT11)
+ * DHT21 (Via I2C Backpack)
+   * [Google](https://www.google.com/search?q=DHT21)
+ * DHT22 (Via I2C Backpack)
+   * [Google](https://www.google.com/search?q=DHT22)
+ * SHT31D
+   * [Adafruit](https://www.adafruit.com/products/2857)
 
 ### Motors
 
