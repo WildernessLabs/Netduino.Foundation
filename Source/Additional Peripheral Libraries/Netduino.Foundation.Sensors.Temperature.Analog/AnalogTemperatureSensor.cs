@@ -6,6 +6,7 @@
 //  The full text of the Apache 2.0 licence agreement can be found here:
 //  <http://www.apache.org/licenses/>
 //
+using System;
 using Microsoft.SPOT.Hardware;
 
 namespace Netduino.Foundation.Sensors.Temperature.Analog
@@ -15,25 +16,31 @@ namespace Netduino.Foundation.Sensors.Temperature.Analog
     ///     - TMP35 / 36 / 37
     ///     - LM35 / 45
     /// </summary>
-    public class AnalogTemperatureSensor
+    public class AnalogTemperatureSensor : IDisposable
     {
+        #region Private member variables (fields)
+
         /// <summary>
-        /// Millivots per degree centigrade for the sensor attached to the analog port.
+        /// Millivolts per degree centigrade for the sensor attached to the analog port.
         /// </summary>
         private int _millivoltsPerDegreeCentigrade;
 
         /// <summary>
-        /// Minimum sensor reading in degrees centegrade.
+        /// Minimum sensor reading in degrees centigrade.
         /// </summary>
         private int _minimumReading;
 
         /// <summary>
-        /// Number of millivots at the specified minimum reading.
+        /// Number of millivolts at the specified minimum reading.
         /// </summary>
         private int _millvoltsAtMinimumReading;
 
+        #endregion Private member variables (fields)
+
+        #region Properties
+
         /// <summary>
-        /// Type of temperarure sensor.
+        /// Type of temperature sensor.
         /// </summary>
         public enum SensorType { Custom, TMP35, TMP36, TMP37, LM35, LM45, LM50 };
 
@@ -64,6 +71,10 @@ namespace Netduino.Foundation.Sensors.Temperature.Analog
             }
         }
 
+        #endregion Properties
+
+        #region Constructor(s)
+
         /// <summary>
         /// Default constructor, private to prevent this being used.
         /// </summary>
@@ -74,15 +85,15 @@ namespace Netduino.Foundation.Sensors.Temperature.Analog
         /// <summary>
         /// New instance of the AnalogTemperatureSensor class.
         /// </summary>
-        /// <param name="port">Analog port the temperature sensor is connected to.</param>
+        /// <param name="analogPin">Analog pin the temperature sensor is connected to.</param>
         /// <param name="sensor">Type of sensor attached to the analog port.</param>
         /// <param name="minimumReading">Minimum sensor reading in degrees centigrade (Optional)</param>
-        /// <param name="millivoltsAtMinimumReading">Number of milliviolts representing the minimum reading (Optional)</param>
-        /// <param name="milliVoltsPerDegreeCentigrade">Number of millivolts pre degree centigrade (Optional)</param>
-        public AnalogTemperatureSensor(AnalogInput port, SensorType sensor, int minimumReading = 10, 
-                                       int millivoltsAtMinimumReading = 100, int milliVoltsPerDegreeCentigrade = 10)
+        /// <param name="millivoltsAtMinimumReading">Number of millivolts representing the minimum reading (Optional)</param>
+        /// <param name="millivoltsPerDegreeCentigrade">Number of millivolts pre degree centigrade (Optional)</param>
+        public AnalogTemperatureSensor(Cpu.AnalogChannel analogPin, SensorType sensor, int minimumReading = 10, 
+                                       int millivoltsAtMinimumReading = 100, int millivoltsPerDegreeCentigrade = 10)
         {
-            AnalogPort = port;
+            AnalogPort = new AnalogInput(analogPin);
             switch (sensor)
             {
                 case SensorType.TMP35:
@@ -106,9 +117,29 @@ namespace Netduino.Foundation.Sensors.Temperature.Analog
                 case SensorType.Custom:
                     _minimumReading = minimumReading;
                     _millvoltsAtMinimumReading = millivoltsAtMinimumReading;
-                    _millivoltsPerDegreeCentigrade = milliVoltsPerDegreeCentigrade;
+                    _millivoltsPerDegreeCentigrade = millivoltsPerDegreeCentigrade;
                     break;
+                default:
+                    throw new ArgumentException("Unknown sensor type", nameof(sensor));
+#pragma warning disable 0162
+                    break;
+#pragma warning restore 0162
             }
         }
+
+        #endregion Constructors
+
+        #region IDisposable
+
+        /// <summary>
+        /// Implement IDisposable interface.
+        /// </summary>
+        public void Dispose()
+        {
+            AnalogPort.Dispose();
+            AnalogPort = null;
+        }
+
+        #endregion IDisposable
     }
 }
