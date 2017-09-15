@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Light.TSL2561", "Netduino.Foundation.Sensors.Light.TSL2561\Netduino.Foundation.Sensors.Light.TSL2561.csproj", "{AC24642E-E6DA-47D7-B4F5-9F12F35BE78A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Temperature.Analog", "Netduino.Foundation.Sensors.Temperature.Analog\Netduino.Foundation.Sensors.Temperature.Analog.csproj", "{79372BE0-C1EC-4AC7-8481-6AB20013FC35}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{AC24642E-E6DA-47D7-B4F5-9F12F35BE78A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC24642E-E6DA-47D7-B4F5-9F12F35BE78A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC24642E-E6DA-47D7-B4F5-9F12F35BE78A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79372BE0-C1EC-4AC7-8481-6AB20013FC35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79372BE0-C1EC-4AC7-8481-6AB20013FC35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79372BE0-C1EC-4AC7-8481-6AB20013FC35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79372BE0-C1EC-4AC7-8481-6AB20013FC35}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0} = {82E59041-71D9-420E-B3FE-836243B81E1E}
