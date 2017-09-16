@@ -16,6 +16,23 @@ namespace Netduino.Foundation.Sensors.Temperature.Analog
     ///     - TMP35 / 36 / 37
     ///     - LM35 / 45
     /// </summary>
+    /// <remarks>
+    /// <i>AnalogTemperatureSensor</i> provides a method of reading the temperature from
+    /// linear analog temperature sensors.  There are a number of these sensors available
+    /// including the commonly available TMP and LM series.
+    ///
+    /// The <i>SensorType</i> enum defines the list of sensors with default settings in the 
+    /// library.  Unsupported sensors that use the same linear algorithm can be constructed
+    /// by setting the sensor type to <i>SensorType.Custom</i> and providing the settings for 
+    /// the linear calculations.
+    ///
+    /// The default sensors have the following settings:
+    ///
+    /// Sensor              Min Temp    Millvolts at Min Temp   Millivolts per degree C
+    /// TMP35, LM35, LM45   10          100                     10
+    /// TMP36, LM50         -40         100                     10
+    /// TMP37               5           100                     20
+    /// </remarks>
     public class AnalogTemperatureSensor : IDisposable
     {
         #region Private member variables (fields)
@@ -53,6 +70,11 @@ namespace Netduino.Foundation.Sensors.Temperature.Analog
         /// <summary>
         /// Temperature in degrees centigrade.
         /// </summary>
+        /// <remarks>
+        /// The temperature is given by the following calculation:
+        ///
+        /// temperature = minimum sensor reading + (millivolts above minimum millivolts / millivolts per degree C)
+        /// </remarks>
         public float Temperature
         {
             get
