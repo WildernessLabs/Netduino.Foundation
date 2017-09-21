@@ -31,6 +31,11 @@ namespace Netduino.Foundation.Displays
         /// </summary>
         public enum LCDBaudRate { Baud2400 = 11, Baud4800, Baud9600, Baud14400, Baud19200, Baud38400 };
 
+        /// <summary>
+        /// Direction to move the cursor or the display.
+        /// </summary>
+        public enum Direction { Left, Right };
+
         #endregion Enums
 
         #region Constants
@@ -253,6 +258,47 @@ namespace Netduino.Foundation.Displays
         }
 
         /// <summary>
+        /// Move the cursor either right or left on the display.
+        /// </summary>
+        /// <param name="direction">Direction to move the cursor, left or right.</param>
+        public void MoveCursor(Direction direction)
+        {
+            if (direction == Direction.Left)
+            {
+                Write(new byte[] { EXTENDED_LCD_COMMAND_CHARACTER, 0x10 });
+            }
+            else
+            {
+                Write(new byte[] { EXTENDED_LCD_COMMAND_CHARACTER, 0x14 });
+            }
+        }
+
+        /// <summary>
+        /// Scroll the contents of the display one character in the specified direction.
+        /// </summary>
+        /// <param name="direction">Direction to scroll the display, left or right.</param>
+        public void ScrollDisplay(Direction direction)
+        {
+            if (direction == Direction.Left)
+            {
+                Write(new byte[] { EXTENDED_LCD_COMMAND_CHARACTER, 0x18 });
+            }
+            else
+            {
+                Write(new byte[] { EXTENDED_LCD_COMMAND_CHARACTER, 0x1c });
+            }
+        }
+
+        /// <summary>
+        /// Set the cursor style to underline or block.  The cursor can also be blinking or solid.
+        /// </summary>
+        /// <param name="style">New cursor style (Block/Underline, Blinking/Solid).</param>
+        public void SetCursorStyle(CursorStyle style)
+        {
+            Write(new byte[] { EXTENDED_LCD_COMMAND_CHARACTER, (byte) style });
+        }
+
+        /// <summary>
         /// Display the text at the current cursor position.
         /// </summary>
         /// <param name="text">Test to display.</param>
@@ -264,19 +310,10 @@ namespace Netduino.Foundation.Displays
         /// <summary>
         /// Turn the display on or off.
         /// </summary>
-        /// <param name="newState">New power state for the display.</param>
-        public void SetDisplayVisualState(DisplayPowerState newState)
+        /// <param name="state">New power state for the display.</param>
+        public void SetDisplayVisualState(DisplayPowerState state)
         {
-            Write(new byte[] { EXTENDED_LCD_COMMAND_CHARACTER, (byte) newState });
-        }
-
-        /// <summary>
-        /// Set the cursor style for the display.
-        /// </summary>
-        /// <param name="newStyle">New cursor style to use.</param>
-        public void SetCursorStyle(CursorStyle newStyle)
-        {
-            Write(new byte[] { EXTENDED_LCD_COMMAND_CHARACTER, (byte) newStyle });
+            Write(new byte[] { EXTENDED_LCD_COMMAND_CHARACTER, (byte) state });
         }
 
         #endregion Methods
