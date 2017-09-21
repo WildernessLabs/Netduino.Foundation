@@ -8,6 +8,8 @@
 //
 using System;
 using Microsoft.SPOT.Hardware;
+using Microsoft.SPOT;
+using SecretLabs.NETMF.Hardware;
 
 namespace Netduino.Foundation.Sensors.Temperature.Analog
 {
@@ -20,6 +22,13 @@ namespace Netduino.Foundation.Sensors.Temperature.Analog
     /// <i>AnalogTemperatureSensor</i> provides a method of reading the temperature from
     /// linear analog temperature sensors.  There are a number of these sensors available
     /// including the commonly available TMP and LM series.
+    /// 
+    /// Sensors of this type obey the following equation:
+    /// 
+    ///     y = mx + c
+    ///     
+    /// where y is the reading in millivolts, m is the gradient (number of millivolts per
+    /// degree centigrade and C is the point where the line would intercept the y axis.
     ///
     /// The <i>SensorType</i> enum defines the list of sensors with default settings in the 
     /// library.  Unsupported sensors that use the same linear algorithm can be constructed
@@ -28,10 +37,10 @@ namespace Netduino.Foundation.Sensors.Temperature.Analog
     ///
     /// The default sensors have the following settings:
     ///
-    /// Sensor              Min Temp    Millvolts at Min Temp   Millivolts per degree C
-    /// TMP35, LM35, LM45   10          100                     10
-    /// TMP36, LM50         -40         100                     10
-    /// TMP37               5           100                     20
+    /// Sensor              Millvolts at 25C    Millivolts per degree C
+    /// TMP35, LM35, LM45       250                     10
+    /// TMP36, LM50             750                     10
+    /// TMP37                   500                     20
     /// </remarks>
     public class AnalogTemperatureSensor : IDisposable
     {
@@ -40,17 +49,15 @@ namespace Netduino.Foundation.Sensors.Temperature.Analog
         /// <summary>
         /// Millivolts per degree centigrade for the sensor attached to the analog port.
         /// </summary>
+        /// <remarks>
+        /// This will be the gradient of the 
+        /// </remarks>
         private int _millivoltsPerDegreeCentigrade;
 
         /// <summary>
-        /// Minimum sensor reading in degrees centigrade.
+        /// Point where the line y = mx +c would intercept the y-axis.
         /// </summary>
-        private int _minimumReading;
-
-        /// <summary>
-        /// Number of millivolts at the specified minimum reading.
-        /// </summary>
-        private int _millvoltsAtMinimumReading;
+        private float _yIntercept;
 
         #endregion Private member variables (fields)
 
@@ -73,22 +80,15 @@ namespace Netduino.Foundation.Sensors.Temperature.Analog
         /// <remarks>
         /// The temperature is given by the following calculation:
         ///
-        /// temperature = minimum sensor reading + (millivolts above minimum millivolts / millivolts per degree C)
+        /// temperature = (reading in millivolts - yIntercept) / millivolts per degree centigrade
         /// </remarks>
         public float Temperature
         {
             get
             {
-                //
-                //  Get the sensor reading in millivolts.
-                //
-                float milliVoltReading = (float) (AnalogPort.ReadRaw() * (3.3 / 1023)) * 1000;
-                //
-                //  Now calculate the actual temperature.
-                //
-                float reading = milliVoltReading - _millvoltsAtMinimumReading;
+                float reading = (float) (AnalogPort.Read() * 3300);
+                reading -= _yIntercept;
                 reading /= _millivoltsPerDegreeCentigrade;
-                reading += _minimumReading;
                 return (reading);
             }
         }
@@ -109,11 +109,11 @@ namespace Netduino.Foundation.Sensors.Temperature.Analog
         /// </summary>
         /// <param name="analogPin">Analog pin the temperature sensor is connected to.</param>
         /// <param name="sensor">Type of sensor attached to the analog port.</param>
-        /// <param name="minimumReading">Minimum sensor reading in degrees centigrade (Optional)</param>
-        /// <param name="millivoltsAtMinimumReading">Number of millivolts representing the minimum reading (Optional)</param>
+        /// <param name="sampleReading">Sample sensor reading in degrees centigrade (Optional)</param>
+        /// <param name="millivoltsAtSampleReading">Number of millivolts representing the sample reading (Optional)</param>
         /// <param name="millivoltsPerDegreeCentigrade">Number of millivolts pre degree centigrade (Optional)</param>
-        public AnalogTemperatureSensor(Cpu.AnalogChannel analogPin, SensorType sensor, int minimumReading = 10, 
-                                       int millivoltsAtMinimumReading = 100, int millivoltsPerDegreeCentigrade = 10)
+        public AnalogTemperatureSensor(Cpu.AnalogChannel analogPin, SensorType sensor, int sampleReading = 25, 
+                                       int millivoltsAtSampleReading = 250, int millivoltsPerDegreeCentigrade = 10)
         {
             AnalogPort = new AnalogInput(analogPin);
             switch (sensor)
@@ -121,28 +121,24 @@ namespace Netduino.Foundation.Sensors.Temperature.Analog
                 case SensorType.TMP35:
                 case SensorType.LM35:
                 case SensorType.LM45:
-                    _minimumReading = 10;
-                    _millvoltsAtMinimumReading = 100;
+                    _yIntercept = 0;
                     _millivoltsPerDegreeCentigrade = 10;
                     break;
                 case SensorType.LM50:
                 case SensorType.TMP36:
-                    _minimumReading = -40;
-                    _millvoltsAtMinimumReading = 100;
+                    _yIntercept = 500;
                     _millivoltsPerDegreeCentigrade = 10;
                     break;
                 case SensorType.TMP37:
-                    _minimumReading = 5;
-                    _millvoltsAtMinimumReading = 100;
+                    _yIntercept = 0;
                     _millivoltsPerDegreeCentigrade = 20;
                     break;
                 case SensorType.Custom:
-                    _minimumReading = minimumReading;
-                    _millvoltsAtMinimumReading = millivoltsAtMinimumReading;
+                    _yIntercept = millivoltsAtSampleReading - (sampleReading * millivoltsAtSampleReading);
                     _millivoltsPerDegreeCentigrade = millivoltsPerDegreeCentigrade;
                     break;
                 default:
-                    throw new ArgumentException("Unknown sensor type", nameof(sensor));
+                    throw new ArgumentException("Unknown sensor type", "sensor");
 #pragma warning disable 0162
                     break;
 #pragma warning restore 0162
