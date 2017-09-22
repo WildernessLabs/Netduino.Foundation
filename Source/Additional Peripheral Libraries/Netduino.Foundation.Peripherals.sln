@@ -23,6 +23,38 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Displays.SerialLCD", "Netduino.Foundation.Displays.SerialLCD\Netduino.Foundation.Displays.SerialLCD.csproj", "{D32F7103-5F7B-4880-8C80-B17570F4380D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.HIH6130", "Netduino.Foundation.Sensors.Barometric.HIH6130\Netduino.Foundation.Sensors.Barometric.HIH6130.csproj", "{F6428AF2-EC4B-4FB7-AB15-71CCD0B67985}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.HTU21DF", "Netduino.Foundation.Sensors.Barometric.HTU21DF\Netduino.Foundation.Sensors.Barometric.HTU21DF.csproj", "{25442BC4-A47A-440D-B87B-C628BC4A9F74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.MPL11A2", "Netduino.Foundation.Sensors.Barometric.MPL11A2\Netduino.Foundation.Sensors.Barometric.MPL11A2.csproj", "{1DD219D3-C5A0-43DA-9B97-D2E2E54446E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.MPL311A2", "Netduino.Foundation.Sensors.Barometric.MPL311A2\Netduino.Foundation.Sensors.Barometric.MPL311A2.csproj", "{CEC7105C-617B-4C4F-8654-A65718AE7217}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.SHT31D", "Netduino.Foundation.Sensors.Barometric.SHT31D\Netduino.Foundation.Sensors.Barometric.SHT31D.csproj", "{FB02A7ED-4CAF-43FD-A91F-DC0EEB8597CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.SI7021", "Netduino.Foundation.Sensors.Barometric.SI7021\Netduino.Foundation.Sensors.Barometric.SI7021.csproj", "{46810344-EB9D-47DD-A7F1-CAD71E702B59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.GPS.GP20U7", "Netduino.Foundation.Sensors.GPS.GP20U7\Netduino.Foundation.Sensors.GPS.GP20U7.csproj", "{3F2A70D0-6A7F-40BE-9CB8-D87507635D25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Light.ALSPT19315C", "Netduino.Foundation.Sensors.Light.ALSPT19315C\Netduino.Foundation.Sensors.Light.ALSPT19315C.csproj", "{2F9EEB9E-D4F0-4C17-B159-D6D66410A2CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.ADX362", "Netduino.Foundation.Sensors.Motion.ADX362\Netduino.Foundation.Sensors.Motion.ADX362.csproj", "{A9601FA8-73EC-401D-89B1-4405F155928C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.ADXL335", "Netduino.Foundation.Sensors.Motion.ADXL335\Netduino.Foundation.Sensors.Motion.ADXL335.csproj", "{798D429C-E6C4-452D-922D-EC0EB23CAF13}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.ADXL345", "Netduino.Foundation.Sensors.Motion.ADXL345\Netduino.Foundation.Sensors.Motion.ADXL345.csproj", "{BBC754AC-3108-41DC-BD6A-314F2379F101}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.FXAS21002", "Netduino.Foundation.Sensors.Motion.FXAS21002\Netduino.Foundation.Sensors.Motion.FXAS21002.csproj", "{B6E0EB06-49A6-47C3-A47E-E850F0053FB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.FXOS8700CQ", "Netduino.Foundation.Sensors.Motion.FXOS8700CQ\Netduino.Foundation.Sensors.Motion.FXOS8700CQ.csproj", "{63FF6729-1B79-451B-8831-20629616EEAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.MAG3110", "Netduino.Foundation.Sensors.Motion.MAG3110\Netduino.Foundation.Sensors.Motion.MAG3110.csproj", "{E2E681A1-59E1-44E5-8D08-F0BCA48951BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.MPU6050", "Netduino.Foundation.Sensors.Motion.MPU6050\Netduino.Foundation.Sensors.Motion.MPU6050.csproj", "{F969B9F2-D1CE-4DF4-9E09-2E098ADE665A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Temperature.DS18B20", "Netduino.Foundation.Sensors.Temperature.DS18B20\Netduino.Foundation.Sensors.Temperature.DS18B20.csproj", "{17108484-8789-4439-9C53-A2AFAEEB54BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +143,134 @@ Global
 		{D32F7103-5F7B-4880-8C80-B17570F4380D}.Debug|x86.Build.0 = Debug|x86
 		{D32F7103-5F7B-4880-8C80-B17570F4380D}.Release|x86.ActiveCfg = Release|x86
 		{D32F7103-5F7B-4880-8C80-B17570F4380D}.Release|x86.Build.0 = Release|x86
+		{F6428AF2-EC4B-4FB7-AB15-71CCD0B67985}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{F6428AF2-EC4B-4FB7-AB15-71CCD0B67985}.Debug|Any CPU.Build.0 = Debug|x86
+		{F6428AF2-EC4B-4FB7-AB15-71CCD0B67985}.Release|Any CPU.ActiveCfg = Release|x86
+		{F6428AF2-EC4B-4FB7-AB15-71CCD0B67985}.Release|Any CPU.Build.0 = Release|x86
+		{F6428AF2-EC4B-4FB7-AB15-71CCD0B67985}.Debug|x86.ActiveCfg = Debug|x86
+		{F6428AF2-EC4B-4FB7-AB15-71CCD0B67985}.Debug|x86.Build.0 = Debug|x86
+		{F6428AF2-EC4B-4FB7-AB15-71CCD0B67985}.Release|x86.ActiveCfg = Release|x86
+		{F6428AF2-EC4B-4FB7-AB15-71CCD0B67985}.Release|x86.Build.0 = Release|x86
+		{25442BC4-A47A-440D-B87B-C628BC4A9F74}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{25442BC4-A47A-440D-B87B-C628BC4A9F74}.Debug|Any CPU.Build.0 = Debug|x86
+		{25442BC4-A47A-440D-B87B-C628BC4A9F74}.Release|Any CPU.ActiveCfg = Release|x86
+		{25442BC4-A47A-440D-B87B-C628BC4A9F74}.Release|Any CPU.Build.0 = Release|x86
+		{25442BC4-A47A-440D-B87B-C628BC4A9F74}.Debug|x86.ActiveCfg = Debug|x86
+		{25442BC4-A47A-440D-B87B-C628BC4A9F74}.Debug|x86.Build.0 = Debug|x86
+		{25442BC4-A47A-440D-B87B-C628BC4A9F74}.Release|x86.ActiveCfg = Release|x86
+		{25442BC4-A47A-440D-B87B-C628BC4A9F74}.Release|x86.Build.0 = Release|x86
+		{1DD219D3-C5A0-43DA-9B97-D2E2E54446E6}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{1DD219D3-C5A0-43DA-9B97-D2E2E54446E6}.Debug|Any CPU.Build.0 = Debug|x86
+		{1DD219D3-C5A0-43DA-9B97-D2E2E54446E6}.Release|Any CPU.ActiveCfg = Release|x86
+		{1DD219D3-C5A0-43DA-9B97-D2E2E54446E6}.Release|Any CPU.Build.0 = Release|x86
+		{1DD219D3-C5A0-43DA-9B97-D2E2E54446E6}.Debug|x86.ActiveCfg = Debug|x86
+		{1DD219D3-C5A0-43DA-9B97-D2E2E54446E6}.Debug|x86.Build.0 = Debug|x86
+		{1DD219D3-C5A0-43DA-9B97-D2E2E54446E6}.Release|x86.ActiveCfg = Release|x86
+		{1DD219D3-C5A0-43DA-9B97-D2E2E54446E6}.Release|x86.Build.0 = Release|x86
+		{CEC7105C-617B-4C4F-8654-A65718AE7217}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{CEC7105C-617B-4C4F-8654-A65718AE7217}.Debug|Any CPU.Build.0 = Debug|x86
+		{CEC7105C-617B-4C4F-8654-A65718AE7217}.Release|Any CPU.ActiveCfg = Release|x86
+		{CEC7105C-617B-4C4F-8654-A65718AE7217}.Release|Any CPU.Build.0 = Release|x86
+		{CEC7105C-617B-4C4F-8654-A65718AE7217}.Debug|x86.ActiveCfg = Debug|x86
+		{CEC7105C-617B-4C4F-8654-A65718AE7217}.Debug|x86.Build.0 = Debug|x86
+		{CEC7105C-617B-4C4F-8654-A65718AE7217}.Release|x86.ActiveCfg = Release|x86
+		{CEC7105C-617B-4C4F-8654-A65718AE7217}.Release|x86.Build.0 = Release|x86
+		{FB02A7ED-4CAF-43FD-A91F-DC0EEB8597CB}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{FB02A7ED-4CAF-43FD-A91F-DC0EEB8597CB}.Debug|Any CPU.Build.0 = Debug|x86
+		{FB02A7ED-4CAF-43FD-A91F-DC0EEB8597CB}.Release|Any CPU.ActiveCfg = Release|x86
+		{FB02A7ED-4CAF-43FD-A91F-DC0EEB8597CB}.Release|Any CPU.Build.0 = Release|x86
+		{FB02A7ED-4CAF-43FD-A91F-DC0EEB8597CB}.Debug|x86.ActiveCfg = Debug|x86
+		{FB02A7ED-4CAF-43FD-A91F-DC0EEB8597CB}.Debug|x86.Build.0 = Debug|x86
+		{FB02A7ED-4CAF-43FD-A91F-DC0EEB8597CB}.Release|x86.ActiveCfg = Release|x86
+		{FB02A7ED-4CAF-43FD-A91F-DC0EEB8597CB}.Release|x86.Build.0 = Release|x86
+		{46810344-EB9D-47DD-A7F1-CAD71E702B59}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{46810344-EB9D-47DD-A7F1-CAD71E702B59}.Debug|Any CPU.Build.0 = Debug|x86
+		{46810344-EB9D-47DD-A7F1-CAD71E702B59}.Release|Any CPU.ActiveCfg = Release|x86
+		{46810344-EB9D-47DD-A7F1-CAD71E702B59}.Release|Any CPU.Build.0 = Release|x86
+		{46810344-EB9D-47DD-A7F1-CAD71E702B59}.Debug|x86.ActiveCfg = Debug|x86
+		{46810344-EB9D-47DD-A7F1-CAD71E702B59}.Debug|x86.Build.0 = Debug|x86
+		{46810344-EB9D-47DD-A7F1-CAD71E702B59}.Release|x86.ActiveCfg = Release|x86
+		{46810344-EB9D-47DD-A7F1-CAD71E702B59}.Release|x86.Build.0 = Release|x86
+		{3F2A70D0-6A7F-40BE-9CB8-D87507635D25}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{3F2A70D0-6A7F-40BE-9CB8-D87507635D25}.Debug|Any CPU.Build.0 = Debug|x86
+		{3F2A70D0-6A7F-40BE-9CB8-D87507635D25}.Release|Any CPU.ActiveCfg = Release|x86
+		{3F2A70D0-6A7F-40BE-9CB8-D87507635D25}.Release|Any CPU.Build.0 = Release|x86
+		{3F2A70D0-6A7F-40BE-9CB8-D87507635D25}.Debug|x86.ActiveCfg = Debug|x86
+		{3F2A70D0-6A7F-40BE-9CB8-D87507635D25}.Debug|x86.Build.0 = Debug|x86
+		{3F2A70D0-6A7F-40BE-9CB8-D87507635D25}.Release|x86.ActiveCfg = Release|x86
+		{3F2A70D0-6A7F-40BE-9CB8-D87507635D25}.Release|x86.Build.0 = Release|x86
+		{2F9EEB9E-D4F0-4C17-B159-D6D66410A2CC}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{2F9EEB9E-D4F0-4C17-B159-D6D66410A2CC}.Debug|Any CPU.Build.0 = Debug|x86
+		{2F9EEB9E-D4F0-4C17-B159-D6D66410A2CC}.Release|Any CPU.ActiveCfg = Release|x86
+		{2F9EEB9E-D4F0-4C17-B159-D6D66410A2CC}.Release|Any CPU.Build.0 = Release|x86
+		{2F9EEB9E-D4F0-4C17-B159-D6D66410A2CC}.Debug|x86.ActiveCfg = Debug|x86
+		{2F9EEB9E-D4F0-4C17-B159-D6D66410A2CC}.Debug|x86.Build.0 = Debug|x86
+		{2F9EEB9E-D4F0-4C17-B159-D6D66410A2CC}.Release|x86.ActiveCfg = Release|x86
+		{2F9EEB9E-D4F0-4C17-B159-D6D66410A2CC}.Release|x86.Build.0 = Release|x86
+		{A9601FA8-73EC-401D-89B1-4405F155928C}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{A9601FA8-73EC-401D-89B1-4405F155928C}.Debug|Any CPU.Build.0 = Debug|x86
+		{A9601FA8-73EC-401D-89B1-4405F155928C}.Release|Any CPU.ActiveCfg = Release|x86
+		{A9601FA8-73EC-401D-89B1-4405F155928C}.Release|Any CPU.Build.0 = Release|x86
+		{A9601FA8-73EC-401D-89B1-4405F155928C}.Debug|x86.ActiveCfg = Debug|x86
+		{A9601FA8-73EC-401D-89B1-4405F155928C}.Debug|x86.Build.0 = Debug|x86
+		{A9601FA8-73EC-401D-89B1-4405F155928C}.Release|x86.ActiveCfg = Release|x86
+		{A9601FA8-73EC-401D-89B1-4405F155928C}.Release|x86.Build.0 = Release|x86
+		{798D429C-E6C4-452D-922D-EC0EB23CAF13}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{798D429C-E6C4-452D-922D-EC0EB23CAF13}.Debug|Any CPU.Build.0 = Debug|x86
+		{798D429C-E6C4-452D-922D-EC0EB23CAF13}.Release|Any CPU.ActiveCfg = Release|x86
+		{798D429C-E6C4-452D-922D-EC0EB23CAF13}.Release|Any CPU.Build.0 = Release|x86
+		{798D429C-E6C4-452D-922D-EC0EB23CAF13}.Debug|x86.ActiveCfg = Debug|x86
+		{798D429C-E6C4-452D-922D-EC0EB23CAF13}.Debug|x86.Build.0 = Debug|x86
+		{798D429C-E6C4-452D-922D-EC0EB23CAF13}.Release|x86.ActiveCfg = Release|x86
+		{798D429C-E6C4-452D-922D-EC0EB23CAF13}.Release|x86.Build.0 = Release|x86
+		{BBC754AC-3108-41DC-BD6A-314F2379F101}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{BBC754AC-3108-41DC-BD6A-314F2379F101}.Debug|Any CPU.Build.0 = Debug|x86
+		{BBC754AC-3108-41DC-BD6A-314F2379F101}.Release|Any CPU.ActiveCfg = Release|x86
+		{BBC754AC-3108-41DC-BD6A-314F2379F101}.Release|Any CPU.Build.0 = Release|x86
+		{BBC754AC-3108-41DC-BD6A-314F2379F101}.Debug|x86.ActiveCfg = Debug|x86
+		{BBC754AC-3108-41DC-BD6A-314F2379F101}.Debug|x86.Build.0 = Debug|x86
+		{BBC754AC-3108-41DC-BD6A-314F2379F101}.Release|x86.ActiveCfg = Release|x86
+		{BBC754AC-3108-41DC-BD6A-314F2379F101}.Release|x86.Build.0 = Release|x86
+		{B6E0EB06-49A6-47C3-A47E-E850F0053FB2}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{B6E0EB06-49A6-47C3-A47E-E850F0053FB2}.Debug|Any CPU.Build.0 = Debug|x86
+		{B6E0EB06-49A6-47C3-A47E-E850F0053FB2}.Release|Any CPU.ActiveCfg = Release|x86
+		{B6E0EB06-49A6-47C3-A47E-E850F0053FB2}.Release|Any CPU.Build.0 = Release|x86
+		{B6E0EB06-49A6-47C3-A47E-E850F0053FB2}.Debug|x86.ActiveCfg = Debug|x86
+		{B6E0EB06-49A6-47C3-A47E-E850F0053FB2}.Debug|x86.Build.0 = Debug|x86
+		{B6E0EB06-49A6-47C3-A47E-E850F0053FB2}.Release|x86.ActiveCfg = Release|x86
+		{B6E0EB06-49A6-47C3-A47E-E850F0053FB2}.Release|x86.Build.0 = Release|x86
+		{63FF6729-1B79-451B-8831-20629616EEAA}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{63FF6729-1B79-451B-8831-20629616EEAA}.Debug|Any CPU.Build.0 = Debug|x86
+		{63FF6729-1B79-451B-8831-20629616EEAA}.Release|Any CPU.ActiveCfg = Release|x86
+		{63FF6729-1B79-451B-8831-20629616EEAA}.Release|Any CPU.Build.0 = Release|x86
+		{63FF6729-1B79-451B-8831-20629616EEAA}.Debug|x86.ActiveCfg = Debug|x86
+		{63FF6729-1B79-451B-8831-20629616EEAA}.Debug|x86.Build.0 = Debug|x86
+		{63FF6729-1B79-451B-8831-20629616EEAA}.Release|x86.ActiveCfg = Release|x86
+		{63FF6729-1B79-451B-8831-20629616EEAA}.Release|x86.Build.0 = Release|x86
+		{E2E681A1-59E1-44E5-8D08-F0BCA48951BC}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{E2E681A1-59E1-44E5-8D08-F0BCA48951BC}.Debug|Any CPU.Build.0 = Debug|x86
+		{E2E681A1-59E1-44E5-8D08-F0BCA48951BC}.Release|Any CPU.ActiveCfg = Release|x86
+		{E2E681A1-59E1-44E5-8D08-F0BCA48951BC}.Release|Any CPU.Build.0 = Release|x86
+		{E2E681A1-59E1-44E5-8D08-F0BCA48951BC}.Debug|x86.ActiveCfg = Debug|x86
+		{E2E681A1-59E1-44E5-8D08-F0BCA48951BC}.Debug|x86.Build.0 = Debug|x86
+		{E2E681A1-59E1-44E5-8D08-F0BCA48951BC}.Release|x86.ActiveCfg = Release|x86
+		{E2E681A1-59E1-44E5-8D08-F0BCA48951BC}.Release|x86.Build.0 = Release|x86
+		{F969B9F2-D1CE-4DF4-9E09-2E098ADE665A}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{F969B9F2-D1CE-4DF4-9E09-2E098ADE665A}.Debug|Any CPU.Build.0 = Debug|x86
+		{F969B9F2-D1CE-4DF4-9E09-2E098ADE665A}.Release|Any CPU.ActiveCfg = Release|x86
+		{F969B9F2-D1CE-4DF4-9E09-2E098ADE665A}.Release|Any CPU.Build.0 = Release|x86
+		{F969B9F2-D1CE-4DF4-9E09-2E098ADE665A}.Debug|x86.ActiveCfg = Debug|x86
+		{F969B9F2-D1CE-4DF4-9E09-2E098ADE665A}.Debug|x86.Build.0 = Debug|x86
+		{F969B9F2-D1CE-4DF4-9E09-2E098ADE665A}.Release|x86.ActiveCfg = Release|x86
+		{F969B9F2-D1CE-4DF4-9E09-2E098ADE665A}.Release|x86.Build.0 = Release|x86
+		{17108484-8789-4439-9C53-A2AFAEEB54BE}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{17108484-8789-4439-9C53-A2AFAEEB54BE}.Debug|Any CPU.Build.0 = Debug|x86
+		{17108484-8789-4439-9C53-A2AFAEEB54BE}.Release|Any CPU.ActiveCfg = Release|x86
+		{17108484-8789-4439-9C53-A2AFAEEB54BE}.Release|Any CPU.Build.0 = Release|x86
+		{17108484-8789-4439-9C53-A2AFAEEB54BE}.Debug|x86.ActiveCfg = Debug|x86
+		{17108484-8789-4439-9C53-A2AFAEEB54BE}.Debug|x86.Build.0 = Debug|x86
+		{17108484-8789-4439-9C53-A2AFAEEB54BE}.Release|x86.ActiveCfg = Release|x86
+		{17108484-8789-4439-9C53-A2AFAEEB54BE}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0} = {82E59041-71D9-420E-B3FE-836243B81E1E}
