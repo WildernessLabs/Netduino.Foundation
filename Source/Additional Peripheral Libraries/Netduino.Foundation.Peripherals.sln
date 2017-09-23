@@ -39,7 +39,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Light.ALSPT19315C", "Netduino.Foundation.Sensors.Light.ALSPT19315C\Netduino.Foundation.Sensors.Light.ALSPT19315C.csproj", "{2F9EEB9E-D4F0-4C17-B159-D6D66410A2CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.ADX362", "Netduino.Foundation.Sensors.Motion.ADX362\Netduino.Foundation.Sensors.Motion.ADX362.csproj", "{A9601FA8-73EC-401D-89B1-4405F155928C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.ADXL362", "Netduino.Foundation.Sensors.Motion.ADX362\Netduino.Foundation.Sensors.Motion.ADXL362.csproj", "{A9601FA8-73EC-401D-89B1-4405F155928C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.ADXL335", "Netduino.Foundation.Sensors.Motion.ADXL335\Netduino.Foundation.Sensors.Motion.ADXL335.csproj", "{798D429C-E6C4-452D-922D-EC0EB23CAF13}"
 EndProject
@@ -54,6 +54,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.MPU6050", "Netduino.Foundation.Sensors.Motion.MPU6050\Netduino.Foundation.Sensors.Motion.MPU6050.csproj", "{F969B9F2-D1CE-4DF4-9E09-2E098ADE665A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Temperature.DS18B20", "Netduino.Foundation.Sensors.Temperature.DS18B20\Netduino.Foundation.Sensors.Temperature.DS18B20.csproj", "{17108484-8789-4439-9C53-A2AFAEEB54BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Core", "Netduino.Foundation.Core\Netduino.Foundation.Core.csproj", "{FEAB94D0-0A87-4962-9D0E-87780CFF0BCC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -271,6 +273,14 @@ Global
 		{17108484-8789-4439-9C53-A2AFAEEB54BE}.Debug|x86.Build.0 = Debug|x86
 		{17108484-8789-4439-9C53-A2AFAEEB54BE}.Release|x86.ActiveCfg = Release|x86
 		{17108484-8789-4439-9C53-A2AFAEEB54BE}.Release|x86.Build.0 = Release|x86
+		{FEAB94D0-0A87-4962-9D0E-87780CFF0BCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEAB94D0-0A87-4962-9D0E-87780CFF0BCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEAB94D0-0A87-4962-9D0E-87780CFF0BCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEAB94D0-0A87-4962-9D0E-87780CFF0BCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEAB94D0-0A87-4962-9D0E-87780CFF0BCC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FEAB94D0-0A87-4962-9D0E-87780CFF0BCC}.Debug|x86.Build.0 = Debug|Any CPU
+		{FEAB94D0-0A87-4962-9D0E-87780CFF0BCC}.Release|x86.ActiveCfg = Release|Any CPU
+		{FEAB94D0-0A87-4962-9D0E-87780CFF0BCC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0} = {82E59041-71D9-420E-B3FE-836243B81E1E}
