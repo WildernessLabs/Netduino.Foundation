@@ -13,34 +13,10 @@ namespace Netduino.Foundation.Sensors.Barometric
 	/// </remarks>
 	public class BME280
 	{
-		#region Constants
-
 		/// <summary>
-		/// Address of the humidity control register.
+		/// Registers used to control the BME280.
 		/// </summary>
-		private const byte CTRL_HUMIDITY_REGISTER = 0xf2;
-
-		/// <summary>
-		/// Address of the status register.
-		/// </summary>
-		private const byte STATUS_REGISTER = 0xf3;
-
-		/// <summary>
-		/// Address of the temperature and pressure measurement register.
-		/// </summary>
-		private const byte CTRL_MEASUREMENT_REGISTER = 0xf4;
-
-		/// <summary>
-		/// Address of the configuration register.
-		/// </summary>
-		private const byte CONFIG_REGISTER = 0xf5;
-
-		/// <summary>
-		/// Address of the reset register.
-		/// </summary>
-		private const byte RESET_REGISTER = 0xe0;
-
-		#endregion Constants
+		enum Registers : byte { Humidity = 0xf2, Status = 0xf3, Measurement = 0xf4, Configuration = 0xf5, Reset = 0xe0 };
 
 		#region Internal Structures
 
@@ -230,15 +206,15 @@ namespace Netduino.Foundation.Sensors.Barometric
 			//
 			//  Put to sleep to allow the configuration to be changed.
 			//
-			WriteRegister(CTRL_MEASUREMENT_REGISTER, 0x00);
+			WriteRegister((byte) Registers.Measurement, 0x00);
 
 			byte data = (byte)(((Standby << 5) & 0xe0) | ((Filter << 2) & 0x1c));
-			WriteRegister(CONFIG_REGISTER, data);
+			WriteRegister((byte) Registers.Configuration, data);
 			data = (byte)(HumidityOverSampling & 0x07);
-			WriteRegister(CTRL_HUMIDITY_REGISTER, data);
+			WriteRegister((byte) Registers.Humidity, data);
 			data = (byte)(((TemperatureOverSampling << 5) & 0xe0) | ((PressureOversampling << 2) & 0x1c) |
 					(Mode & 0x03));
-			WriteRegister(CTRL_MEASUREMENT_REGISTER, data);
+			WriteRegister((byte) Registers.Measurement, data);
 		}
 
 		/// <summary>
@@ -249,7 +225,7 @@ namespace Netduino.Foundation.Sensors.Barometric
 		/// </remarks>
 		public void Reset()
 		{
-			WriteRegister(RESET_REGISTER, 0xb6);
+			WriteRegister((byte) Registers.Reset, 0xb6);
 			UpdateConfiguration();
 		}
 
