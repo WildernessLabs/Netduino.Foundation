@@ -30,10 +30,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Native" />
+    <Reference Include="Microsoft.SPOT.Hardware" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ADXL345.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Netduino.Foundation.Core\Netduino.Foundation.Core.csproj">
+      <Project>{FEAB94D0-0A87-4962-9D0E-87780CFF0BCC}</Project>
+      <Name>Netduino.Foundation.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
 </Project>
