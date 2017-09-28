@@ -32,7 +32,7 @@ namespace Netduino.Foundation.Displays
         public enum LCDBaudRate { Baud2400 = 11, Baud4800, Baud9600, Baud14400, Baud19200, Baud38400 };
 
         /// <summary>
-        /// Direction to move the cursor or the display.
+        /// Direction to move the curosr or the display.
         /// </summary>
         public enum Direction { Left, Right };
 
