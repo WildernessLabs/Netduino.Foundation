@@ -1,5 +1,15 @@
-﻿using System;
+﻿//
+//  This software is distributed under the terms of the Apache licence agreement.
+//
+//  Apache License Version 2.0, January 2004
+//
+//  The full text of the Apache 2.0 licence agreement can be found here:
+//  <http://www.apache.org/licenses/>
+//
+using System;
 using Microsoft.SPOT.Hardware;
+using Microsoft.SPOT;
+using SecretLabs.NETMF.Hardware;
 
 namespace Netduino.Foundation.Sensors.Temperature.Analog
 {
@@ -18,7 +28,7 @@ namespace Netduino.Foundation.Sensors.Temperature.Analog
     ///     y = mx + c
     ///     
     /// where y is the reading in millivolts, m is the gradient (number of millivolts per
-    /// degree centigrade) and c is the point where the line would intercept the y axis.
+    /// degree centigrade and C is the point where the line would intercept the y axis.
     ///
     /// The <i>SensorType</i> enum defines the list of sensors with default settings in the 
     /// library.  Unsupported sensors that use the same linear algorithm can be constructed
