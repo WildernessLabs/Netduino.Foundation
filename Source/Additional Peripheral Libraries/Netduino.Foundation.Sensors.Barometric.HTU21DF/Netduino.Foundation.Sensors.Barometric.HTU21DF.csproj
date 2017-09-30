@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProjectGuid>{25442BC4-A47A-440D-B87B-C628BC4A9F74}</ProjectGuid>
     <ProjectTypeGuids>{B69E3092-B931-443C-ABE7-7E7B65F2A37F};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>Netduino.Foundation.Sensors.Barometric.HTU21DF</RootNamespace>
     <AssemblyName>Netduino.Foundation.Sensors.Barometric.HTU21DF</AssemblyName>
     <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>

@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProjectGuid>{D32F7103-5F7B-4880-8C80-B17570F4380D}</ProjectGuid>
     <ProjectTypeGuids>{B69E3092-B931-443C-ABE7-7E7B65F2A37F};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>Netduino.Foundation.Displays.SerialLCD</RootNamespace>
     <AssemblyName>Netduino.Foundation.Displays.SerialLCD</AssemblyName>
     <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>

@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProjectGuid>{2F9EEB9E-D4F0-4C17-B159-D6D66410A2CC}</ProjectGuid>
     <ProjectTypeGuids>{B69E3092-B931-443C-ABE7-7E7B65F2A37F};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>Netduino.Fountation.Sensors.Light.ALSPT19315C</RootNamespace>
     <AssemblyName>Netduino.Fountation.Sensors.Light.ALSPT19315C</AssemblyName>
     <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>

@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProjectGuid>{BBC754AC-3108-41DC-BD6A-314F2379F101}</ProjectGuid>
     <ProjectTypeGuids>{B69E3092-B931-443C-ABE7-7E7B65F2A37F};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>Netduino.Foundation.Sensors.Motion.ADXL345</RootNamespace>
     <AssemblyName>Netduino.Foundation.Sensors.Motion.ADXL345</AssemblyName>
     <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>

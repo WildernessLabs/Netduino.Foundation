@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProjectGuid>{A9601FA8-73EC-401D-89B1-4405F155928C}</ProjectGuid>
     <ProjectTypeGuids>{B69E3092-B931-443C-ABE7-7E7B65F2A37F};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>Netduino.Foundation.Sensors.Accelerometer.ADX362</RootNamespace>
     <AssemblyName>Netduino.Foundation.Sensors.Accelerometer.ADX362</AssemblyName>
     <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>

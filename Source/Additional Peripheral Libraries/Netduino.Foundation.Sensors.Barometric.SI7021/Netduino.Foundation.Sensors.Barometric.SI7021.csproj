@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProjectGuid>{46810344-EB9D-47DD-A7F1-CAD71E702B59}</ProjectGuid>
     <ProjectTypeGuids>{B69E3092-B931-443C-ABE7-7E7B65F2A37F};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>Netduino.Foundation.Sensors.Barometric.SI7021</RootNamespace>
     <AssemblyName>Netduino.Foundation.Sensors.Barometric.SI7021</AssemblyName>
     <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>

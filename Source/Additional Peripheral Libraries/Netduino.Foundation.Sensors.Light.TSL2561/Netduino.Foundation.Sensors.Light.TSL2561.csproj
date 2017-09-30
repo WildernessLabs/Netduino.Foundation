@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{AC24642E-E6DA-47D7-B4F5-9F12F35BE78A}</ProjectGuid>
     <ProjectTypeGuids>{B69E3092-B931-443C-ABE7-7E7B65F2A37F};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>TSL2561</RootNamespace>
     <AssemblyName>TSL2561</AssemblyName>
     <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>
