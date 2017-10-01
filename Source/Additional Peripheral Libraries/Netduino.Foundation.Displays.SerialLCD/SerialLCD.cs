@@ -74,9 +74,9 @@ namespace Netduino.Foundation.Displays
         /// </summary>
         private byte _height;
 
-		#endregion Member variable / fields
+        #endregion Member variable / fields
 
-		#region Constructors
+        #region Constructors
 
         /// <summary>
         /// Make the default constructor private to prevent it being called.
@@ -85,25 +85,25 @@ namespace Netduino.Foundation.Displays
         {
         }
 
-		/// <summary>
-		/// Default constructor.
-		/// </summary>
-		/// <param name="width">Number of characters on a line.</param>
-		/// <param name="height">Number of lines on the display.</param>
-		/// <param name="port">Com port the display is connected to.</param>
-		/// <param name="baudRate">Baud rate to use (default = 9600).</param>
-		/// <param name="parity">Parity to use (deafult is None).</param>
-		/// <param name="dataBits">Number of data bits (default is 8 data bits).</param>
-		/// <param name="stopBits">Number of stop bits (default is one stop bit).</param>
-		public SerialLCD(byte width = 16, byte height = 2, string port = "COM1", int baudRate = 9600, 
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        /// <param name="width">Number of characters on a line.</param>
+        /// <param name="height">Number of lines on the display.</param>
+        /// <param name="port">Com port the display is connected to.</param>
+        /// <param name="baudRate">Baud rate to use (default = 9600).</param>
+        /// <param name="parity">Parity to use (deafult is None).</param>
+        /// <param name="dataBits">Number of data bits (default is 8 data bits).</param>
+        /// <param name="stopBits">Number of stop bits (default is one stop bit).</param>
+        public SerialLCD(byte width = 16, byte height = 2, string port = "COM1", int baudRate = 9600, 
                          Parity parity = Parity.None, int dataBits = 8, StopBits stopBits = StopBits.One)
-		{
-			if ((_comPort != null) && (_comPort.IsOpen))
-			{
-				_comPort.Close();
-			}
-			_comPort = new SerialPort(port, baudRate, parity, dataBits, stopBits);
-			_comPort.Open();
+        {
+            if ((_comPort != null) && (_comPort.IsOpen))
+            {
+                _comPort.Close();
+            }
+            _comPort = new SerialPort(port, baudRate, parity, dataBits, stopBits);
+            _comPort.Open();
             //
             //  Assume a 16 x 2 LCD.
             //
@@ -133,9 +133,9 @@ namespace Netduino.Foundation.Displays
             }
             _width = width;
             _height = height;
-			Write(new byte[] { CONFIGURATION_COMMAND_CHARACTER, characters, CONFIGURATION_COMMAND_CHARACTER, lines });
-			Thread.Sleep(10);
-		}
+            Write(new byte[] { CONFIGURATION_COMMAND_CHARACTER, characters, CONFIGURATION_COMMAND_CHARACTER, lines });
+            Thread.Sleep(10);
+        }
 
         #endregion Constructors
 
@@ -145,43 +145,43 @@ namespace Netduino.Foundation.Displays
         /// Implement IDisposable.
         /// </summary>
         public void Dispose()
-		{
-			Dispose(true);
+        {
+            Dispose(true);
             //
-			// Call to GC.SupressFinalize will take this object off the finalization queue 
+            // Call to GC.SupressFinalize will take this object off the finalization queue 
             // and prevent multiple executions.
-			GC.SuppressFinalize(this);
-		}
+            GC.SuppressFinalize(this);
+        }
 
-		/// <summary>
-		/// Initiate object disposal.
-		/// </summary>
-		/// <param name="disposing">Flag used to determine if the method is being called by the runtime (false) or programmatically (true).</param>
-		private void Dispose(bool disposing)
-		{
-			if (!_disposed)
-			{
-				if (disposing)
-				{
-					_comPort.Close();
-					_comPort.Dispose();
-				}
-				_disposed = true;   // Done - prevent accidental or intentional Dispose calls.
-			}
-		}
+        /// <summary>
+        /// Initiate object disposal.
+        /// </summary>
+        /// <param name="disposing">Flag used to determine if the method is being called by the runtime (false) or programmatically (true).</param>
+        private void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _comPort.Close();
+                    _comPort.Dispose();
+                }
+                _disposed = true;   // Done - prevent accidental or intentional Dispose calls.
+            }
+        }
 
-		#endregion Implement IDisposable
+        #endregion Implement IDisposable
 
-		#region Methods
+        #region Methods
 
-		/// <summary>
-		/// Write the buffer of data to the COM port (i.e. the display).
-		/// </summary>
-		/// <param name="buffer">Bytes of data to be sent to the display.</param>
-		private void Write(byte[] buffer)
-		{
-			_comPort.Write(buffer, 0, buffer.Length);
-		}
+        /// <summary>
+        /// Write the buffer of data to the COM port (i.e. the display).
+        /// </summary>
+        /// <param name="buffer">Bytes of data to be sent to the display.</param>
+        private void Write(byte[] buffer)
+        {
+            _comPort.Write(buffer, 0, buffer.Length);
+        }
 
         /// <summary>
         /// Toggle the splash screen.
@@ -211,10 +211,10 @@ namespace Netduino.Foundation.Displays
             Write(new byte[] { CONFIGURATION_COMMAND_CHARACTER, (byte) baudRate });
         }
 
-		/// <summary>
-		/// Clear the display.
-		/// </summary>
-		public void Clear()
+        /// <summary>
+        /// Clear the display.
+        /// </summary>
+        public void Clear()
         {
             byte[] buffer = { EXTENDED_LCD_COMMAND_CHARACTER, 0x01 };
             Write(buffer);
