@@ -12,6 +12,10 @@ To use Netduino.Foundation, simply add a nuget reference to the core library (fo
 
 [todo: simple sample app illustrating the manual API of a sensor]
 
+### [Supported Peripherals](Documentation/Supported_Peripherals)
+
+For a list of supported peripherals and their usage info, see the [supported peripherals](Documentation/Supported_Peripherals) document.
+
 ## Wait, there's more.
 
 Many of the drivers and core helpers adhere to a modular architecture based on the concept of _Blocks_ and _Scopes_ that represent devices and listeners, accordingly. This is to simplify prototyping and quickly connect peripherals and application components in a reactive-like way that more realistically models the underlying circuit. For many complex peripherals, this architecture only exposes the most basic of functionality, and is conceptually similar to .NET primitive calls like .ToString(), in which an object is reduced to a basic representation of its IO meant to provide a fast way to prototype.
