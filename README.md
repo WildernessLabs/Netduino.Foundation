@@ -24,6 +24,11 @@ Netduino.Foundation, is open source and community powered, much like Netduino it
  * Tests, if possible and/or applicable.
  * The datasheet for the peripheral and a link to purchase it, if applicable.
 
+### List of Peripherals TODO
+
+We maintain a list of peripherals that we'd like to support. Feel free to add to this list, or assign yourself if you're actively working on a driver for it.
+
+[todo: link to the list after we clean it up]
 
 
 # Blocks and Scopes Architecture
