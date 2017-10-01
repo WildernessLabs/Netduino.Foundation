@@ -301,7 +301,7 @@ namespace Netduino.Foundation.Displays
         /// <summary>
         /// Display the text at the current cursor position.
         /// </summary>
-        /// <param name="text">Test to display.</param>
+        /// <param name="text">Text to display.</param>
         public void DisplayText(string text)
         {
             Write(System.Text.Encoding.UTF8.GetBytes(text));
