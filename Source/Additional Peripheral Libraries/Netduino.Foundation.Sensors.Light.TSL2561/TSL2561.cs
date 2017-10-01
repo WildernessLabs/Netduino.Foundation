@@ -9,6 +9,24 @@ namespace Netduino.Foundation.Sensors.Light
     /// </summary>
     public class TSL2561
     {
+        #region Constants
+        
+        /// <summary>
+        /// The command bit in the Command Register.
+        /// 
+        /// See page 13 of the datasheet.
+        /// </summary>
+        public byte COMMAND_BIT = 0x80;
+
+        /// <summary>
+        /// The interrupt clear bit in the Command Register.
+        /// 
+        /// See page 13 of the datasheet.
+        /// </summary>
+        private byte CLEAR_INTERRUPT_BIT = 0x40;
+
+        #endregion Constants
+
         #region Enums
 
         /// <summary>
@@ -39,22 +57,28 @@ namespace Netduino.Foundation.Sensors.Light
         /// <summary>
         /// TSL2561 register locations.
         ///
-        /// See Register Set on page 12 of the datasheet.
+        /// See Register Set on page 12 and Command Register on page 13 of the datasheet.
         /// </summary>
+        /// <remarks>
+        /// All of the register numbers have 0x80 added to the register.  When reading
+        /// or witing to a register the application must set the CMD bit in the command 
+        /// register (see page 13) and the register address is written into the lower
+        /// four bits of the Command Register.
+        /// </remarks>
         public enum Registers : byte
         {
-            Control = 0x00,
-            Timing = 0x01,
-            ThresholdLowLow = 0x02,
-            ThresholdLowHigh = 0x03,
-            ThresholdHighLow = 0x04,
-            ThresholdHighHigh = 0x05,
-            InterruptControl = 0x06,
-            ID = 0x0a,
-            Data0Low = 0x0c,
-            Data0High = 0x0d,
-            Data1Low = 0x0e,
-            Data1High = 0x0f
+            Control = 0x80,
+            Timing = 0x81,
+            ThresholdLowLow = 0x82,
+            ThresholdLowHigh = 0x83,
+            ThresholdHighLow = 0x84,
+            ThresholdHighHigh = 0x85,
+            InterruptControl = 0x86,
+            ID = 0x8a,
+            Data0Low = 0x8c,
+            Data0High = 0x8d,
+            Data1Low = 0x8e,
+            Data1High = 0x8f
         }
 
         /// <summary>
@@ -164,11 +188,36 @@ namespace Netduino.Foundation.Sensors.Light
 
         /// <summary>
         /// Gain of the sensor.
+        /// 
+        /// The sensor gain can be set to high or low.
         /// </summary>
         /// <remarks>
-        /// Gain for the sensor.
+        /// The sensor Gain bit can be fouond in the Timing Register.  This allows the gain
+        /// to be set to High (16x) or Low (1x).
+        /// 
+        /// See page 14 of the datasheet.
         /// </remarks>
-        public Gain SensorGain { get; set; }
+        public Gain SensorGain
+        {
+            get
+            {
+                byte data = (byte) (_tsl2561.ReadRegister((byte) Registers.Timing) & 0x10);
+                return (data == 0 ? Gain.Low : Gain.High);
+            }
+            set
+            {
+                byte data = _tsl2561.ReadRegister((byte) Registers.Timing);
+                if (value == Gain.Low)
+                {
+                    data &= 0xef;       // Set bit 4 to 0.
+                }
+                else
+                {
+                    data |= 0x10;       // Set bit 4 to 1.
+                }
+                _tsl2561.WriteRegister((byte) Registers.Timing, data);
+            }
+        }
 
         /// <summary>
         /// Integration timing for the sensor reading.
@@ -177,7 +226,7 @@ namespace Netduino.Foundation.Sensors.Light
         {
             get
             {
-                /// TODO: Implement this.
+                //TODO: Implement this.
                 return IntegrationTiming.Manual;
             }
             set
@@ -198,10 +247,11 @@ namespace Netduino.Foundation.Sensors.Light
         }
 
         /// <summary>
-        /// I2C object used to communicate with the sensor.
+        /// ICommunicationBus object used to communicate with the sensor.
         /// </summary>
-        private I2CDevice Device { get; set; }
-
+        /// <remarks>
+        /// In this case the actual object will always be an I2SBus object.
+        /// </remarks>
         private ICommunicationBus _tsl2561 = null;
 
         #endregion Properties
@@ -227,7 +277,6 @@ namespace Netduino.Foundation.Sensors.Light
         public TSL2561(byte address = (byte) Addresses.Default, ushort speed = 100)
         {
             Address = address;
-            SensorGain = Gain.Low;
             I2CBus device = new I2CBus(address, speed);
             _tsl2561 = (ICommunicationBus) device;
         }
@@ -296,10 +345,12 @@ namespace Netduino.Foundation.Sensors.Light
         /// conversions are outside of the threshold limits for a specified number
         /// of consecutive conversions.
         /// </remarks>
+        /// <param name="lowerLimit">Lower threshold, light levels lower than this value will generate and interrupt.</param>
+        /// <param name="upperLimit">Upper threshold, light levels higher than this will generate an interrupt.</param>
         public void SetInteruptThreshold(ushort lowerLimit, ushort upperLimit)
         {
-            _tsl2561.WriteUShort((byte) Registers.ThresholdLowLow, lowerLimit);
-            _tsl2561.WriteUShort((byte) Registers.ThresholdHighLow, upperLimit);
+            _tsl2561.WriteUShort((byte) Registers.ThresholdLowLow, lowerLimit, ByteOrder.LittleEndian);
+            _tsl2561.WriteUShort((byte) Registers.ThresholdHighLow, upperLimit, ByteOrder.LittleEndian);
         }
 
         /// <summary>
@@ -307,9 +358,12 @@ namespace Netduino.Foundation.Sensors.Light
         /// </summary>
         /// <remarks>
         /// The conversion count is the number of conversions that must be outside
-        /// of the upper and lower limits.  WAn interrupt will be generated when
-        /// the conversion count reaches the specified value.
-        /// <summary>
+        /// of the upper and lower limits before and interrupt is generated.
+        /// 
+        /// See Interrupt Control Register on page 15 and 16 of the datasheet.
+        /// </remarks>
+        /// <param name="mode"></param>
+        /// <param name="conversionCount">Number of conversions that must be outside of the threshold before an interrupt is generated.</param>
         public void SetInterruptMode(InterruptMode mode, byte conversionCount)
         {
             if (conversionCount > 15)
