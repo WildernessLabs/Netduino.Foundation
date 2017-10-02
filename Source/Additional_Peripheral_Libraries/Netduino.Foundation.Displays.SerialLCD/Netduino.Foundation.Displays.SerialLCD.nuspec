@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>WildernessLabs.Netduino.Foundation.Displays.SerialLCD</id>
+    <title>Netduino.Foundation.Displays.SerialLCD</title>
+    <version>1.0.0.0</version>
+    <authors>Mark Stevens</authors>
+    <owners>Wilderness Labs</owners>
+    <licenseUrl>https://github.com/WildernessLabs/Netduino.Foundation/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/WildernessLabs/Netduino.Foundation</projectUrl>
+<!--    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Serial LCD driver for Netduino.Foundation</description>
+<!--    <releaseNotes>First release on Nuget.</releaseNotes> -->
+    <copyright>Copyright 2017 Wilderness Labs</copyright>
+    <tags>NETMF Netduino</tags>
+<!--    <dependencies>
+      <group targetFramework="netmf">
+        <dependency id="Microsoft.SPOT.Hardware" version="4.3.1.0 " />
+        <dependency id="Microsoft.SPOT.Hardware.PWM" version="4.3.1.0 " />
+        <dependency id="Microsoft.SPOT.Hardware.SerialPort" version="4.3.1.0 " />
+        <dependency id="Microsoft.SPOT.Native" version="4.3.1.0 " />
+        <dependency id="Microsoft.SPOT.TinyCore" version="4.3.1.0 " />
+      </group>
+    </dependencies>
+-->
+  </metadata>
+  <files>
+    <file src="/bin/Release/Netduino.Foundation.Displays.SerialLCD.*" target="lib/netmf43" />
+    <file src="/bin/Release/Netduino.Foundation.Displays.SerialLCD.*" target="lib/netmf43/le" />
+    <file src="/bin/Release/Netduino.Foundation.Displays.SerialLCD.*" target="lib/netmf43/be" />
+  </files>
+</package>
