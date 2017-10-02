@@ -1,61 +1,61 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.Memsic2125", "Netduino.Foundation.Sensors.Motion.Memsic2125\Netduino.Foundation.Sensors.Motion.Memsic2125.csproj", "{831CCCF7-8F8D-434D-809A-F2995A5B5730}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.Memsic2125", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Motion.Memsic2125\Netduino.Foundation.Sensors.Motion.Memsic2125.csproj", "{831CCCF7-8F8D-434D-809A-F2995A5B5730}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation", "..\Netduino.Foundation\Netduino.Foundation.csproj", "{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation", "Netduino.Foundation\Netduino.Foundation.csproj", "{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Foundation Source", "Foundation Source", "{82E59041-71D9-420E-B3FE-836243B81E1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Motors.AdafruitMotorShield", "Netduino.Foundation.Motors.AdafruitMotorShield\Netduino.Foundation.Motors.AdafruitMotorShield.csproj", "{72D2D0F4-3E30-46E3-8EF9-392DDAF77EBE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Motors.AdafruitMotorShield", "Additional_Peripheral_Libraries\Netduino.Foundation.Motors.AdafruitMotorShield\Netduino.Foundation.Motors.AdafruitMotorShield.csproj", "{72D2D0F4-3E30-46E3-8EF9-392DDAF77EBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.Bmp085", "Netduino.Foundation.Sensors.Barometric.Bmp085\Netduino.Foundation.Sensors.Barometric.Bmp085.csproj", "{29261BF0-47B8-48FA-851F-E24158069228}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.Bmp085", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.Bmp085\Netduino.Foundation.Sensors.Barometric.Bmp085.csproj", "{29261BF0-47B8-48FA-851F-E24158069228}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass", "Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass\Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass.csproj", "{8CD6A83E-A425-417E-BD8E-8C2CFB0B4CB4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass\Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass.csproj", "{8CD6A83E-A425-417E-BD8E-8C2CFB0B4CB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.SharpGP2D12", "Netduino.Foundation.Sensors.SharpGP2D12\Netduino.Foundation.Sensors.SharpGP2D12.csproj", "{105B4678-62F3-49BC-AE86-9ED8F0A00D1F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.SharpGP2D12", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.SharpGP2D12\Netduino.Foundation.Sensors.SharpGP2D12.csproj", "{105B4678-62F3-49BC-AE86-9ED8F0A00D1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.BME280", "Netduino.Foundation.Sensors.Barometric.BME280\Netduino.Foundation.Sensors.Barometric.BME280.csproj", "{565DC80C-9F37-4FF4-9E39-A06BF880C64C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.BME280", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.BME280\Netduino.Foundation.Sensors.Barometric.BME280.csproj", "{565DC80C-9F37-4FF4-9E39-A06BF880C64C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Light.TSL2561", "Netduino.Foundation.Sensors.Light.TSL2561\Netduino.Foundation.Sensors.Light.TSL2561.csproj", "{AC24642E-E6DA-47D7-B4F5-9F12F35BE78A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Light.TSL2561", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Light.TSL2561\Netduino.Foundation.Sensors.Light.TSL2561.csproj", "{AC24642E-E6DA-47D7-B4F5-9F12F35BE78A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Temperature.Analog", "Netduino.Foundation.Sensors.Temperature.Analog\Netduino.Foundation.Sensors.Temperature.Analog.csproj", "{79372BE0-C1EC-4AC7-8481-6AB20013FC35}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Temperature.Analog", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Temperature.Analog\Netduino.Foundation.Sensors.Temperature.Analog.csproj", "{79372BE0-C1EC-4AC7-8481-6AB20013FC35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Displays.SerialLCD", "Netduino.Foundation.Displays.SerialLCD\Netduino.Foundation.Displays.SerialLCD.csproj", "{D32F7103-5F7B-4880-8C80-B17570F4380D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Displays.SerialLCD", "Additional_Peripheral_Libraries\Netduino.Foundation.Displays.SerialLCD\Netduino.Foundation.Displays.SerialLCD.csproj", "{D32F7103-5F7B-4880-8C80-B17570F4380D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.HIH6130", "Netduino.Foundation.Sensors.Barometric.HIH6130\Netduino.Foundation.Sensors.Barometric.HIH6130.csproj", "{F6428AF2-EC4B-4FB7-AB15-71CCD0B67985}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.HIH6130", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.HIH6130\Netduino.Foundation.Sensors.Barometric.HIH6130.csproj", "{F6428AF2-EC4B-4FB7-AB15-71CCD0B67985}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.HTU21DF", "Netduino.Foundation.Sensors.Barometric.HTU21DF\Netduino.Foundation.Sensors.Barometric.HTU21DF.csproj", "{25442BC4-A47A-440D-B87B-C628BC4A9F74}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.HTU21DF", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.HTU21DF\Netduino.Foundation.Sensors.Barometric.HTU21DF.csproj", "{25442BC4-A47A-440D-B87B-C628BC4A9F74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.MPL11A2", "Netduino.Foundation.Sensors.Barometric.MPL11A2\Netduino.Foundation.Sensors.Barometric.MPL11A2.csproj", "{1DD219D3-C5A0-43DA-9B97-D2E2E54446E6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.MPL11A2", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.MPL11A2\Netduino.Foundation.Sensors.Barometric.MPL11A2.csproj", "{1DD219D3-C5A0-43DA-9B97-D2E2E54446E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.MPL311A2", "Netduino.Foundation.Sensors.Barometric.MPL311A2\Netduino.Foundation.Sensors.Barometric.MPL311A2.csproj", "{CEC7105C-617B-4C4F-8654-A65718AE7217}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.MPL311A2", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.MPL311A2\Netduino.Foundation.Sensors.Barometric.MPL311A2.csproj", "{CEC7105C-617B-4C4F-8654-A65718AE7217}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.SHT31D", "Netduino.Foundation.Sensors.Barometric.SHT31D\Netduino.Foundation.Sensors.Barometric.SHT31D.csproj", "{FB02A7ED-4CAF-43FD-A91F-DC0EEB8597CB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.SHT31D", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.SHT31D\Netduino.Foundation.Sensors.Barometric.SHT31D.csproj", "{FB02A7ED-4CAF-43FD-A91F-DC0EEB8597CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.SI7021", "Netduino.Foundation.Sensors.Barometric.SI7021\Netduino.Foundation.Sensors.Barometric.SI7021.csproj", "{46810344-EB9D-47DD-A7F1-CAD71E702B59}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.SI7021", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.SI7021\Netduino.Foundation.Sensors.Barometric.SI7021.csproj", "{46810344-EB9D-47DD-A7F1-CAD71E702B59}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.GPS.GP20U7", "Netduino.Foundation.Sensors.GPS.GP20U7\Netduino.Foundation.Sensors.GPS.GP20U7.csproj", "{3F2A70D0-6A7F-40BE-9CB8-D87507635D25}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.GPS.GP20U7", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.GPS.GP20U7\Netduino.Foundation.Sensors.GPS.GP20U7.csproj", "{3F2A70D0-6A7F-40BE-9CB8-D87507635D25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Light.ALSPT19315C", "Netduino.Foundation.Sensors.Light.ALSPT19315C\Netduino.Foundation.Sensors.Light.ALSPT19315C.csproj", "{2F9EEB9E-D4F0-4C17-B159-D6D66410A2CC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Light.ALSPT19315C", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Light.ALSPT19315C\Netduino.Foundation.Sensors.Light.ALSPT19315C.csproj", "{2F9EEB9E-D4F0-4C17-B159-D6D66410A2CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.ADXL362", "Netduino.Foundation.Sensors.Motion.ADX362\Netduino.Foundation.Sensors.Motion.ADXL362.csproj", "{A9601FA8-73EC-401D-89B1-4405F155928C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.ADXL362", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Motion.ADX362\Netduino.Foundation.Sensors.Motion.ADXL362.csproj", "{A9601FA8-73EC-401D-89B1-4405F155928C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.ADXL335", "Netduino.Foundation.Sensors.Motion.ADXL335\Netduino.Foundation.Sensors.Motion.ADXL335.csproj", "{798D429C-E6C4-452D-922D-EC0EB23CAF13}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.ADXL335", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Motion.ADXL335\Netduino.Foundation.Sensors.Motion.ADXL335.csproj", "{798D429C-E6C4-452D-922D-EC0EB23CAF13}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.ADXL345", "Netduino.Foundation.Sensors.Motion.ADXL345\Netduino.Foundation.Sensors.Motion.ADXL345.csproj", "{BBC754AC-3108-41DC-BD6A-314F2379F101}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.ADXL345", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Motion.ADXL345\Netduino.Foundation.Sensors.Motion.ADXL345.csproj", "{BBC754AC-3108-41DC-BD6A-314F2379F101}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.FXAS21002", "Netduino.Foundation.Sensors.Motion.FXAS21002\Netduino.Foundation.Sensors.Motion.FXAS21002.csproj", "{B6E0EB06-49A6-47C3-A47E-E850F0053FB2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.FXAS21002", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Motion.FXAS21002\Netduino.Foundation.Sensors.Motion.FXAS21002.csproj", "{B6E0EB06-49A6-47C3-A47E-E850F0053FB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.FXOS8700CQ", "Netduino.Foundation.Sensors.Motion.FXOS8700CQ\Netduino.Foundation.Sensors.Motion.FXOS8700CQ.csproj", "{63FF6729-1B79-451B-8831-20629616EEAA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.FXOS8700CQ", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Motion.FXOS8700CQ\Netduino.Foundation.Sensors.Motion.FXOS8700CQ.csproj", "{63FF6729-1B79-451B-8831-20629616EEAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.MAG3110", "Netduino.Foundation.Sensors.Motion.MAG3110\Netduino.Foundation.Sensors.Motion.MAG3110.csproj", "{E2E681A1-59E1-44E5-8D08-F0BCA48951BC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.MAG3110", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Motion.MAG3110\Netduino.Foundation.Sensors.Motion.MAG3110.csproj", "{E2E681A1-59E1-44E5-8D08-F0BCA48951BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.MPU6050", "Netduino.Foundation.Sensors.Motion.MPU6050\Netduino.Foundation.Sensors.Motion.MPU6050.csproj", "{F969B9F2-D1CE-4DF4-9E09-2E098ADE665A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.MPU6050", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Motion.MPU6050\Netduino.Foundation.Sensors.Motion.MPU6050.csproj", "{F969B9F2-D1CE-4DF4-9E09-2E098ADE665A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Temperature.DS18B20", "Netduino.Foundation.Sensors.Temperature.DS18B20\Netduino.Foundation.Sensors.Temperature.DS18B20.csproj", "{17108484-8789-4439-9C53-A2AFAEEB54BE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Temperature.DS18B20", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Temperature.DS18B20\Netduino.Foundation.Sensors.Temperature.DS18B20.csproj", "{17108484-8789-4439-9C53-A2AFAEEB54BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Core", "Netduino.Foundation.Core\Netduino.Foundation.Core.csproj", "{FEAB94D0-0A87-4962-9D0E-87780CFF0BCC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Core", "Additional_Peripheral_Libraries\Netduino.Foundation.Core\Netduino.Foundation.Core.csproj", "{FEAB94D0-0A87-4962-9D0E-87780CFF0BCC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
