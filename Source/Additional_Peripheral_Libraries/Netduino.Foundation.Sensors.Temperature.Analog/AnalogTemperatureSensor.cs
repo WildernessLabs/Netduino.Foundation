@@ -9,7 +9,6 @@
 using System;
 using Microsoft.SPOT.Hardware;
 using Microsoft.SPOT;
-using SecretLabs.NETMF.Hardware;
 
 namespace Netduino.Foundation.Sensors.Temperature.Analog
 {

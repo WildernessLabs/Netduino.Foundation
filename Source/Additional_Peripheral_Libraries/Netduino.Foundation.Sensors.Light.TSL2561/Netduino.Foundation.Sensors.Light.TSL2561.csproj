@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <NetMfTargetsBaseDir Condition="'$(NetMfTargetsBaseDir)'==''">$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\</NetMfTargetsBaseDir>
+    <NetMfTargetsBaseDir Condition="'$(NetMfTargetsBaseDir)'==''">$([System.Environment]::GetFolderPath(SpecialFolder.LocalApplicationData))\.NETMicroFramework\xbuild\Microsoft\.NET Micro Framework\</NetMfTargetsBaseDir>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{AC24642E-E6DA-47D7-B4F5-9F12F35BE78A}</ProjectGuid>
@@ -37,6 +37,12 @@
   <ItemGroup>
     <Compile Include="TSL2561.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Netduino.Foundation.Core\Netduino.Foundation.Core.csproj">
+      <Project>{FEAB94D0-0A87-4962-9D0E-87780CFF0BCC}</Project>
+      <Name>Netduino.Foundation.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
 </Project>
