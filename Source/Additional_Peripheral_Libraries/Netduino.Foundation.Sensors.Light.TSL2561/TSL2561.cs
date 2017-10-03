@@ -90,6 +90,15 @@ namespace Netduino.Foundation.Sensors.Light
 
         #endregion Enums
 
+        #region Member variable / fields.
+
+        /// <summary>
+        /// GPIO pin on the Netduion that is connected to the interrupt pin on the TSL2561.
+        /// </summary>
+        InterruptPort _interruptPin = null;
+
+        #endregion Member variable / fields.
+
         #region Properties
 
         /// <summary>
@@ -247,6 +256,48 @@ namespace Netduino.Foundation.Sensors.Light
         }
 
         /// <summary>
+        /// Lower interrupt threshold.
+        /// </summary>
+        /// <remarks>
+        /// Get or se the lower interrupt threshold.  Any readings below this
+        /// value may trigger an interrupt <seealso cref="SetInterruptMode"/>
+        /// 
+        /// See page 14/15 of the datasheet.
+        /// </remarks>
+        public ushort ThresholdLow
+        {
+            get
+            {
+                return (_tsl2561.ReadUShort((byte) Registers.ThresholdLowLow, ByteOrder.LittleEndian));
+            }
+            set
+            {
+                _tsl2561.WriteUShort((byte) Registers.ThresholdLowLow, value, ByteOrder.LittleEndian);
+            }
+        }
+
+        /// <summary>
+        /// High interrupt threshold.
+        /// </summary>
+        /// <remarks>
+        /// Get or se the upper interrupt threshold.  Any readings above this
+        /// value may trigger an interrupt <seealso cref="SetInterruptMode"/>
+        /// 
+        /// See page 14/15 of the datasheet.
+        /// </remarks>
+        public ushort ThresholdHigh
+        {
+            get
+            {
+                return (_tsl2561.ReadUShort((byte) Registers.ThresholdHighLow, ByteOrder.LittleEndian));
+            }
+            set
+            {
+                _tsl2561.WriteUShort((byte) Registers.ThresholdHighLow, value, ByteOrder.LittleEndian);
+            }
+        }
+
+        /// <summary>
         /// ICommunicationBus object used to communicate with the sensor.
         /// </summary>
         /// <remarks>
@@ -255,6 +306,29 @@ namespace Netduino.Foundation.Sensors.Light
         private ICommunicationBus _tsl2561 = null;
 
         #endregion Properties
+
+        #region Event definitions
+
+        /// <summary>
+        /// Allow the user to attach an interrupt to the TSL2561.
+        /// </summary>
+        /// <remarks>
+        /// This interrupt requires the interrupts to be set up correctly.
+        /// <see cref="SetInterruptMode"/>
+        /// </remarks>
+        /// <param name="time">Date and time the interrupt was generated.</param>
+        public delegate void ThresholdInterrupt(DateTime time);
+
+        /// <summary>
+        /// Interrupt generated when the reading is outside of the threshold window.
+        /// </summary>
+        /// <remarks>
+        /// This interrupt requires the threshold window to be defined <see cref="SetInterruptMode"/>
+        /// and for the interrupts to be enabled.
+        /// </remarks>
+        public event ThresholdInterrupt ReadingOutsideThresholdWindow = null;
+
+        #endregion Event definitions
 
         #region Constructor(s)
 
@@ -309,10 +383,20 @@ namespace Netduino.Foundation.Sensors.Light
 
         /// <summary>
         /// Clear the interrupt flag.
+        /// 
+        /// Se Command Register on page 13 of the datasheet.
         /// </summary>
+        /// <remarks>
+        /// According to the datasheet, writing a 1 into bit 6 of the command 
+        /// register will clear any pending interrupts.
+        /// </remarks>
         public void ClearInterrupt()
         {
-            throw new NotImplementedException();
+            _tsl2561.WriteByte(CLEAR_INTERRUPT_BIT);
+            if (_interruptPin != null)
+            {
+                _interruptPin.ClearInterrupt();
+            }
         }
 
         /// <summary>
@@ -364,16 +448,60 @@ namespace Netduino.Foundation.Sensors.Light
         /// </remarks>
         /// <param name="mode"></param>
         /// <param name="conversionCount">Number of conversions that must be outside of the threshold before an interrupt is generated.</param>
-        public void SetInterruptMode(InterruptMode mode, byte conversionCount)
+        /// <param name="pin">GPIO pin connected to the TSL2561 interrupt pin.  Set to null to use the previously supplied pin.</param>
+        public void SetInterruptMode(InterruptMode mode, byte conversionCount, Cpu.Pin pin = Cpu.Pin.GPIO_NONE)
         {
             if (conversionCount > 15)
             {
                 throw new ArgumentOutOfRangeException("conversionCount", "Conversion count must be in the range 0-15 inclusive.");
             }
-            int registerValue = ((((byte) mode) | 0x03) << 4) | (conversionCount | 0x0f);
+            //
+            // Put interrupt control in bits 4 & 5 of the Interrupt Control Register.
+            // Using the enum above makes sure that mode is in the range 0-3 inclusive.
+            //
+            byte registerValue = (byte) mode;
+            registerValue <<= 4;
+            //
+            // conversionCount is known to be 0-15, put this in the lower four bits of
+            // the Interrupt Control Register.
+            //
+            registerValue |= conversionCount;
             _tsl2561.WriteRegister((byte) Registers.InterruptControl, (byte) (registerValue & 0xff));
+            if (pin != Cpu.Pin.GPIO_NONE)
+            {
+                if (_interruptPin != null)
+                {
+                    _interruptPin.Dispose();
+                }
+                _interruptPin = new InterruptPort(pin, false, Port.ResistorMode.Disabled, Port.InterruptMode.InterruptEdgeHigh);
+                _interruptPin.OnInterrupt += _interruptPin_OnInterrupt;
+            }
+            else
+            {
+                if (_interruptPin == null)
+                {
+                    throw new ArgumentException("Interrupt pin must be supplied");
+                }
+            }
+        }
+        #endregion
+
+        #region Interrupt handlers
+
+        /// <summary>
+        /// Process the interrupt generated by the TSL2561.
+        /// </summary>
+        /// <param name="data1"></param>
+        /// <param name="data2"></param>
+        /// <param name="time">Date and time of the interrupt.</param>
+        void _interruptPin_OnInterrupt(uint data1, uint data2, DateTime time)
+        {
+            if (ReadingOutsideThresholdWindow != null)
+            {
+                ReadingOutsideThresholdWindow(time);
+            }
         }
 
-        #endregion
+        #endregion Interrupt handlers
     }
 }
