@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>WildernessLabs.Netduino.Foundation</id>
-    <title>Netduino.Foundation</title>
+    <id>WildernessLabs.Netduino.Foundation.Displays.SerialLCD</id>
+    <title>Netduino.Foundation.Displays.SerialLCD</title>
     <version>1.0.0.0</version>
-    <authors>Bryan Costanich, Frank Krueger, Craig Dunn</authors>
+    <authors>Mark Stevens</authors>
     <owners>Wilderness Labs</owners>
     <licenseUrl>https://github.com/WildernessLabs/Netduino.Foundation/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/WildernessLabs/Netduino.Foundation</projectUrl>
 <!--    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Netduino.Foundation greatly simplifies the task of building complex .NET Microframework (MF) powered connected things with Netduino.</description>
+    <description>Serial LCD driver for Netduino.Foundation</description>
 <!--    <releaseNotes>First release on Nuget.</releaseNotes> -->
     <copyright>Copyright 2017 Wilderness Labs</copyright>
     <tags>NETMF Netduino</tags>
@@ -26,8 +26,8 @@
 -->
   </metadata>
   <files>
-    <file src="../Netduino.Foundation/bin/Release/Netduino.Foundation.*" target="lib/netmf43" />
-    <file src="../Netduino.Foundation/bin/Release/le/Netduino.Foundation.*" target="lib/netmf43/le" />
-    <file src="../Netduino.Foundation/bin/Release/be/Netduino.Foundation.*" target="lib/netmf43/be" />
+    <file src="/bin/Release/Netduino.Foundation.Displays.SerialLCD.*" target="lib/netmf43" />
+    <file src="/bin/Release/Netduino.Foundation.Displays.SerialLCD.*" target="lib/netmf43/le" />
+    <file src="/bin/Release/Netduino.Foundation.Displays.SerialLCD.*" target="lib/netmf43/be" />
   </files>
 </package>
