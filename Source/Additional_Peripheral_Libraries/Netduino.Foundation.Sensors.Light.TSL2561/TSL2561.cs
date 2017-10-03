@@ -90,33 +90,16 @@ namespace Netduino.Foundation.Sensors.Light
 
         #endregion Enums
 
-        #region Member variable / fields.
+        #region Member variables / fields.
 
         /// <summary>
-        /// GPIO pin on the Netduion that is connected to the interrupt pin on the TSL2561.
+        /// GPIO pin on the Netduino that is connected to the interrupt pin on the TSL2561.
         /// </summary>
         InterruptPort _interruptPin = null;
 
-        #endregion Member variable / fields.
+        #endregion Member variables / fields.
 
         #region Properties
-
-        /// <summary>
-        /// Address of the TSL2561 sensor on the I2C bus.
-        /// </summary>
-        private byte _address;
-        private byte Address
-        {
-            get { return _address; }
-            set
-            {
-                if ((value != (byte) Addresses.Address0) && (value != (byte) Addresses.Default) && (value != (byte) Addresses.Address1))
-                {
-                    throw new ArgumentOutOfRangeException("Address", "Address should be 0x29, 0x39 or 0x49.");
-                }
-                _address = value;
-            }
-        }
 
         /// <summary>
         /// Lux reading from the TSL2561 sensor.
@@ -350,7 +333,10 @@ namespace Netduino.Foundation.Sensors.Light
         /// <remarks>
         public TSL2561(byte address = (byte) Addresses.Default, ushort speed = 100)
         {
-            Address = address;
+            if ((address != (byte) Addresses.Address0) && (address != (byte) Addresses.Default) && (address != (byte) Addresses.Address1))
+            {
+                throw new ArgumentOutOfRangeException("Address", "Address should be 0x29, 0x39 or 0x49.");
+            }
             I2CBus device = new I2CBus(address, speed);
             _tsl2561 = (ICommunicationBus) device;
         }
