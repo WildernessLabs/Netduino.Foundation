@@ -70,17 +70,11 @@ namespace Netduino.Foundation.Sensors.Light
             Control = 0x80,
             Timing = 0x81,
             ThresholdLow = 0x82,
-            ThresholdLowLow = 0x82,
-            ThresholdLowHigh = 0x83,
             ThresholdHigh = 0x84,
-            ThresholdHighLow = 0x84,
-            ThresholdHighHigh = 0x85,
             InterruptControl = 0x86,
             ID = 0x8a,
-            Data0Low = 0x8c,
-            Data0High = 0x8d,
-            Data1Low = 0x8e,
-            Data1High = 0x8f
+            Data0 = 0x8c,
+            Data1 = 0x8e
         }
 
         /// <summary>
@@ -110,8 +104,9 @@ namespace Netduino.Foundation.Sensors.Light
         {
             get
             {
-                ushort data0 = _tsl2561.ReadUShort((byte) Registers.Data0Low, ByteOrder.LittleEndian);
-                ushort data1 = _tsl2561.ReadUShort((byte) Registers.Data1Low, ByteOrder.LittleEndian);
+                byte[] adcData = _tsl2561.ReadUShorts((byte) Registers.Data0, 2, ByteOrder.LittleEndian);
+                ushort data0 = adcData[0];
+                ushort data1 = adcData[1];
                 if ((data0 == 0xffff) | (data1 == 0xffff))
                 {
                     return(0.0);
@@ -136,31 +131,34 @@ namespace Netduino.Foundation.Sensors.Light
                         milliseconds = 0;
                         break;
                 }
-                d0 *= (402.0 / milliseconds);
-                d1 *= (402.0 / milliseconds);
-                if (SensorGain == Gain.Low)
+                double result = 0.0;
+                if (milliseconds != 0)
                 {
-                    d0 *= 16;
-                    d1 *= 16;
+                    d0 *= (402.0 / milliseconds);
+                    d1 *= (402.0 / milliseconds);
+                    if (SensorGain == Gain.Low)
+                    {
+                        d0 *= 16;
+                        d1 *= 16;
+                    }
+                    if (ratio < 0.5)
+                    {
+                        result = 0.0304 * d0 - 0.062 * d0 * System.Math.Pow(ratio, 1.4);
+                    }
+                    if (ratio < 0.61)
+                    {
+                        result = 0.0224 * d0 - 0.031 * d1;
+                    }
+                    if (ratio < 0.80)
+                    {
+                        result = 0.0128 * d0 - 0.0153 * d1;
+                    }
+                    if (ratio < 1.30)
+                    {
+                        result = 0.00146 * d0 - 0.00112 * d1;
+                    }
                 }
-
-                if (ratio < 0.5)
-                {
-                    //return(0.0304 * d0 - 0.062 * d0 * Microsoft.SPOT.Math(ratio, 1.4));
-                }
-                if (ratio < 0.61)
-                {
-                    return(0.0224 * d0 - 0.031 * d1);
-                }
-                if (ratio < 0.80)
-                {
-                    return(0.0128 * d0 - 0.0153 * d1);
-                }
-                if (ratio < 1.30)
-                {
-                    return(0.00146 * d0 - 0.00112 * d1);
-                }
-                return(0.0);
+                return(result);
             }
         }
 
