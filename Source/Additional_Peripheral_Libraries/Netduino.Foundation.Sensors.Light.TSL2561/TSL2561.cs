@@ -115,7 +115,7 @@ namespace Netduino.Foundation.Sensors.Light
                 double d1 = data1;
                 double ratio = d1 / d0;
 
-                double milliseconds = 0;
+                int milliseconds = 0;
                 switch (Timing)
                 {
                     case IntegrationTiming.Ms13:
