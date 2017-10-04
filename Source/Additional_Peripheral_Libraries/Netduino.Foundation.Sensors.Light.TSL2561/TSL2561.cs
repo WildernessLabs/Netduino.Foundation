@@ -104,7 +104,7 @@ namespace Netduino.Foundation.Sensors.Light
         {
             get
             {
-                byte[] adcData = _tsl2561.ReadUShorts((byte) Registers.Data0, 2, ByteOrder.LittleEndian);
+                ushort[] adcData = _tsl2561.ReadUShorts((byte) Registers.Data0, 2, ByteOrder.LittleEndian);
                 ushort data0 = adcData[0];
                 ushort data1 = adcData[1];
                 if ((data0 == 0xffff) | (data1 == 0xffff))
@@ -252,11 +252,11 @@ namespace Netduino.Foundation.Sensors.Light
         {
             get
             {
-                return (_tsl2561.ReadUShort((byte) Registers.ThresholdLowLow, ByteOrder.LittleEndian));
+                return (_tsl2561.ReadUShort((byte) Registers.ThresholdLow, ByteOrder.LittleEndian));
             }
             set
             {
-                _tsl2561.WriteUShort((byte) Registers.ThresholdLowLow, value, ByteOrder.LittleEndian);
+                _tsl2561.WriteUShort((byte) Registers.ThresholdLow, value, ByteOrder.LittleEndian);
             }
         }
 
@@ -273,11 +273,11 @@ namespace Netduino.Foundation.Sensors.Light
         {
             get
             {
-                return (_tsl2561.ReadUShort((byte) Registers.ThresholdHighLow, ByteOrder.LittleEndian));
+                return (_tsl2561.ReadUShort((byte) Registers.ThresholdHigh, ByteOrder.LittleEndian));
             }
             set
             {
-                _tsl2561.WriteUShort((byte) Registers.ThresholdHighLow, value, ByteOrder.LittleEndian);
+                _tsl2561.WriteUShort((byte) Registers.ThresholdHigh, value, ByteOrder.LittleEndian);
             }
         }
 
@@ -423,7 +423,7 @@ namespace Netduino.Foundation.Sensors.Light
             ushort[] thresholdValues = new ushort[2];
             thresholdValues[0] = lowerLimit;
             thresholdValues[1] = upperLimit;
-            _tsl2561.WriteUShorts((byte) Registers.ThresholdLow, 2, ByteOrder.LittleEndian);
+            _tsl2561.WriteUShorts((byte) Registers.ThresholdLow, thresholdValues, ByteOrder.LittleEndian);
         }
 
         /// <summary>
