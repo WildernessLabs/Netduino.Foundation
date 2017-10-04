@@ -39,7 +39,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Light.ALSPT19315C", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Light.ALSPT19315C\Netduino.Foundation.Sensors.Light.ALSPT19315C.csproj", "{2F9EEB9E-D4F0-4C17-B159-D6D66410A2CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.ADXL362", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Motion.ADX362\Netduino.Foundation.Sensors.Motion.ADXL362.csproj", "{A9601FA8-73EC-401D-89B1-4405F155928C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.ADXL362", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Motion.ADXL362\Netduino.Foundation.Sensors.Motion.ADXL362.csproj", "{A9601FA8-73EC-401D-89B1-4405F155928C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.ADXL335", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Motion.ADXL335\Netduino.Foundation.Sensors.Motion.ADXL335.csproj", "{798D429C-E6C4-452D-922D-EC0EB23CAF13}"
 EndProject
