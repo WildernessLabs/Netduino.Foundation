@@ -442,6 +442,25 @@ namespace Netduino.Foundation.Sensors.Light
                 throw new ArgumentOutOfRangeException("conversionCount", "Conversion count must be in the range 0-15 inclusive.");
             }
             //
+            //  Attach the interrupt event before we turn on interrupts.
+            //
+            if (pin != Cpu.Pin.GPIO_NONE)
+            {
+                if (_interruptPin != null)
+                {
+                    _interruptPin.Dispose();
+                }
+                _interruptPin = new InterruptPort(pin, false, Port.ResistorMode.Disabled, Port.InterruptMode.InterruptEdgeLow);
+                _interruptPin.OnInterrupt += _interruptPin_OnInterrupt;
+            }
+            else
+            {
+                if (_interruptPin == null)
+                {
+                    throw new ArgumentException("Interrupt pin must be supplied");
+                }
+            }
+            //
             // Put interrupt control in bits 4 & 5 of the Interrupt Control Register.
             // Using the enum above makes sure that mode is in the range 0-3 inclusive.
             //
@@ -452,23 +471,11 @@ namespace Netduino.Foundation.Sensors.Light
             // the Interrupt Control Register.
             //
             registerValue |= conversionCount;
+            //
+            //  Clear the interrupt bit before we turn them on.
+            //
+            ClearInterrupt();
             _tsl2561.WriteRegister((byte) Registers.InterruptControl, (byte) (registerValue & 0xff));
-            if (pin != Cpu.Pin.GPIO_NONE)
-            {
-                if (_interruptPin != null)
-                {
-                    _interruptPin.Dispose();
-                }
-                _interruptPin = new InterruptPort(pin, false, Port.ResistorMode.Disabled, Port.InterruptMode.InterruptEdgeHigh);
-                _interruptPin.OnInterrupt += _interruptPin_OnInterrupt;
-            }
-            else
-            {
-                if (_interruptPin == null)
-                {
-                    throw new ArgumentException("Interrupt pin must be supplied");
-                }
-            }
         }
         #endregion
 
