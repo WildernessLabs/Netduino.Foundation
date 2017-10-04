@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <NetMfTargetsBaseDir Condition="'$(NetMfTargetsBaseDir)'==''">$([System.Environment]::GetFolderPath(SpecialFolder.LocalApplicationData))\.NETMicroFramework\xbuild\Microsoft\.NET Micro Framework\</NetMfTargetsBaseDir>
+    <NetMfTargetsBaseDir Condition="'$(NetMfTargetsBaseDir)'==''">$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\</NetMfTargetsBaseDir>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProjectGuid>{17108484-8789-4439-9C53-A2AFAEEB54BE}</ProjectGuid>
@@ -33,6 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Native" />
+    <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DS18B20.cs" />

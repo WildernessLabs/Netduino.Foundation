@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <NetMfTargetsBaseDir Condition="'$(NetMfTargetsBaseDir)'==''">$([System.Environment]::GetFolderPath(SpecialFolder.LocalApplicationData))\.NETMicroFramework\xbuild\Microsoft\.NET Micro Framework\</NetMfTargetsBaseDir>
+    <NetMfTargetsBaseDir Condition="'$(NetMfTargetsBaseDir)'==''">$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\</NetMfTargetsBaseDir>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{79372BE0-C1EC-4AC7-8481-6AB20013FC35}</ProjectGuid>
@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Native" />
     <Reference Include="Microsoft.SPOT.Hardware" />
+    <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AnalogTemperatureSensor.cs" />
