@@ -69,8 +69,10 @@ namespace Netduino.Foundation.Sensors.Light
         {
             Control = 0x80,
             Timing = 0x81,
+            ThresholdLow = 0x82,
             ThresholdLowLow = 0x82,
             ThresholdLowHigh = 0x83,
+            ThresholdHigh = 0x84,
             ThresholdHighLow = 0x84,
             ThresholdHighHigh = 0x85,
             InterruptControl = 0x86,
@@ -419,8 +421,10 @@ namespace Netduino.Foundation.Sensors.Light
         /// <param name="upperLimit">Upper threshold, light levels higher than this will generate an interrupt.</param>
         public void SetInteruptThreshold(ushort lowerLimit, ushort upperLimit)
         {
-            _tsl2561.WriteUShort((byte) Registers.ThresholdLowLow, lowerLimit, ByteOrder.LittleEndian);
-            _tsl2561.WriteUShort((byte) Registers.ThresholdHighLow, upperLimit, ByteOrder.LittleEndian);
+            ushort[] thresholdValues = new ushort[2];
+            thresholdValues[0] = lowerLimit;
+            thresholdValues[1] = upperLimit;
+            _tsl2561.WriteUShorts((byte) Registers.ThresholdLow, 2, ByteOrder.LittleEndian);
         }
 
         /// <summary>
