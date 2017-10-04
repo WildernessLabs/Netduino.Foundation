@@ -14,19 +14,19 @@
 <!--    <releaseNotes>First release on Nuget.</releaseNotes> -->
     <copyright>Copyright 2017 Wilderness Labs</copyright>
     <tags>NETMF Netduino</tags>
-    <dependencies>
-      <group targetFramework="netmf">
-        <dependency id="Microsoft.SPOT.Hardware" version="4.3.1.0 " />
-        <dependency id="Microsoft.SPOT.Hardware.PWM" version="4.3.1.0 " />
-        <dependency id="Microsoft.SPOT.Hardware.SerialPort" version="4.3.1.0 " />
-        <dependency id="Microsoft.SPOT.Native" version="4.3.1.0 " />
-        <dependency id="Microsoft.SPOT.TinyCore" version="4.3.1.0 " />
-      </group>
-    </dependencies>
   </metadata>
   <files>
     <file src="bin/Release/Netduino.Foundation.*" target="lib/netmf43" />
     <file src="bin/Release/le/Netduino.Foundation.*" target="lib/netmf43/le" />
     <file src="bin/Release/be/Netduino.Foundation.*" target="lib/netmf43/be" />
+
+    <!-- how to add these references?? -->
+    <!--<file src="Microsoft.SPOT.Hardware" target="lib" />-->
+    <!--
+    "Microsoft.SPOT.Hardware.PWM"
+    "Microsoft.SPOT.Hardware.SerialPort"
+    "Microsoft.SPOT.Native"
+    "Microsoft.SPOT.TinyCore"
+    -->
   </files>
 </package>
