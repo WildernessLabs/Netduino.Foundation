@@ -186,7 +186,7 @@ namespace Netduino.Foundation.Sensors.Light
         /// The sensor gain can be set to high or low.
         /// </summary>
         /// <remarks>
-        /// The sensor Gain bit can be fouond in the Timing Register.  This allows the gain
+        /// The sensor Gain bit can be found in the Timing Register.  This allows the gain
         /// to be set to High (16x) or Low (1x).
         /// 
         /// See page 14 of the datasheet.
@@ -220,8 +220,9 @@ namespace Netduino.Foundation.Sensors.Light
         {
             get
             {
-                //TODO: Implement this.
-                return IntegrationTiming.Manual;
+                byte timing = _tsl2561.ReadRegister((byte) Registers.Timing);
+                timing &= 0x03;
+                return ((IntegrationTiming) timing);
             }
             set
             {
