@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Foundation Source", "Founda
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Motors.AdafruitMotorShield", "Additional_Peripheral_Libraries\Netduino.Foundation.Motors.AdafruitMotorShield\Netduino.Foundation.Motors.AdafruitMotorShield.csproj", "{72D2D0F4-3E30-46E3-8EF9-392DDAF77EBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.Bmp085", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.Bmp085\Netduino.Foundation.Sensors.Barometric.Bmp085.csproj", "{29261BF0-47B8-48FA-851F-E24158069228}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.BMP085", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.BMP085\Netduino.Foundation.Sensors.Barometric.BMP085.csproj", "{29261BF0-47B8-48FA-851F-E24158069228}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass\Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass.csproj", "{8CD6A83E-A425-417E-BD8E-8C2CFB0B4CB4}"
 EndProject
