@@ -7,7 +7,7 @@ namespace Netduino.Foundation.Sensors.Light
     /// <summary>
     /// Driver for the TSL2561 light-to-digital converter.
     /// </summary>
-    public class TSL2561
+    public class TSL2561 : IDisposable
     {
         #region Constants
         
@@ -344,6 +344,21 @@ namespace Netduino.Foundation.Sensors.Light
 
         #endregion Constructor(s)
 
+        #region IDisposable
+
+        /// <summary>
+        /// Implement IDisposable interface.
+        /// </summary>
+        public void Dispose()
+        {
+            if (_interruptPin != null)
+            {
+                _interruptPin.Dispose();
+            }
+        }
+
+        #endregion IDisposable
+
         #region Methods
 
         /// <summary>
@@ -478,7 +493,7 @@ namespace Netduino.Foundation.Sensors.Light
             //  Clear the interrupt bit before we turn them on.
             //
             ClearInterrupt();
-            _tsl2561.WriteRegister((byte) Registers.InterruptControl, (byte) (registerValue & 0xff));
+            _tsl2561.WriteRegister((byte) Registers.InterruptControl, registerValue);
         }
         #endregion
 
