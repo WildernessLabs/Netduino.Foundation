@@ -29,8 +29,8 @@
 -->
   </metadata>
   <files>
-    <file src="/bin/Release/Netduino.Foundation.Displays.SerialLCD.*" target="lib/netmf43" />
-    <file src="/bin/Release/Netduino.Foundation.Displays.SerialLCD.*" target="lib/netmf43/le" />
-    <file src="/bin/Release/Netduino.Foundation.Displays.SerialLCD.*" target="lib/netmf43/be" />
+    <file src="bin/Release/Netduino.Foundation.Displays.SerialLCD.*" target="lib/netmf43" />
+    <file src="bin/Release/Netduino.Foundation.Displays.SerialLCD.*" target="lib/netmf43/le" />
+    <file src="bin/Release/Netduino.Foundation.Displays.SerialLCD.*" target="lib/netmf43/be" />
   </files>
 </package>
