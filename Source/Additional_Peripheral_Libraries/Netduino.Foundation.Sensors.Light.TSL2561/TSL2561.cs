@@ -395,10 +395,6 @@ namespace Netduino.Foundation.Sensors.Light
         public void ClearInterrupt()
         {
             _tsl2561.WriteByte(CLEAR_INTERRUPT_BIT);
-            if (_interruptPin != null)
-            {
-                _interruptPin.ClearInterrupt();
-            }
         }
 
         /// <summary>
