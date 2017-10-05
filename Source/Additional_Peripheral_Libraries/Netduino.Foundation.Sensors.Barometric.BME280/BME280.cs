@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
+using Netduino.Foundation.Core;
 
 namespace Netduino.Foundation.Sensors.Barometric
 {
@@ -50,6 +51,15 @@ namespace Netduino.Foundation.Sensors.Barometric
 		#region Member Variables
 
 		/// <summary>
+		/// Communication bus used to read and write to the BME280 sensor.
+		/// </summary>
+		/// <remarks>
+		/// The BME has both I2C and SPI interfaces. The ICommunicationBus allows the
+		/// selection to be made in the constructor.
+		/// </remarks>
+		ICommunicationBus _bme280 = null;
+
+		/// <summary>
 		/// Compensation data from the sensor.
 		/// </summary>
 		CompensationData _compensationData = new CompensationData();
@@ -57,48 +67,6 @@ namespace Netduino.Foundation.Sensors.Barometric
 		#endregion Member Variables
 
 		#region Properties
-
-		/// <summary>
-		/// Gets or sets the I2C Address.
-		/// </summary>
-		/// <value>I2C address for the sensor.  This should be one of 0x76 or 0x77 (default).</value>
-		private byte _address;
-		public byte Address
-		{
-			get { return _address; }
-			set
-			{
-				if ((value != 0x76) && (value != 0x77))
-				{
-					throw new ArgumentOutOfRangeException("Address", "Address should be 0x76 or 0x77");
-				}
-				_address = value;
-			}
-		}
-
-		/// <summary>
-		/// Speed of the I2C bus in KHz.
-		/// </summary>
-		/// <value>Speed of the I2C bus in KHz.</value>
-		private ushort _speed;
-		public ushort Speed
-		{
-			get { return _speed; }
-			set
-			{
-				if ((value < 10) || (value > 3400))
-				{
-					throw new ArgumentOutOfRangeException("Speed", "Speed should be 10 KHz to 3,400 KHz.");
-				}
-				_speed = value;
-			}
-		}
-
-		/// <summary>
-		/// Instance of the I2CDevice used to communicate with the BME280 sensor.
-		/// </summary>
-		/// <value>The device.</value>
-		private I2CDevice Device { get; set; }
 
 		/// <summary>
 		/// Temperature reading from the sensor.
@@ -168,9 +136,16 @@ namespace Netduino.Foundation.Sensors.Barometric
 		/// <param name="speed">Speed of the I2C bus (default = 100KHz).</param>
 		public BME280(byte address = 0x77, ushort speed = 100)
 		{
-			Address = address;
-			Speed = speed;
-			Device = new I2CDevice(new I2CDevice.Configuration(address, speed));
+			if ((address != 0x76) && (address != 0x77))
+			{
+				throw new ArgumentOutOfRangeException("address", "Address should be 0x76 or 0x77");
+			}
+			if ((speed < 10) || (speed > 3400))
+			{
+				throw new ArgumentOutOfRangeException("speed", "Speed should be 10 KHz to 3,400 KHz.");
+			}
+
+			_bme280 = (ICommunicationBus) (new I2CDevice(new I2CDevice.Configuration(address, speed)));
 			ReadCompensationData();
 			//
 			//  Update the configuration information and start sampling.
@@ -206,15 +181,15 @@ namespace Netduino.Foundation.Sensors.Barometric
 			//
 			//  Put to sleep to allow the configuration to be changed.
 			//
-			WriteRegister((byte) Registers.Measurement, 0x00);
+			_bme280.WriteRegister((byte) Registers.Measurement, 0x00);
 
 			byte data = (byte)(((Standby << 5) & 0xe0) | ((Filter << 2) & 0x1c));
-			WriteRegister((byte) Registers.Configuration, data);
+			_bme280.WriteRegister((byte) Registers.Configuration, data);
 			data = (byte)(HumidityOverSampling & 0x07);
-			WriteRegister((byte) Registers.Humidity, data);
+			_bme280.WriteRegister((byte) Registers.Humidity, data);
 			data = (byte)(((TemperatureOverSampling << 5) & 0xe0) | ((PressureOversampling << 2) & 0x1c) |
 					(Mode & 0x03));
-			WriteRegister((byte) Registers.Measurement, data);
+			_bme280.WriteRegister((byte) Registers.Measurement, data);
 		}
 
 		/// <summary>
@@ -225,61 +200,8 @@ namespace Netduino.Foundation.Sensors.Barometric
 		/// </remarks>
 		public void Reset()
 		{
-			WriteRegister((byte) Registers.Reset, 0xb6);
+			_bme280.WriteRegister((byte) Registers.Reset, 0xb6);
 			UpdateConfiguration();
-		}
-
-		/// <summary>
-		/// Read a block of data from the sensor.
-		/// </summary>
-		/// <param name="address">Address of the first register to read.</param>
-		/// <param name="length">Number of bytes to read.</param>
-		private byte[] ReadRegisters(byte address, int length)
-		{
-			byte[] registers = new byte[length];
-			byte[] registerAddress = { address };
-			I2CDevice.I2CTransaction[] readCompensationData =
-			{
-				I2CDevice.CreateWriteTransaction(registerAddress),
-				I2CDevice.CreateReadTransaction(registers)
-			};
-			int bytesTransferred = 0;
-			int retryCount = 0;
-			while (bytesTransferred != (length + 1))
-			{
-				if (retryCount > 3)
-				{
-					throw new Exception("ReadRegisters: Retry count exceeded.");
-				}
-				retryCount++;
-				bytesTransferred = Device.Execute(readCompensationData, 100);
-			}
-			return registers;
-		}
-
-		/// <summary>
-		/// Write the specified value to the registers in the sensor.
-		/// </summary>
-		/// <param name="address">Register address.</param>
-		/// <param name="value">Value to write into the register.</param>
-		private void WriteRegister(byte address, byte value)
-		{
-			byte[] data = new byte[2];
-			data[0] = address;
-			data[1] = value;
-			I2CDevice.I2CTransaction[] writeRegisters =
-			{
-				I2CDevice.CreateWriteTransaction(data)
-			};
-			int retryCount = 0;
-			while (Device.Execute(writeRegisters, 100) != 2)
-			{
-				if (retryCount > 3)
-				{
-					throw new Exception("WriteRegister: Retry count exceeded.");
-				}
-				retryCount++;
-			}
 		}
 
 		/// <summary>
@@ -297,9 +219,9 @@ namespace Netduino.Foundation.Sensors.Barometric
 		/// </remarks>
 		private void ReadCompensationData()
 		{
-			byte[] temperatureAndPressureData = ReadRegisters(0x88, 24);
-			byte[] humidityData1 = ReadRegisters(0xa1, 1);
-			byte[] humidityData2To6 = ReadRegisters(0xe1, 7);
+			byte[] temperatureAndPressureData = _bme280.ReadRegisters(0x88, 24);
+			byte[] humidityData1 = _bme280.ReadRegisters(0xa1, 1);
+			byte[] humidityData2To6 = _bme280.ReadRegisters(0xe1, 7);
 
 			_compensationData.T1 = (ushort)(temperatureAndPressureData[0] + (temperatureAndPressureData[1] << 8));
 			_compensationData.T2 = (short)(temperatureAndPressureData[2] + (temperatureAndPressureData[3] << 8));
@@ -341,7 +263,7 @@ namespace Netduino.Foundation.Sensors.Barometric
 		/// </remarks>
 		public void Read()
 		{
-			byte[] readings = ReadRegisters(0xf7, 8);
+			byte[] readings = _bme280.ReadRegisters(0xf7, 8);
 			//
 			//  Temperature calculation from section 4.2.3 of the datasheet.
 			//
