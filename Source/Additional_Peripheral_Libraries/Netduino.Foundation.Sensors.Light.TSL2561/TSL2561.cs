@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.SPOT.Hardware;
 using Netduino.Foundation.Core;
+using Microsoft.SPOT;
 
 namespace Netduino.Foundation.Sensors.Light
 {
@@ -16,14 +17,23 @@ namespace Netduino.Foundation.Sensors.Light
         /// 
         /// See page 13 of the datasheet.
         /// </summary>
-        public byte COMMAND_BIT = 0x80;
+        private byte COMMAND_BIT = 0x80;
 
         /// <summary>
         /// The interrupt clear bit in the Command Register.
         /// 
         /// See page 13 of the datasheet.
         /// </summary>
-        private byte CLEAR_INTERRUPT_BIT = 0x40;
+        private byte CLEAR_INTERRUPT_BIT = 0xC0;
+
+        /// <summary>
+        /// This bit control the write operations for the TSL2561.  Setting
+        /// this bit puts the chip into Word mode for the specified register.
+        /// </summary>
+        /// <remarks>
+        /// See page 13 of the data sheet.
+        /// </remarks>
+        private byte WORD_MODE_BIT = 0x20;
 
         #endregion Constants
 
@@ -98,13 +108,28 @@ namespace Netduino.Foundation.Sensors.Light
         #region Properties
 
         /// <summary>
+        /// Get the sensor reading
+        /// </summary>
+        /// <remarks>
+        /// This can be used to get the raw sensor data from the TSL2561. 
+        /// </remarks>
+        /// <returns>Sensor data.</returns>
+        public ushort[] SensorReading
+        {
+            get
+            {
+                return(_tsl2561.ReadUShorts((byte) Registers.Data0, 2, ByteOrder.LittleEndian));
+            }
+        }
+
+        /// <summary>
         /// Lux reading from the TSL2561 sensor.
         /// </summary>
         public double Lux
         {
             get
             {
-                ushort[] adcData = _tsl2561.ReadUShorts((byte) Registers.Data0, 2, ByteOrder.LittleEndian);
+                ushort[] adcData = SensorReading;
                 ushort data0 = adcData[0];
                 ushort data1 = adcData[1];
                 if ((data0 == 0xffff) | (data1 == 0xffff))
@@ -265,7 +290,7 @@ namespace Netduino.Foundation.Sensors.Light
             }
             set
             {
-                _tsl2561.WriteUShort((byte) Registers.ThresholdLow, value, ByteOrder.LittleEndian);
+                _tsl2561.WriteUShort((byte) (Registers.ThresholdLow + WORD_MODE_BIT), value, ByteOrder.LittleEndian);
             }
         }
 
@@ -286,7 +311,7 @@ namespace Netduino.Foundation.Sensors.Light
             }
             set
             {
-                _tsl2561.WriteUShort((byte) Registers.ThresholdHigh, value, ByteOrder.LittleEndian);
+                _tsl2561.WriteUShort((byte) (Registers.ThresholdHigh + WORD_MODE_BIT), value, ByteOrder.LittleEndian);
             }
         }
 
@@ -404,6 +429,10 @@ namespace Netduino.Foundation.Sensors.Light
         public void ClearInterrupt()
         {
             _tsl2561.WriteByte(CLEAR_INTERRUPT_BIT);
+            if (_interruptPin != null)
+            {
+                _interruptPin.ClearInterrupt();
+            }
         }
 
         /// <summary>
@@ -426,24 +455,6 @@ namespace Netduino.Foundation.Sensors.Light
             byte timing = _tsl2561.ReadRegister((byte) Registers.Timing);
             timing &= 0xf7; //  ~0x08;
             _tsl2561.WriteRegister((byte) Registers.Timing, timing);
-        }
-
-        /// <summary>
-        /// Set the upper and lower limits for the threshold values.
-        /// </summary>
-        /// <remarks>
-        /// Interrupts can be set to be generated on every conversion or when the
-        /// conversions are outside of the threshold limits for a specified number
-        /// of consecutive conversions.
-        /// </remarks>
-        /// <param name="lowerLimit">Lower threshold, light levels lower than this value will generate and interrupt.</param>
-        /// <param name="upperLimit">Upper threshold, light levels higher than this will generate an interrupt.</param>
-        public void SetInteruptThreshold(ushort lowerLimit, ushort upperLimit)
-        {
-            ushort[] thresholdValues = new ushort[2];
-            thresholdValues[0] = lowerLimit;
-            thresholdValues[1] = upperLimit;
-            _tsl2561.WriteUShorts((byte) Registers.ThresholdLow, thresholdValues, ByteOrder.LittleEndian);
         }
 
         /// <summary>
@@ -473,7 +484,7 @@ namespace Netduino.Foundation.Sensors.Light
                 {
                     _interruptPin.Dispose();
                 }
-                _interruptPin = new InterruptPort(pin, false, Port.ResistorMode.Disabled, Port.InterruptMode.InterruptEdgeLow);
+                _interruptPin = new InterruptPort(pin, false, Port.ResistorMode.PullUp, Port.InterruptMode.InterruptEdgeLow);
                 _interruptPin.OnInterrupt += _interruptPin_OnInterrupt;
             }
             else
@@ -500,7 +511,17 @@ namespace Netduino.Foundation.Sensors.Light
             ClearInterrupt();
             _tsl2561.WriteRegister((byte) Registers.InterruptControl, registerValue);
         }
-        #endregion
+
+        public void RegisterContents()
+        {
+            byte[] registers = _tsl2561.ReadRegisters((byte) Registers.Control, 16);
+            for (int index = 0; index < 16; index++)
+            {
+                Debug.Print("Register " + index.ToString() + " : " + registers[index].ToString());
+            }
+        }
+
+        #endregion Methods
 
         #region Interrupt handlers
 
