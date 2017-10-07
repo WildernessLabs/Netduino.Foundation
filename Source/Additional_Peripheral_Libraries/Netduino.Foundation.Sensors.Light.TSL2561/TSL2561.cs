@@ -145,17 +145,26 @@ namespace Netduino.Foundation.Sensors.Light
                     {
                         result = 0.0304 * d0 - 0.062 * d0 * System.Math.Pow(ratio, 1.4);
                     }
-                    if (ratio < 0.61)
+                    else
                     {
-                        result = 0.0224 * d0 - 0.031 * d1;
-                    }
-                    if (ratio < 0.80)
-                    {
-                        result = 0.0128 * d0 - 0.0153 * d1;
-                    }
-                    if (ratio < 1.30)
-                    {
-                        result = 0.00146 * d0 - 0.00112 * d1;
+                        if (ratio < 0.61)
+                        {
+                            result = 0.0224 * d0 - 0.031 * d1;
+                        }
+                        else
+                        {
+                            if (ratio < 0.80)
+                            {
+                                result = 0.0128 * d0 - 0.0153 * d1;
+                            }
+                            else
+                            {
+                                if (ratio < 1.30)
+                                {
+                                    result = 0.00146 * d0 - 0.00112 * d1;
+                                }
+                            }
+                        }
                     }
                 }
                 return(result);
