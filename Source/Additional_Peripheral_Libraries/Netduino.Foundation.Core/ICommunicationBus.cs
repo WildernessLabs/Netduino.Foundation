@@ -96,7 +96,7 @@ namespace Netduino.Foundation.Core
 		/// </summary>
 		/// <param name="address">First register address to read from.</param>
 		/// <param name="number">Number of unsigned shorts to read.</param>
-		/// <param name="order">Order of the bytes (Little or Big endian)</params>
+		/// <param name="order">Order of the bytes (Little or Big endian)</param>
 		/// <returns>Array of unsigned shorts.</returns>
         ushort[] ReadUShorts(byte address, ushort number, ByteOrder order = ByteOrder.LittleEndian);
 
