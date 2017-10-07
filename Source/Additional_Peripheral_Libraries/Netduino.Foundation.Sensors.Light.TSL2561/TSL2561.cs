@@ -512,15 +512,6 @@ namespace Netduino.Foundation.Sensors.Light
             _tsl2561.WriteRegister((byte) Registers.InterruptControl, registerValue);
         }
 
-        public void RegisterContents()
-        {
-            byte[] registers = _tsl2561.ReadRegisters((byte) Registers.Control, 16);
-            for (int index = 0; index < 16; index++)
-            {
-                Debug.Print("Register " + index.ToString() + " : " + registers[index].ToString());
-            }
-        }
-
         #endregion Methods
 
         #region Interrupt handlers
