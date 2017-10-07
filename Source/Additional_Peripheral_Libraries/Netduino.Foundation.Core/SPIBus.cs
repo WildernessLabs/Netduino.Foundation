@@ -1,11 +1,41 @@
 ﻿using System;
+using Microsoft.SPOT.Hardware;
+
 namespace Netduino.Foundation.Core
 {
     public class SPIBus : ICommunicationBus
     {
-		public SPIBus()
+		#region Member variables / fields
+
+		/// <summary>
+		/// SPI bus object.
+		/// </summary>
+		SPI _spi = null;
+
+		#endregion Member variables / fields
+
+		#region Constructor(s)
+ 
+		/// <summary>
+		/// Default constructor for the SPIBus.
+		/// </summary>
+		/// <remarks>
+		/// This is private to prevent the programmer using it.
+		/// </remarks>
+		private SPIBus()
 		{
 		}
+
+		/// <summary>
+		/// Create a new SPIBus object.
+		/// </summary>
+		/// <param name="configuration">SPI bus configuration.</param>
+		public SPIBus(SPI.Configuration configuration)
+		{
+			_spi = new SPI(configuration);
+		}
+
+		#endregion Constructor(s)
 
 		/// <summary>
 		/// Write a single byte to the device.
@@ -13,7 +43,7 @@ namespace Netduino.Foundation.Core
 		/// <param name="value">Value to be written (8-bits).</param>
 		public void WriteByte(byte value)
 		{
-			throw new NotImplementedException();
+			WriteBytes(new byte[] { value });
 		}
 
 		/// <summary>
@@ -25,7 +55,7 @@ namespace Netduino.Foundation.Core
 		/// <param name="values">Values to be written.</param>
 		public void WriteBytes(byte[] values)
 		{
-			throw new NotImplementedException();
+			_spi.Write(values);
 		}
 
 		/// <summary>
@@ -36,7 +66,18 @@ namespace Netduino.Foundation.Core
         /// <param name="order">Indicate if the data should be written as big or little endian.</param>
         public void WriteUShort(byte address, ushort value, ByteOrder order)
 		{
-			throw new NotImplementedException();
+			byte[] data = new byte[2];
+			if (order == ByteOrder.LittleEndian)
+			{
+				data[0] = (byte)(value & 0xff);
+				data[1] = (byte)((value >> 8) & 0xff);
+			}
+			else
+			{
+				data[0] = (byte)((value >> 8) & 0xff);
+				data[1] = (byte)(value & 0xff);
+			}
+			WriteRegisters(address, data);
 		}
 
 		/// <summary>
@@ -50,7 +91,21 @@ namespace Netduino.Foundation.Core
         /// <param name="order">Indicate if the data should be written as big or little endian.</param>
         public void WriteUShorts(byte address, ushort[] values, ByteOrder order)
 		{
-			throw new NotImplementedException();
+			byte[] data = new byte[2 * values.Length];
+			for (int index = 0; index < values.Length; index++)
+			{
+				if (order == ByteOrder.LittleEndian)
+				{
+					data[index * 2] = (byte) (values[index] & 0xff);
+					data[(index * 2) + 1] = (byte) ((values[index] >> 8) & 0xff);
+				}
+				else
+				{
+					data[index * 2] = (byte) ((values[index] >> 8) & 0xff);
+					data[(index * 2) + 1] = (byte) (values[index] & 0xff);
+				}
+			}
+			WriteRegisters(address, data);
 		}
 
         /// <summary>
@@ -58,9 +113,9 @@ namespace Netduino.Foundation.Core
         /// </summary>
         /// <param name="address">Address of the register to write to.</param>
         /// <param name="value">Data to write into the register.</param>
-        public void WriteRegister(byte register, byte value)
-        {
-            throw new NotImplementedException();
+        public void WriteRegister(byte address, byte value)
+		{
+			WriteRegisters(address, new byte[] { value });
         }
 
         /// <summary>
@@ -68,9 +123,12 @@ namespace Netduino.Foundation.Core
         /// </summary>
         /// <param name="address">Address of the first register to write to.</param>
         /// <param name="data">Data to write into the registers.</param>
-        public void WriteRegisters(byte address, byte[] data)
+        public void WriteRegisters(byte address, byte[] values)
         {
-            throw new NotImplementedException();
+			byte[] data = new byte[values.Length + 1];
+			data[0] = address;
+			Array.Copy(values, 0, data, 1, values.Length);
+			WriteBytes(data);
         }
         /// <summary>
 		/// Write data to the device and also read some data from the device.
@@ -82,7 +140,9 @@ namespace Netduino.Foundation.Core
 		/// <param name="length">Amount of data to read from the device.</param>
 		public byte[] WriteRead(byte[] write, ushort length)
 		{
-			throw new NotImplementedException();
+			byte[] result = new byte[length];
+			_spi.WriteRead(write, result);
+			return (result);
 		}
 
         /// <summary>
@@ -91,7 +151,7 @@ namespace Netduino.Foundation.Core
         /// <param name="address">Address of the register to read.</param>
         public byte ReadRegister(byte address)
         {
-            throw new NotImplementedException();
+			return(WriteRead(new byte[] { address }, 1)[0]);
         }
 
         /// <summary>
@@ -101,7 +161,7 @@ namespace Netduino.Foundation.Core
 		/// <param name="length">Number of bytes to read from the device.</param>
 		public byte[] ReadRegisters(byte address, ushort length)
 		{
-			throw new NotImplementedException();
+			return (WriteRead(new byte[] { address }, length));
 		}
 
         /// <summary>
