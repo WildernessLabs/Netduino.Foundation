@@ -13,15 +13,64 @@ namespace Netduino.Foundation.Sensors.Barometric
 	/// from the Bosch BME280 sensor.
 	/// </remarks>
 	public class BME280
-	{
-		/// <summary>
+    {
+        #region Enums
+
+        /// <summary>
 		/// Registers used to control the BME280.
 		/// </summary>
-		enum Registers : byte { Humidity = 0xf2, Status = 0xf3, Measurement = 0xf4, Configuration = 0xf5, Reset = 0xe0 };
+		private enum Registers : byte { Humidity = 0xf2, Status = 0xf3, Measurement = 0xf4, Configuration = 0xf5, Reset = 0xe0 };
 
-		#region Internal Structures
+        /// <summary>
+        /// Valid oversampling values.
+        /// </summary>
+        /// <remarks>
+        ///     000 - Data output set to 0x8000
+        ///     001 - Oversampling x1
+        ///     010 - Oversampling x2
+        ///     011 - Oversampling x4
+        ///     100 - Oversampling x8
+        ///     101, 110, 111 - Oversampling x16
+        /// </remarks>
+        public enum Oversample : byte { Skip = 0, OversampleX1, OversampleX2, OversampleX4, OversampleX8, OversampleX16 };
 
-		/// <summary>
+        /// <summary>
+        /// Valid values for the operating mode of the sensor.
+        /// </summary>
+        /// <remarks>
+        ///     00 - Sleep mode
+        ///     01 and 10 - Forced mode
+        ///     11 - Normal mode
+        /// </remarks>
+        public enum Modes : byte { Sleep = 0, Forced = 1, Normal = 3 };
+
+        /// <summary>
+        /// Valid values for the inactive duration in normal mode.
+        /// </summary>
+        /// <remarks>
+        ///     000 - 0.5 milliseconds
+        ///     001 - 62.5 milliseconds
+        ///     010 - 125 milliseconds
+        ///     011 - 250 milliseconds
+        ///     100 - 500 milliseconds
+        ///     101 - 1000 milliseconds
+        ///     110 - 10 milliseconds
+        ///     111 - 20 milliseconds
+        ///     
+        /// See section 3.4 of the datasheet.
+        /// </remarks>
+        public enum StandbyDuration : byte { MsHalf = 0, Ms62Half, Ms125, Ms250, Ms500, Ms1000, Ms10, Ms20 };
+
+        /// <summary>
+        /// Valid filter co-efficient values.
+        /// </summary>
+        public enum FilterCoefficient : byte { Off = 0, Two, Four, Eight, Sixteen };
+
+        #endregion Enums
+
+        #region Internal Structures
+
+        /// <summary>
 		/// Compensation data.
 		/// </summary>
 		private struct CompensationData
@@ -89,30 +138,36 @@ namespace Netduino.Foundation.Sensors.Barometric
 		/// <summary>
 		/// Temperature over sampling configuration.
 		/// </summary>
-		public byte TemperatureOverSampling { get; set; }
+        public Oversample TemperatureOverSampling { get; set; }
 
 		/// <summary>
 		/// Pressure over sampling configuration.
 		/// </summary>
-		public byte PressureOversampling { get; set; }
+        /// <remarks>
+        public Oversample PressureOversampling { get; set; }
 
 		/// <summary>
 		/// Humidity over sampling configuration.
 		/// </summary>
-		public byte HumidityOverSampling { get; set; }
+        public Oversample HumidityOverSampling { get; set; }
 
 		/// <summary>
 		/// Set the operating mode for the sensor.
 		/// </summary>
-		public byte Mode { get; set; }
+		public Modes Mode { get; set; }
 
 		/// <summary>
+        /// Set the standby period for the sensor.
 		/// </summary>
-		public byte Standby { get; set; }
+		public StandbyDuration Standby { get; set; }
 
 		/// <summary>
+        /// Determine the time constant for the IIR filter.
 		/// </summary>
-		public byte Filter { get; set; }
+        /// <remarks>
+        /// See section 3.44 of the datasheet for more informaiton.
+        /// </remarks>
+        public FilterCoefficient Filter { get; set; }
 
 		#endregion Properties
 
@@ -145,17 +200,17 @@ namespace Netduino.Foundation.Sensors.Barometric
 				throw new ArgumentOutOfRangeException("speed", "Speed should be 10 KHz to 3,400 KHz.");
 			}
 
-			_bme280 = (ICommunicationBus) (new I2CDevice(new I2CDevice.Configuration(address, speed)));
+			_bme280 = (ICommunicationBus) (new I2CBus(address, speed));
 			ReadCompensationData();
 			//
 			//  Update the configuration information and start sampling.
 			//
-			TemperatureOverSampling = 1;
-			PressureOversampling = 1;
-			HumidityOverSampling = 1;
-			Mode = 3;
-			Filter = 0;
-			Standby = 0;
+            TemperatureOverSampling = Oversample.OversampleX1;
+            PressureOversampling = Oversample.OversampleX1;
+			HumidityOverSampling = Oversample.OversampleX1;
+			Mode = Modes.Normal;
+            Filter = FilterCoefficient.Off;
+            Standby = StandbyDuration.MsHalf;
 			UpdateConfiguration();
 		}
 
@@ -183,12 +238,13 @@ namespace Netduino.Foundation.Sensors.Barometric
 			//
 			_bme280.WriteRegister((byte) Registers.Measurement, 0x00);
 
-			byte data = (byte)(((Standby << 5) & 0xe0) | ((Filter << 2) & 0x1c));
+			byte data = (byte) (((((byte) Standby) << 5) & 0xe0) | ((((byte) Filter) << 2) & 0x1c));
 			_bme280.WriteRegister((byte) Registers.Configuration, data);
-			data = (byte)(HumidityOverSampling & 0x07);
+			data = (byte) (((byte) HumidityOverSampling) & 0x07);
 			_bme280.WriteRegister((byte) Registers.Humidity, data);
-			data = (byte)(((TemperatureOverSampling << 5) & 0xe0) | ((PressureOversampling << 2) & 0x1c) |
-					(Mode & 0x03));
+			data = (byte) (((((byte) TemperatureOverSampling) << 5) & 0xe0) |
+                   ((((byte) PressureOversampling) << 2) & 0x1c) |
+				   (((byte) Mode) & 0x03));
 			_bme280.WriteRegister((byte) Registers.Measurement, data);
 		}
 
