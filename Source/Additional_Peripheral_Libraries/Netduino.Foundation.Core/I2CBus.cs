@@ -52,7 +52,7 @@ namespace Netduino.Foundation.Core
 				I2CDevice.CreateWriteTransaction(values)
 			};
 			int retryCount = 0;
-			while (_device.Execute(transaction, 100) != 2)
+			while (_device.Execute(transaction, 100) != values.Length)
 			{
 				if (retryCount > 3)
 				{
