@@ -1,12 +1,4 @@
-﻿//
-//  This software is distributed under the terms of the Apache licence agreement.
-//
-//  Apache License Version 2.0, January 2004
-//
-//  The full text of the Apache 2.0 licence agreement can be found here:
-//  <http://www.apache.org/licenses/>
-//
-using System;
+﻿using System;
 using Microsoft.SPOT.Hardware;
 using Microsoft.SPOT;
 
