@@ -9,7 +9,7 @@ namespace Netduino.Foundation.Sensors.Barometric
 	/// BME280 Temperature, Pressure and Humidity Sensor.
 	/// </summary>
 	/// <remarks>
-	/// This class implements the functionality necessary to read the temperature, pressure and humidty
+	/// This class implements the functionality necessary to read the temperature, pressure and humidity
 	/// from the Bosch BME280 sensor.
 	/// </remarks>
 	public class BME280
