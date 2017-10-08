@@ -7,7 +7,6 @@ The BME280 is a combined temperature, pressure and humidity sensor.
 The BME280 sensor is available as a breakout board from the following suppliers:
 
 * [Sparkfun BME280](https://www.sparkfun.com/products/13676)
-* [Adafruit BME280](https://www.adafruit.com/product/2652)
 
 ## Hardware
 
