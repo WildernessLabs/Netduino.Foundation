@@ -19,6 +19,8 @@ The basic configuration of the TSL2561 requires only the data and power connecti
 
 ![TSL2561 on Breadboard](TSL2561OnBreadboard.png)
 
+Note that the connection between the `Int` pin and `D7` is only required when using the device in interrupt mode.
+
 ## Software
 
 Applications using the TSL2561 can operating in two ways:
