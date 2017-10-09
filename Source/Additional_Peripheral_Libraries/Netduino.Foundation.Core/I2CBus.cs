@@ -5,10 +5,26 @@ namespace Netduino.Foundation.Core
 {
     public class I2CBus : ICommunicationBus
     {
+		#region Member variables / fields.
+
 		/// <summary>
 		/// I2C bus used to communicate with a device (sensor etc.).
 		/// </summary>
-		private I2CDevice _device;
+		/// <remarks>
+		/// This I2CDevice is static and shared across all instances of the I2CBus.
+		/// Communication with difference devices is made possible by changing the 
+		//	Config property of the I2CDevice.
+		/// </remarks>
+		private static I2CDevice _device = null;
+
+		/// <summary>
+		///	Configuration property for this I2CDevice.
+		/// </summary>
+        private I2CDevice.Configuration _configuration;
+
+		#endregion Member variables / fields.
+
+		#region Constructors
 
 		/// <summary>
 		/// Default constructor for the I2CBus class.  This is private to prevent the
@@ -25,8 +41,16 @@ namespace Netduino.Foundation.Core
 		/// <param name="speed">Bus speed in kHz.</param>
 		public I2CBus(byte address, ushort speed)
 		{
-			_device = new I2CDevice(new I2CDevice.Configuration(address, speed));
+            _configuration = new I2CDevice.Configuration(address, speed);
+            if (_device == null)
+            {
+                _device = new I2CDevice(_configuration);
+            }
 		}
+
+		#endregion Constructors
+
+		#region ICommunicationBus methods.
 
 		/// <summary>
 		/// Write a single byte to the device.
@@ -47,7 +71,8 @@ namespace Netduino.Foundation.Core
 		/// <param name="values">Values to be written.</param>
 		public void WriteBytes(byte[] values)
 		{
-			I2CDevice.I2CTransaction[] transaction =
+            _device.Config = _configuration;
+            I2CDevice.I2CTransaction[] transaction =
 			{
 				I2CDevice.CreateWriteTransaction(values)
 			};
@@ -122,7 +147,8 @@ namespace Netduino.Foundation.Core
 		/// <param name="length">Amount of data to read from the device.</param>
 		public byte[] WriteRead(byte[] write, ushort length)
 		{
-			byte[] read = new byte[length];
+            _device.Config = _configuration;
+            byte[] read = new byte[length];
 			I2CDevice.I2CTransaction[] transaction =
 			{
 				I2CDevice.CreateWriteTransaction(write),
@@ -238,5 +264,7 @@ namespace Netduino.Foundation.Core
 			}
 			return(result);
 		}
+
+		#endregion ICommunicationBus methods.
     }
 }
