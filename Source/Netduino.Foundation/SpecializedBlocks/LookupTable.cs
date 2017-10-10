@@ -88,9 +88,13 @@ namespace Netduino.Foundation.SpecializedBlocks
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator ()
         {
-            for (var i = 0; i < numEntries; i++) {
-                yield return entries[i].X; // Probably not too useful
-            }
+            //for (var i = 0; i < numEntries; i++) {
+            //    yield return entries[i].X; // Probably not too useful
+            //}
+            
+            // TODO: getting random build errors
+
+            throw new NotImplementedException();
         }
     }
 }
