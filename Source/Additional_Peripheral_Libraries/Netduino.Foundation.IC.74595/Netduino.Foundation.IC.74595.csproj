@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <NetMfTargetsBaseDir Condition="'$(NetMfTargetsBaseDir)'==''">$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\</NetMfTargetsBaseDir>
@@ -24,7 +24,8 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
-    <DefineConstants></DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoStdLib>false</NoStdLib>
@@ -41,7 +42,7 @@
     <None Include="readme.md" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Additional_Peripheral_Libraries\Netduino.Foundation.Core\Netduino.Foundation.Core.csproj">
+    <ProjectReference Include="..\Netduino.Foundation.Core\Netduino.Foundation.Core.csproj">
       <Project>{FEAB94D0-0A87-4962-9D0E-87780CFF0BCC}</Project>
       <Name>Netduino.Foundation.Core</Name>
     </ProjectReference>

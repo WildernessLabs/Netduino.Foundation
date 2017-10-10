@@ -3,7 +3,7 @@
   <metadata>
     <id>WildernessLabs.Netduino.Foundation.Sensors.Motion.FXAS21002</id>
     <title>Netduino.Foundation.Sensors.Motion.FXAS21002</title>
-    <version>1.0.0.0</version>
+    <version>$version$</version>
     <authors>Mark Stevens</authors>
     <owners>Wilderness Labs</owners>
     <licenseUrl>https://github.com/WildernessLabs/Netduino.Foundation/blob/master/LICENSE</licenseUrl>
