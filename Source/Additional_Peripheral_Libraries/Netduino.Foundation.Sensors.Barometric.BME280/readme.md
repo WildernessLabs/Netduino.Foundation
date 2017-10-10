@@ -7,6 +7,7 @@ The BME280 is a combined temperature, pressure and humidity sensor.
 The BME280 sensor is available as a breakout board from the following suppliers:
 
 * [Sparkfun BME280](https://www.sparkfun.com/products/13676)
+* [Adafruit BME280](https://www.adafruit.com/product/2652)
 
 ## Hardware
 
@@ -18,6 +19,8 @@ The BME280 can be connected using I2C or SPI.  Only 4 wires are required when us
 * SCL
 
 ![BME280 on Breadboard](BME280OnBreadboard.png)
+
+It should be noted that the Sparkfun board is supplied with pull-up resistors enabled by default.  The Adafruit board does not have any pull-up resistors onboard.  It is therefore necessary to add two pull-up resistors (4.7 K&Omega; should be adequate for a single device) between 3.3V and SDA and 3.3V and SCL.
 
 ## Software
 
