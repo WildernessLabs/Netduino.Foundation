@@ -57,9 +57,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Core", "Additional_Peripheral_Libraries\Netduino.Foundation.Core\Netduino.Foundation.Core.csproj", "{FEAB94D0-0A87-4962-9D0E-87780CFF0BCC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.IC.74595", "Netduino.Foundation.IC.74595\Netduino.Foundation.IC.74595.csproj", "{B8ECB2CF-11CF-4C06-A817-CC7700360168}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.IC.74595", "Additional_Peripheral_Libraries\Netduino.Foundation.IC.74595\Netduino.Foundation.IC.74595.csproj", "{B8ECB2CF-11CF-4C06-A817-CC7700360168}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Servo.ArduinoLib", "Netduino.Foundation.Servo.ArduinoLib\Netduino.Foundation.Servo.ArduinoLib.csproj", "{67C83896-CD66-4989-83AD-6295A8DF973B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Servo.ArduinoLib", "Additional_Peripheral_Libraries\Netduino.Foundation.Servo.ArduinoLib\Netduino.Foundation.Servo.ArduinoLib.csproj", "{67C83896-CD66-4989-83AD-6295A8DF973B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
