@@ -14,19 +14,19 @@
 <!--    <releaseNotes>First release on Nuget.</releaseNotes> -->
     <copyright>Copyright 2017 Wilderness Labs</copyright>
     <tags>NETMF Netduino</tags>
+    <!-- NET MF assemblies needed for core to build -->
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="Microsoft.SPOT.Hardware" targetFramework="netmf" />
+      <frameworkAssembly assemblyName="Microsoft.SPOT.Hardware.PWM" targetFramework="netmf" />
+      <frameworkAssembly assemblyName="Microsoft.SPOT.Hardware.SerialPort" targetFramework="netmf" />
+      <frameworkAssembly assemblyName="Microsoft.SPOT.Native" targetFramework="netmf" />
+      <frameworkAssembly assemblyName="Microsoft.SPOT.TinyCore" targetFramework="netmf" />
+    </frameworkAssemblies>
   </metadata>
+  <!-- files to put into the nuget package. target is where they get put into the package. -->
   <files>
     <file src="bin/Release/Netduino.Foundation.*" target="lib/netmf43" />
     <file src="bin/Release/le/Netduino.Foundation.*" target="lib/netmf43/le" />
     <file src="bin/Release/be/Netduino.Foundation.*" target="lib/netmf43/be" />
-
-    <!-- how to add these references?? -->
-    <!--<file src="Microsoft.SPOT.Hardware" target="lib" />-->
-    <!--
-    "Microsoft.SPOT.Hardware.PWM"
-    "Microsoft.SPOT.Hardware.SerialPort"
-    "Microsoft.SPOT.Native"
-    "Microsoft.SPOT.TinyCore"
-    -->
   </files>
 </package>
