@@ -492,6 +492,10 @@ namespace Netduino.Foundation.Sensors.Motion
             }
             set
             {
+                if (value == 0)
+                {
+                    throw new ArgumentException("A value of 0 can result in undesirable behavior.");
+                }
                 _adxl345.WriteRegister((byte) Registers.FreeFallThreshold, value);
             }
         }
@@ -516,6 +520,10 @@ namespace Netduino.Foundation.Sensors.Motion
             }
             set
             {
+                if (value == 0)
+                {
+                    throw new ArgumentException("A value of 0 can result in undesirable behavior.");
+                }
                 _adxl345.WriteRegister((byte) Registers.FreeFallTime, value);
             }
         }
@@ -584,7 +592,7 @@ namespace Netduino.Foundation.Sensors.Motion
         }
 
         /// <summary>
-        /// Indicated if a Trigger event has occurred.
+        /// Indicate if a Trigger event has occurred.
         /// </summary>
         public bool FIFOTriggerEventOccurred
         {
