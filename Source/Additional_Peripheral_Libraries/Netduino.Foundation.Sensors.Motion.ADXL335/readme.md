@@ -13,7 +13,7 @@ The ADXL335 sensor can be purchased on a breakout board from the following suppl
 
 ![ADXL335 on Breadboard](ADXL335OnBreadboard.png)
 
-The datasheet notes that bypass capacitors should be installed for the X, Y and Z outputs from the sensor.  Both the Sparkfun and Adafruit breakout boards have `0.1 &mu;F capacitors installed on the board.
+The datasheet notes that bypass capacitors should be installed for the X, Y and Z outputs from the sensor.  Both the Sparkfun and Adafruit breakout boards have `0.1uF` capacitors installed on the board.
 
 ## Software
 
