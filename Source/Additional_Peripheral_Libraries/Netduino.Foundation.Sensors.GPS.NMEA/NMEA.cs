@@ -13,7 +13,7 @@ namespace Netduino.Foundation.Sensors.GPS
         #region Member variables / fields
 
         /// <summary>
-        /// NMEA decoders available tothe GPS.
+        /// NMEA decoders available to the GPS.
         /// </summary>
         Hashtable _decoders = new Hashtable();
 
@@ -69,6 +69,9 @@ namespace Netduino.Foundation.Sensors.GPS
         /// <summary>
         /// GPS message ready for processing.
         /// </summary>
+        /// <remarks>
+        /// Unknown message types will be discarded.
+        /// </remarks>
         /// <param name="line">GPS text for processing.</param>
         void _gps_OnLineReady(string line)
         {
