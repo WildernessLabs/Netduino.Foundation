@@ -17,7 +17,8 @@ namespace Netduino.Foundation.Sensors.GPS
 		#endregion Enums
 
 		/// <summary>
-		/// Position recorded in degrees, minutes and seconds.
+		/// Position recorded in degrees and minutes along with an indiction of the direction
+		/// of the position..
 		/// </summary>
 		public struct DMPosition
 		{

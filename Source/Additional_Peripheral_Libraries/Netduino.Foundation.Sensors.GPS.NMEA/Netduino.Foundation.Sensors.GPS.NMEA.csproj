@@ -45,7 +45,7 @@
     <Compile Include="GSVDecoder.cs" />
     <Compile Include="RMCDecoder.cs" />
     <Compile Include="VTGDecoder.cs" />
-    <Compile Include="Location.cs" />
+    <Compile Include="GPSLocation.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Netduino.Foundation.Core\Netduino.Foundation.Core.csproj">
