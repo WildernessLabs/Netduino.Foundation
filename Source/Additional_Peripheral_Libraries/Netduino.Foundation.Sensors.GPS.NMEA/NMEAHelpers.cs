@@ -3,7 +3,7 @@
 namespace Netduino.Foundation.Sensors.GPS
 {
 	/// <summary>
-	/// Provivde common functionality for the decode classes.
+	/// Provide common functionality for the decode classes.
 	/// </summary>
 	public class NMEAHelpers
 	{

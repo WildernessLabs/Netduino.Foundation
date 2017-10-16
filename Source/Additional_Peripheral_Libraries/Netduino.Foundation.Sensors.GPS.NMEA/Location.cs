@@ -10,7 +10,7 @@ namespace Netduino.Foundation.Sensors.GPS
 		#region Enums
 
 		/// <summary>
-		/// Direction indicatoe.
+		/// Direction indicator.
 		/// </summary>
 		public enum DirectionIndicator { North, South, East, West };
 
