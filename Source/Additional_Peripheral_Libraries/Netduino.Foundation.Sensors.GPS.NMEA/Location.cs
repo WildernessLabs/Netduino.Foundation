@@ -43,7 +43,7 @@ namespace Netduino.Foundation.Sensors.GPS
 		#region Constructors
 
 		/// <summary>
-		/// Default constructor is privat to prevent it being used.
+		/// Default constructor is private to prevent it being used.
 		/// </summary>
 		private GPSLocation()
 		{
