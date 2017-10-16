@@ -132,6 +132,17 @@ namespace Netduino.Foundation.Core
                             throw new Exception("Buffer overflow");
                         }
                     }
+                    int eolMarkerPosition = _buffer.IndexOf(_endOfLine);
+                    while (eolMarkerPosition > 0)
+                    {
+                        string line = _buffer.Substring(0, eolMarkerPosition - 2);
+                        _buffer = _buffer.Substring(eolMarkerPosition + 2);
+                        eolMarkerPosition = _buffer.IndexOf(_endOfLine);
+                        if (OnLineReady != null)
+                        {
+                            OnLineReady(line);   
+                        }
+                    }
                 }
             }
         }
