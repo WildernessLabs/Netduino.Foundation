@@ -77,17 +77,26 @@ namespace Netduino.Foundation.Sensors.GPS
         {
             if (line.Length > 0)
             {
-                string[] elements = line.Split(',');
-                if (elements.Length > 0)
+                int checksumLocation = line.LastIndexOf('*');
+                if (checksumLocation > 0)
                 {
-                    INMEADecoder decoder = (INMEADecoder) _decoders[elements[0]];
-                    if (decoder != null)
+                    string checksumDigits = line.Substring(checksumLocation + 1);
+                    string actualData = line.Substring(0, checksumLocation);
+                    if (Helpers.Hexadecimal(Helpers.XORChecksum(actualData.Substring(1))) == ("0x" + checksumDigits))
                     {
-                        decoder.Process(elements);
-                    }
-                    else
-                    {
-                        throw new Exception("No registered decoder for " + elements[0]);
+                        string[] elements = actualData.Split(',');
+                        if (elements.Length > 0)
+                        {
+                            INMEADecoder decoder = (INMEADecoder)_decoders[elements[0]];
+                            if (decoder != null)
+                            {
+                                decoder.Process(elements);
+                            }
+                            else
+                            {
+                                throw new Exception("No registered decoder for " + elements[0]);
+                            }
+                        }
                     }
                 }
             }

@@ -80,7 +80,7 @@ namespace Netduino.Foundation.Core
         /// <returns>XOR checksum for the sting.</returns>
         public static byte XORChecksum(string data)
         {
-            return XORChecksum(Encoding.UTF8.GetBytes(data));
+            return(XORChecksum(Encoding.UTF8.GetBytes(data)));
         }
 
         /// <summary>
