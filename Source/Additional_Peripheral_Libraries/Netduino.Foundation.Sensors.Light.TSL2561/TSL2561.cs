@@ -2,6 +2,7 @@
 using Microsoft.SPOT.Hardware;
 using Netduino.Foundation.Core;
 using Microsoft.SPOT;
+using Spot = Microsoft.SPOT.Hardware;
 
 namespace Netduino.Foundation.Sensors.Light
 {
@@ -484,7 +485,7 @@ namespace Netduino.Foundation.Sensors.Light
                 {
                     _interruptPin.Dispose();
                 }
-                _interruptPin = new InterruptPort(pin, false, Port.ResistorMode.PullUp, Port.InterruptMode.InterruptEdgeLow);
+                _interruptPin = new InterruptPort(pin, false, Spot.Port.ResistorMode.PullUp, Spot.Port.InterruptMode.InterruptEdgeLow);
                 _interruptPin.OnInterrupt += _interruptPin_OnInterrupt;
             }
             else

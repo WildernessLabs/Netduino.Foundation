@@ -1,6 +1,7 @@
 ﻿using System;
 using Netduino.Foundation.Core;
 using Microsoft.SPOT.Hardware;
+using Spot = Microsoft.SPOT.Hardware;
 
 namespace Netduino.Foundation.Sensors.Motion
 {
@@ -759,12 +760,12 @@ namespace Netduino.Foundation.Sensors.Motion
             Reset();
             if (interrupt1Pin != Cpu.Pin.GPIO_NONE)
             {
-                _interrupt1 = new InterruptPort(interrupt1Pin, false, Port.ResistorMode.Disabled, Port.InterruptMode.InterruptEdgeHigh);
+                _interrupt1 = new InterruptPort(interrupt1Pin, false, Spot.Port.ResistorMode.Disabled, Spot.Port.InterruptMode.InterruptEdgeHigh);
                 _interrupt1.OnInterrupt += _interruptPin_OnInterrupt;
             }
             if (interrupt2Pin != Cpu.Pin.GPIO_NONE)
             {
-                _interrupt2 = new InterruptPort(interrupt2Pin, false, Port.ResistorMode.Disabled, Port.InterruptMode.InterruptEdgeHigh);
+                _interrupt2 = new InterruptPort(interrupt2Pin, false, Spot.Port.ResistorMode.Disabled, Spot.Port.InterruptMode.InterruptEdgeHigh);
                 _interrupt2.OnInterrupt += _interruptPin_OnInterrupt;
             }
         }
@@ -809,7 +810,7 @@ namespace Netduino.Foundation.Sensors.Motion
         /// </summary>
         /// <param name="port">InterruptPort to check and possibly reconfigure.</param>
         /// <param name="mode">New mode for the port.</param>
-        private void SetInterruptMode(InterruptPort port, Port.InterruptMode mode)
+        private void SetInterruptMode(InterruptPort port, Spot.Port.InterruptMode mode)
         {
             if ((port != null) && (port.Interrupt != mode))
             {
@@ -850,13 +851,13 @@ namespace Netduino.Foundation.Sensors.Motion
             if (invertInterrupts)
             {
                 data |= 0x20;
-                SetInterruptMode(_interrupt1, Port.InterruptMode.InterruptEdgeHigh);
-                SetInterruptMode(_interrupt2, Port.InterruptMode.InterruptEdgeHigh);
+                SetInterruptMode(_interrupt1, Spot.Port.InterruptMode.InterruptEdgeHigh);
+                SetInterruptMode(_interrupt2, Spot.Port.InterruptMode.InterruptEdgeHigh);
             }
             else
             {
-                SetInterruptMode(_interrupt1, Port.InterruptMode.InterruptEdgeLow);
-                SetInterruptMode(_interrupt2, Port.InterruptMode.InterruptEdgeLow);
+                SetInterruptMode(_interrupt1, Spot.Port.InterruptMode.InterruptEdgeLow);
+                SetInterruptMode(_interrupt2, Spot.Port.InterruptMode.InterruptEdgeLow);
             }
             if (fullResolution)
             {

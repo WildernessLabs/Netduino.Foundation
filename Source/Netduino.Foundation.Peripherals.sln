@@ -55,8 +55,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Temperature.DS18B20", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Temperature.DS18B20\Netduino.Foundation.Sensors.Temperature.DS18B20.csproj", "{17108484-8789-4439-9C53-A2AFAEEB54BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Core", "Additional_Peripheral_Libraries\Netduino.Foundation.Core\Netduino.Foundation.Core.csproj", "{FEAB94D0-0A87-4962-9D0E-87780CFF0BCC}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.IC.74595", "Additional_Peripheral_Libraries\Netduino.Foundation.IC.74595\Netduino.Foundation.IC.74595.csproj", "{B8ECB2CF-11CF-4C06-A817-CC7700360168}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Servo.ArduinoLib", "Additional_Peripheral_Libraries\Netduino.Foundation.Servo.ArduinoLib\Netduino.Foundation.Servo.ArduinoLib.csproj", "{67C83896-CD66-4989-83AD-6295A8DF973B}"
@@ -279,14 +277,6 @@ Global
 		{17108484-8789-4439-9C53-A2AFAEEB54BE}.Debug|x86.Build.0 = Debug|x86
 		{17108484-8789-4439-9C53-A2AFAEEB54BE}.Release|x86.ActiveCfg = Release|x86
 		{17108484-8789-4439-9C53-A2AFAEEB54BE}.Release|x86.Build.0 = Release|x86
-		{FEAB94D0-0A87-4962-9D0E-87780CFF0BCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FEAB94D0-0A87-4962-9D0E-87780CFF0BCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FEAB94D0-0A87-4962-9D0E-87780CFF0BCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FEAB94D0-0A87-4962-9D0E-87780CFF0BCC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FEAB94D0-0A87-4962-9D0E-87780CFF0BCC}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{FEAB94D0-0A87-4962-9D0E-87780CFF0BCC}.Debug|x86.Build.0 = Debug|Any CPU
-		{FEAB94D0-0A87-4962-9D0E-87780CFF0BCC}.Release|x86.ActiveCfg = Release|Any CPU
-		{FEAB94D0-0A87-4962-9D0E-87780CFF0BCC}.Release|x86.Build.0 = Release|Any CPU
 		{B8ECB2CF-11CF-4C06-A817-CC7700360168}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B8ECB2CF-11CF-4C06-A817-CC7700360168}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8ECB2CF-11CF-4C06-A817-CC7700360168}.Release|Any CPU.ActiveCfg = Release|Any CPU
