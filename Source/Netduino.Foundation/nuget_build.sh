@@ -1,1 +1,0 @@
-nuget pack Netduino.Foundation.nuspec -NoDefaultExcludes
