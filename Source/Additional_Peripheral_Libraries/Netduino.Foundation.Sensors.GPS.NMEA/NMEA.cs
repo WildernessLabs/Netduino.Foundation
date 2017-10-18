@@ -1,7 +1,8 @@
 ﻿using System;
 using System.IO.Ports;
 using System.Collections;
-using Netduino.Foundation.Core;
+using Netduino.Foundation.Devices;
+using Netduino.Foundation.Helpers;
 
 namespace Netduino.Foundation.Sensors.GPS
 {
@@ -82,7 +83,7 @@ namespace Netduino.Foundation.Sensors.GPS
                 {
                     string checksumDigits = line.Substring(checksumLocation + 1);
                     string actualData = line.Substring(0, checksumLocation);
-                    if (Helpers.Hexadecimal(Helpers.XORChecksum(actualData.Substring(1))) == ("0x" + checksumDigits))
+                    if (Debug.Hexadecimal(Checksum.XOR(actualData.Substring(1))) == ("0x" + checksumDigits))
                     {
                         string[] elements = actualData.Split(',');
                         if (elements.Length > 0)

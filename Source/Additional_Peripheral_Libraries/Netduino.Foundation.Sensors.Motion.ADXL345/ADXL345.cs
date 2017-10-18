@@ -1,5 +1,5 @@
 ﻿using System;
-using Netduino.Foundation.Core;
+using Netduino.Foundation.Devices;
 using Microsoft.SPOT.Hardware;
 using Spot = Microsoft.SPOT.Hardware;
 

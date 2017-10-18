@@ -2,15 +2,15 @@ using System;
 using System.Text;
 using Microsoft.SPOT;
 
-namespace Netduino.Foundation.Core
+namespace Netduino.Foundation.Helpers
 {
-    public class Helpers
+    public class Debug
     {
         /// <summary>
         /// Convert a byte into the hex representation of the value.
         /// </summary>
         /// <param name="b">Value to convert.</param>
-        /// <returns>two hexadecimal digits representing the byte.</returns>
+        /// <returns>Two hexadecimal digits representing the byte.</returns>
         public static string HexadecimalDigits(byte b)
         {
             char[] digits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
@@ -71,31 +71,6 @@ namespace Netduino.Foundation.Core
             {
                 Debug.Print(line);
             }
-        }
-
-        /// <summary>
-        /// Calculate a checksum for the string by XORing the bytes in the string.
-        /// </summary>
-        /// <param name="data">String to calculate the checksum for.</param>
-        /// <returns>XOR checksum for the sting.</returns>
-        public static byte XORChecksum(string data)
-        {
-            return(XORChecksum(Encoding.UTF8.GetBytes(data)));
-        }
-
-        /// <summary>
-        /// Generate a checksum by XORing all of the data in the array.
-        /// </summary>
-        /// <param name="data">Data to calculate the checksum for.</param>
-        /// <returns>XOR Checksum of the array of bytes.</returns>
-        public static byte XORChecksum(byte[] data)
-        {
-            byte checksum = 0;
-            for (int index = 0; index < data.Length; index++)
-            {
-                checksum ^= data[index];
-            }
-            return(checksum);
         }
     }
 }
