@@ -10,6 +10,7 @@
     <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <NetMfTargetsBaseDir Condition="'$(NetMfTargetsBaseDir)'==''">$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\</NetMfTargetsBaseDir>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -70,13 +71,14 @@
     <Compile Include="Messaging\Control.cs" />
     <Compile Include="Messaging\ControlServer.cs" />
     <Compile Include="Messaging\Message.cs" />
-    <Compile Include="FromCoreToBeOrganized\ByteOrderEnum.cs" />
-    <Compile Include="FromCoreToBeOrganized\Helpers.cs" />
-    <Compile Include="FromCoreToBeOrganized\I2CBus.cs" />
-    <Compile Include="FromCoreToBeOrganized\ICommunicationBus.cs" />
-    <Compile Include="FromCoreToBeOrganized\SerialTextFile.cs" />
-    <Compile Include="FromCoreToBeOrganized\SoftwareSPIBus.cs" />
-    <Compile Include="FromCoreToBeOrganized\SPIBus.cs" />
+    <Compile Include="Devices\Netduino\Enums.cs" />
+    <Compile Include="Devices\Netduino\I2CBus.cs" />
+    <Compile Include="Devices\Netduino\ICommunicationBus.cs" />
+    <Compile Include="Devices\Netduino\SerialTextFile.cs" />
+    <Compile Include="Devices\Netduino\SoftwareSPIBus.cs" />
+    <Compile Include="Devices\Netduino\SPIBus.cs" />
+    <Compile Include="Helpers\Checksum.cs" />
+    <Compile Include="Helpers\Debug.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Hardware" />
@@ -91,7 +93,6 @@
   <ItemGroup />
   <ItemGroup>
     <Folder Include="Sensors\Location\" />
-    <Folder Include="FromCoreToBeOrganized\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -99,4 +100,5 @@
   <Import Project="..\packages\NuGet.Build.Packaging.0.2.0\build\NuGet.Build.Packaging.targets" Condition="Exists('..\packages\NuGet.Build.Packaging.0.2.0\build\NuGet.Build.Packaging.targets')" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\$(TargetFrameworkVersion)\CSharp.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\$(TargetFrameworkVersion)\CSharp.targets')" />
   <Import Project="$([System.Environment]::GetFolderPath(SpecialFolder.LocalApplicationData))\.NETMicroFramework\xbuild\Microsoft\.NET Micro Framework\$(TargetFrameworkVersion)\CSharp.targets" Condition="!Exists('$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\$(TargetFrameworkVersion)\CSharp.targets')" />
+  <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
 </Project>

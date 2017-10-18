@@ -4,7 +4,7 @@ using Microsoft.SPOT;
 
 namespace Netduino.Foundation.Helpers
 {
-    public class Debug
+    public class DebugInformation
     {
         /// <summary>
         /// Convert a byte into the hex representation of the value.
