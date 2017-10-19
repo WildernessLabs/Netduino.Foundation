@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.IO.Ports;
 using System.Collections;
 using Netduino.Foundation.Devices;
@@ -21,7 +22,7 @@ namespace Netduino.Foundation.Sensors.GPS
         /// <summary>
         /// GPS serial input.
         /// </summary>
-        SerialTextFile _gps = null;
+        //SerialTextFile _gps = null;
 
         #endregion Member variables / fields
 
@@ -45,8 +46,8 @@ namespace Netduino.Foundation.Sensors.GPS
         /// <param name="stopBits">Number of stop bits.</param>
         public NMEA(string port, int baudRate, Parity parity, int dataBits, StopBits stopBits)
         {
-            _gps = new SerialTextFile(port, baudRate, parity, dataBits, stopBits, "\r\n");
-            _gps.OnLineReady += _gps_OnLineReady;
+//            _gps = new SerialTextFile(port, baudRate, parity, dataBits, stopBits, "\r\n");
+//            _gps.OnLineReceived += _gps_OnLineReceived;
         }
 
         #endregion Constructors
@@ -57,10 +58,69 @@ namespace Netduino.Foundation.Sensors.GPS
         /// Add a new NMEA decoder to the GPS.
         /// </summary>
         /// <param name="decoder">NMEA decoder.</param>
-        public void AddDecoder(INMEADecoder decoder)
+        public void AddDecoder(NMEADecoder decoder)
         {
-            string key = decoder.GetPrefix();
-            _decoders.Add(key, decoder);
+            if (_decoders.Contains(decoder.Prefix))
+            {
+                throw new Exception(decoder.Prefix + " already registered.");
+            }
+            _decoders.Add(decoder.Prefix, decoder);
+        }
+
+        /// <summary>
+        /// Convert a byte into the hex representation of the value.
+        /// </summary>
+        /// <param name="b">Value to convert.</param>
+        /// <returns>two hexadecimal digits representing the byte.</returns>
+        public static string HexadecimalDigits(byte b)
+        {
+        	char[] digits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+        	return ("" + digits[b >> 4] + digits[b & 0xf]);
+        }
+
+        /// <summary>
+        /// Convert a byte into hexadecimal including the "0x" prefix.
+        /// </summary>
+        /// <param name="b">Value to convert.</param>
+        /// <returns>Hexadecimal string including the 0x prefix.</returns>
+        public static string Hexadecimal(byte b)
+        {
+        	return ("0x" + HexadecimalDigits(b));
+        }
+
+        /// <summary>
+        /// Convert an unsigned short into hexadecimal.
+        /// </summary>
+        /// <param name="us">Unsigned short value to convert.</param>
+        /// <returns>Hexadecimal reporesentation of the unsigned short.</returns>
+        public static string Hexadecimal(ushort us)
+        {
+        	return ("0x" + HexadecimalDigits((byte)((us >> 8) & 0xff))) + HexadecimalDigits((byte)(us & 0xff));
+        }
+
+        /// <summary>
+        /// Calculate a checksum for the string by XORing the bytes in the string.
+        /// </summary>
+        /// <param name="data">String to calculate the checksum for.</param>
+        /// <returns>XOR checksum for the sting.</returns>
+        public static byte XORChecksum(string data)
+        {
+        	return (XORChecksum(Encoding.UTF8.GetBytes(data)));
+        }
+
+        /// <summary>
+        /// Generate a checksum by XORing all of the data in the array.
+        /// </summary>
+        /// <param name="data">Data to calculate the checksum for.</param>
+        /// <returns>XOR Checksum of the array of bytes.</returns>
+        public static byte XORChecksum(byte[] data)
+        {
+        	byte checksum = 0;
+        	for (int index = 0; index < data.Length; index++)
+        	{
+        		checksum ^= data[index];
+        	}
+        	return (checksum);
         }
 
         #endregion Methods
@@ -74,7 +134,7 @@ namespace Netduino.Foundation.Sensors.GPS
         /// Unknown message types will be discarded.
         /// </remarks>
         /// <param name="line">GPS text for processing.</param>
-        void _gps_OnLineReady(string line)
+        void _gps_OnLineReceived(string line)
         {
             if (line.Length > 0)
             {
@@ -88,7 +148,7 @@ namespace Netduino.Foundation.Sensors.GPS
                         string[] elements = actualData.Split(',');
                         if (elements.Length > 0)
                         {
-                            INMEADecoder decoder = (INMEADecoder)_decoders[elements[0]];
+                            NMEADecoder decoder = (NMEADecoder)_decoders[elements[0]];
                             if (decoder != null)
                             {
                                 decoder.Process(elements);
