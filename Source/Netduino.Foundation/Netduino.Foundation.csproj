@@ -78,7 +78,7 @@
     <Compile Include="Devices\Netduino\SoftwareSPIBus.cs" />
     <Compile Include="Devices\Netduino\SPIBus.cs" />
     <Compile Include="Helpers\Checksum.cs" />
-    <Compile Include="Helpers\Debug.cs" />
+    <Compile Include="Helpers\DebugInformation.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Hardware" />

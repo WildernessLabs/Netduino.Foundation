@@ -960,7 +960,7 @@ namespace Netduino.Foundation.Sensors.Motion
         public void DisplayRegisters()
         {
             byte[] registers = _adxl345.ReadRegisters((byte) Registers.TAPThreshold, 29);
-            Helpers.DisplayRegisters((byte) Registers.TAPThreshold, registers);
+            Helpers.DebugInformation.DisplayRegisters((byte) Registers.TAPThreshold, registers);
         }
 
         #endregion Methods

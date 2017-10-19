@@ -1,6 +1,4 @@
 ﻿using System;
-using Microsoft.SPOT;
-using Microsoft.SPOT.Hardware;
 using Netduino.Foundation.Devices;
 
 namespace Netduino.Foundation.Sensors.Barometric
