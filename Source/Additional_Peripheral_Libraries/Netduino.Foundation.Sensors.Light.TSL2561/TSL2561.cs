@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.SPOT.Hardware;
-using Netduino.Foundation.Core;
-using Microsoft.SPOT;
+using Netduino.Foundation.Devices;
 using Spot = Microsoft.SPOT.Hardware;
 
 namespace Netduino.Foundation.Sensors.Light

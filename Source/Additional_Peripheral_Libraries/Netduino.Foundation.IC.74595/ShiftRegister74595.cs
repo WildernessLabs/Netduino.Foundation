@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.SPOT.Hardware;
-using Netduino.Foundation.Core;
+using Netduino.Foundation.Devices;
 
 namespace Netduino.Foundation.IC
 {

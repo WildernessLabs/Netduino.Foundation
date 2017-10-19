@@ -2,7 +2,7 @@
 using System.Text;
 using System.IO.Ports;
 
-namespace Netduino.Foundation.Core
+namespace Netduino.Foundation.Devices
 {
     /// <summary>
     /// Provide a mechanism for reading lines of text from a SerialPort.
