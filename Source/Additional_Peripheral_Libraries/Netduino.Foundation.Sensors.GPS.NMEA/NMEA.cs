@@ -67,6 +67,22 @@ namespace Netduino.Foundation.Sensors.GPS
             _decoders.Add(decoder.Prefix, decoder);
         }
 
+        /// <summary>
+        /// Open the connection to the GPS and start processing data.
+        /// </summary>
+        public void Open()
+        {
+            _gps.Open();
+        }
+
+        /// <summary>
+        /// Close the connection to the GPS and stop processing data.
+        /// </summary>
+        public void Close()
+        {
+            _gps.Close();
+        }
+
         #endregion Methods
 
         #region Interrupts
@@ -96,10 +112,6 @@ namespace Netduino.Foundation.Sensors.GPS
                             if (decoder != null)
                             {
                                 decoder.Process(elements);
-                            }
-                            else
-                            {
-                                throw new Exception("No registered decoder for " + elements[0]);
                             }
                         }
                     }
