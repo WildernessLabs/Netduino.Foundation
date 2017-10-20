@@ -55,21 +55,25 @@ namespace Netduino.Foundation.Sensors.GPS
         {
             if (OnPositionReceived != null)
             {
-                try
+                int invalidFieldCount = 0;
+                for (int index = 1; index <= 9; index++)
+                {
+                    if ((data[index] == null) || (data[index] == ""))
+                    {
+                        invalidFieldCount++;
+                    }
+                }
+                if (invalidFieldCount == 0)
                 {
                     GPSLocation location = new GPSLocation();
                     location.ReadingTime = NMEAHelpers.TimeOfReading(null, data[1]);
                     location.Latitude = NMEAHelpers.DegreesMinutesDecode(data[2], data[3]);
                     location.Longitude = NMEAHelpers.DegreesMinutesDecode(data[4], data[5]);
-                    location.FixQuality = (FixType) Converters.Integer(data[6]);
+                    location.FixQuality = (FixType)Converters.Integer(data[6]);
                     location.NumberOfSatellites = Converters.Integer(data[7]);
                     location.HorizontalDilutionOfPrecision = Converters.Double(data[8]);
                     location.Altitude = Converters.Double(data[9]);
                     OnPositionReceived(this, location);
-                }
-                catch (Exception ex)
-                {
-                    //  Throw the exception away, the data will not generate an event.
                 }
             }
         }
