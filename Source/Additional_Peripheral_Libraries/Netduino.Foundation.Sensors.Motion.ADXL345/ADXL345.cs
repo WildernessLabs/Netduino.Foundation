@@ -1,7 +1,5 @@
 ﻿using System;
 using Netduino.Foundation.Devices;
-using Microsoft.SPOT.Hardware;
-using Spot = Microsoft.SPOT.Hardware;
 
 namespace Netduino.Foundation.Sensors.Motion
 {
@@ -11,128 +9,6 @@ namespace Netduino.Foundation.Sensors.Motion
     /// </summary>
     public class ADXL345
     {
-        #region Constants
-
-        /// <summary>
-        /// Enable Z-axis inactivity interrupt.
-        /// </summary>
-        public const byte ACTRL_Z_INACTIVITY_ENABLE = 0x01;
-
-        /// <summary>
-        /// Enable Y-axis inactivity interrupt.
-        /// </summary>
-        public const byte ACTRL_Y_INACTIVITY_ENABLE = 0x02;
-
-        /// <summary>
-        /// Enable X-axis inactivity interrupt.
-        /// </summary>
-        public const byte ACTRL_X_INACTIVITY_ENABLE = 0x04;
-
-        /// <summary>
-        /// Make the inactivity interrupt AC-coupled.
-        /// </summary>
-        public const byte ACTRL_INACTIVITY_AC_COUPLED = 0x08;
-
-        /// <summary>
-        /// Enable Z-axis activity interrupt.
-        /// </summary>
-        public const byte ACTRL_Z_ACTIVITY_ENABLE = 0x10;
-
-        /// <summary>
-        /// Enable Y-axis activity interrupt.
-        /// </summary>
-        public const byte ACTRL_Y_ACTIVITY_ENABLE = 0x20;
-
-        /// <summary>
-        /// Enable X-axis activity interrupt.
-        /// </summary>
-        public const byte ACTRL_X_ACTIVITY_ENABLE = 0x40;
-
-        /// <summary>
-        /// Make the activity interrupt AC-coupled.
-        /// </summary>
-        public const byte ACTRL_ACTIVITY_AC_COUPLED = 0x80;
-
-        /// <summary>
-        /// Mask for the bits representing the Wakeup flag in the Power Control register.
-        /// </summary>
-        private const byte POWER_WAKEUP_MASK = 0x03;
-
-        /// <summary>
-        /// Mask for the bit representing the Sleep flag in the Power Control register.
-        /// </summary>
-        private const byte POWER_SLEEP_MASK = 0x04;
-
-        /// <summary>
-        /// Mask for the bit representing the Measure flag in the Power Control register.
-        /// </summary>
-        private const byte POWER_MEASURE_MASK = 0x08;
-
-        /// <summary>
-        /// Mask for the bit representing the Auto Sleep flag in the Power Control register.
-        /// </summary>
-        private const byte POWER_AUTO_SLEEP_MASK = 0x10;
-
-        /// <summary>
-        /// Mask for the bit representing the Link flag in the Power Control register.
-        /// </summary>
-        private const byte POWER_LINK_MASK = 0x20;
-
-        /// <summary>
-        /// Overrun interrupt bit in the InterruptEnable, InterruptMap and InterruptSource
-        /// registers.
-        /// </summary>
-        public const byte INT_OVERRUN_MASK = 0x01;
-
-        /// <summary>
-        /// Watermark interrupt bit in the InterruptEnable, InterruptMap and InterruptSource
-        /// registers.
-        /// </summary>
-        public const byte INT_WATERMARK_MASK = 0x02;
-
-        /// <summary>
-        /// Freefall interrupt bit in the InterruptEnable, InterruptMap and InterruptSource
-        /// registers.
-        /// </summary>
-        public const byte INT_FREEFALL_MASK = 0x04;
-
-        /// <summary>
-        /// Inactivity interrupt bit in the InterruptEnable, InterruptMap and InterruptSource
-        /// registers.
-        /// </summary>
-        public const byte INT_INACTIVITY_MASK = 0x08;
-
-        /// <summary>
-        /// Activity interrupt bit in the InterruptEnable, InterruptMap and InterruptSource
-        /// registers.
-        /// </summary>
-        public const byte INT_ACTIVITY_MASK = 0x10;
-
-        /// <summary>
-        /// Double Tap interrupt bit in the InterruptEnable, InterruptMap and InterruptSource
-        /// registers.
-        /// </summary>
-        public const byte INT_DOUBLE_TAP_MASK = 0x20;
-
-        /// <summary>
-        /// Single Tap interrupt bit in the InterruptEnable, InterruptMap and InterruptSource
-        /// registers.
-        /// </summary>
-        public const byte INT_SINGLE_TAP_MASK = 0x04;
-
-        /// <summary>
-        ///Data Ready  interrupt bit in the InterruptEnable, InterruptMap and InterruptSource
-        /// registers.
-        /// </summary>
-        public const byte INT_DATA_READY_MASK = 0x80;
-
-        /// <summary>
-        /// Mask for the Trigger bit in the FIFO status register.
-        /// </summary>
-        public const byte FIFO_STATUS_TRIGGER_MASK = 0x80;
-
-        #endregion Constants
-
         #region Enums
 
         /// <summary>
@@ -178,16 +54,6 @@ namespace Netduino.Foundation.Sensors.Motion
         /// Communication bus used to communicate with the sensor.
         /// </summary>
         private ICommunicationBus _adxl345;
-
-        /// <summary>
-        /// Interrupt port for the interrupt 1 pin.
-        /// </summary>
-        private InterruptPort _interrupt1 = null;
-
-        /// <summary>
-        /// Interrupt port for the interrupt 2 pin.
-        /// </summary>
-        private InterruptPort _interrupt2 = null;
 
         #endregion Member variables / fields
 
@@ -235,26 +101,6 @@ namespace Netduino.Foundation.Sensors.Motion
         /// an interrupt has been generated.
         /// </remarks>
         public short Z { get; private set; }
-
-        /// <summary>
-        /// Threshold for the tap interrupts (62.5 mg/LSB).  A value of 0 may lead to undesirable
-        /// results and so will be rejected.
-        /// </summary>
-        public byte TapThreshold
-        {
-            get
-            {
-                return (_adxl345.ReadRegister((byte) Registers.TAPThreshold));
-            }
-            set
-            {
-                if (value == 0)
-                {
-                    throw new ArgumentException("Threshold should be between 1 and 255 inclusive.");
-                }
-                _adxl345.WriteRegister((byte) Registers.TAPThreshold, value);
-            }
-        }
 
         /// <summary>
         /// Values stored in this register are automatically added to the X reading.
@@ -311,277 +157,6 @@ namespace Netduino.Foundation.Sensors.Motion
         }
 
         /// <summary>
-        /// The maximum time that an event must be above the threshold in order to qualify
-        /// as a double tap event.  The scale factor is 625us per LSB.
-        /// </summary>
-        /// <remarks>
-        /// A value of 0 disables the double tap function.
-        /// </remarks>
-        public byte TapDuration
-        {
-            get
-            {
-                return (_adxl345.ReadRegister((byte) Registers.TAPDuration));
-            }
-            set
-            {
-                _adxl345.WriteRegister((byte) Registers.TAPDuration, value);
-            }
-        }
-
-        /// <summary>
-        /// Used in combination with the Window property to control the double tap detection.
-        /// This value represents the period of time between the detection of the tap event
-        /// until the start of the time window.
-        ///
-        /// The scale factor is 1.25ms per LSB.
-        /// </summary>
-        /// <remarks>
-        /// A value of 0 disables the double tap function.
-        /// </remarks>
-        public byte DoubleTapLatency
-        {
-            get
-            {
-                return (_adxl345.ReadRegister((byte) Registers.TAPLatency));
-            }
-            set
-            {
-                _adxl345.WriteRegister((byte) Registers.TAPLatency, value);
-            }
-        }
-
-        /// <summary>
-        /// Defines the period in which a second tap event can occur after the expiration
-        /// of the latency period in order for the second table to be considered a
-        /// double tap.  The time period is measured in 1.25ms per LSB.
-        /// </summary>
-        public byte DoubleTapWindow
-        {
-            get
-            {
-                return (_adxl345.ReadRegister((byte) Registers.TAPWindow));
-            }
-            set
-            {
-                _adxl345.WriteRegister((byte) Registers.TAPWindow, value);
-            }
-        }
-
-        /// <summary>
-        /// Threshold for detecting activity as 62.5mg per LSB.
-        /// </summary>
-        /// <remarks>
-        /// A value of zero is undesirable when interrupts are enabled.
-        /// <remarks>
-        public byte ActivityThreshold
-        {
-            get
-            {
-                return (_adxl345.ReadRegister((byte) Registers.ActivityThreshold));
-            }
-            set
-            {
-                if (value == 0)
-                {
-                    throw new ArgumentException("ActivityThreshold should be between 1 and 255 inclusive.");
-                }
-                _adxl345.WriteRegister((byte) Registers.ActivityThreshold, value);
-            }
-        }
-
-        /// <summary>
-        /// Threshold value for determining inactivity.
-        /// </summary>
-        /// <remarks>
-        /// A value of 0 is not recommended when the inactivity interrupt is enabled.
-        /// </remarks>
-        public byte InactivityThreshold
-        {
-            get
-            {
-                return (_adxl345.ReadRegister((byte) Registers.InactivityThreshold));
-            }
-            set
-            {
-                if (value == 0)
-                {
-                    throw new ArgumentException("InactivityThreshold should be between 1 and 255 inclusive.");
-                }
-                _adxl345.WriteRegister((byte) Registers.InactivityThreshold, value);
-            }
-        }
-
-        /// <summary>
-        /// The amount of time that the acceleration must be less than the threshold value
-        /// in order for inactivity to be declared.
-        /// </summary>
-        /// <remarks>
-        /// Scale factor is 1s per LSB.
-        ///
-        /// A value of 0 will allow an interrupt to be generated when the output data is
-        /// less than the InactivityThreshold.
-        /// </remarks>
-        public byte InactivityTime
-        {
-            get
-            {
-                return (_adxl345.ReadRegister((byte) Registers.InactivityTime));
-            }
-            set
-            {
-                _adxl345.WriteRegister((byte) Registers.InactivityTime, value);
-            }
-        }
-
-        /// <summary>
-        /// Set the Activity and Inactivity control
-        /// </summary>
-        /// <remarks>
-        /// A setting of 0 selects dc-coupled operation, and a setting of 1 enables ac-coupled 
-        /// operation. In dc-coupled operation, the current acceleration magnitude is compared 
-        /// directly with THRESH_ACT and THRESH_INACT to determine whether activity or inactivity 
-        /// is detected.
-        /// 
-        /// In ac-coupled operation for activity detection, the acceleration value at the start
-        /// of activity detection is taken as a reference value. New samples of acceleration 
-        /// are then compared to this reference value, and if the magnitude of the difference 
-        /// exceeds the THRESH_ACT value, the device triggers an activity interrupt.
-        /// 
-        /// Similarly, in ac-coupled operation for inactivity detection, a reference value is 
-        /// used for comparison and is updated whenever the device exceeds the inactivity
-        /// threshold. After the reference value is selected, the device compares the magnitude 
-        /// of the difference between the reference value and the current acceleration with 
-        /// THRESH_INACT. If the difference is less than the value in THRESH_INACT for the time
-        /// in TIME_INACT, the device is considered inactive and the inactivity interrupt is 
-        /// triggered.
-        /// 
-        /// An activity interrupt is generated if any of the x, y, z axis have activity monitoring
-        /// enabled and any of the axes register activity exceeding the threshold.
-        /// 
-        /// An inactivity interrupt is generated if any of the x, y or z axis have inactivity
-        /// monitoring enabled and ALL of the enabled axes exceed the threshold.
-        /// </remarks>
-        public byte ActivityAndInactivityControl
-        {
-            get
-            {
-                return (_adxl345.ReadRegister((byte) Registers.ActivityInactivityControl));
-            }
-            set
-            {
-                _adxl345.WriteRegister((byte) Registers.ActivityInactivityControl, value);
-            }
-        }
-
-        /// <summary>
-        /// Free-fall detection threshold value.
-        ///
-        /// Scale factor is 62.5mg per LSB.
-        /// </summary>
-        /// <remarks>
-        /// A value of 0 may result in undesirable behavior if free-fall interrupts
-        /// are enabled.
-        /// 
-        /// Recommended value is between 300mg (0x05) and 600mg (0x09).
-        /// <remarks>
-        public byte FreeFallThreshold
-        {
-            get
-            {
-                return (_adxl345.ReadRegister((byte) Registers.FreeFallThreshold));
-            }
-            set
-            {
-                if (value == 0)
-                {
-                    throw new ArgumentException("A value of 0 can result in undesirable behavior.");
-                }
-                _adxl345.WriteRegister((byte) Registers.FreeFallThreshold, value);
-            }
-        }
-
-        /// <summary>
-        /// The amount of time that all three axis must exceed the free fall threshold
-        /// before an interrupt is generated.
-        /// </summary>
-        /// <remarks>
-        /// Scale factor is 5ms per LSB.
-        ///
-        /// A value of 0 may result in undesirable behavior if the free-fall
-        /// interrupt is enabled.
-        /// 
-        /// Recommended value should be between 100ms (0x14) and 350ms (0x46);
-        /// <remarks>
-        public byte FreeFallTime
-        {
-            get
-            {
-                return (_adxl345.ReadRegister((byte) Registers.FreeFallTime));
-            }
-            set
-            {
-                if (value == 0)
-                {
-                    throw new ArgumentException("A value of 0 can result in undesirable behavior.");
-                }
-                _adxl345.WriteRegister((byte) Registers.FreeFallTime, value);
-            }
-        }
-
-        /// <summary>
-        /// Determine which interrupts are enabled / disabled.
-        /// </summary>
-        /// <remarks>
-        /// See the interrupt mask bits for details of the interrupts available.
-        /// </remarks>
-        public byte InterruptEnable
-        {
-            get
-            {
-                return (_adxl345.ReadRegister((byte) Registers.InterruptEnable));
-            }
-            set
-            {
-                _adxl345.WriteRegister((byte) Registers.InterruptEnable, value);
-            }
-        }
-
-        /// <summary>
-        /// Map the interrupts to either Interrupt1 (bit set to 0) or Interrupt2 (bit set to 1).
-        /// </summary>
-        /// <remarks>
-        /// See the interrupt mask bits for details of the interrupts available.
-        /// </remarks>
-        public byte InterruptMap
-        {
-            get
-            {
-                return (_adxl345.ReadRegister((byte) Registers.InterruptMap));
-            }
-            set
-            {
-                _adxl345.WriteRegister((byte) Registers.InterruptMap, value);
-            }
-        }
-
-
-        /// <summary>
-        /// Indicate which interrupts have generated the interrupt.
-        /// </summary>
-        /// <remarks>
-        /// Use the interrupt mask bit details to extract the relevant bits.
-        /// </remarks>
-        public byte InterruptSource
-        {
-            get
-            {
-                return (_adxl345.ReadRegister((byte) Registers.InterruptSource));
-            }
-        }
-
-
-        /// <summary>
         /// Number of samples in the FIFO buffer.
         /// </summary>
         public byte FirstInFirstOutSampleCount
@@ -605,130 +180,6 @@ namespace Netduino.Foundation.Sensors.Motion
 
         #endregion Properties
 
-        #region Event definitions
-
-        /// <summary>
-        /// Overrun interrupt has been detected.
-        /// 
-        /// Overrun interrupts are generated when new data replaces unread data.  The exact
-        /// mode depends upon the FIFO mode. In bypass mode, this interrupt is generated
-        /// when the <see cref="X"/>, <see cref="Y"/> and <see cref="Z"/> properties are
-        /// updated. In all other modes, this interrupt is generated when the FIFO buffer
-        /// is full.
-        /// </summary>
-        public event OverrunInterrupt OnOverrun = null;
-
-        /// <summary>
-        /// Delegate defintion to support the OnOverrun event.
-        /// </summary>
-        public delegate void OverrunInterrupt();
-
-        /// <summary>
-        /// Watermark interrupt has been detected.
-        /// 
-        /// Watermark interrupts are generated when the number of samples in the FIFO
-        /// buffer equals the number of samples specified in the <i>samples</i>
-        /// parameter in the <see cref="SetupFIFO"/> method.
-        /// </summary>
-        public event WatermarkInterrupt OnWatermarkReached = null;
-
-        /// <summary>
-        /// Delegate defintion to support the OnWatermarkReached event.
-        /// </summary>
-        public delegate void WatermarkInterrupt();
-
-        /// <summary>
-        /// Freefall interrupt has been detected.
-        /// 
-        /// This interrupt is generated when an acceleration of less than the value stored in the
-        /// <see cref="FreeFallThreshold"/> property is experienced for more time than is specified in
-        /// the <see cref="FreeFallTime"/> property on all axes (logical AND). the OnFreeFall interrupt 
-        /// differs from the OnInactivity interrupt as follows: all axes always participate and are 
-        /// logically AND’ed, the timer period is much smaller (1.28 sec maximum), and the mode of 
-        /// operation is always dc-coupled.
-        /// </summary>
-        public event FreeFallInterrupt OnFreeFall = null;
-
-        /// <summary>
-        /// Delegate defintion to support the OnFreeFall event.
-        /// </summary>
-        public delegate void FreeFallInterrupt();
-
-        /// <summary>
-        /// Inactivity interrupt has been detected.
-        /// 
-        /// An inactivity interrupt is generated when acceleration of less than the value stored
-        /// in the <see cref="InactivityThreshold"/> property is experienced for more time than is 
-        /// specified in the <see cref="InactivityTime"/> property on all participating axes, 
-        /// as set by the <see cref="ActivityAndInactivityControl"/> property. The maximum value 
-        /// for <see cref="InactivityTime"/> is 255 sec.
-        /// </summary>
-        public event InactivityInterrupt OnInactivity = null;
-
-        /// <summary>
-        /// Delegate defintion to support the OnWatermarkReached event.
-        /// </summary>
-        public delegate void InactivityInterrupt();
-
-        /// <summary>
-        /// Activity interrupt has been detected.
-        /// 
-        /// An activity interrupt is genrated when an acceleration greater than the value in the
-        /// <see cref="ActivityThreshold"/> property is experienced on any of the participating
-        /// axes (<see cref="ActivityAndInactivityControl"/>).
-        /// </summary>
-        public event ActivityInterrupt OnActivity = null;
-
-
-        /// <summary>
-        /// Delegate defintion to support the OnActivity event.
-        /// </summary>
-        public delegate void ActivityInterrupt();
-
-        /// <summary>
-        /// Single Tap event has been detected.
-        /// 
-        /// The SINGLE_TAP bit is set when a single acceleration event that is greater than the 
-        /// value in the <see cref="TapThreshold"/> property occurs for less time than is
-        /// specified in the <see cref="TapDuration"/> property.
-        /// </summary>
-        public event SingleTapInterrupt OnSingleTap = null;
-
-        /// <summary>
-        /// Delegate defintion to support the OnSingleTap event.
-        /// </summary>
-        public delegate void SingleTapInterrupt();
-
-        /// <summary>
-        /// Double Tap event has been detected.
-        /// 
-        /// A double tap interrupt is generated when two acceleration events that are greater 
-        /// than the value in the <see cref="TapThreshold"/> occur for less time than is specified 
-        /// in the <see cref="TapDuration"/>, with the second tap starting after the time 
-        /// specified by the <see cref="DoubleTapLatency"/> property but within the time specified in the
-        /// <see cref="DoubleTapWindow"/> property.
-        /// </summary>
-        public event DoubleTapInterrupt OnDoubleTap = null;
-
-        /// <summary>
-        /// Delegate defintion to support the OnDoubleTap event.
-        /// </summary>
-        public delegate void DoubleTapInterrupt();
-
-        /// <summary>
-        /// Data Ready interrupt has been detected.
-        /// 
-        /// A data ready interrupt is generated when data is available for reading.
-        /// </summary>
-        public event DataReadyInterrupt OnDataReady = null;
-
-        /// <summary>
-        /// Delegate defintion to support the OnDataReady event.
-        /// </summary>
-        public delegate void DataReadyInterrupt();
-
-        #endregion Event definitions
-
         #region Constructors
 
         /// <summary>
@@ -743,9 +194,7 @@ namespace Netduino.Foundation.Sensors.Motion
         /// </summary>
         /// <param name="address">Address of the I2C sensor</param>
         /// <param name="speed">Speed of the I2C bus in KHz</param>
-        /// <param name="interrupt1Pin">Pin attached to the interrupt 1 pin.</param>
-        /// <param name="interrupt2Pin">Pin attached to the interrupt 2 pin.</param>
-        public ADXL345(byte address = 0x53, ushort speed = 100, Cpu.Pin interrupt1Pin = Cpu.Pin.GPIO_NONE, Cpu.Pin interrupt2Pin = Cpu.Pin.GPIO_NONE)
+        public ADXL345(byte address = 0x53, ushort speed = 100)
         {
 			if ((address != 0x1d) && (address != 0x53))
 			{
@@ -758,16 +207,6 @@ namespace Netduino.Foundation.Sensors.Motion
 			I2CBus device = new I2CBus(address, speed);
 			_adxl345 = (ICommunicationBus) device;
             Reset();
-            if (interrupt1Pin != Cpu.Pin.GPIO_NONE)
-            {
-                _interrupt1 = new InterruptPort(interrupt1Pin, false, Spot.Port.ResistorMode.Disabled, Spot.Port.InterruptMode.InterruptEdgeHigh);
-                _interrupt1.OnInterrupt += _interruptPin_OnInterrupt;
-            }
-            if (interrupt2Pin != Cpu.Pin.GPIO_NONE)
-            {
-                _interrupt2 = new InterruptPort(interrupt2Pin, false, Spot.Port.ResistorMode.Disabled, Spot.Port.InterruptMode.InterruptEdgeHigh);
-                _interrupt2.OnInterrupt += _interruptPin_OnInterrupt;
-            }
         }
 
         #endregion Constructors
@@ -806,21 +245,6 @@ namespace Netduino.Foundation.Sensors.Motion
         }
 
         /// <summary>
-        /// Change the mode for an interrupt port if necessary.
-        /// </summary>
-        /// <param name="port">InterruptPort to check and possibly reconfigure.</param>
-        /// <param name="mode">New mode for the port.</param>
-        private void SetInterruptMode(InterruptPort port, Spot.Port.InterruptMode mode)
-        {
-            if ((port != null) && (port.Interrupt != mode))
-            {
-                port.DisableInterrupt();
-                port.Interrupt = mode;
-                port.EnableInterrupt();
-            }
-        }
-
-        /// <summary>
         /// Configure the data format (see pages 26 and 27 of the data sheet).
         /// </summary>
         /// <param name="selfTest">Put the device into self test mode when true.</param>
@@ -837,7 +261,7 @@ namespace Netduino.Foundation.Sensors.Motion
         /// 2:  +/- 8g
         /// 3:  +/ 16g
         /// </remarks>
-        public void SetDataFormat(bool selfTest, bool spiMode, bool invertInterrupts, bool fullResolution, bool justification, ADXL345.Range range)
+        public void SetDataFormat(bool selfTest, bool spiMode, bool fullResolution, bool justification, ADXL345.Range range)
         {
             byte data = 0;
             if (selfTest)
@@ -847,17 +271,6 @@ namespace Netduino.Foundation.Sensors.Motion
             if (spiMode)
             {
                 data |= 0x40;
-            }
-            if (invertInterrupts)
-            {
-                data |= 0x20;
-                SetInterruptMode(_interrupt1, Spot.Port.InterruptMode.InterruptEdgeHigh);
-                SetInterruptMode(_interrupt2, Spot.Port.InterruptMode.InterruptEdgeHigh);
-            }
-            else
-            {
-                SetInterruptMode(_interrupt1, Spot.Port.InterruptMode.InterruptEdgeLow);
-                SetInterruptMode(_interrupt2, Spot.Port.InterruptMode.InterruptEdgeLow);
             }
             if (fullResolution)
             {
@@ -964,52 +377,5 @@ namespace Netduino.Foundation.Sensors.Motion
         }
 
         #endregion Methods
-
-        #region Interrupt handlers
-
-        /// <summary>
-        /// Handle the interrupts for the Interrupt1 and Interrupt2 pins on the ADXL345.
-        /// </summary>
-        /// <remarks>
-        /// The same interrupt handler is used for both the _interrupt1 and _interrupt2 pins.
-        /// </remarks>
-        private void _interruptPin_OnInterrupt(uint data1, uint data2, DateTime time)
-        {
-            byte interruptSource = _adxl345.ReadRegister((byte) Registers.InterruptSource);
-            if (((interruptSource & INT_ACTIVITY_MASK) != 0) && (OnActivity != null))
-            {
-                OnActivity();
-            }
-            if (((interruptSource & INT_DATA_READY_MASK) != 0) && (OnDataReady != null))
-            {
-                OnDataReady();
-            }
-            if (((interruptSource & INT_DOUBLE_TAP_MASK) != 0) && (OnDoubleTap != null))
-            {
-                OnDoubleTap();
-            }
-            if (((interruptSource & INT_FREEFALL_MASK) != 0) && (OnFreeFall != null))
-            {
-                OnFreeFall();
-            }
-            if (((interruptSource & INT_INACTIVITY_MASK) != 0) && (OnInactivity != null))
-            {
-                OnInactivity();
-            }
-            if (((interruptSource & INT_OVERRUN_MASK) != 0) && (OnOverrun != null))
-            {
-                OnOverrun();
-            }
-            if (((interruptSource & INT_SINGLE_TAP_MASK) != 0) && (OnSingleTap != null))
-            {
-                OnSingleTap();
-            }
-            if (((interruptSource & INT_WATERMARK_MASK) != 0) && (OnWatermarkReached != null))
-            {
-                OnWatermarkReached();
-            }
-        }
-        
-        #endregion Interrupt handlers
     }
 }
