@@ -127,7 +127,11 @@ namespace Netduino.Foundation.Devices
                     {
                         if ((amount + _buffer.Length) <= MAXIMUM_BUFFER_SIZE)
                         {
-                            _buffer += Encoding.UTF8.GetChars(buffer);
+                            char[] characters = Encoding.UTF8.GetChars(buffer);
+                            for (int index = 0; index < characters.Length; index++)
+                            {
+                                _buffer += characters[index];
+                            }
                         }
                         else
                         {
@@ -135,9 +139,9 @@ namespace Netduino.Foundation.Devices
                         }
                     }
                     int eolMarkerPosition = _buffer.IndexOf(_endOfLine);
-                    while (eolMarkerPosition > 0)
+                    while (eolMarkerPosition >= 0)
                     {
-                        string line = _buffer.Substring(0, eolMarkerPosition - 2);
+                        string line = _buffer.Substring(0, eolMarkerPosition);
                         _buffer = _buffer.Substring(eolMarkerPosition + 2);
                         eolMarkerPosition = _buffer.IndexOf(_endOfLine);
                         if (OnLineReceived != null)
