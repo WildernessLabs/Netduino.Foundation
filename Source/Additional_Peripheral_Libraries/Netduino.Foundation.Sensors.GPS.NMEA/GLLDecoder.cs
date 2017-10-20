@@ -13,7 +13,8 @@ namespace Netduino.Foundation.Sensors.GPS
         /// Delegate for the GLL data received event.
         /// </summary>
         /// <param name="location">Location data to pass to the application.</param>
-        public delegate void GeographicLatitudeLongitudeReceived(GPSLocation location);
+        /// <param name="sender">Reference to the object generating the event.</param>
+        public delegate void GeographicLatitudeLongitudeReceived(object sender, GPSLocation location);
 
         /// <summary>
         /// Event raised when valid GLL data is received.
@@ -62,7 +63,7 @@ namespace Netduino.Foundation.Sensors.GPS
                     location.Latitude = NMEAHelpers.DegreesMinutesDecode(data[1], data[2]);
                     location.Longitude = NMEAHelpers.DegreesMinutesDecode(data[3], data[4]);
                     location.ReadingTime = NMEAHelpers.TimeOfReading(null, data[5]);
-                    OnGeographicLatitudeLongitudeReceived(location);
+                    OnGeographicLatitudeLongitudeReceived(this, location);
                 }
             }
         }

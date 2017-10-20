@@ -14,7 +14,8 @@ namespace Netduino.Foundation.Sensors.GPS
         /// Delegate for the position update received event.
         /// </summary>
         /// <param name="location">Location data received.</param>
-        public delegate void PositionReceived(GPSLocation location);
+        /// <param name="sender">Reference to the object generating the event.</param>
+        public delegate void PositionReceived(object sender, GPSLocation location);
 
         /// <summary>
         /// Position update received event.
@@ -60,11 +61,11 @@ namespace Netduino.Foundation.Sensors.GPS
                     location.ReadingTime = NMEAHelpers.TimeOfReading(null, data[1]);
                     location.Latitude = NMEAHelpers.DegreesMinutesDecode(data[2], data[3]);
                     location.Longitude = NMEAHelpers.DegreesMinutesDecode(data[4], data[5]);
-//                    location.FixQuality = (FixType) Helpers.IntegerOrDefault(data[6]);
-//                    location.NumberOfSatellites = Helpers.IntegerOrDefault(data[7]);
-//                    location.HorizontalDilutionOfPrecision = Helpers.DoubleOrDefault(data[8]);
-//                    location.Altitude = Helpers.DoubleOrDefault(data[9]);
-                    OnPositionReceived(location);
+                    location.FixQuality = (FixType) Converters.Integer(data[6]);
+                    location.NumberOfSatellites = Converters.Integer(data[7]);
+                    location.HorizontalDilutionOfPrecision = Converters.Double(data[8]);
+                    location.Altitude = Converters.Double(data[9]);
+                    OnPositionReceived(this, location);
                 }
                 catch (Exception ex)
                 {

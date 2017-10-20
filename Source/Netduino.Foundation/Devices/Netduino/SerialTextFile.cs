@@ -42,12 +42,14 @@ namespace Netduino.Foundation.Devices
         /// <summary>
         /// Delegate for the line ready event.
         /// </summary>
-        public delegate void LineReady(string line);
+        /// <param name="line">Line of text ready for processing.</param>
+        /// <param name="sender">Reference to the object generating the event.</param>
+        public delegate void LineReceived(object sender, string line);
 
         /// <summary>
         /// A complete line of text has been read, send this to the event subscriber.
         /// </summary>
-        public event LineReady OnLineReady = null;
+        public event LineReceived OnLineReceived = null;
 
         #endregion Events and delegates
 
@@ -138,9 +140,9 @@ namespace Netduino.Foundation.Devices
                         string line = _buffer.Substring(0, eolMarkerPosition - 2);
                         _buffer = _buffer.Substring(eolMarkerPosition + 2);
                         eolMarkerPosition = _buffer.IndexOf(_endOfLine);
-                        if (OnLineReady != null)
+                        if (OnLineReceived != null)
                         {
-                            OnLineReady(line);   
+                            OnLineReceived(this, line);   
                         }
                     }
                 }

@@ -12,7 +12,8 @@ namespace Netduino.Foundation.Sensors.GPS
         /// Delegate for the position update received event.
         /// </summary>
         /// <param name="positionCourseAndTime">Position, course and time information.</param>
-        public delegate void PositionCourseAndTimeReceived(PositionCourseAndTime positionCourseAndTime);
+        /// <param name="sender">Reference to the object generating the event.</param>
+        public delegate void PositionCourseAndTimeReceived(object sender, PositionCourseAndTime positionCourseAndTime);
 
         /// <summary>
         /// Position update received event.
@@ -74,7 +75,7 @@ namespace Netduino.Foundation.Sensors.GPS
                 {
                     position.MagneticVariation = DirectionIndicator.West;
                 }
-                OnPositionCourseAndTimeReceived(position);
+                OnPositionCourseAndTimeReceived(this, position);
             }
         }
 

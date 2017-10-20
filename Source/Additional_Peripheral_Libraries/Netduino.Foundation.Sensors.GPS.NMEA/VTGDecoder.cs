@@ -14,7 +14,8 @@ namespace Netduino.Foundation.Sensors.GPS
         /// Delegate for the Course and Velocity events.
         /// </summary>
         /// <param name="courseAndVelocity"></param>
-        public delegate void CourseAndVelocityReceived(CourseOverGround courseAndVelocity);
+        /// <param name="sender">Reference to the object generating the event.</param>
+        public delegate void CourseAndVelocityReceived(object sender, CourseOverGround courseAndVelocity);
 
         /// <summary>
         /// Event to be raised when a course and velocity message is received and decoded.
@@ -55,11 +56,11 @@ namespace Netduino.Foundation.Sensors.GPS
             if (OnCourseAndVelocityReceived != null)
             {
                 CourseOverGround course = new CourseOverGround();
-//                course.TrueHeading = Helpers.DoubleOrDefault(data[1]);
-//                course.MagneticHeading = Helpers.DoubleOrDefault(data[3]);
-//               course.Knots = Helpers.DoubleOrDefault(data[5]);
-//                course.KPH = Helpers.DoubleOrDefault(data[7]);
-                OnCourseAndVelocityReceived(course);
+                course.TrueHeading = Converters.Double(data[1]);
+                course.MagneticHeading = Converters.Double(data[3]);
+                course.Knots = Converters.Double(data[5]);
+                course.KPH = Converters.Double(data[7]);
+                OnCourseAndVelocityReceived(this, course);
             }
         }
 

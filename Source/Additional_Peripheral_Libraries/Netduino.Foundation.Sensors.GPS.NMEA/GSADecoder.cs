@@ -9,7 +9,8 @@ namespace Netduino.Foundation.Sensors.GPS
         /// Delegate for the GSA data received event.
         /// </summary>
         /// <param name="activeSatellites">Active satellites.</param>
-        public delegate void ActiveSatelitesReceived(ActiveSatellites activeSatellites);
+        /// <param name="sender">Reference to the object generating the event.</param>
+        public delegate void ActiveSatelitesReceived(object sender, ActiveSatellites activeSatellites);
 
         /// <summary>
         /// Event raised when valid GSA data is received.
@@ -91,7 +92,7 @@ namespace Netduino.Foundation.Sensors.GPS
                 satelites.DilutionOfPrecision = double.Parse(data[15]);
                 satelites.HorizontalDilutionOfPrecision = double.Parse(data[16]);
                 satelites.VerticalDilutionOfPrecision = double.Parse(data[17]);
-                OnActiveSatelitesReceived(satelites);
+                OnActiveSatelitesReceived(this, satelites);
             }
         }
 

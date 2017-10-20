@@ -46,7 +46,8 @@ namespace Netduino.Foundation.Sensors.GPS
         /// Delegate for the GSV data received event.
         /// </summary>
         /// <param name="activeSatellites">Active satellites.</param>
-        public delegate void SatellitesInViewReceived(Satellite[] satellites);
+        /// <param name="sender">Reference to the object generating the event.</param>
+        public delegate void SatellitesInViewReceived(object sender, Satellite[] satellites);
 
         /// <summary>
         /// Event raised when valid GSV data is received.
@@ -119,7 +120,7 @@ namespace Netduino.Foundation.Sensors.GPS
                         _totalSentences = -1;
                         _satelliteList = null;
                         _nextSatelliteEntry = 0;
-                        OnSatellitesInViewReceived(_satelliteList);
+                        OnSatellitesInViewReceived(this, _satelliteList);
                     }
                 }
                 else
