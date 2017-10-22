@@ -14,7 +14,7 @@ namespace Netduino.Foundation.Sensors.GPS
     /// <summary>
     /// Active satelite selection for GSA messages.
     /// </summary>
-    public enum ActiveSateliteSelection { Unknown, Automatic, Manual };
+    public enum ActiveSatelliteSelection { Unknown, Automatic, Manual };
 
     /// <summary>
     /// Diemensions type of the fix.

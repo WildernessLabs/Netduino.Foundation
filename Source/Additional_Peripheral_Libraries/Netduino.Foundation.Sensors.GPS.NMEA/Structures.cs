@@ -111,7 +111,7 @@ namespace Netduino.Foundation.Sensors.GPS
         /// <summary>
         /// PRNs of the satellites used in the fix.
         /// </summary>
-        public string[] satellitesUsedForFix;
+        public string[] SatellitesUsedForFix;
         
         /// <summary>
         /// Dilution of precision for the reading.

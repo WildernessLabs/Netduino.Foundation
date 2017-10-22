@@ -1,5 +1,4 @@
-﻿using System;
-namespace Netduino.Foundation.Sensors.GPS
+﻿namespace Netduino.Foundation.Sensors.GPS
 {
     public class GSADecoder : NMEADecoder
     {
@@ -48,51 +47,51 @@ namespace Netduino.Foundation.Sensors.GPS
         /// <param name="data">String array of the message components for a GSA message.</param>
         public override void Process(string[] data)
         {
-            if (OnActiveSatelitesReceived != null)
+            if (OnActiveSatellitesReceived != null)
             {
-                ActiveSatellites satelites = new ActiveSatellites();
+                ActiveSatellites Satellites = new ActiveSatellites();
                 switch (data[1].ToLower())
                 {
                     case "a":
-                        satelites.SateliteSelection = ActiveSateliteSelection.Automatic;
+                        Satellites.SatelliteSelection = ActiveSatelliteSelection.Automatic;
                         break;
                     case "m":
-                        satelites.SateliteSelection = ActiveSateliteSelection.Manual;
+                        Satellites.SatelliteSelection = ActiveSatelliteSelection.Manual;
                         break;
                     default:
-                        satelites.SateliteSelection = ActiveSateliteSelection.Unknown;
+                        Satellites.SatelliteSelection = ActiveSatelliteSelection.Unknown;
                         break;
                 }
-                satelites.Demensions = (DimensionalFixType) int.Parse(data[2]);
-                int sateliteCount = 0;
+                Satellites.Demensions = (DimensionalFixType) int.Parse(data[2]);
+                int SatelliteCount = 0;
                 for (int index = 3; index < 15; index++)
                 {
                     if ((data[index] != null) && (data[index] != ""))
                     {
-                        sateliteCount++;
+                        SatelliteCount++;
                     }
                 }
-                if (sateliteCount > 0)
+                if (SatelliteCount > 0)
                 {
-                    satelites.SatelitesUsedForFix = new string[sateliteCount];
-                    int currentSatelite = 0;
+                    Satellites.SatellitesUsedForFix = new string[SatelliteCount];
+                    int currentSatellite = 0;
                     for (int index = 3; index < 15; index++)
                     {
                         if ((data[index] != null) && (data[index] != ""))
                         {
-                            satelites.SatelitesUsedForFix[currentSatelite] = data[index];
-                            currentSatelite++;
+                            Satellites.SatellitesUsedForFix[currentSatellite] = data[index];
+                            currentSatellite++;
                         }
                     }
                 }
                 else
                 {
-                    satelites.SatelitesUsedForFix = null;
+                    Satellites.SatellitesUsedForFix = null;
                 }
-                satelites.DilutionOfPrecision = double.Parse(data[15]);
-                satelites.HorizontalDilutionOfPrecision = double.Parse(data[16]);
-                satelites.VerticalDilutionOfPrecision = double.Parse(data[17]);
-                OnActiveSatelitesReceived(this, satelites);
+                Satellites.DilutionOfPrecision = double.Parse(data[15]);
+                Satellites.HorizontalDilutionOfPrecision = double.Parse(data[16]);
+                Satellites.VerticalDilutionOfPrecision = double.Parse(data[17]);
+                OnActiveSatellitesReceived(this, Satellites);
             }
         }
 
