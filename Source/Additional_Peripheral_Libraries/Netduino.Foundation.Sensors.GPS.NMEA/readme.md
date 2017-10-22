@@ -2,7 +2,7 @@
 
 `NMEA` provides a library of routines to read the output from a GPS receiver and translate the output into a series of messages for the application.  A number of decoders are provided for the application developer:
 
-* [GGA - 3D Fix](GGLDecoder.md)
+* [GGA - 3D Fix](GGADecoder.md)
 * [GLL - Location Information](GLLDecoder.md)
 * [GSA - Active satellites](GSADecoder.md)
 * [GSV - Satellites in view](GSVDecoder.md)
