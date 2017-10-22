@@ -10,12 +10,12 @@ namespace Netduino.Foundation.Sensors.GPS
         /// </summary>
         /// <param name="activeSatellites">Active satellites.</param>
         /// <param name="sender">Reference to the object generating the event.</param>
-        public delegate void ActiveSatelitesReceived(object sender, ActiveSatellites activeSatellites);
+        public delegate void ActiveSatellitesReceived(object sender, ActiveSatellites activeSatellites);
 
         /// <summary>
         /// Event raised when valid GSA data is received.
         /// </summary>
-        public event ActiveSatelitesReceived OnActiveSatelitesReceived = null;
+        public event ActiveSatellitesReceived OnActiveSatellitesReceived = null;
 
         #endregion Delegates and events
 

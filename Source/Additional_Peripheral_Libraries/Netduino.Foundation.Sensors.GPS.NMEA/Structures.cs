@@ -58,8 +58,6 @@ namespace Netduino.Foundation.Sensors.GPS
     /// </summary>
     public struct GPSLocation
     {
-        #region Properties
-
         /// <summary>
         ///    Time that the reading was taken.  The date component is fixed for each reading.
         /// </summary>
@@ -93,12 +91,10 @@ namespace Netduino.Foundation.Sensors.GPS
         /// <summary>
         /// Altitude above mean sea level (m).
         public double Altitude;
-
-        #endregion Properties
     }
 
     /// <summary>
-    /// Active satelite information (GSA message information).
+    /// Active satellite information (GSA message information).
     /// </summary>
     public struct ActiveSatellites
     {
@@ -108,14 +104,14 @@ namespace Netduino.Foundation.Sensors.GPS
         public DimensionalFixType Demensions;
 
         /// <summary>
-        /// Satelite selection type (Automatic or manual).
+        /// Satellite selection type (Automatic or manual).
         /// </summary>
-        public ActiveSateliteSelection SateliteSelection;
+        public ActiveSatelliteSelection SatelliteSelection;
 
         /// <summary>
-        /// PRNs of the satelites used in the fix.
+        /// PRNs of the satellites used in the fix.
         /// </summary>
-        public string[] SatelitesUsedForFix;
+        public string[] satellitesUsedForFix;
         
         /// <summary>
         /// Dilution of precision for the reading.
