@@ -14,7 +14,7 @@ namespace Netduino.Foundation.Devices
         /// <summary>
         /// Default buffer size for the incoming data from the serial port.
         /// </summary>
-        private const int MAXIMUM_BUFFER_SIZE = 1024;
+        private const int MAXIMUM_BUFFER_SIZE = 256;
 
         #endregion Constants
 
@@ -29,6 +29,12 @@ namespace Netduino.Foundation.Devices
         /// Buffer to hold the incoming text from the serial port.
         /// </summary>
         private string _buffer = String.Empty;
+
+        /// <summary>
+        /// The static buffer is used when processing the text coming in from the
+        /// serial port.
+        /// </summary>
+        private byte[] _staticBuffer = new byte[MAXIMUM_BUFFER_SIZE];
 
         /// <summary>
         /// Character(s) that indicate an end of line in the text stream.
@@ -97,12 +103,16 @@ namespace Netduino.Foundation.Devices
         /// <summary>
         /// Close the serial port and stop processing data.
         /// </summary>
+        /// <remarks>
+        /// This method clears the buffer and destroys any pending text.
+        /// </remarks>
         public void Close()
         {
             if (_serialPort.IsOpen)
             {
                 _serialPort.Close();
             }
+            _buffer = "";
         }
 
         #endregion Methods
@@ -119,23 +129,12 @@ namespace Netduino.Foundation.Devices
                 lock (_buffer)
                 {
                     int amount;
-                    byte[] buffer;
-
-                    buffer = new byte[MAXIMUM_BUFFER_SIZE];
-                    amount = ((SerialPort) sender).Read(buffer, 0, MAXIMUM_BUFFER_SIZE);
+                    amount = ((SerialPort) sender).Read(_staticBuffer, 0, MAXIMUM_BUFFER_SIZE);
                     if (amount > 0)
                     {
-                        if ((amount + _buffer.Length) <= MAXIMUM_BUFFER_SIZE)
+                        for (int index = 0; index < amount; index++)
                         {
-                            char[] characters = Encoding.UTF8.GetChars(buffer);
-                            for (int index = 0; index < characters.Length; index++)
-                            {
-                                _buffer += characters[index];
-                            }
-                        }
-                        else
-                        {
-                            throw new Exception("Buffer overflow");
+                            _buffer += (char) _staticBuffer[index];
                         }
                     }
                     int eolMarkerPosition = _buffer.IndexOf(_endOfLine);
