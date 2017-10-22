@@ -96,7 +96,8 @@ namespace Netduino.Foundation.Sensors.GPS
                         position.Direction = DirectionIndicator.West;
                         break;
                     default:
-                        throw new ArgumentException("Invalid direction");    
+                        position.Direction = DirectionIndicator.Unknown;
+                        break;
                 }
             }
             else
