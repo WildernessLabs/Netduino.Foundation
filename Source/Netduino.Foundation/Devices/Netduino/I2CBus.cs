@@ -203,6 +203,31 @@ namespace Netduino.Foundation.Devices
         }
 
         /// <summary>
+        /// Read the specified number of bytes from the I2C device.
+        /// </summary>
+        /// <returns>The bytes.</returns>
+        /// <param name="numberOfBytes">Number of bytes.</param>
+        public byte[] ReadBytes(ushort numberOfBytes)
+        {
+            _device.Config = _configuration;
+            byte[] result = new byte[numberOfBytes];
+            I2CDevice.I2CTransaction[] transaction =
+            {
+                I2CDevice.CreateReadTransaction(result)
+            };
+            int retryCount = 0;
+            while (_device.Execute(transaction, _transactionTimeout) != numberOfBytes)
+            {
+                if (retryCount > 3)
+                {
+                    throw new Exception("WriteBytes: Retry count exceeded.");
+                }
+                retryCount++;
+            }
+            return (result);
+        }
+
+        /// <summary>
         /// Read a register from the device.
         /// </summary>
         /// <param name="address">Address of the register to read.</param>

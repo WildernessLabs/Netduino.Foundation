@@ -70,6 +70,13 @@ namespace Netduino.Foundation.Devices
         byte[] WriteRead(byte[] write, ushort length);
 
         /// <summary>
+        /// Read the specified number of bytes from the I2C device.
+        /// </summary>
+        /// <returns>The bytes.</returns>
+        /// <param name="numberOfBytes">Number of bytes.</param>
+        byte[] ReadBytes(ushort numberOfBytes);
+
+        /// <summary>
         /// Read a registers from the device.
         /// </summary>
         /// <param name="address">Address of the register to read.</param>
