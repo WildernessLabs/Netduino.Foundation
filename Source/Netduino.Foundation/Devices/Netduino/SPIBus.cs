@@ -146,6 +146,16 @@ namespace Netduino.Foundation.Devices
 		}
 
         /// <summary>
+        /// Read the specified number of bytes from the I2C device.
+        /// </summary>
+        /// <returns>The bytes.</returns>
+        /// <param name="numberOfBytes">Number of bytes.</param>
+        public byte[] ReadBytes(ushort numberOfBytes)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Read a registers from the device.
         /// </summary>
         /// <param name="address">Address of the register to read.</param>
