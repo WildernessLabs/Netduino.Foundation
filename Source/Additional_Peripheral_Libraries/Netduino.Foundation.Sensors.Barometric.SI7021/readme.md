@@ -8,6 +8,9 @@ The Si7021 is available on a breakout board from the the following suppliers:
 
 * [Adafruit Si7021 Breakout Board](https://www.adafruit.com/product/3251)
 * [Sparkfun Si7021 Breakout Board](https://www.sparkfun.com/products/13763)
+* [Tessel Climate Module](https://www.seeedstudio.com/Tessel-Climate-Module-p-2225.html)
+
+Note that the Tessel Climate module is compatible with this library.
 
 ## Hardware
 
