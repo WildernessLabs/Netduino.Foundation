@@ -59,6 +59,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Servo.A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.GPS.NMEA", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.GPS.NMEA\Netduino.Foundation.Sensors.GPS.NMEA.csproj", "{E0526237-4F52-4A82-9433-9308431F1214}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Light.SI1145", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Light.SI1145\Netduino.Foundation.Sensors.Light.SI1145.csproj", "{5BCDA33E-90D7-462E-8B4D-768258C92BBB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -291,6 +293,14 @@ Global
 		{E0526237-4F52-4A82-9433-9308431F1214}.Debug|x86.Build.0 = Debug|Any CPU
 		{E0526237-4F52-4A82-9433-9308431F1214}.Release|x86.ActiveCfg = Release|Any CPU
 		{E0526237-4F52-4A82-9433-9308431F1214}.Release|x86.Build.0 = Release|Any CPU
+		{5BCDA33E-90D7-462E-8B4D-768258C92BBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BCDA33E-90D7-462E-8B4D-768258C92BBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BCDA33E-90D7-462E-8B4D-768258C92BBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BCDA33E-90D7-462E-8B4D-768258C92BBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BCDA33E-90D7-462E-8B4D-768258C92BBB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5BCDA33E-90D7-462E-8B4D-768258C92BBB}.Debug|x86.Build.0 = Debug|Any CPU
+		{5BCDA33E-90D7-462E-8B4D-768258C92BBB}.Release|x86.ActiveCfg = Release|Any CPU
+		{5BCDA33E-90D7-462E-8B4D-768258C92BBB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0} = {82E59041-71D9-420E-B3FE-836243B81E1E}
