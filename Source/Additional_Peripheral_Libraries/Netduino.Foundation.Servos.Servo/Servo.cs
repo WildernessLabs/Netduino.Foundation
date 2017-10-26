@@ -1,16 +1,18 @@
 ﻿using System;
 using Microsoft.SPOT.Hardware;
-using Microsoft.SPOT;
 
-namespace Netduino.Foundation.Servo.ArduinoLib
+namespace Netduino.Foundation.Servos
 {
-class Servo
-{
-		#region Constants
+    /// <summary>
+    /// Implement a Servo xlass.
+    /// </summary>
+    class Servo
+    {
+        #region Constants
 
-	/// <summary>
-	/// Default frequency for the servo.
-	/// </summary>
+        /// <summary>
+        /// Default frequency for the servo.
+        /// </summary>
         public const double SERVO_FREQUENCY = 50;
 
         /// <summary>
@@ -33,7 +35,7 @@ class Servo
         ///<Returns>true if the instance is attached to a PWM pin, false otherwise.</Returns>
         public bool Attached
         {
-        	get { return (Pin != Cpu.PWMChannel.PWM_NONE); }
+            get { return (Pin != Cpu.PWMChannel.PWM_NONE); }
         }
 
         /// <summary>
@@ -49,33 +51,33 @@ class Servo
         private double _angle = 0;
         public double Angle
         {
-        	get
-        	{
-        		if (!Attached)
-        		{
-        			throw new InvalidOperationException("Cannot read angle of servo when not attached.");
-        		}
-        		return (_angle);
-        	}
-        	set
-        	{
-        		if ((_angle < MINIMUM_ANGLE) || (_angle > MAXIMUM_ANGLE))
-        		{
-        			throw new ArgumentOutOfRangeException("angle", "Servo angle out of range 0 to 180 degrees.");
-        		}
-        		_angle = value;
-        		double pulseWidth = MinimumPulseWidth + (_angle * ((MaximumPulseWidth - MinimumPulseWidth) / 181));
-        		double dutyCycle = pulseWidth / 20000;
-        		if (PWMPin == null)
-        		{
-        			PWMPin = new PWM(Pin, SERVO_FREQUENCY, dutyCycle, false);
-        			PWMPin.Start();
-        		}
-        		else
-        		{
-        			PWMPin.DutyCycle = dutyCycle;
-        		}
-        	}
+            get
+            {
+                if (!Attached)
+                {
+                    throw new InvalidOperationException("Cannot read angle of servo when not attached.");
+                }
+                return (_angle);
+            }
+            set
+            {
+                if ((_angle < MINIMUM_ANGLE) || (_angle > MAXIMUM_ANGLE))
+                {
+                    throw new ArgumentOutOfRangeException("angle", "Servo angle out of range 0 to 180 degrees.");
+                }
+                _angle = value;
+                double pulseWidth = MinimumPulseWidth + (_angle * ((MaximumPulseWidth - MinimumPulseWidth) / 181));
+                double dutyCycle = pulseWidth / 20000;
+                if (PWMPin == null)
+                {
+                    PWMPin = new PWM(Pin, SERVO_FREQUENCY, dutyCycle, false);
+                    PWMPin.Start();
+                }
+                else
+                {
+                    PWMPin.DutyCycle = dutyCycle;
+                }
+            }
         }
 
         /// <summary>
@@ -111,10 +113,10 @@ class Servo
         /// </remarks>
         public Servo()
         {
-        	Pin = Cpu.PWMChannel.PWM_NONE;
-        	PWMPin = null;
-        	MinimumPulseWidth = 544;
-        	MaximumPulseWidth = 2400;
+            Pin = Cpu.PWMChannel.PWM_NONE;
+            PWMPin = null;
+            MinimumPulseWidth = 544;
+            MaximumPulseWidth = 2400;
         }
 
         /// <summary>
@@ -126,7 +128,7 @@ class Servo
         /// <param name="maximum">Maximum value for the pulse width, the default value is 2400.</param>
         public Servo(Cpu.PWMChannel pin, int minimum = 544, int maximum = 2400)
         {
-        	Attach(pin, minimum, maximum);
+            Attach(pin, minimum, maximum);
         }
 
         #endregion
@@ -142,9 +144,9 @@ class Servo
         /// <param name="maximum">Maximum pulse width for the servo.  The maximum value determines the value used for 180 degrees.</param>
         void Attach(Cpu.PWMChannel pin, int minimum = 544, int maximum = 2400)
         {
-        	Pin = pin;
-        	MinimumPulseWidth = minimum;
-        	MaximumPulseWidth = maximum;
+            Pin = pin;
+            MinimumPulseWidth = minimum;
+            MaximumPulseWidth = maximum;
         }
 
         /// <summary>
@@ -153,7 +155,7 @@ class Servo
         /// <param name="angle">Angle for the servo which should be between 0 and 180 degrees inclusive.</param>
         void Write(int angle)
         {
-        	Angle = angle;
+            Angle = angle;
         }
 
         /// <summary>
@@ -162,7 +164,7 @@ class Servo
         /// <returns>The read.</returns>
         double Read()
         {
-        	return (Angle);
+            return (Angle);
         }
 
         /// <summary>
@@ -170,12 +172,12 @@ class Servo
         /// </summary>
         void Detach()
         {
-        	if (Attached)
-        	{
-        		PWMPin.Stop();
-        		PWMPin = null;
-        		Pin = Cpu.PWMChannel.PWM_NONE;
-        	}
+            if (Attached)
+            {
+                PWMPin.Stop();
+                PWMPin = null;
+                Pin = Cpu.PWMChannel.PWM_NONE;
+            }
         }
 
         /// <summary>
@@ -183,7 +185,7 @@ class Servo
         /// </summary>
         void Stop()
         {
-        	PWMPin.Stop();
+            PWMPin.Stop();
         }
 
         /// <summary>
