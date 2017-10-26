@@ -6,13 +6,12 @@ nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometri
 nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.BMP085/Netduino.Foundation.Sensors.Barometric.BMP085.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.HIH6130/Netduino.Foundation.Sensors.Barometric.HIH6130.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.HTU21DF/Netduino.Foundation.Sensors.Barometric.HTU21DF.csproj -NoDefaultExcludes -Prop Configuration=Release
-nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.MPL11A2/Netduino.Foundation.Sensors.Barometric.MPL11A2.csproj -NoDefaultExcludes -Prop Configuration=Release
+nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.MPL115A2/Netduino.Foundation.Sensors.Barometric.MPL115A2.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.MPL311A2/Netduino.Foundation.Sensors.Barometric.MPL311A2.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.SHT31D/Netduino.Foundation.Sensors.Barometric.SHT31D.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.SI7021/Netduino.Foundation.Sensors.Barometric.SI7021.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass/Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Distance.SharpGP2D12/Netduino.Foundation.Sensors.Distance.SharpGP2D12.csproj -NoDefaultExcludes -Prop Configuration=Release
-nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.GPS.GP20U7/Netduino.Foundation.Sensors.GPS.GP20U7.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.GPS.NMEA/Netduino.Foundation.Sensors.GPS.NMEA.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Light.ALSPT19315C/Netduino.Foundation.Sensors.Light.ALSPT19315C.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Light.TSL2561/Netduino.Foundation.Sensors.Light.TSL2561.csproj -NoDefaultExcludes -Prop Configuration=Release
@@ -26,4 +25,4 @@ nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Motion.Me
 nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Motion.MPU6050/Netduino.Foundation.Sensors.Motion.MPU6050.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Temperature.Analog/Netduino.Foundation.Sensors.Temperature.Analog.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Temperature.DS18B20/Netduino.Foundation.Sensors.Temperature.DS18B20.csproj -NoDefaultExcludes -Prop Configuration=Release
-nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Servo.ArduinoLib/Netduino.Foundation.Servo.ArduinoLib.csproj -NoDefaultExcludes -Prop Configuration=Release
+nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Servos.Servo/Netduino.Foundation.Servos.Servo.csproj -NoDefaultExcludes -Prop Configuration=Release
