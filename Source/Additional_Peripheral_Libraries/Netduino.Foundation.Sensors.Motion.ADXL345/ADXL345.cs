@@ -334,7 +334,7 @@ namespace Netduino.Foundation.Sensors.Motion
             }
             if ((mode == FIFOMode.Trigger) && (samples == 0))
             {
-                throw new ArgumentException("Setting number of samples to 0 in Trigger mode can result in unpredicatble behavior.");
+                throw new ArgumentException("Setting number of samples to 0 in Trigger mode can result in unpredictable behavior.");
             }
             data += samples;
             _adxl345.WriteRegister((byte) Registers.FirstInFirstOutControl, data);
