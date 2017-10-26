@@ -21,7 +21,7 @@ The following application sweeps the servo from 0 to 180 degrees and then back a
 ```csharp
 using System.Threading;
 using SecretLabs.NETMF.Hardware.NetduinoPlus;
-using ArduinoLib;
+using Netduino.Foundation.Servos;
 
 namespace ServoTest
 {
