@@ -1,10 +1,10 @@
-﻿# Servo - Generic Implementation of the Arduino Servo Library
+﻿# Servo - Generic Servo Library
 
-The `Servo` class provides a method of controlling a servo motor.  This implementation mimic the Arduino `Servo` class and is provided to aid portability of applications.
+The `Servo` class provides a method of controlling a servo motor.
 
 ## Purchasing
 
-This example uses a generic servo, these are available from a number of suppliers inclufing [Adafruit](www.adafruit.com) and [Sparkfun](www.sparkfun.com).
+This example uses a generic servo, these are available from a number of suppliers including [Adafruit](www.adafruit.com) and [Sparkfun](www.sparkfun.com).
 
 * [Servo Motor](https://www.sparkfun.com/categories/245)
 
@@ -16,7 +16,7 @@ Note the presence of a current limiting resistor in the above circuit.
 
 ## Software
 
-The following application sweeps the servo from 0 to 180 degress and then back again.  This is repeated continuously:
+The following application sweeps the servo from 0 to 180 degrees and then back again.  This is repeated continuously:
 
 ```csharp
 using System.Threading;
