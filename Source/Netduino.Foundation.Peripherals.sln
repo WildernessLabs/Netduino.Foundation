@@ -27,8 +27,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.HTU21DF", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.HTU21DF\Netduino.Foundation.Sensors.Barometric.HTU21DF.csproj", "{25442BC4-A47A-440D-B87B-C628BC4A9F74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.MPL11A2", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.MPL11A2\Netduino.Foundation.Sensors.Barometric.MPL11A2.csproj", "{1DD219D3-C5A0-43DA-9B97-D2E2E54446E6}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.MPL311A2", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.MPL311A2\Netduino.Foundation.Sensors.Barometric.MPL311A2.csproj", "{CEC7105C-617B-4C4F-8654-A65718AE7217}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.SHT31D", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.SHT31D\Netduino.Foundation.Sensors.Barometric.SHT31D.csproj", "{FB02A7ED-4CAF-43FD-A91F-DC0EEB8597CB}"
@@ -55,11 +53,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.IC.74595", "Additional_Peripheral_Libraries\Netduino.Foundation.IC.74595\Netduino.Foundation.IC.74595.csproj", "{B8ECB2CF-11CF-4C06-A817-CC7700360168}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Servo.ArduinoLib", "Additional_Peripheral_Libraries\Netduino.Foundation.Servo.ArduinoLib\Netduino.Foundation.Servo.ArduinoLib.csproj", "{67C83896-CD66-4989-83AD-6295A8DF973B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.GPS.NMEA", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.GPS.NMEA\Netduino.Foundation.Sensors.GPS.NMEA.csproj", "{E0526237-4F52-4A82-9433-9308431F1214}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Light.SI1145", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Light.SI1145\Netduino.Foundation.Sensors.Light.SI1145.csproj", "{5BCDA33E-90D7-462E-8B4D-768258C92BBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.MPL115A2", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.MPL115A2\Netduino.Foundation.Sensors.Barometric.MPL115A2.csproj", "{ABF79BD5-8EA2-4F42-9C1A-41AFC3A6EAEB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Servos.Servo", "Additional_Peripheral_Libraries\Netduino.Foundation.Servos.Servo\Netduino.Foundation.Servos.Servo.csproj", "{8EFE2319-3D0D-4E57-B25F-02E6401FC45F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -165,14 +165,6 @@ Global
 		{25442BC4-A47A-440D-B87B-C628BC4A9F74}.Debug|x86.Build.0 = Debug|x86
 		{25442BC4-A47A-440D-B87B-C628BC4A9F74}.Release|x86.ActiveCfg = Release|x86
 		{25442BC4-A47A-440D-B87B-C628BC4A9F74}.Release|x86.Build.0 = Release|x86
-		{1DD219D3-C5A0-43DA-9B97-D2E2E54446E6}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{1DD219D3-C5A0-43DA-9B97-D2E2E54446E6}.Debug|Any CPU.Build.0 = Debug|x86
-		{1DD219D3-C5A0-43DA-9B97-D2E2E54446E6}.Release|Any CPU.ActiveCfg = Release|x86
-		{1DD219D3-C5A0-43DA-9B97-D2E2E54446E6}.Release|Any CPU.Build.0 = Release|x86
-		{1DD219D3-C5A0-43DA-9B97-D2E2E54446E6}.Debug|x86.ActiveCfg = Debug|x86
-		{1DD219D3-C5A0-43DA-9B97-D2E2E54446E6}.Debug|x86.Build.0 = Debug|x86
-		{1DD219D3-C5A0-43DA-9B97-D2E2E54446E6}.Release|x86.ActiveCfg = Release|x86
-		{1DD219D3-C5A0-43DA-9B97-D2E2E54446E6}.Release|x86.Build.0 = Release|x86
 		{CEC7105C-617B-4C4F-8654-A65718AE7217}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{CEC7105C-617B-4C4F-8654-A65718AE7217}.Debug|Any CPU.Build.0 = Debug|x86
 		{CEC7105C-617B-4C4F-8654-A65718AE7217}.Release|Any CPU.ActiveCfg = Release|x86
@@ -277,14 +269,6 @@ Global
 		{B8ECB2CF-11CF-4C06-A817-CC7700360168}.Debug|x86.Build.0 = Debug|Any CPU
 		{B8ECB2CF-11CF-4C06-A817-CC7700360168}.Release|x86.ActiveCfg = Release|Any CPU
 		{B8ECB2CF-11CF-4C06-A817-CC7700360168}.Release|x86.Build.0 = Release|Any CPU
-		{67C83896-CD66-4989-83AD-6295A8DF973B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{67C83896-CD66-4989-83AD-6295A8DF973B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{67C83896-CD66-4989-83AD-6295A8DF973B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{67C83896-CD66-4989-83AD-6295A8DF973B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{67C83896-CD66-4989-83AD-6295A8DF973B}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{67C83896-CD66-4989-83AD-6295A8DF973B}.Debug|x86.Build.0 = Debug|Any CPU
-		{67C83896-CD66-4989-83AD-6295A8DF973B}.Release|x86.ActiveCfg = Release|Any CPU
-		{67C83896-CD66-4989-83AD-6295A8DF973B}.Release|x86.Build.0 = Release|Any CPU
 		{E0526237-4F52-4A82-9433-9308431F1214}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E0526237-4F52-4A82-9433-9308431F1214}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0526237-4F52-4A82-9433-9308431F1214}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -301,6 +285,22 @@ Global
 		{5BCDA33E-90D7-462E-8B4D-768258C92BBB}.Debug|x86.Build.0 = Debug|Any CPU
 		{5BCDA33E-90D7-462E-8B4D-768258C92BBB}.Release|x86.ActiveCfg = Release|Any CPU
 		{5BCDA33E-90D7-462E-8B4D-768258C92BBB}.Release|x86.Build.0 = Release|Any CPU
+		{ABF79BD5-8EA2-4F42-9C1A-41AFC3A6EAEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABF79BD5-8EA2-4F42-9C1A-41AFC3A6EAEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABF79BD5-8EA2-4F42-9C1A-41AFC3A6EAEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABF79BD5-8EA2-4F42-9C1A-41AFC3A6EAEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABF79BD5-8EA2-4F42-9C1A-41AFC3A6EAEB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{ABF79BD5-8EA2-4F42-9C1A-41AFC3A6EAEB}.Debug|x86.Build.0 = Debug|Any CPU
+		{ABF79BD5-8EA2-4F42-9C1A-41AFC3A6EAEB}.Release|x86.ActiveCfg = Release|Any CPU
+		{ABF79BD5-8EA2-4F42-9C1A-41AFC3A6EAEB}.Release|x86.Build.0 = Release|Any CPU
+		{8EFE2319-3D0D-4E57-B25F-02E6401FC45F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EFE2319-3D0D-4E57-B25F-02E6401FC45F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EFE2319-3D0D-4E57-B25F-02E6401FC45F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EFE2319-3D0D-4E57-B25F-02E6401FC45F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EFE2319-3D0D-4E57-B25F-02E6401FC45F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8EFE2319-3D0D-4E57-B25F-02E6401FC45F}.Debug|x86.Build.0 = Debug|Any CPU
+		{8EFE2319-3D0D-4E57-B25F-02E6401FC45F}.Release|x86.ActiveCfg = Release|Any CPU
+		{8EFE2319-3D0D-4E57-B25F-02E6401FC45F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0} = {82E59041-71D9-420E-B3FE-836243B81E1E}
