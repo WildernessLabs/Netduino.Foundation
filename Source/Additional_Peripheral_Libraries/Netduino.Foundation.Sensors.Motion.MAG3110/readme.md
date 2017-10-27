@@ -68,7 +68,9 @@ Set or retrieve the `Standby` state for the sensor.  The following puts the sens
 Standby = true;
 ```
 
-### `Reset()`
+### Methods
+
+#### `Reset()`
 
 Put the sensor into standby mode and reset the sensor control and offset registers.
 
