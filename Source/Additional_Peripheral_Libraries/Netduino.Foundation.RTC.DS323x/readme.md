@@ -17,6 +17,20 @@ A variety of modules are available including low cost modules with integrated EE
 
 ## Hardware
 
+The DS3231 real time clock module (see image below) requires only four (for simple timekeeping) or five (for alarms) connections
+
+![DS3231 Real Time Clock Module](DS3231RealTimeClock.png)
+
+| Netduino Pin | Sensor Pin        |
+|--------------|-------------------|
+| 3.3V         | V<sub>cc</sub>    |
+| GND          | GND               |
+| SC           | SCK               |
+| SD           | SDA               |
+| SQW          | Digital Interrupt |
+
+The 32K pin outputs the 32,768 Hz clock signal from the module.  This signal is only available when power is supplied by V<sub>cc</sub>, it is not availbe when the module is on battery power.
+
 ## Software
 
 The following application sets an alarm to trigger at when the current second is equal to 15.  The interrupt routine displays the time and then clears the interrupt flag:
@@ -53,7 +67,7 @@ namespace DS3231Test
 }
 ```
 
-Connect the interrupt pin of the DS323x real time clock to digital input pin 8 on the Netduino.
+Connect the interrupt pin of the DS3231 real time clock to digital input pin 8 on the Netduino.
 
 ## API
 
