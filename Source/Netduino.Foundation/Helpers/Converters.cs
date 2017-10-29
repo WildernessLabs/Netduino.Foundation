@@ -51,5 +51,32 @@ namespace Netduino.Foundation
         	return (result);
         }
 
+        /// <summary>
+        /// Convert a BCD value in a byte into a decimal representation.
+        /// </summary>
+        /// <param name="bcd">BCD value to decode.</param>
+        /// <returns>Decimal version of the BCD value.</returns>
+        public static byte BCDToByte(byte bcd)
+        {
+            int result = bcd & 0x0f;
+            result += (bcd >> 4) * 10;
+            return ((byte) (result & 0x0f));
+        }
+
+        /// <summary>
+        /// Convert a 
+        /// </summary>
+        /// <returns>The to bcd.</returns>
+        /// <param name="v">V.</param>
+        public static byte ByteToBCD(byte v)
+        {
+            if (v > 99)
+            {
+                throw new ArgumentException("v", "Value to encode should be in the range 0-99 inclusive.");
+            }
+            int result = (v % 10) << 4;
+            result += (v / 10);
+            return ((byte) (result & 0xff));
+        }
     }
 }
