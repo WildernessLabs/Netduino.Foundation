@@ -168,7 +168,7 @@ namespace Netduino.Foundation.RTC
         /// <summary>
         /// Get the current die temperature.
         /// </summary>
-        public double Temperature
+        public double Temperature 
         {
             get
             {
@@ -186,7 +186,7 @@ namespace Netduino.Foundation.RTC
         /// 
         /// EOSC - BBSQW - CONV - RS1 - RS2 - INTCN - A2IE - A1IE
         /// </remarks>
-        public byte ControlRegister
+        protected byte ControlRegister
         {
             get
             {
@@ -206,7 +206,7 @@ namespace Netduino.Foundation.RTC
         /// 
         /// OSF - 0 - 0 - 0 - EN32KHZ - BSY - A2F - A1F
         /// </remarks>
-        public byte ControlStatusRegister
+        protected byte ControlStatusRegister
         {
             get
             {
@@ -221,7 +221,7 @@ namespace Netduino.Foundation.RTC
         /// <summary>
         /// Determine which alarm has been raised.
         /// </summary>
-        public Alarm WhichAlarm
+        protected Alarm WhichAlarm
         {
             get
             {
@@ -333,7 +333,7 @@ namespace Netduino.Foundation.RTC
         /// </summary>
         /// <param name="day">Day of the week</param>
         /// <returns>Byte representation of the day of the week (Sunday = 1).</returns>
-        public byte DayOfWeekToByte(DayOfWeek day)
+        protected byte DayOfWeekToByte(DayOfWeek day)
         {
             byte result = 1;
             switch (day)
