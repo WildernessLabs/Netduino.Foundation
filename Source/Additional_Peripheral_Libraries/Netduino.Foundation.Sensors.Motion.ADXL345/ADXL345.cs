@@ -1,5 +1,5 @@
-﻿using System;
-using Netduino.Foundation.Devices;
+﻿using Netduino.Foundation.Devices;
+using System;
 
 namespace Netduino.Foundation.Sensors.Motion
 {
@@ -40,11 +40,6 @@ namespace Netduino.Foundation.Sensors.Motion
         /// See page 26 of the data sheet.
         /// </remarks>
         public enum Frequency { EightHz = 0x00, FourHz = 0x01, TwoHz = 0x02, OneHz = 0x03 };
-
-        /// <summary>
-        /// Valid FIFO modes (see page 27 of the datasheet).
-        /// </summary>
-        public enum FIFOMode { Bypass = 0x00, FIFO = 0x40, Stream = 0x80, Trigger = 0xc0 };
 
         #endregion Enums
 
@@ -156,28 +151,6 @@ namespace Netduino.Foundation.Sensors.Motion
             }
         }
 
-        /// <summary>
-        /// Number of samples in the FIFO buffer.
-        /// </summary>
-        public byte FirstInFirstOutSampleCount
-        {
-            get
-            {
-                return ((byte) (_adxl345.ReadRegister((byte) Registers.FirstInFirstOutStatus) & 0x2f));
-            }
-        }
-
-        /// <summary>
-        /// Indicate if a Trigger event has occurred.
-        /// </summary>
-        public bool FIFOTriggerEventOccurred
-        {
-            get
-            {
-                return((_adxl345.ReadRegister((byte) Registers.FirstInFirstOutStatus) & 0x40) == 0);
-            }
-        }
-
         #endregion Properties
 
         #region Constructors
@@ -206,7 +179,10 @@ namespace Netduino.Foundation.Sensors.Motion
 			}
 			I2CBus device = new I2CBus(address, speed);
 			_adxl345 = (ICommunicationBus) device;
-            Reset();
+            if (DeviceID != 0xe5)
+            {
+                throw new Exception("Invalid device ID.");
+            }
         }
 
         #endregion Constructors
@@ -304,43 +280,6 @@ namespace Netduino.Foundation.Sensors.Motion
         }
 
         /// <summary>
-        /// Setup the FIFO mode.
-        /// </summary>
-        /// <param name="mode">FIFO mode (one of Bypass, FIFO, Stream or Trigger).</param>
-        /// <param name="trigger">Link the trigger mode to Interrupt1 (false) or Interrupt2 (true).</param>
-        /// <param name="samples">Number of FIFO samples (0-32).</param>
-        /// <remarks>
-        /// The function of these bits depends on the FIFO mode selected (see table below). Entering 
-        /// a value of 0 in the samples bits immediately sets the watermark status bit in the InterruptSource
-        /// register, regardless of which FIFO mode is selected. Undesirable operation may occur if a 
-        /// value of 0 is used for the samples bits when trigger mode is used.
-        /// 
-        /// FIFO Mode   Samples Bits Function
-        /// Bypass      None.
-        /// FIFO        Specifies how many FIFO entries are needed to trigger a watermark interrupt. 
-        /// Stream      Specifies how many FIFO entries are needed to trigger a watermark interrupt. 
-        /// Trigger     Specifies how many FIFO samples are retained in the FIFO buffer before a trigger event. 
-        /// </remarks>
-        public void SetupFIFO(FIFOMode mode, bool trigger, byte samples)
-        {
-            byte data = (byte) mode;
-            if (trigger)
-            {
-                data |= 0x20;
-            }
-            if (samples > 32)
-            {
-                throw new ArgumentOutOfRangeException("samples", "Number of samples should be between 0 and 32 inclusive.");
-            }
-            if ((mode == FIFOMode.Trigger) && (samples == 0))
-            {
-                throw new ArgumentException("Setting number of samples to 0 in Trigger mode can result in unpredictable behavior.");
-            }
-            data += samples;
-            _adxl345.WriteRegister((byte) Registers.FirstInFirstOutControl, data);
-        }
-
-        /// <summary>
         /// Read the six sensor bytes and set the values for the X, y and Z acceleration.
         /// </summary>
         /// <remarks>
@@ -354,19 +293,7 @@ namespace Netduino.Foundation.Sensors.Motion
             Y = (short) (data[2] + (data[3] << 8));
             Z = (short) (data[4] + (data[5] << 8));
         }
-
-        /// <summary>
-        /// There is no reset function on the ADXL345 so this method resets the registers to the
-        /// power on values.
-        /// </summary>
-        public void Reset()
-        {
-            _adxl345.WriteRegisters((byte) Registers.TAPThreshold, new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 });
-            _adxl345.WriteRegisters((byte) Registers.DataRate, new byte[] { 0x0a, 0, 0, 0 });
-            _adxl345.WriteRegister((byte) Registers.DataFormat, 0);
-            _adxl345.WriteRegister((byte) Registers.FirstInFirstOutControl, 0);
-        }
-
+        
         /// <summary>
         /// Dump the registers to the debug output stream.
         /// </summary>
