@@ -1,6 +1,7 @@
 nuget pack Netduino.Foundation/Netduino.Foundation.nuspec -NoDefaultExcludes
 nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Displays.SerialLCD/Netduino.Foundation.Displays.SerialLCD.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.IC.74595/Netduino.Foundation.IC.74595.csproj -NoDefaultExcludes -Prop Configuration=Release
+nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.RTC.DS323x/Netduino.Foundation.RTC.DS323x.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Motors.AdafruitMotorShield/Netduino.Foundation.Motors.AdafruitMotorShield.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.BME280/Netduino.Foundation.Sensors.Barometric.BME280.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.BMP085/Netduino.Foundation.Sensors.Barometric.BMP085.csproj -NoDefaultExcludes -Prop Configuration=Release
