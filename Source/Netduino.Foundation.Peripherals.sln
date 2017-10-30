@@ -65,6 +65,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.RTC.DS3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.GroveTH02", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.GroveTH02\Netduino.Foundation.Sensors.Barometric.GroveTH02.csproj", "{F54C544C-716D-477C-A7D0-6AAE6F04902D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.ParallaxPIR", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Motion.ParallaxPIR\Netduino.Foundation.Sensors.Motion.ParallaxPIR.csproj", "{D72E15FF-84F3-41E2-AC15-F8BAFA7FFBD4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -321,6 +323,14 @@ Global
 		{F54C544C-716D-477C-A7D0-6AAE6F04902D}.Debug|x86.Build.0 = Debug|Any CPU
 		{F54C544C-716D-477C-A7D0-6AAE6F04902D}.Release|x86.ActiveCfg = Release|Any CPU
 		{F54C544C-716D-477C-A7D0-6AAE6F04902D}.Release|x86.Build.0 = Release|Any CPU
+		{D72E15FF-84F3-41E2-AC15-F8BAFA7FFBD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D72E15FF-84F3-41E2-AC15-F8BAFA7FFBD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D72E15FF-84F3-41E2-AC15-F8BAFA7FFBD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D72E15FF-84F3-41E2-AC15-F8BAFA7FFBD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D72E15FF-84F3-41E2-AC15-F8BAFA7FFBD4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D72E15FF-84F3-41E2-AC15-F8BAFA7FFBD4}.Debug|x86.Build.0 = Debug|Any CPU
+		{D72E15FF-84F3-41E2-AC15-F8BAFA7FFBD4}.Release|x86.ActiveCfg = Release|Any CPU
+		{D72E15FF-84F3-41E2-AC15-F8BAFA7FFBD4}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0} = {82E59041-71D9-420E-B3FE-836243B81E1E}
