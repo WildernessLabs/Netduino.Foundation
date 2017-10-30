@@ -63,6 +63,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Servos.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.RTC.DS323x", "Additional_Peripheral_Libraries\Netduino.Foundation.RTC.DS323x\Netduino.Foundation.RTC.DS323x.csproj", "{94AA6C5B-5A98-492D-B79E-23C1437EDA8B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.GroveTH02", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.GroveTH02\Netduino.Foundation.Sensors.Barometric.GroveTH02.csproj", "{F54C544C-716D-477C-A7D0-6AAE6F04902D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -311,6 +313,14 @@ Global
 		{94AA6C5B-5A98-492D-B79E-23C1437EDA8B}.Debug|x86.Build.0 = Debug|Any CPU
 		{94AA6C5B-5A98-492D-B79E-23C1437EDA8B}.Release|x86.ActiveCfg = Release|Any CPU
 		{94AA6C5B-5A98-492D-B79E-23C1437EDA8B}.Release|x86.Build.0 = Release|Any CPU
+		{F54C544C-716D-477C-A7D0-6AAE6F04902D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F54C544C-716D-477C-A7D0-6AAE6F04902D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F54C544C-716D-477C-A7D0-6AAE6F04902D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F54C544C-716D-477C-A7D0-6AAE6F04902D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F54C544C-716D-477C-A7D0-6AAE6F04902D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F54C544C-716D-477C-A7D0-6AAE6F04902D}.Debug|x86.Build.0 = Debug|Any CPU
+		{F54C544C-716D-477C-A7D0-6AAE6F04902D}.Release|x86.ActiveCfg = Release|Any CPU
+		{F54C544C-716D-477C-A7D0-6AAE6F04902D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0} = {82E59041-71D9-420E-B3FE-836243B81E1E}
