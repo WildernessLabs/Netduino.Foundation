@@ -4,6 +4,8 @@
 |---------------------------|-------------------------------------|
 | 74595 Shift Register      | [74595 shift register](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.IC.74595) |
 | Analog Temperature Sensor                        | [Generic analog temperature sensor](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Temperature.Analog) (TMP35 / 36 / 37 / LM35)|
+| ADXL335 Accelerometer | [ADXL335 Triple axis accelerometer](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Motion.ADXL335) (Analog output) |
+| ADXL345 Accelerometer | [ADXL345 Triple axis accelerometer](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Motion.ADXL345) (I2C digital output) |
 | BME280 Temperature, Humidity and Pressure Sensor | [BME280 combined temperature, humidity and pressure sensor](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.BME280) |
 | DS323x Real Time Clock | [DS323x Real Time Clock modules](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.RTC.DS323x) |
 | HIH6130 Temperature and Humidity | [HIH6130 Temperature and Humidity breakout board](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.HIH6130) |
