@@ -11,6 +11,7 @@
 | HIH6130 Temperature and Humidity | [HIH6130 Temperature and Humidity breakout board](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.HIH6130) |
 | MAG3110 Magnetometer | [MAG3110 Three axis magnetometer](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Motion.MAG3110) |
 | NMEA GPS Decoder          | [Generic GPS decoders](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.GPS.NMEA) |
+| Parallax PIR | [Parallax PIR Rev B](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Motion.ParallaxPIR) |
 | Serial LCD                                       | [Serial LCD](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Displays.SerialLCD) |
 | Servo                     | [Generic Servo Library](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Servos.Servo) |
 | SHT31D                    | [SHT31D](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.SHT31D) Temperature and humidity sensor |
