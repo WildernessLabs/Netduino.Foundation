@@ -43,7 +43,7 @@ namespace Netduino.Foundation.Sensors.Barometric
         }
 
         /// <summary>
-        /// Create a new MAG3110 object using the default parameters for the component.
+        /// Create a new HIH6130 object using the default parameters for the component.
         /// </summary>
         /// <param name="address">Address of the HIH6130 (default = 0x27).</param>
         /// <param name="speed">Speed of the I2C bus (default = 100 KHz).</param>
