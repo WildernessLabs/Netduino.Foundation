@@ -94,7 +94,7 @@ namespace Netduino.Foundation.EEPROM
         /// </summary>
         /// <param name="startAddress">Address of he first byte to be written.</param>
         /// <param name="data">Data to be written to the EEPROM.</param>
-        public void WriteBytes(ushort startAddress, byte[] data)
+        public void Write(ushort startAddress, byte[] data)
         {
             CheckAddress(startAddress, (ushort) data.Length);
             //
