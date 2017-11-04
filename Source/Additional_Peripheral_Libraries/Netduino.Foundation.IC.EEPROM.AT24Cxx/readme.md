@@ -31,8 +31,8 @@ namespace AT24C32Test
             {
                 Debug.Print("Byte: " + index + ", Value: " + memory[index]);
             }
-            eeprom.WriteBytes(3, new byte[] { 10 });
-            eeprom.WriteBytes(7, new byte[] { 1, 2, 3, 4 });
+            eeprom.Write(3, new byte[] { 10 });
+            eeprom.Write(7, new byte[] { 1, 2, 3, 4 });
             memory = eeprom.Read(0, 16);
             for (ushort index = 0; index < 16; index++)
             {
