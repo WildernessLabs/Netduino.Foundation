@@ -1,26 +1,30 @@
 ﻿using System;
 using System.Threading;
-using Microsoft.SPOT;
 using Netduino.Foundation.Devices;
 
 namespace Netduino.Foundation.Sensors.Barometric
 {
     public class MPL3115A2
     {
-        #region Constants
+        #region Member variables / fields
 
-        #endregion Constants
+        /// <summary>
+        ///     Object used to communicate with the sensor.
+        /// </summary>
+        private readonly ICommunicationBus _mpl3115a2;
+
+        #endregion Member variables / fields
 
         #region Enums
 
         /// <summary>
-        /// Registers for non-FIFO mode.
+        ///     Registers for non-FIFO mode.
         /// </summary>
-        private enum Registers : byte 
+        private enum Registers : byte
         {
-            Status = 0x00,
+            Status = 0x06,
             PressureMSB = 0x01,
-            PressureCSB = 0x02, 
+            PressureCSB = 0x02,
             PressureLSB = 0x03,
             TemperatureMSB = 0x04,
             TemperatureLSB = 0x05,
@@ -29,7 +33,7 @@ namespace Netduino.Foundation.Sensors.Barometric
             PressureDeltaCSB = 0x08,
             PressureDeltaLSB = 0x09,
             TemperatureDeltaMSB = 0x0a,
-            TemperatureDeltaLSB =0x0b,
+            TemperatureDeltaLSB = 0x0b,
             WhoAmI = 0x0c,
             FifoStatus = 0x0d,
             FiFoDataAccess = 0x0e,
@@ -37,7 +41,7 @@ namespace Netduino.Foundation.Sensors.Barometric
             TimeDelay = 0x11,
             InterruptSource = 0x12,
             DataConfiguration = 0x13,
-            BarometricMSB = 0x14, 
+            BarometricMSB = 0x14,
             BarometricLSB = 0x15,
             PressureTargetMSB = 0x16,
             PressureTargetLSB = 0x17,
@@ -45,12 +49,12 @@ namespace Netduino.Foundation.Sensors.Barometric
             PressureWindowMSB = 0x19,
             PressureWindowLSB = 0x1a,
             TemperatureWindow = 0x1b,
-            PressureMinimumMSB = 0x1c, 
+            PressureMinimumMSB = 0x1c,
             PressureMinimumCSB = 0x1d,
             PressureMinimumLSB = 0x1e,
             TemperatureMinimumMSB = 0x1f,
             TemperatureMinimumLSB = 0x20,
-            PressureMaximumMSB = 0x21, 
+            PressureMaximumMSB = 0x21,
             PressureMaximumCSB = 0x22,
             PressureMaximumSB = 0x23,
             TemperatureMaximumMSB = 0x24,
@@ -66,7 +70,7 @@ namespace Netduino.Foundation.Sensors.Barometric
         }
 
         /// <summary>
-        /// Status register bits.
+        ///     Status register bits.
         /// </summary>
         private enum ReadingStatus : byte
         {
@@ -80,140 +84,105 @@ namespace Netduino.Foundation.Sensors.Barometric
 
         #endregion Enums
 
-        #region Member variables / fields
-
-        /// <summary>
-        /// Object used to communicate with the sensor.
-        /// </summary>
-        private ICommunicationBus _mpl3115a2;
-
-        #endregion Member variables / fields
-
         #region Properties
 
         /// <summary>
-        /// Last temperature reading (note that Read should be called before 
-        /// this value is accessed.)
+        ///     Last temperature reading (note that Read should be called before
+        ///     this value is accessed.)
         /// </summary>
         public double Temperature { get; private set; }
 
         /// <summary>
-        /// Minimum temperature since the sensor was last reset.
+        ///     Minimum temperature since the sensor was last reset.
         /// </summary>
         public double TemperatureMinimum
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { throw new NotImplementedException(); }
         }
 
         /// <summary>
-        /// Maximum temperature since the sensor was last reset.
+        ///     Maximum temperature since the sensor was last reset.
         /// </summary>
         public double TemperatureMaximum
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { throw new NotImplementedException(); }
         }
 
         /// <summary>
-        /// Target temperature.
+        ///     Target temperature.
         /// </summary>
         public double TemperatureTarget
         {
-            set
-            {
-                throw new NotImplementedException();
-            }
+            set { throw new NotImplementedException(); }
         }
 
         /// <summary>
-        /// Temperature window.
+        ///     Temperature window.
         /// </summary>
         public double TemperatureWindow
         {
-            set
-            {
-                throw new NotImplementedException();
-            }
+            set { throw new NotImplementedException(); }
         }
 
         /// <summary>
-        /// Last pressure reading (note that Read should be called before 
-        /// this value is accessed.)
+        ///     Last pressure reading (note that Read should be called before
+        ///     this value is accessed.)
         /// </summary>
         public double Pressure { get; private set; }
 
         /// <summary>
-        /// Maximum pressure reading since the last reset.
+        ///     Maximum pressure reading since the last reset.
         /// </summary>
         public double PressureMaximum
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { throw new NotImplementedException(); }
         }
 
         /// <summary>
-        /// Minimum pressure reading since the last reset.
+        ///     Minimum pressure reading since the last reset.
         /// </summary>
         public double PressureMinimum
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { throw new NotImplementedException(); }
         }
 
         /// <summary>
-        /// Set the pressure target.
+        ///     Set the pressure target.
         /// </summary>
         /// <remarks>
-        /// An interrupt will be generated when the pressure reaches the
-        /// target pressure +/- the pressure window value.
-        /// </remarks>]
+        ///     An interrupt will be generated when the pressure reaches the
+        ///     target pressure +/- the pressure window value.
+        /// </remarks>
+        /// ]
         public double PressureTarget
         {
-            set
-            {
-                throw new NotImplementedException();
-            }
+            set { throw new NotImplementedException(); }
         }
 
         /// <summary>
-        /// Set the Pressure Window
+        ///     Set the Pressure Window
         /// </summary>
         /// <remarks>
-        /// See section 6.6.2 of the data sheet.
+        ///     See section 6.6.2 of the data sheet.
         /// </remarks>
         public double PressureWindow
         {
-            set
-            {
-                throw new NotImplementedException();
-            }
+            set { throw new NotImplementedException(); }
         }
 
         /// <summary>
-        /// Check if the part is in standby mode or change the standby mode.
+        ///     Check if the part is in standby mode or change the standby mode.
         /// </summary>
         /// <remarks>
-        /// Changes the SBYB bit in Control register 1 to put the device to sleep
-        /// or to allow measurements to be made.
+        ///     Changes the SBYB bit in Control register 1 to put the device to sleep
+        ///     or to allow measurements to be made.
         /// </remarks>
         public bool Standby
         {
-            get
-            {
-                return((_mpl3115a2.ReadRegister((byte) Registers.Control1) & 0x01) > 0);
-            }
+            get { return(_mpl3115a2.ReadRegister((byte) Registers.Control1) & 0x01) > 0; }
             set
             {
-                byte status = _mpl3115a2.ReadRegister((byte) Registers.Control1);
+                var status = _mpl3115a2.ReadRegister((byte) Registers.Control1);
                 if (value)
                 {
                     status &= 0xfe;
@@ -227,14 +196,11 @@ namespace Netduino.Foundation.Sensors.Barometric
         }
 
         /// <summary>
-        /// Get the status register from the sensor.
+        ///     Get the status register from the sensor.
         /// </summary>
         public byte Status
         {
-            get
-            {
-                return(_mpl3115a2.ReadRegister((byte) Registers.Status));
-            }
+            get { return _mpl3115a2.ReadRegister((byte) Registers.Status); }
         }
 
         #endregion Properties
@@ -242,25 +208,28 @@ namespace Netduino.Foundation.Sensors.Barometric
         #region Constructors
 
         /// <summary>
-        /// Default constructor (private to prevent it being called).
+        ///     Default constructor (private to prevent it being called).
         /// </summary>
         private MPL3115A2()
         {
         }
 
         /// <summary>
-        /// Create a new MPL3115A2 object with the default address and speed settings.
+        ///     Create a new MPL3115A2 object with the default address and speed settings.
         /// </summary>
         /// <param name="address">Address of the sensor (default = 0x60).</param>
         /// <param name="speed">Bus speed to use when communicating with the sensor (Maximum is 400 kHz).</param>
         public MPL3115A2(byte address = 0x60, ushort speed = 400)
         {
-            I2CBus device = new I2CBus(address, speed);
-            _mpl3115a2 = (ICommunicationBus) device;
+            var device = new I2CBus(address, speed);
+            _mpl3115a2 = device;
             if (_mpl3115a2.ReadRegister((byte) Registers.WhoAmI) != 0xc4)
             {
                 throw new Exception("Unexpected device ID, expected 0xc4");
             }
+            _mpl3115a2.WriteRegister((byte) Registers.Control1, 0xb9);
+            _mpl3115a2.WriteRegister((byte) Registers.DataConfiguration, 0xb8);
+            Read();
         }
 
         #endregion
@@ -268,8 +237,8 @@ namespace Netduino.Foundation.Sensors.Barometric
         #region Methods
 
         /// <summary>
-        /// Decode the three data bytes representing the pressure into a doubleing
-        /// point pressure value.
+        ///     Decode the three data bytes representing the pressure into a doubleing
+        ///     point pressure value.
         /// </summary>
         /// <param name="msb">MSB for the pressure sensor reading.</param>
         /// <param name="csb">CSB for the pressure sensor reading.</param>
@@ -282,31 +251,30 @@ namespace Netduino.Foundation.Sensors.Barometric
             pressure |= csb;
             pressure <<= 8;
             pressure |= lsb;
-            return (((double) pressure) / 64.0);
+            return pressure / 64.0;
         }
 
         /// <summary>
-        /// Encode the pressure into the sensor reading byes.
-        /// 
-        /// This method is used to allow the target pressure and pressure window
-        /// properties to be set.
+        ///     Encode the pressure into the sensor reading byes.
+        ///     This method is used to allow the target pressure and pressure window
+        ///     properties to be set.
         /// </summary>
         /// <param name="pressure">Pressure in Pascals to encode.</param>
         /// <returns>Array holding the three byte values for the sensor.</returns>
         private byte[] EncodePressure(double pressure)
         {
-            byte[] result = new byte[3];
-            uint temp = (uint) (pressure * 64);
+            var result = new byte[3];
+            var temp = (uint) (pressure * 64);
             result[2] = (byte) (temp & 0xff);
             temp >>= 8;
             result[1] = (byte) (temp & 0xff);
             temp >>= 8;
             result[0] = (byte) (temp & 0xff);
-            return(result);
+            return result;
         }
 
         /// <summary>
-        /// Decode the two bytes representing the temperature into degrees C.
+        ///     Decode the two bytes representing the temperature into degrees C.
         /// </summary>
         /// <param name="msb">MSB of the temperature sensor reading.</param>
         /// <param name="lsb">LSB of the temperature sensor reading.</param>
@@ -316,30 +284,29 @@ namespace Netduino.Foundation.Sensors.Barometric
             ushort temperature = msb;
             temperature <<= 8;
             temperature |= lsb;
-            return(((double) temperature) / 256.0);
+            return temperature / 256.0;
         }
 
         /// <summary>
-        /// Encode a temperature into sensor reading bytes.
-        /// 
-        /// This method is needed in order to allow the temperature target
-        /// and window properties to work.
+        ///     Encode a temperature into sensor reading bytes.
+        ///     This method is needed in order to allow the temperature target
+        ///     and window properties to work.
         /// </summary>
         /// <param name="temperature">Temperature to encode.</param>
         /// <returns>Temperature tuple containing the two bytes for the sensor.</returns>
         private byte[] EncodeTemperature(double temperature)
         {
-            byte[] result = new byte[2];
-            ushort temp = (ushort) (temperature * 256);
+            var result = new byte[2];
+            var temp = (ushort) (temperature * 256);
             result[1] = (byte) (temp & 0xff);
             temp >>= 8;
             result[0] = (byte) (temp & 0xff);
-            return(result);
+            return result;
         }
 
         /// <summary>
-        /// Force a read of the current sensor values and update the Temperature
-        /// and Pressure properties.
+        ///     Force a read of the current sensor values and update the Temperature
+        ///     and Pressure properties.
         /// </summary>
         public void Read()
         {
@@ -348,27 +315,28 @@ namespace Netduino.Foundation.Sensors.Barometric
             //  register 1 (see 7.17.1 of the datasheet).
             //
             Standby = false;
-            byte controlRegister = _mpl3115a2.ReadRegister((byte) Registers.Control1);
+            var controlRegister = _mpl3115a2.ReadRegister((byte) Registers.Control1);
             controlRegister |= 0x02;
-            _mpl3115a2.WriteRegister((byte) Registers.Control1, controlRegister);
+            _mpl3115a2.WriteRegister((byte) Registers.Control1, 0xb9);
             //
             //  Pause until both temperature and pressure readings are available.
             //            
-            while ((Status & 0x06) != 0x06)
-            {
-                Thread.Sleep(5);
-            }
-            byte[] data = _mpl3115a2.ReadRegisters((byte) Registers.PressureMSB, 5);
+            //while ((Status & 0x06) != 0x06)
+            //{
+            //    Thread.Sleep(5);
+            //}
+            Thread.Sleep(100);
+            var data = _mpl3115a2.ReadRegisters((byte) Registers.PressureMSB, 5);
             Pressure = DecodePresssure(data[0], data[1], data[2]);
             Temperature = DecodeTemperature(data[3], data[4]);
         }
 
         /// <summary>
-        /// Reset the sensor.
+        ///     Reset the sensor.
         /// </summary>
         public void Reset()
         {
-            byte data = _mpl3115a2.ReadRegister((byte) Registers.Control1);
+            var data = _mpl3115a2.ReadRegister((byte) Registers.Control1);
             data |= 0x04;
             _mpl3115a2.WriteRegister((byte) Registers.Control1, data);
         }
