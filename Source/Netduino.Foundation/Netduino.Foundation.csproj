@@ -80,6 +80,7 @@
     <Compile Include="Helpers\Checksum.cs" />
     <Compile Include="Helpers\DebugInformation.cs" />
     <Compile Include="Helpers\Converters.cs" />
+    <Compile Include="Helpers\IniFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Hardware" />
@@ -89,6 +90,8 @@
     </Reference>
     <Reference Include="Microsoft.SPOT.TinyCore" />
     <Reference Include="System" />
+    <Reference Include="Microsoft.SPOT.IO" />
+    <Reference Include="System.IO" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup />
