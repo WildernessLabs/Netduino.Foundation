@@ -35,7 +35,7 @@
     <Reference Include="Microsoft.SPOT.Native" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MPL311A2.cs" />
+    <Compile Include="MPL3115A2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

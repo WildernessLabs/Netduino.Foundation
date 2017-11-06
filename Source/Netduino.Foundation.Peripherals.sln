@@ -27,7 +27,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.HTU21DF", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.HTU21DF\Netduino.Foundation.Sensors.Barometric.HTU21DF.csproj", "{25442BC4-A47A-440D-B87B-C628BC4A9F74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.MPL311A2", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.MPL311A2\Netduino.Foundation.Sensors.Barometric.MPL311A2.csproj", "{CEC7105C-617B-4C4F-8654-A65718AE7217}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.MPL3115A2", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.MPL311A2\Netduino.Foundation.Sensors.Barometric.MPL3115A2.csproj", "{CEC7105C-617B-4C4F-8654-A65718AE7217}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.SHT31D", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.SHT31D\Netduino.Foundation.Sensors.Barometric.SHT31D.csproj", "{FB02A7ED-4CAF-43FD-A91F-DC0EEB8597CB}"
 EndProject
