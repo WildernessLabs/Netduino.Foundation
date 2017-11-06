@@ -8,7 +8,7 @@ nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometri
 nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.HIH6130/Netduino.Foundation.Sensors.Barometric.HIH6130.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.HTU21DF/Netduino.Foundation.Sensors.Barometric.HTU21DF.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.MPL115A2/Netduino.Foundation.Sensors.Barometric.MPL115A2.csproj -NoDefaultExcludes -Prop Configuration=Release
-nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.MPL311A2/Netduino.Foundation.Sensors.Barometric.MPL311A2.csproj -NoDefaultExcludes -Prop Configuration=Release
+nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.MPL3115A2/Netduino.Foundation.Sensors.Barometric.MPL311A2.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.SHT31D/Netduino.Foundation.Sensors.Barometric.SHT31D.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.SI7021/Netduino.Foundation.Sensors.Barometric.SI7021.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass/Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass.csproj -NoDefaultExcludes -Prop Configuration=Release
