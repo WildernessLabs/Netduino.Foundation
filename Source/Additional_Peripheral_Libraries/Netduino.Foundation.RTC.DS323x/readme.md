@@ -134,6 +134,6 @@ Clear the interrupt for the specified alarm.  This must be called in the alarm e
 
 #### `OnAlarm1Raised(object sender)` and `OnAlarm2Raised(object sender)`
 
-Raised when the appropriate alaram is triggered.  If both alarms are triggered at the same time then both events will be triggered.
+Raised when the appropriate alarm is triggered.  If both alarms are triggered at the same time then both events will be triggered.
 
 It is important that the event handler clears the event by calling the `ClearInterrupts` method before exiting.  If the interrupts are not cleared then future events will not be triggered.
