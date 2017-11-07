@@ -102,7 +102,7 @@ The two alarms have a number of possible options that may be configured with the
 * `WhenMinutesMatch` - Event is raised when the minutes in the current time match the minutes in alarm 2.
 * `WhenHoursMinutesMatch` - Event raised when the hours and minutes in the current time match those stored in alarm 2.
 * `WhenDateHoursMinutesMatch` - Event raised when the date, hours and minutes of the current time match the those stored in alarm 2.
-* `WhenDayHoursMinutesMatch` - Event raised when the daym hours, minutes match those stored in alarm 2.
+* `WhenDayHoursMinutesMatch` - Event raised when the day, hours, minutes match those stored in alarm 2.
 
 ### Constructors
 
