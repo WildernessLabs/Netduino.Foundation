@@ -69,6 +69,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.IC.EEPROM.AT24Cxx", "Additional_Peripheral_Libraries\Netduino.Foundation.IC.EEPROM.AT24Cxx\Netduino.Foundation.IC.EEPROM.AT24Cxx.csproj", "{E406EED1-8BE6-4BB1-A498-1FCF485D19B3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Displays.MicroLiquidCrystal", "Additional_Peripheral_Libraries\Netduino.Foundation.Displays.MicroLiquidCrystal\Netduino.Foundation.Displays.MicroLiquidCrystal.csproj", "{B925A846-5EDE-436F-B217-6B35DAF5AFA1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -341,6 +343,14 @@ Global
 		{E406EED1-8BE6-4BB1-A498-1FCF485D19B3}.Debug|x86.Build.0 = Debug|Any CPU
 		{E406EED1-8BE6-4BB1-A498-1FCF485D19B3}.Release|x86.ActiveCfg = Release|Any CPU
 		{E406EED1-8BE6-4BB1-A498-1FCF485D19B3}.Release|x86.Build.0 = Release|Any CPU
+		{B925A846-5EDE-436F-B217-6B35DAF5AFA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B925A846-5EDE-436F-B217-6B35DAF5AFA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B925A846-5EDE-436F-B217-6B35DAF5AFA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B925A846-5EDE-436F-B217-6B35DAF5AFA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B925A846-5EDE-436F-B217-6B35DAF5AFA1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B925A846-5EDE-436F-B217-6B35DAF5AFA1}.Debug|x86.Build.0 = Debug|Any CPU
+		{B925A846-5EDE-436F-B217-6B35DAF5AFA1}.Release|x86.ActiveCfg = Release|Any CPU
+		{B925A846-5EDE-436F-B217-6B35DAF5AFA1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0} = {82E59041-71D9-420E-B3FE-836243B81E1E}
