@@ -88,11 +88,11 @@ The two alarms have a number of possible options that may be configured with the
 *Alarm 1*
 
 * `OncePerSecond` - Event raised every second
-* `WhenSecondsMatch` - Event raised with the seconds in the current time matches the seconds in the alarm 1 time.
-* `WhenMinutesSecondsMatch` - Event raised when both the seconds and the minutes in the current time match the time stored in the alarm 1 time.
-* `WhenHoursMinutesSecondsMatch` - Event raised when the hours, minutes and seconds in the current time match the time stored in the alarm 1 time.
-* `WhenDateHoursMinutesSecondsMatch` - Event raised when the current date and time match the time stored in the alarm 1 time.
-* `WhenDayHoursMinutesSecondsMatch` - Event raised when the day, hour, minute and second in the current time match the time in atored in alarm 1.
+* `WhenSecondsMatch` - Event raised with the seconds in the current time matches the seconds in alarm 1.
+* `WhenMinutesSecondsMatch` - Event raised when both the seconds and the minutes in the current time match the time stored in alarm 1.
+* `WhenHoursMinutesSecondsMatch` - Event raised when the hours, minutes and seconds in the current time match the time stored in alarm 1.
+* `WhenDateHoursMinutesSecondsMatch` - Event raised when the current date and time match the time stored in alarm 1.
+* `WhenDayHoursMinutesSecondsMatch` - Event raised when the day, hour, minute and second in the current time match the time in stored in alarm 1.
 
 *Alarm 2*
 
