@@ -6,15 +6,6 @@ namespace Netduino.Foundation.Sensors.Barometric
 {
     public class MPL3115A2
     {
-        #region Member variables / fields
-
-        /// <summary>
-        ///     Object used to communicate with the sensor.
-        /// </summary>
-        private readonly ICommunicationBus _mpl3115a2;
-
-        #endregion Member variables / fields
-
         #region Enums
 
         /// <summary>
@@ -84,10 +75,121 @@ namespace Netduino.Foundation.Sensors.Barometric
 
         #endregion Enums
 
+        #region Classes / structures
+
+        /// <summary>
+        ///     Byte values for the various masks in the control registers.
+        /// </summary>
+        /// <remarks>
+        ///     For further information see section 7.17 of the datasheet.
+        /// </remarks>
+        private class ControlRegisterBits
+        {
+            /// <summary>
+            ///     Control1 - Device in standby when bit 0 is 0.
+            /// </summary>
+            public static readonly byte Standby = 0x00;
+
+            /// <summary>
+            ///     Control1 - Device in active when bit 0 is set to 1
+            /// </summary>
+            public static readonly byte Active = 0x01;
+
+            /// <summary>
+            ///     Control1 - Initiate a single measurement immediately.
+            /// </summary>
+            public static readonly byte OneShot = 0x02;
+
+            /// <summary>
+            ///     Control1 - Perform a software reset when in standby mode.
+            /// </summary>
+            public static readonly byte SoftwareResetEnable = 0x04;
+
+            /// <summary>
+            ///     Control1 - Set the oversample rate to 1.
+            /// </summary>
+            public static readonly byte OverSample1 = 0x00;
+
+            /// <summary>
+            ///     Control1 - Set the oversample rate to 2.
+            /// </summary>
+            public static readonly byte OverSample2 = 0x08;
+
+            /// <summary>
+            ///     Control1 - Set the oversample rate to 4.
+            /// </summary>
+            public static readonly byte OverSample4 = 0x10;
+
+            /// <summary>
+            ///     Control1 - Set the oversample rate to 8.
+            /// </summary>
+            public static readonly byte OverSample8 = 0x18;
+
+            /// <summary>
+            ///     Control1 - Set the oversample rate to 16.
+            /// </summary>
+            public static readonly byte OverSample16 = 0x20;
+
+            /// <summary>
+            ///     Control1 - Set the oversample rate to 32.
+            /// </summary>
+            public static readonly byte OverSample32 = 0x28;
+
+            /// <summary>
+            ///     Control1 - Set the oversample rate to 64.
+            /// </summary>
+            public static readonly byte OverSample64 = 0x30;
+
+            /// <summary>
+            ///     Control1 - Set the oversample rate to 128.
+            /// </summary>
+            public static readonly byte OverSample128 = 0x38;
+
+            /// <summary>
+            ///     Control1 - Altimeter or Barometer mode (Altimeter = 1, Barometer = 0);
+            /// </summary>
+            public static readonly byte AlimeterMode = 0x80;
+        }
+
+        /// <summary>
+        ///     Pressure/Temperature data configuration register bits.
+        /// </summary>
+        /// <remarks>
+        ///     For more information see section 7.7 of the datasheet.
+        /// </remarks>
+        public class ConfigurationRegisterBits
+        {
+            /// <summary>
+            ///     PT_DATA_CFG - Enable the event detection.
+            /// </summary>
+            public static readonly byte DataReadyEvent = 0x01;
+
+            /// <summary>
+            ///     PT_DATA_CFG - Enable the pressure data ready events.
+            /// </summary>
+            public static readonly byte EnablePressureEvent = 0x02;
+
+            /// <summary>
+            ///     PT_DATA_CFG - Enable the temperature data ready events.
+            /// </summary>
+            public static readonly byte EnableTemperatureEvent = 0x04;
+        }
+
+        #endregion Classes / structures
+
+        #region Member variables / fields
+
+        /// <summary>
+        ///     Object used to communicate with the sensor.
+        /// </summary>
+        private readonly ICommunicationBus _mpl3115a2;
+
+        #endregion Member variables / fields
+
         #region Properties
 
         /// <summary>
-        ///     Last temperature reading (note that Read should be called before
+        ///     Last temperature reading in degrees C (note that Read should be called before
         ///     this value is accessed.)
         /// </summary>
         public double Temperature { get; private set; }
@@ -125,7 +227,7 @@ namespace Netduino.Foundation.Sensors.Barometric
         }
 
         /// <summary>
-        ///     Last pressure reading (note that Read should be called before
+        ///     Last pressure reading in Pascals (note that Read should be called before
         ///     this value is accessed.)
         /// </summary>
         public double Pressure { get; private set; }
@@ -185,11 +287,11 @@ namespace Netduino.Foundation.Sensors.Barometric
                 var status = _mpl3115a2.ReadRegister((byte) Registers.Control1);
                 if (value)
                 {
-                    status &= 0xfe;
+                    status &= (byte) ~(ControlRegisterBits.Active);
                 }
                 else
                 {
-                    status |= 0x01;
+                    status |= ControlRegisterBits.Active;
                 }
                 _mpl3115a2.WriteRegister((byte) Registers.Control1, status);
             }
@@ -227,8 +329,12 @@ namespace Netduino.Foundation.Sensors.Barometric
             {
                 throw new Exception("Unexpected device ID, expected 0xc4");
             }
-            _mpl3115a2.WriteRegister((byte) Registers.Control1, 0xb9);
-            _mpl3115a2.WriteRegister((byte) Registers.DataConfiguration, 0xb8);
+            _mpl3115a2.WriteRegister((byte) Registers.Control1,
+                                     (byte) (ControlRegisterBits.Active | ControlRegisterBits.OverSample128));
+            _mpl3115a2.WriteRegister((byte) Registers.DataConfiguration,
+                                     (byte) (ConfigurationRegisterBits.DataReadyEvent |
+                                             ConfigurationRegisterBits.EnablePressureEvent |
+                                             ConfigurationRegisterBits.EnableTemperatureEvent));
             Read();
         }
 
@@ -315,16 +421,13 @@ namespace Netduino.Foundation.Sensors.Barometric
             //  register 1 (see 7.17.1 of the datasheet).
             //
             Standby = false;
-            var controlRegister = _mpl3115a2.ReadRegister((byte) Registers.Control1);
-            controlRegister |= 0x02;
-            _mpl3115a2.WriteRegister((byte) Registers.Control1, 0xb9);
             //
             //  Pause until both temperature and pressure readings are available.
             //            
-            //while ((Status & 0x06) != 0x06)
-            //{
-            //    Thread.Sleep(5);
-            //}
+            while ((Status & 0x06) != 0x06)
+            {
+                Thread.Sleep(5);
+            }
             Thread.Sleep(100);
             var data = _mpl3115a2.ReadRegisters((byte) Registers.PressureMSB, 5);
             Pressure = DecodePresssure(data[0], data[1], data[2]);
