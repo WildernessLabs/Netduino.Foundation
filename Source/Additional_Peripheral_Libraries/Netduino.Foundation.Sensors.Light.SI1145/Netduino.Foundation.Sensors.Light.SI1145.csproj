@@ -37,17 +37,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Netduino.Foundation\Netduino.Foundation.csproj">
-      <Project>{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}</Project>
-      <Name>Netduino.Foundation</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Datasheet\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="readme.md" />
     <None Include="SI1145OnBreadboard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Netduino.Foundation\Netduino.Foundation.csproj">
+      <Project>{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}</Project>
+      <Name>Netduino.Foundation</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
 </Project>
