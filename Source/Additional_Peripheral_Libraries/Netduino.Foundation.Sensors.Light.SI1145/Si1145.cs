@@ -159,7 +159,9 @@ namespace Netduino.Foundation.Sensors.Light
         {
             get
             {
-                return (1.0);
+                byte[] data = _si1145.ReadRegisters(Registers.UltravioletLightLSB, 2);
+                int result = (data[1] << 8) | data[0];
+                return(result / 100.0);
             }
         }
 
@@ -170,7 +172,9 @@ namespace Netduino.Foundation.Sensors.Light
         {
             get
             {
-                return (1.0);
+                byte[] data = _si1145.ReadRegisters(Registers.InfraredLSB, 2);
+                int result = (data[1] << 8) | data[0];
+                return(result);
             }
         }
 
@@ -181,7 +185,9 @@ namespace Netduino.Foundation.Sensors.Light
         {
             get
             {
-                return (1.0);
+                byte[] data = _si1145.ReadRegisters(Registers.VisibleLightLSB, 2);
+                int result = (data[1] << 8) | data[0];
+                return(result);
             }
         }
 
@@ -212,10 +218,5 @@ namespace Netduino.Foundation.Sensors.Light
         }
 
         #endregion Constructors
-
-        #region Methods
-
-
-        #endregion Methods
     }
 }
