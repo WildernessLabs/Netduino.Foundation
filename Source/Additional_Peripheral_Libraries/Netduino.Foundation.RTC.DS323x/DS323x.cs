@@ -1,55 +1,109 @@
 using System;
 using Microsoft.SPOT.Hardware;
 using Netduino.Foundation.Devices;
+using Netduino.Foundation.Helpers;
 
 namespace Netduino.Foundation.RTC
 {
-    class DS323x
+    public class DS323x
     {
+        #region Classes / structures
+
+        /// <summary>
+        ///     Register addresses in the sensor.
+        /// </summary>
+        protected static class Registers
+        {
+            public static readonly byte Seconds = 0x00;
+            public static readonly byte Minutes = 0x01;
+            public static readonly byte Hours = 0x02;
+            public static readonly byte Day = 0x03;
+            public static readonly byte Date = 0x04;
+            public static readonly byte Month = 0x05;
+            public static readonly byte Year = 0x06;
+            public static readonly byte Alarm1Seconds = 0x07;
+            public static readonly byte Alarm1Minutes = 0x08;
+            public static readonly byte Alarm1Hours = 0x09;
+            public static readonly byte Alarm1DayDate = 0x0a;
+            public static readonly byte Alarm2Minutes = 0x0b;
+            public static readonly byte Alarm2Hours = 0x0c;
+            public static readonly byte Alarm2DayDate = 0x0d;
+            public static readonly byte Control = 0x0e;
+            public static readonly byte ControlStatus = 0x0f;
+            public static readonly byte AgingOffset = 0x10;
+            public static readonly byte TemperatureMSB = 0x11;
+            public static readonly byte TemperatureLSB = 0x12;
+        }
+
+        #endregion Classes / structures
+
+        #region Interrupt handler
+
+        /// <summary>
+        ///     Alarm interrupt has been raised, work out which one and raise the necessary event.
+        /// </summary>
+        private void _interruptPort_OnInterrupt(uint data1, uint data2, DateTime time)
+        {
+            if ((OnAlarm1Raised != null) || (OnAlarm2Raised != null))
+            {
+                var alarm = WhichAlarm;
+                if (((alarm == Alarm.Alarm1Raised) || (alarm == Alarm.BothAlarmsRaised)) && (OnAlarm1Raised != null))
+                {
+                    OnAlarm1Raised(this);
+                }
+                if (((alarm == Alarm.Alarm2Raised) || (alarm == Alarm.BothAlarmsRaised)) && (OnAlarm2Raised != null))
+                {
+                    OnAlarm2Raised(this);
+                }
+            }
+        }
+
+        #endregion Interrupt handlers.
+
         #region Constants
 
         /// <summary>
-        /// Number of registers that hold the date and time information.
+        ///     Number of registers that hold the date and time information.
         /// </summary>
         private const int DATE_TIME_REGISTERS_SIZE = 0x07;
 
         /// <summary>
-        /// Bit mask to turn Alarm1 on.
+        ///     Bit mask to turn Alarm1 on.
         /// </summary>
         private const byte ALARM1_ENABLE = 0x01;
 
         /// <summary>
-        /// Bit mask to turn Alarm1 off.
+        ///     Bit mask to turn Alarm1 off.
         /// </summary>
         private const byte ALARM1_DISABLE = 0xfe;
 
         /// <summary>
-        /// Bit mask to turn Alarm2 on.
+        ///     Bit mask to turn Alarm2 on.
         /// </summary>
         private const byte ALARM2_ENABLE = 0x02;
 
         /// <summary>
-        /// Bit mask to turn Alarm2 off.
+        ///     Bit mask to turn Alarm2 off.
         /// </summary>
         private const byte ALARM2_DISABLE = 0xfd;
 
         /// <summary>
-        /// Interrupt flag for Alarm1.
+        ///     Interrupt flag for Alarm1.
         /// </summary>
         private const byte ALARM1_INTERRUPT_FLAG = 0x01;
 
         /// <summary>
-        /// Bit mask to clear the Alarm1 interrupt.
+        ///     Bit mask to clear the Alarm1 interrupt.
         /// </summary>
         private const byte ALARM1_INTERRUPT_OFF = 0xfe;
 
         /// <summary>
-        /// Interrupt flag for the Alarm2 interrupt.
+        ///     Interrupt flag for the Alarm2 interrupt.
         /// </summary>
         private const byte ALARM2_INTERRUPT_FLAG = 0x02;
 
         /// <summary>
-        /// Bit mask to clear the Alarm2 interrupt.
+        ///     Bit mask to clear the Alarm2 interrupt.
         /// </summary>
         private const byte ALARM2_INTERRUPT_OFF = 0xfd;
 
@@ -58,177 +112,181 @@ namespace Netduino.Foundation.RTC
         #region Enums
 
         /// <summary>
-        /// Register addresses in the sensor.
-        /// </summary>
-        protected enum Registers
-        {
-            Seconds = 0x00, Minutes = 0x01, Hours = 0x02, Day = 0x03, Date = 0x04,
-            Month = 0x05, Year = 0x06, Alarm1Seconds = 0x07, Alarm1Minutes = 0x08,
-            Alarm1Hours = 0x09, Alarm1DayDate = 0x0a, Alarm2Minutes = 0x0b,
-            Alarm2Hours = 0x0c, Alarm2DayDate = 0x0d, Control = 0x0e,
-            ControlStatus = 0x0f, AgingOffset = 0x10, TemperatureMSB = 0x11,
-            TemperatureLSB = 0x12
-        }
-
-        /// <summary>
-        /// Possible values for the alarm that can be set or alarm that has been raised.
+        ///     Possible values for the alarm that can be set or alarm that has been raised.
         /// </summary>
         public enum Alarm
         {
-            Alarm1Raised, Alarm2Raised, BothAlarmsRaised, Unknown
-        };
+            Alarm1Raised,
+            Alarm2Raised,
+            BothAlarmsRaised,
+            Unknown
+        }
 
         /// <summary>
-        /// Registers bits in the control register.
+        ///     Registers bits in the control register.
         /// </summary>
-        enum ControlRegisterBits { A1IE = 0x01, A2IE = 0x02, INTCON = 0x04, RS1 = 0x08, 
-                                   RS2 = 0x10, Conv = 0x20, BBSQW = 0x40, NotEOSC = 0x80 };
+        private enum ControlRegisterBits
+        {
+            A1IE = 0x01,
+            A2IE = 0x02,
+            INTCON = 0x04,
+            RS1 = 0x08,
+            RS2 = 0x10,
+            Conv = 0x20,
+            BBSQW = 0x40,
+            NotEOSC = 0x80
+        }
 
         /// <summary>
-        /// Register bits in the control / status register.
+        ///     Register bits in the control / status register.
         /// </summary>
-        enum StatusRegisterBits { A1F = 0x02, A2F = 0x02, BSY = 0x04, EN32Khz = 0x08, Crate0 = 0x10, 
-                                  Crate1 = 0x20, BB32kHz = 0x40, OSF = 0x80 };
+        private enum StatusRegisterBits
+        {
+            A1F = 0x02,
+            A2F = 0x02,
+            BSY = 0x04,
+            EN32Khz = 0x08,
+            Crate0 = 0x10,
+            Crate1 = 0x20,
+            BB32kHz = 0x40,
+            OSF = 0x80
+        }
 
         /// <summary>
-        /// Possible frequency for the square wave output.
+        ///     Possible frequency for the square wave output.
         /// </summary>
-        public enum RateSelect { OneHz = 0, OnekHz = 1, FourkHz = 2, EightkHz = 3 };
+        public enum RateSelect
+        {
+            OneHz = 0,
+            OnekHz = 1,
+            FourkHz = 2,
+            EightkHz = 3
+        }
 
         /// <summary>
-        /// Determine which alarm should be raised.
+        ///     Determine which alarm should be raised.
         /// </summary>
         public enum AlarmType
         {
             //
             //  Alarm 1 options.
             //
-            OncePerSecond, WhenSecondsMatch, WhenMinutesSecondsMatch,  WhenHoursMinutesSecondsMatch,
-            WhenDateHoursMinutesSecondsMatch, WhenDayHoursMinutesSecondsMatch,
+            OncePerSecond,
+            WhenSecondsMatch,
+            WhenMinutesSecondsMatch,
+            WhenHoursMinutesSecondsMatch,
+            WhenDateHoursMinutesSecondsMatch,
+            WhenDayHoursMinutesSecondsMatch,
+
             //
             //  Alarm 2 options.
             //
-            OncePerMinute, WhenMinutesMatch, WhenHoursMinutesMatch, WhenDateHoursMinutesMatch,
+            OncePerMinute,
+            WhenMinutesMatch,
+            WhenHoursMinutesMatch,
+            WhenDateHoursMinutesMatch,
             WhenDayHoursMinutesMatch
-        };
+        }
 
         #endregion Enums
 
         #region Member variables / fields
 
         /// <summary>
-        /// DS323x Real Time Clock object.
+        ///     DS323x Real Time Clock object.
         /// </summary>
         protected ICommunicationBus _ds323x = null;
 
         /// <summary>
-        /// Interrupt port attached to the DS323x RTC module.
+        ///     Interrupt port attached to the DS323x RTC module.
         /// </summary>
-        protected InterruptPort _interruptPort = null;
+        protected InterruptPort _interruptPort;
 
         #endregion Member variables / fields
 
         #region Delegate and events
 
         /// <summary>
-        /// Delegate for the alarm events.
+        ///     Delegate for the alarm events.
         /// </summary>
         public delegate void AlarmRaised(object sender);
 
         /// <summary>
-        /// Event raised when Alarm1 is triggered.
+        ///     Event raised when Alarm1 is triggered.
         /// </summary>
-        public event AlarmRaised OnAlarm1Raised = null;
+        public event AlarmRaised OnAlarm1Raised;
 
         /// <summary>
-        /// Event raised when Alarm2 is triggered.
+        ///     Event raised when Alarm2 is triggered.
         /// </summary>
-        public event AlarmRaised OnAlarm2Raised = null;
+        public event AlarmRaised OnAlarm2Raised;
 
         #endregion Delegate and events
 
         #region Properties
 
         /// <summary>
-        /// Get / Set the current date and time.
+        ///     Get / Set the current date and time.
         /// </summary>
         public DateTime CurrentDateTime
         {
             get
             {
-                byte[] data = _ds323x.ReadRegisters((byte) Registers.Seconds, DATE_TIME_REGISTERS_SIZE);
-                return (DecodeDateTimeRegisters(data));
+                var data = _ds323x.ReadRegisters(Registers.Seconds, DATE_TIME_REGISTERS_SIZE);
+                return DecodeDateTimeRegisters(data);
             }
-            set
-            {
-                _ds323x.WriteRegisters((byte) Registers.Seconds, EncodeDateTimeRegisters(value));
-            }
+            set { _ds323x.WriteRegisters(Registers.Seconds, EncodeDateTimeRegisters(value)); }
         }
 
         /// <summary>
-        /// Get the current die temperature.
+        ///     Get the current die temperature.
         /// </summary>
-        public double Temperature 
+        public double Temperature
         {
             get
             {
-                byte[] data = _ds323x.ReadRegisters((byte) Registers.TemperatureMSB, 2);
-                ushort temperature = (ushort) ((data[0] << 2) | (data[1] >> 6));
-                return (temperature * 0.25);
+                var data = _ds323x.ReadRegisters(Registers.TemperatureMSB, 2);
+                var temperature = (ushort) ((data[0] << 2) | (data[1] >> 6));
+                return temperature * 0.25;
             }
         }
 
         /// <summary>
-        /// Control register.
+        ///     Control register.
         /// </summary>
         /// <remarks>
-        /// Control register contains the following bit (in sequence b7 - b0):
-        /// 
-        /// EOSC - BBSQW - CONV - RS1 - RS2 - INTCN - A2IE - A1IE
+        ///     Control register contains the following bit (in sequence b7 - b0):
+        ///     EOSC - BBSQW - CONV - RS1 - RS2 - INTCN - A2IE - A1IE
         /// </remarks>
         protected byte ControlRegister
         {
-            get
-            {
-                return (_ds323x.ReadRegister((byte) Registers.Control));
-            }
-            set
-            {
-                _ds323x.WriteRegister((byte) Registers.Control, value);
-            }
+            get { return _ds323x.ReadRegister(Registers.Control); }
+            set { _ds323x.WriteRegister(Registers.Control, value); }
         }
 
         /// <summary>
-        /// Control and status register.
+        ///     Control and status register.
         /// </summary>
         /// <remarks>
-        /// Control and status register contains the following bit (in sequence b7 - b0):
-        /// 
-        /// OSF - 0 - 0 - 0 - EN32KHZ - BSY - A2F - A1F
+        ///     Control and status register contains the following bit (in sequence b7 - b0):
+        ///     OSF - 0 - 0 - 0 - EN32KHZ - BSY - A2F - A1F
         /// </remarks>
         protected byte ControlStatusRegister
         {
-            get
-            {
-                return (_ds323x.ReadRegister((byte) Registers.ControlStatus));
-            }
-            set
-            {
-                _ds323x.WriteRegister((byte) Registers.ControlStatus, value);
-            }
+            get { return _ds323x.ReadRegister(Registers.ControlStatus); }
+            set { _ds323x.WriteRegister(Registers.ControlStatus, value); }
         }
 
         /// <summary>
-        /// Determine which alarm has been raised.
+        ///     Determine which alarm has been raised.
         /// </summary>
         protected Alarm WhichAlarm
         {
             get
             {
-                byte controlStatusRegister;
-                Alarm result = Alarm.Unknown;
+                var result = Alarm.Unknown;
 
-                controlStatusRegister = ControlStatusRegister;
+                byte controlStatusRegister = ControlStatusRegister;
                 if (((controlStatusRegister & 0x01) != 0) && ((controlStatusRegister & 0x02) != 0))
                 {
                     result = Alarm.BothAlarmsRaised;
@@ -241,14 +299,15 @@ namespace Netduino.Foundation.RTC
                 {
                     result = Alarm.Alarm2Raised;
                 }
-                return(result);
+                return result;
             }
         }
 
         /// <summary>
-        /// Setup the interrupts.
+        ///     Setup the interrupts.
         /// </summary>
-        Cpu.Pin _interruptPin = Cpu.Pin.GPIO_NONE;
+        private Cpu.Pin _interruptPin = Cpu.Pin.GPIO_NONE;
+
         protected Cpu.Pin InterruptPin
         {
             set
@@ -258,7 +317,8 @@ namespace Netduino.Foundation.RTC
                     throw new Exception("Cannot change interrupt pin.");
                 }
                 _interruptPin = value;
-                _interruptPort = new InterruptPort(value, false, Microsoft.SPOT.Hardware.Port.ResistorMode.Disabled, Microsoft.SPOT.Hardware.Port.InterruptMode.InterruptEdgeLow);
+                _interruptPort = new InterruptPort(value, false, Microsoft.SPOT.Hardware.Port.ResistorMode.Disabled,
+                                                   Microsoft.SPOT.Hardware.Port.InterruptMode.InterruptEdgeLow);
                 _interruptPort.OnInterrupt += _interruptPort_OnInterrupt;
             }
         }
@@ -268,15 +328,15 @@ namespace Netduino.Foundation.RTC
         #region Methods
 
         /// <summary>
-        /// Decode the register contents and create a DateTime version of the
-        /// register contents.
+        ///     Decode the register contents and create a DateTime version of the
+        ///     register contents.
         /// </summary>
         /// <param name="data">Register contents.</param>
         /// <returns>DateTime object version of the data.</returns>
         protected DateTime DecodeDateTimeRegisters(byte[] data)
         {
-            byte seconds = Converters.BCDToByte(data[0]);
-            byte minutes = Converters.BCDToByte(data[1]);
+            var seconds = Converters.BCDToByte(data[0]);
+            var minutes = Converters.BCDToByte(data[1]);
             byte hour = 0;
             if ((data[2] & 0x40) != 0)
             {
@@ -288,27 +348,27 @@ namespace Netduino.Foundation.RTC
             }
             else
             {
-                hour = Converters.BCDToByte((byte)( data[2] & 0x3f));
+                hour = Converters.BCDToByte((byte) (data[2] & 0x3f));
             }
-            byte wday = data[3];
-            byte day = Converters.BCDToByte(data[4]);
-            byte month = Converters.BCDToByte((byte) (data[5] & 0x7f));
-            ushort year = (ushort) (1900 + Converters.BCDToByte(data[6]));
+            var wday = data[3];
+            var day = Converters.BCDToByte(data[4]);
+            var month = Converters.BCDToByte((byte) (data[5] & 0x7f));
+            var year = (ushort) (1900 + Converters.BCDToByte(data[6]));
             if ((data[5] & 0x80) != 0)
             {
                 year += 100;
             }
-            return (new DateTime(year, month, day, hour, minutes, seconds));
+            return new DateTime(year, month, day, hour, minutes, seconds);
         }
 
         /// <summary>
-        /// Encode the a DateTime object into the format used by the DS323x chips.
+        ///     Encode the a DateTime object into the format used by the DS323x chips.
         /// </summary>
         /// <param name="dt">DateTime object to encode.</param>
         /// <returns>Bytes to send to the DS323x chip.</returns>
         protected byte[] EncodeDateTimeRegisters(DateTime dt)
         {
-            byte[] data = new byte[7];
+            var data = new byte[7];
 
             data[0] = Converters.ByteToBCD((byte) dt.Second);
             data[1] = Converters.ByteToBCD((byte) dt.Minute);
@@ -325,11 +385,11 @@ namespace Netduino.Foundation.RTC
             {
                 data[6] = Converters.ByteToBCD((byte) ((dt.Year - 1900) & 0xff));
             }
-            return (data);
+            return data;
         }
 
         /// <summary>
-        /// Convert the day of the week to a byte.
+        ///     Convert the day of the week to a byte.
         /// </summary>
         /// <param name="day">Day of the week</param>
         /// <returns>Byte representation of the day of the week (Sunday = 1).</returns>
@@ -360,11 +420,11 @@ namespace Netduino.Foundation.RTC
                     result = 7;
                     break;
             }
-            return (result);
+            return result;
         }
 
         /// <summary>
-        /// Set one of the two alarms on the DS323x module.
+        ///     Set one of the two alarms on the DS323x module.
         /// </summary>
         /// <param name="alarm">Define the alarm to be set.</param>
         /// <param name="time">Date and time for the alarm.</param>
@@ -372,8 +432,8 @@ namespace Netduino.Foundation.RTC
         public void SetAlarm(Alarm alarm, DateTime time, AlarmType type)
         {
             byte[] data = null;
-            Registers register = Registers.Alarm1Seconds;
-            int element = 0;
+            var register = Registers.Alarm1Seconds;
+            var element = 0;
 
             if (alarm == Alarm.Alarm1Raised)
             {
@@ -445,31 +505,29 @@ namespace Netduino.Foundation.RTC
                     data[2] |= 0x40;
                     break;
             }
-            _ds323x.WriteRegisters((byte) register, data);
+            _ds323x.WriteRegisters(register, data);
             //
             //  Turn the relevant alarm on.
             //
-            byte controlRegister = ControlRegister;
-            byte bits = (byte) ControlRegisterBits.A1IE;
+            var controlRegister = ControlRegister;
+            var bits = (byte) ControlRegisterBits.A1IE;
             if (alarm == Alarm.Alarm2Raised)
             {
                 bits = (byte) ControlRegisterBits.A2IE;
             }
-            controlRegister |= ((byte) ControlRegisterBits.INTCON);
+            controlRegister |= (byte) ControlRegisterBits.INTCON;
             controlRegister |= bits;
             ControlRegister = controlRegister;
         }
 
         /// <summary>
-        /// Enable or disable the specified alarm.
+        ///     Enable or disable the specified alarm.
         /// </summary>
         /// <param name="alarm">Alarm to enable / disable.</param>
         /// <param name="enable">Alarm state, true = on, false = off.</param>
         public void EnableDisableAlarm(Alarm alarm, bool enable)
         {
-            byte controlRegister;
-
-            controlRegister = ControlRegister;
+            byte controlRegister = ControlRegister;
             if (alarm == Alarm.Alarm1Raised)
             {
                 if (enable)
@@ -496,12 +554,12 @@ namespace Netduino.Foundation.RTC
         }
 
         /// <summary>
-        /// Clear the alarm interrupt flag for the specified alarm.
+        ///     Clear the alarm interrupt flag for the specified alarm.
         /// </summary>
         /// <param name="alarm">Alarm to clear.</param>
         public void ClearInterrupt(Alarm alarm)
         {
-            byte controlStatusRegister = ControlStatusRegister;
+            var controlStatusRegister = ControlStatusRegister;
             switch (alarm)
             {
                 case Alarm.Alarm1Raised:
@@ -519,37 +577,14 @@ namespace Netduino.Foundation.RTC
         }
 
         /// <summary>
-        /// Display the registers.
+        ///     Display the registers.
         /// </summary>
         public void DisplayRegisters()
         {
-            byte[] data = _ds323x.ReadRegisters((byte) 0, 0x12);
-            Helpers.DebugInformation.DisplayRegisters(0, data);
+            var data = _ds323x.ReadRegisters(0, 0x12);
+            DebugInformation.DisplayRegisters(0, data);
         }
 
         #endregion
-
-        #region Interrupt handler
-
-        /// <summary>
-        /// Alarm interrupt has been raised, work out which one and raise the necessary event.
-        /// </summary>
-        void _interruptPort_OnInterrupt(uint data1, uint data2, DateTime time)
-        {
-            if ((OnAlarm1Raised != null) || (OnAlarm2Raised != null))
-            {
-                Alarm alarm = WhichAlarm;
-                if (((alarm == Alarm.Alarm1Raised) || (alarm == Alarm.BothAlarmsRaised)) && (OnAlarm1Raised != null))
-                {
-                    OnAlarm1Raised(this);
-                }
-                if (((alarm == Alarm.Alarm2Raised) || (alarm == Alarm.BothAlarmsRaised)) && (OnAlarm2Raised != null))
-                {
-                    OnAlarm2Raised(this);
-                }
-            }
-        }
-
-        #endregion Interrupt handlers.
     }
 }

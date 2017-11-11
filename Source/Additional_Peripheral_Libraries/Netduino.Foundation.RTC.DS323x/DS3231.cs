@@ -1,33 +1,32 @@
 using Microsoft.SPOT.Hardware;
 using Netduino.Foundation.Devices;
-using Netduino.Foundation.RTC;
 
-namespace DS3231Test
+namespace Netduino.Foundation.RTC
 {
     /// <summary>
-    /// Create a new DS3231 Real Time Clock object.
+    ///     Create a new DS3231 Real Time Clock object.
     /// </summary>
-    class DS3231 : DS323x
+    public class DS3231 : DS323x
     {
         #region Constructors
 
         /// <summary>
-        /// Default constructor is private to prevent the developer from calling it.
+        ///     Default constructor is private to prevent the developer from calling it.
         /// </summary>
         private DS3231()
         {
         }
 
         /// <summary>
-        /// Create a new MAG3110 object using the default parameters for the component.
+        ///     Create a new MAG3110 object using the default parameters for the component.
         /// </summary>
         /// <param name="address">Address of the DS3231 (default = 0x68).</param>
         /// <param name="speed">Speed of the I2C bus (default = 100 KHz).</param>
         /// <param name="interruptPin">Digital pin connected to the alarm interrupt pin on the RTC.</param>
         public DS3231(byte address = 0x68, ushort speed = 100, Cpu.Pin interruptPin = Cpu.Pin.GPIO_NONE)
         {
-            I2CBus device = new I2CBus(address, speed);
-            _ds323x = (ICommunicationBus) device;
+            var device = new I2CBus(address, speed);
+            _ds323x = device;
             if (interruptPin != Cpu.Pin.GPIO_NONE)
             {
                 InterruptPin = interruptPin;
