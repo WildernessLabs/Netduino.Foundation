@@ -75,10 +75,10 @@ Note that calling the `Read` method will take the sensor out of standby mode.
 
 ### Methods
 
-#### `Read`
+#### `void Read()`
 
 Read the current temperature and pressure from the sensor and set the `Temperature` and `Pressure` properties.
 
-#### `void Reset`
+#### `void Reset()`
 
 Reset the sensor.
