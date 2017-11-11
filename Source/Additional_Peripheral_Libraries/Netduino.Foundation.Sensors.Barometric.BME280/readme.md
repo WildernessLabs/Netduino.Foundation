@@ -20,7 +20,7 @@ The BME280 can be connected using I2C or SPI.  Only 4 wires are required when us
 
 ![BME280 on Breadboard](BME280OnBreadboard.png)
 
-It should be noted that the Sparkfun board is supplied with pull-up resistors enabled by default.  The Adafruit board does not have any pull-up resistors onboard.  It is therefore necessary to add two pull-up resistors (4.7 K&Omega; should be adequate for a single device) between 3.3V and SDA and 3.3V and SCL.
+It should be noted that the Sparkfun board is supplied with pull-up resistors enabled by default.  The Adafruit board does not have any pull-up resistors onboard.  It is therefore necessary to add two pull-up resistors (`4.7 K` should be adequate for a single device) between 3.3V and SDA and 3.3V and SCL.
 
 ## Software
 
@@ -56,11 +56,29 @@ namespace BME280Test
 
 ## API
 
+### Enums
+
+#### `Oversample`
+
+Possible oversample rates (`Skip, 1, 2, 4, 8, or 16).
+
+#### `Modes`
+
+Operating modes, `Sleep`, `Forced` or `Normal`.
+
+#### `StandbyDuration`
+
+Possible values for the inactive duration when running in `Normal` mode.  Possible durations range from 0.5 ms to 20 ms.
+
+#### `FilterCoefficient`
+
+Possible values for the filter coefficient.
+
 ### Constructor
 
-#### `BME280`
+#### `BME280(byte address = 0x77, ushort speed = 100)`
 
-The simplest constructor creates a new `BME280` object configured to use I2C with the default address of `0x77` and a default speed of 100 KHz.
+The simplest constructor creates a new `BME280` object configured to use I2C with the default address of `0x77` and a default speed of `100` KHz.
 
 Default values are set for the sensor properties:
 
@@ -71,15 +89,15 @@ Default values are set for the sensor properties:
 
 ### Properties
 
-#### `Temperature`
+#### `float Temperature`
 
 Temperature in &deg;C.
 
-#### `Pressure`
+#### `float Pressure`
 
 Air pressure in Pascals.
 
-#### `Humidity`
+#### `float Humidity`
 
 Relative humidity as a percentage.
 
@@ -117,17 +135,17 @@ Indicates if the sensor is copying data into memory.
 
 ### Methods
 
-#### `Reset`
+#### `void Reset()`
 
 Resets the sensor and reads the compensation data.
 
-#### `Read`
+#### `void Read()`
 
 Read the current temperature, pressure and humidity.
 
 This method must be called before accessing the `Temperature`, `Pressure` or `Humidity` properties.
 
-#### `UpdateConfiguration`
+#### `void UpdateConfiguration()`
 
 This method should be called when one or more of the following properties are modified:
 
