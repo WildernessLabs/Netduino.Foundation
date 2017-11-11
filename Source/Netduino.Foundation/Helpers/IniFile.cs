@@ -1,6 +1,6 @@
 using System;
-using System.IO;
 using System.Collections;
+using System.IO;
 using Microsoft.SPOT.IO;
 
 namespace Netduino.Foundation.Configuration
@@ -12,7 +12,7 @@ namespace Netduino.Foundation.Configuration
     ///     Original posting in the Netduino forums:
     ///     http://forums.netduino.com/index.php?/topic/3680-reading-wriring-ini-file-from-sd-micro/
     ///     Original author: OneManDo.
-    ///     All postings in the forums are shared under the Creative Commons 
+    ///     All postings in the forums are shared under the Creative Commons
     ///     Attribution-ShareAlike License.
     /// </remarks>
     public class IniFile
@@ -29,7 +29,7 @@ namespace Netduino.Foundation.Configuration
         #region Properties
 
         /// <summary>
-        /// Name of the configuration (INI) file.
+        ///     Name of the configuration (INI) file.
         /// </summary>
         public string FileName { get; set; }
 
@@ -77,12 +77,12 @@ namespace Netduino.Foundation.Configuration
 
             var section = "";
             string[] keyValuePair;
-            string actualFileName = Path.Combine("\\SD", fileName);
-            using (FileStream fileStream = new FileStream(actualFileName, FileMode.Open))
+            var actualFileName = Path.Combine("\\SD", fileName);
+            using (var fileStream = new FileStream(actualFileName, FileMode.Open))
             {
-                using (StreamReader streamReader = new StreamReader(fileStream))
+                using (var streamReader = new StreamReader(fileStream))
                 {
-                    string[] lines = streamReader.ReadToEnd().ToLower().Split(new[] {'\n', '\r'});
+                    var lines = streamReader.ReadToEnd().ToLower().Split('\n', '\r');
                     foreach (var line in lines)
                     {
                         if (line == string.Empty)
@@ -113,15 +113,15 @@ namespace Netduino.Foundation.Configuration
         ///     Save the current sections/key/value combinations to a text file.
         /// </summary>
         /// <remarks>
-        ///     The configuration will overwrite the original INI file.  A new file can be 
+        ///     The configuration will overwrite the original INI file.  A new file can be
         ///     created by setting the FileName property before calling this method.
         /// </remarks>
         public void Save()
         {
-            string actualFileName = Path.Combine("\\SD", FileName);
-            using (FileStream fileStream = new FileStream(actualFileName, FileMode.Create))
+            var actualFileName = Path.Combine("\\SD", FileName);
+            using (var fileStream = new FileStream(actualFileName, FileMode.Create))
             {
-                using (StreamWriter streamWriter = new StreamWriter(fileStream))
+                using (var streamWriter = new StreamWriter(fileStream))
                 {
                     foreach (var section in _sections.Keys)
                     {
@@ -155,7 +155,7 @@ namespace Netduino.Foundation.Configuration
         /// <param name="key">Name of the key.</param>
         /// <param name="defaultValue">Default value.</param>
         /// <returns>
-        ///     Value associated with the key in the specified section or the default value if the 
+        ///     Value associated with the key in the specified section or the default value if the
         ///     section/key/value combination does not exist.
         /// </returns>
         public string GetValue(string section, string key, string defaultValue = "")
@@ -163,7 +163,7 @@ namespace Netduino.Foundation.Configuration
             key = key.ToLower();
             section = section.ToLower();
             var keyvalpair = (Hashtable) _sections[section];
-            if ((null != keyvalpair) && (keyvalpair.Contains(key)))
+            if ((null != keyvalpair) && keyvalpair.Contains(key))
             {
                 defaultValue = keyvalpair[key].ToString();
             }
@@ -179,7 +179,7 @@ namespace Netduino.Foundation.Configuration
         /// <param name="key">Name of the key.</param>
         /// <param name="defaultValue">Default value.</param>
         /// <returns>
-        ///     Value associated with the key in the specified section or the default value if the 
+        ///     Value associated with the key in the specified section or the default value if the
         ///     section/key/value combination does not exist.
         /// </returns>
         public float GetValue(string section, string key, float defaultValue)
@@ -227,7 +227,7 @@ namespace Netduino.Foundation.Configuration
         /// <param name="key">Name of the key.</param>
         /// <param name="defaultValue">Default value.</param>
         /// <returns>
-        ///     Value associated with the key in the specified section or the default value if the 
+        ///     Value associated with the key in the specified section or the default value if the
         ///     section/key/value combination does not exist.
         /// </returns>
         public ulong GetValue(string section, string key, ulong defaultValue)
@@ -251,7 +251,7 @@ namespace Netduino.Foundation.Configuration
         /// <param name="key">Name of the key.</param>
         /// <param name="defaultValue">Default value.</param>
         /// <returns>
-        ///     Value associated with the key in the specified section or the default value if the 
+        ///     Value associated with the key in the specified section or the default value if the
         ///     section/key/value combination does not exist.
         /// </returns>
         public uint GetValue(string section, string key, uint defaultValue)
@@ -275,7 +275,7 @@ namespace Netduino.Foundation.Configuration
         /// <param name="key">Name of the key.</param>
         /// <param name="defaultValue">Default value.</param>
         /// <returns>
-        ///     Value associated with the key in the specified section or the default value if the 
+        ///     Value associated with the key in the specified section or the default value if the
         ///     section/key/value combination does not exist.
         /// </returns>
         public ushort GetValue(string section, string key, ushort defaultValue)
@@ -299,7 +299,7 @@ namespace Netduino.Foundation.Configuration
         /// <param name="key">Name of the key.</param>
         /// <param name="defaultValue">Default value.</param>
         /// <returns>
-        ///     Value associated with the key in the specified section or the default value if the 
+        ///     Value associated with the key in the specified section or the default value if the
         ///     section/key/value combination does not exist.
         /// </returns>
         public byte GetValue(string section, string key, byte defaultValue)
@@ -323,7 +323,7 @@ namespace Netduino.Foundation.Configuration
         /// <param name="key">Name of the key.</param>
         /// <param name="defaultValue">Default value.</param>
         /// <returns>
-        ///     Value associated with the key in the specified section or the default value if the 
+        ///     Value associated with the key in the specified section or the default value if the
         ///     section/key/value combination does not exist.
         /// </returns>
         public long GetValue(string section, string key, long defaultValue)
@@ -347,7 +347,7 @@ namespace Netduino.Foundation.Configuration
         /// <param name="key">Name of the key.</param>
         /// <param name="defaultValue">Default value.</param>
         /// <returns>
-        ///     Value associated with the key in the specified section or the default value if the 
+        ///     Value associated with the key in the specified section or the default value if the
         ///     section/key/value combination does not exist.
         /// </returns>
         public int GetValue(string section, string key, int defaultValue)
@@ -371,7 +371,7 @@ namespace Netduino.Foundation.Configuration
         /// <param name="key">Name of the key.</param>
         /// <param name="defaultValue">Default value.</param>
         /// <returns>
-        ///     Value associated with the key in the specified section or the default value if the 
+        ///     Value associated with the key in the specified section or the default value if the
         ///     section/key/value combination does not exist.
         /// </returns>
         public short GetValue(string section, string key, short defaultValue)
