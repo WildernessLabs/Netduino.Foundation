@@ -1,43 +1,43 @@
-﻿using Netduino.Foundation.Devices;
-using System;
+﻿using System;
+using Netduino.Foundation.Devices;
 
 namespace Netduino.Foundation.Sensors.Barometric
 {
     /// <summary>
-    /// Provide a mechanism for reading the temperature and humidity from
-    /// a SHT31D temperature / humidity sensor.
+    ///     Provide a mechanism for reading the temperature and humidity from
+    ///     a SHT31D temperature / humidity sensor.
     /// </summary>
     /// <remarks>
-    /// Readings from the sensor are made in Single-shot mode.
+    ///     Readings from the sensor are made in Single-shot mode.
     /// </remarks>
     public class SHT31D
     {
         #region Member variables / fields
 
         /// <summary>
-        /// SH31D sensor communicates using I2C.
+        ///     SH31D sensor communicates using I2C.
         /// </summary>
-        private I2CBus _sht31d = null;
+        private readonly I2CBus _sht31d;
 
         #endregion Member variables / fields
 
         #region Properties
 
         /// <summary>
-        /// Get the last humidity reading from the sensor.
+        ///     Get the last humidity reading from the sensor.
         /// </summary>
         /// <remarks>
-        /// The Read method should be called before the data in this property
-        /// contains valid data.
+        ///     The Read method should be called before the data in this property
+        ///     contains valid data.
         /// </remarks>
         public float Humidity { get; private set; }
 
         /// <summary>
-        /// Get the last temperature reading.
+        ///     Get the last temperature reading.
         /// </summary>
         /// <remarks>
-        /// The Read method should be called before the data in this property
-        /// contains valid data.
+        ///     The Read method should be called before the data in this property
+        ///     contains valid data.
         /// </remarks>
         public float Temperature { get; private set; }
 
@@ -46,14 +46,14 @@ namespace Netduino.Foundation.Sensors.Barometric
         #region Constructors
 
         /// <summary>
-        /// Default constructor (made private to prevent it being called).
+        ///     Default constructor (made private to prevent it being called).
         /// </summary>
         private SHT31D()
         {
         }
 
         /// <summary>
-        /// Create a new SHT31D object.
+        ///     Create a new SHT31D object.
         /// </summary>
         /// <param name="address">Sensor address (should be 0x44 or 0x45).</param>
         /// <param name="speed">Bus speed (0-1000 KHz).</param>
@@ -75,13 +75,13 @@ namespace Netduino.Foundation.Sensors.Barometric
         #region Methods
 
         /// <summary>
-        /// Get a reading from the sensor and set the Temperature and Humidity properties.
+        ///     Get a reading from the sensor and set the Temperature and Humidity properties.
         /// </summary>
         public void Read()
         {
-            byte[] data = _sht31d.WriteRead(new byte[] { 0x2c, 0x06 }, 6);
-            Humidity = 100 * ((float) ((data[3] << 8) + data[4])) / 65535;
-            Temperature = (175 * ((float) ((data[0] << 8) + data[1])) / 65535) - 45;
+            var data = _sht31d.WriteRead(new byte[] { 0x2c, 0x06 }, 6);
+            Humidity = (100 * (float) ((data[3] << 8) + data[4])) / 65535;
+            Temperature = ((175 * (float) ((data[0] << 8) + data[1])) / 65535) - 45;
         }
 
         #endregion
