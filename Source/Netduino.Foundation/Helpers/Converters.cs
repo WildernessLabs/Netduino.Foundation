@@ -57,7 +57,7 @@ namespace Netduino.Foundation
         {
             var result = bcd & 0x0f;
             result += (bcd >> 4) * 10;
-            return (byte) (result & 0x0f);
+            return (byte) (result & 0xff);
         }
 
         /// <summary>
@@ -71,8 +71,8 @@ namespace Netduino.Foundation
             {
                 throw new ArgumentException("v", "Value to encode should be in the range 0-99 inclusive.");
             }
-            var result = (v % 10) << 4;
-            result += v / 10;
+            var result = (v / 10) << 4;
+            result += (v % 10);
             return (byte) (result & 0xff);
         }
 
