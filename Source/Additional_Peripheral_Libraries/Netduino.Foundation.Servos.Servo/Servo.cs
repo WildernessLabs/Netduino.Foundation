@@ -4,24 +4,24 @@ using Microsoft.SPOT.Hardware;
 namespace Netduino.Foundation.Servos
 {
     /// <summary>
-    /// Implement a Servo xlass.
+    ///     Implement a Servo xlass.
     /// </summary>
-    class Servo
+    public class Servo
     {
         #region Constants
 
         /// <summary>
-        /// Default frequency for the servo.
+        ///     Default frequency for the servo.
         /// </summary>
         public const double SERVO_FREQUENCY = 50;
 
         /// <summary>
-        /// Default minimum servo angle.
+        ///     Default minimum servo angle.
         /// </summary>
         public const int MINIMUM_ANGLE = 0;
 
         /// <summary>
-        /// Default maximum servo angle.
+        ///     Default maximum servo angle.
         /// </summary>
         public const int MAXIMUM_ANGLE = 180;
 
@@ -29,26 +29,27 @@ namespace Netduino.Foundation.Servos
 
         #region Properties
 
-        ///<Summary>
-        ///Determine if this instance of the servo class is associated with a digitsal output pin.
-        ///</Summary>
-        ///<Returns>true if the instance is attached to a PWM pin, false otherwise.</Returns>
+        /// <Summary>
+        ///     Determine if this instance of the servo class is associated with a digitsal output pin.
+        /// </Summary>
+        /// <Returns>true if the instance is attached to a PWM pin, false otherwise.</Returns>
         public bool Attached
         {
-            get { return (Pin != Cpu.PWMChannel.PWM_NONE); }
+            get { return Pin != Cpu.PWMChannel.PWM_NONE; }
         }
 
         /// <summary>
-        /// PWM pin that the servo is attached to.
+        ///     PWM pin that the servo is attached to.
         /// </summary>
         /// <value>PWM pin connected to the servo.</value>
         private Cpu.PWMChannel Pin { get; set; }
 
         /// <summary>
-        /// Angle of the servo.
+        ///     Angle of the servo.
         /// </summary>
         /// <value>Angle of the servo in the range 0 to 180 degrees inclusive.</value>
-        private double _angle = 0;
+        private double _angle;
+
         public double Angle
         {
             get
@@ -57,7 +58,7 @@ namespace Netduino.Foundation.Servos
                 {
                     throw new InvalidOperationException("Cannot read angle of servo when not attached.");
                 }
-                return (_angle);
+                return _angle;
             }
             set
             {
@@ -66,8 +67,8 @@ namespace Netduino.Foundation.Servos
                     throw new ArgumentOutOfRangeException("angle", "Servo angle out of range 0 to 180 degrees.");
                 }
                 _angle = value;
-                double pulseWidth = MinimumPulseWidth + (_angle * ((MaximumPulseWidth - MinimumPulseWidth) / 181));
-                double dutyCycle = pulseWidth / 20000;
+                var pulseWidth = MinimumPulseWidth + (_angle * ((MaximumPulseWidth - MinimumPulseWidth) / 181));
+                var dutyCycle = pulseWidth / 20000;
                 if (PWMPin == null)
                 {
                     PWMPin = new PWM(Pin, SERVO_FREQUENCY, dutyCycle, false);
@@ -81,17 +82,17 @@ namespace Netduino.Foundation.Servos
         }
 
         /// <summary>
-        /// PWM pin used to control the servo.
+        ///     PWM pin used to control the servo.
         /// </summary>
         private PWM PWMPin { get; set; }
 
         /// <summary>
-        /// Minimum pulse width for this servo.  This value normally represents 0 degrees.
+        ///     Minimum pulse width for this servo.  This value normally represents 0 degrees.
         /// </summary>
         private int MinimumPulseWidth { get; set; }
 
         /// <summary>
-        /// Maximum pulse width for the servo.  This value normally represents 180 degrees.
+        ///     Maximum pulse width for the servo.  This value normally represents 180 degrees.
         /// </summary>
         /// <value>Pulse width representing 180 degrees.</value>
         private int MaximumPulseWidth { get; set; }
@@ -101,10 +102,10 @@ namespace Netduino.Foundation.Servos
         #region Contructor(s)
 
         /// <summary>
-        /// Initialise a new instance of the Servo class.  Use the defaul settings for the properties.
+        ///     Initialise a new instance of the Servo class.  Use the defaul settings for the properties.
         /// </summary>
         /// <remarks>
-        /// Defaults are:
+        ///     Defaults are:
         ///     Not connected to a pin.
         ///     Minimum pulse width set to 544
         ///     Maximum pulse width set to 2400.
@@ -120,8 +121,8 @@ namespace Netduino.Foundation.Servos
         }
 
         /// <summary>
-        /// Create a new instance of the Servo class.  This call is equivalent to creating a new instance and
-        /// then calling the <i>Attach</i> method.
+        ///     Create a new instance of the Servo class.  This call is equivalent to creating a new instance and
+        ///     then calling the <i>Attach</i> method.
         /// </summary>
         /// <param name="pin">PWM pin to which the servo is attached.</param>
         /// <param name="minimum">Minimum value for the pulse width, the default is 544.</param>
@@ -136,13 +137,13 @@ namespace Netduino.Foundation.Servos
         #region Methods
 
         /// <summary>
-        /// Attach the servo to a specific PWM pin and set the minimum and maximum pulse
-        /// widths for the 0 and 180 degree angles.
+        ///     Attach the servo to a specific PWM pin and set the minimum and maximum pulse
+        ///     widths for the 0 and 180 degree angles.
         /// </summary>
         /// <param name="pin">PWM pin to use for this servo.</param>
         /// <param name="minimum">Minimum pulse width for the servo.  The minimum width define the value used for 0 degrees.</param>
         /// <param name="maximum">Maximum pulse width for the servo.  The maximum value determines the value used for 180 degrees.</param>
-        void Attach(Cpu.PWMChannel pin, int minimum = 544, int maximum = 2400)
+        private void Attach(Cpu.PWMChannel pin, int minimum = 544, int maximum = 2400)
         {
             Pin = pin;
             MinimumPulseWidth = minimum;
@@ -150,27 +151,27 @@ namespace Netduino.Foundation.Servos
         }
 
         /// <summary>
-        /// Set the angle of the servo to the specified nuber of degrees.
+        ///     Set the angle of the servo to the specified nuber of degrees.
         /// </summary>
         /// <param name="angle">Angle for the servo which should be between 0 and 180 degrees inclusive.</param>
-        void Write(int angle)
+        private void Write(int angle)
         {
             Angle = angle;
         }
 
         /// <summary>
-        /// Read the angle of the servo.
+        ///     Read the angle of the servo.
         /// </summary>
         /// <returns>The read.</returns>
-        double Read()
+        private double Read()
         {
-            return (Angle);
+            return Angle;
         }
 
         /// <summary>
-        /// Detach the pin from the servo.
+        ///     Detach the pin from the servo.
         /// </summary>
-        void Detach()
+        private void Detach()
         {
             if (Attached)
             {
@@ -181,21 +182,21 @@ namespace Netduino.Foundation.Servos
         }
 
         /// <summary>
-        /// Stop the PWM pulse from this instance of the Servo class.
+        ///     Stop the PWM pulse from this instance of the Servo class.
         /// </summary>
-        void Stop()
+        private void Stop()
         {
             PWMPin.Stop();
         }
 
         /// <summary>
-        /// Set the pulse width to the specified number of microseconds
+        ///     Set the pulse width to the specified number of microseconds
         /// </summary>
         /// <remarks>
-        /// This method is not currently supported.
+        ///     This method is not currently supported.
         /// </remarks>
         /// <param name="microseconds">Microsecond pulse width.</param>
-        void WriteMicroseconds(int microseconds)
+        private void WriteMicroseconds(int microseconds)
         {
             throw new NotImplementedException();
         }
