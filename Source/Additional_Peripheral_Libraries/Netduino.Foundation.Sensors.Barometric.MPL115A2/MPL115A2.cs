@@ -5,31 +5,27 @@ namespace Netduino.Foundation.Sensors.Barometric
 {
     public class MPL115A2
     {
-        #region Enums
+        #region Structures
 
         /// <summary>
         ///     Device registers.
         /// </summary>
-        private enum Registers : byte
+        private static class Registers
         {
-            PressureMSB = 0x00,
-            PressureLSB = 0x01,
-            TemperatureMSB = 0x02,
-            TemperatureLSB = 0x03,
-            A0MSB = 0x04,
-            A0LSB = 0x05,
-            B1MSB = 0x06,
-            B1LSB = 0x07,
-            B2MSB = 0x08,
-            B2LSB = 0x09,
-            C12MSB = 0x0a,
-            C12LSB = 0x0b,
-            StartConversion = 0x12
+            public static readonly byte PressureMSB = 0x00;
+            public static readonly byte PressureLSB = 0x01;
+            public static readonly byte TemperatureMSB = 0x02;
+            public static readonly byte TemperatureLSB = 0x03;
+            public static readonly byte A0MSB = 0x04;
+            public static readonly byte A0LSB = 0x05;
+            public static readonly byte B1MSB = 0x06;
+            public static readonly byte B1LSB = 0x07;
+            public static readonly byte B2MSB = 0x08;
+            public static readonly byte B2LSB = 0x09;
+            public static readonly byte C12MSB = 0x0a;
+            public static readonly byte C12LSB = 0x0b;
+            public static readonly byte StartConversion = 0x12;
         }
-
-        #endregion Enums
-
-        #region Structures
 
         /// <summary>
         ///     Structure holding the doubleing point equivalent of the compensation
@@ -101,7 +97,7 @@ namespace Netduino.Foundation.Sensors.Barometric
             //  Read the compensation data from the sensor.  The location and format of the
             //  compensation data can be found on pages 5 and 6 of the datasheet.
             //
-            var data = _mpl115a2.ReadRegisters((byte) Registers.A0MSB, 8);
+            var data = _mpl115a2.ReadRegisters(Registers.A0MSB, 8);
             var a0 = (short) (ushort) ((data[0] << 8) | data[1]);
             var b1 = (short) (ushort) ((data[2] << 8) | data[3]);
             var b2 = (short) (ushort) ((data[4] << 8) | data[5]);
@@ -141,7 +137,7 @@ namespace Netduino.Foundation.Sensors.Barometric
             Read();
         }
 
-        #endregion
+        #endregion Constructors
 
         #region Methods
 
@@ -154,21 +150,21 @@ namespace Netduino.Foundation.Sensors.Barometric
             //  Tell the sensor to take a temperature and pressure reading, wait for
             //  3ms (see section 2.2 of the datasheet) and then read the ADC values.
             //
-            _mpl115a2.WriteBytes(new byte[] { (byte) Registers.StartConversion, 0x00 });
+            _mpl115a2.WriteBytes(new byte[] { Registers.StartConversion, 0x00 });
             Thread.Sleep(5);
-            var data = _mpl115a2.ReadRegisters((byte) Registers.PressureMSB, 4);
+            var data = _mpl115a2.ReadRegisters(Registers.PressureMSB, 4);
             //
             //  Extract the sensor data, note that this is a 10-bit reading so move
             //  the data right 6 bits (see section 3.1 of the datasheet).
             //
             var pressure = (ushort) (((data[0] << 8) + data[1]) >> 6);
             var temperature = (ushort) (((data[2] << 8) + data[3]) >> 6);
-            Temperature = ((temperature - 498.0) / -5.35) +25;
+            Temperature = ((temperature - 498.0) / -5.35) + 25;
             //
             //  Now use the calculations in section 3.2 to determine the
             //  current pressure reading.
             //
-            const double PRESSURE_CONSTANT = (double) (65.0 / 1023.0);
+            const double PRESSURE_CONSTANT = 65.0 / 1023.0;
             var compensatedPressure = _coefficients.A0 + ((_coefficients.B1 + (_coefficients.C12 * temperature))
                                                           * pressure) + (_coefficients.B2 * temperature);
             Pressure = (PRESSURE_CONSTANT * compensatedPressure) + 50;
