@@ -57,7 +57,7 @@ namespace Netduino.Foundation.Displays
         }
 
         /// <summary>
-        ///     Direction to move the curosr or the display.
+        ///     Direction to move the cursor or the display.
         /// </summary>
         public enum Direction
         {

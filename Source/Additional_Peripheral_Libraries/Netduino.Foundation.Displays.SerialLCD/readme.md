@@ -14,7 +14,7 @@ The Serial LCD requires only three connections; power, ground and serial data.  
 
 ## Software
 
-The application below ouputs <i>Hello, world</i> on the LCD:
+The application below outputs <i>Hello, world</i> on the LCD:
 
 ```csharp
 using System.Threading;
@@ -46,13 +46,31 @@ namespace SerialLCDTest
 
 ## API
 
+### Enums
+
+#### `CursorStyle`
+
+Defines the two possible cursor styles (line and box) along with an indication of the state of the cursor (on or off).
+
+#### `DisplayPowerState`
+
+Possible display power states (on or off).
+
+#### `LCDDimensions`
+
+Describe the number of characters and lines on the LCD display.
+
+#### `LCDBaudRate`
+
+Possible baud rates for the display (2400, 4800, 9600, 14400, 19200 or 38400).
+
+#### `Direction`
+
+Define the possible directions for scrolling the display and also text direction.
+
 ### Constructor
 
-A single constructor is supplied with a number of defaults:
-
-```csharp
-public SerialLCD(byte width = 16, byte height = 2, string port = "COM1", int baudRate = 9600, Parity parity = Parity.None, int dataBits = 8, StopBits stopBits = StopBits.One)
-```
+#### `SerialLCD(byte width = 16, byte height = 2, string port = "COM1", int baudRate = 9600, Parity parity = Parity.None, int dataBits = 8, StopBits stopBits = StopBits.One)`
 
 This can be used with the display as supplied by creating a new object with the defaults:
 
@@ -62,15 +80,11 @@ var lcd = new SerialLCD();
 
 The properties for a particular display can be set by supplying values for the parameters in the constructor.
 
-### Splash Screen
+#### Methods
+
+### `void SetSplashScreen(string line1, string line2)`
 
 A splash screen is displayed when the LCD is first powered up.  This can be changed or turned off.
-
-#### ToggleSplashScreen
-
-`ToggleSplashScreen` will turn the splash screen on or off depending upon the current setting.
-
-#### SetSplashScreen
 
 `SetSplashScreen` will change the splash screen.
 
@@ -87,15 +101,19 @@ Weather Station
 Version 1.0
 ```
 
-### SetBaudRate
+#### `void ToggleSplashScreen()`
+
+`ToggleSplashScreen` will turn the splash screen on or off depending upon the current setting.
+
+### `void SetBaudRate(LCDBaudRate baudRate)`
 
 `SetBaudRate` will change the baud rate of the display.  A new `SerialLCD` object will need to be created once the baud rate is changed as the serial port will still be using the old baud rate.
 
-### Clear
+### `void Clear()`
 
 The `Clear` method will clear the display.
 
-### SetCursorPosition
+### `void SetCursorPosition(byte column, byte line)`
 
 This method will set the cursor position on the LCD display.  The cursor locations are zero based.
 
@@ -107,11 +125,11 @@ SetCursorPosition(0, 0);
 
 This moves the cursor to the top left corner of a 16x2 LCD.
 
-### MoveCursor
+### `void MoveCursor(Direction direction)`
 
 `MoveCursor` moves the cursor left or right on the LCD.
 
-### ScrollDisplay
+### `void ScrollDisplay(Direction direction)`
 
 `ScrollDisplay` moves the contents of the display left or right.
 
@@ -119,14 +137,14 @@ It is possible to scroll the contents of the display all the way to the left (or
 
 Writing to the display when the scrolled fully left or right will change the contents of the display memory but not the actual display.  It is necessary to scroll the display in the reverse direction in order to view the updated contents.
 
-### SetCursorStyle
+### `void SetCursorStyle(CursorStyle style)`
 
 Two cursors are available, box or underline.
 
-### DisplayText
+### `void DisplayText(string text)`
 
 Write the text to the current cursor position in the display memory.
 
-### SetDisplayVisualState
+### `void SetDisplayVisualState(DisplayPowerState state)`
 
 Turn the display on or off.
