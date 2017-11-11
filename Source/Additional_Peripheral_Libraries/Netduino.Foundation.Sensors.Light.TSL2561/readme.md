@@ -127,7 +127,7 @@ The list of possible addresses for the TSL2561 sensor breakout board.
 
 The sensor gain can be either `Low` (x1) or `High` (x16).
 
-###  `IntegrationTiming`
+### `IntegrationTiming`
 
 The sensor has three automatic modes and one manual mode.  The integration timing can be set to one of the following:
 
@@ -136,55 +136,57 @@ The sensor has three automatic modes and one manual mode.  The integration timin
 * 402 milliseconds
 * Manual mode
 
-### ` Registers`
-
-The addresses of the registers in the TSL2561.
-
 ### `InterruptMode`
 
 Allows interrupts to be enabled or disabled.
 
 ## Properties
 
-### `SensorReading`
+### `ushort[] SensorReading`
 
 Raw data from the two ADCs, channel 0 and channel 1, on the sensor.
 
-### `Lux`
+### `double Lux`
 
 Light intensity reading in lux.  The value returned will depend upon the timing and gain settings.
 
-### `ID`
+### `byte ID`
 
 ID of the sensor.
 
-### ` SensorGain`
+### `Gain SensorGain`
 
 Set the gain of the sensor to either `Low` or `High`.
 
-### `Timing`
+### `IntegrationTiming Timing`
 
 Integration timing for any sensor readings.
 
-### `ThresholdLow` and `ThresholdHigh`
+### `ushort ThresholdLow` and `ushort ThresholdHigh`
 
 Set the lower and upper limits for the threshold window.  Readings outside of this window will generate an interrupt when interrupts are enabled.
 
+## Constructor
+
+### `TSL2561(byte address = (byte) Addresses.Default, ushort speed = 100)`
+
+Create a new TSL2561 object using the default properties if none are specified.
+
 ## Methods
 
-### `TurnOn` and `TurnOff`
+### `void TurnOn()` and `void TurnOff()`
 
 These two methods turn the integration sensor on and off.  They can be used to put the sensor into low power mode.
 
-### `ClearInterrupt`
+### `void ClearInterrupt()`
 
 Clear the interrupt flag in the sensor.
 
-### `ManualStart` and `ManualStop`
+### `void ManualStart()` and `void ManualStop()`
 
 Manually start or stop the integration sensor.
 
-### `SetInterruptMode`
+### `void SetInterruptMode(InterruptMode mode, byte conversionCount, Spot.Cpu.Pin pin = Spot.Cpu.Pin.GPIO_NONE)`
 
 Setup the interrupt mode on the sensor.  The sensor can be configured to wait until a specified number of consecutive integration readings are outside of the threshold window before an interrupt is generated.
 
