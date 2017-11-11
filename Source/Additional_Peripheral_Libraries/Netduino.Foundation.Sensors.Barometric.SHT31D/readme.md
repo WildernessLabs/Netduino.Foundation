@@ -53,16 +53,16 @@ Create a new SHT31D temperature and humidity sensor object.  The address default
 
 ### Properties
 
-#### `Temperature`
+#### `float Temperature`
 
 Last temperature reading made when the `Read` method was called.
 
-#### `Humidity`
+#### `float Humidity`
 
 Last humidity reading made when the `Read` method was called.
 
 ### Methods
 
-#### `Read`
+#### `void Read()`
 
 The `Read` method forces a temperature and humidity reading from the SHT31D temperature and humidity sensor.  The reading is made using high repeatability mode.
