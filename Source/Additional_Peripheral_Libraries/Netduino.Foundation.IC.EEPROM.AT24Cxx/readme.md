@@ -52,7 +52,7 @@ namespace AT24C32Test
 
 Creates a new AT24Cxx object with the specified address, communication speed, memory size and page size.
 
-The `pageSize` is the number of bytes that can be written in a single transaction before the address pointer waraps to the start of the page.  This value is used to assist with higher perfoamce data writes.
+The `pageSize` is the number of bytes that can be written in a single transaction before the address pointer wraps to the start of the page.  This value is used to assist with higher performance data writes.
 
 The `memorySize` parameter is the number of bytes in the EEPROM.  This is used to prevent wrapping from the end of the EEPROM back to the start.
 
