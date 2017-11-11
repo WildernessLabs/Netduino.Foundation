@@ -56,14 +56,9 @@ namespace NFAnalogTemperatureSensorTest
 
 ## API
 
-### Constructor
+### Enums
 
-The `AnalogTemperatureSensor` can be constructed in a number of ways:
-
-* Using one of the built in sensor types (TMP35, TMP36 etc.)
-* User defined analog sensor
-
-#### Built-in Temperature Sensors
+#### `SensorType`
 
 A number of temperature sensors are predefined and support natively by the `AnalogTemperatureSensor` class.  The natively supported sensors can be found in the `SensorType` enum:
 
@@ -71,13 +66,24 @@ A number of temperature sensors are predefined and support natively by the `Anal
 enum SensorType { Custom, TMP35, TMP36, TMP37, LM35, LM45, LM50 };
 ```
 
+### Constructor
+
+#### `AnalogTemperatureSensor(Cpu.AnalogChannel analogPin, SensorType sensor, int sampleReading = 25, int millivoltsAtSampleReading = 250, int millivoltsPerDegreeCentigrade = 10)`
+
+The `AnalogTemperatureSensor` can be constructed in a number of ways:
+
+* Using one of the built in sensor types (TMP35, TMP36 etc.)
+* User defined analog sensor
+
+##### Built-in Temperature Sensors
+
 A new instance of a supported sensor can be constructed  by supplying the sensor type and the analog pin that the sensor is connected to:
 
 ```csharp
 var tmp36 = new AnalogTemperatureSensor(AnalogChannels.ANALOG_PIN_A0, AnalogTemperatureSensor.SensorType.TMP36);
 ```
 
-#### User Defined Temperature Sensor
+##### User Defined Temperature Sensor
 
 A new sensor can be supported using the `SensorType.Custom` sensor type.  When this type of sensor is used, three additional pieces of information are required:
 
@@ -96,7 +102,9 @@ The constructor for this sensor when connected to pin `A0` would be:
 var newSensor = new AnalogTemperatureSensor(AnalogChannels.ANALOG_PIN_A0, 25, 250, 10);
 ```
 
-### Temperature Property
+### Properties
+
+#### Temperature Property
 
 The `Temperature` property takes a reading from the sensor and returns the result in degrees centigrade.
 
