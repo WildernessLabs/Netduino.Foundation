@@ -33,6 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Native" />
+    <Reference Include="Microsoft.SPOT.Hardware" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MAG3110.cs" />

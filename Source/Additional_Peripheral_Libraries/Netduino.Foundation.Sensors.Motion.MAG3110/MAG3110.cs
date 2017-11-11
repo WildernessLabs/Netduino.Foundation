@@ -1,27 +1,15 @@
-﻿using Microsoft.SPOT.Hardware;
+﻿using System;
+using Microsoft.SPOT.Hardware;
 using Netduino.Foundation.Devices;
-using System;
 
 namespace Netduino.Foundation.Sensors.Motion
 {
     public class MAG3110
     {
-        #region Enums
-
-        /// <summary>
-        /// Register addresses in the sensor.
-        /// </summary>
-        enum Registers { DRStatus = 0x00, XMSB = 0x01, XLSB = 0x02, YMSB = 0x03, YLSB = 0x04, ZMSB = 0x05, ZLSB = 0x06,
-                         WhoAmI = 0x07, SystemMode = 0x08, XOffsetMSB = 0x09, XOffsetLSB = 0x0a, YOffsetMSB = 0x0b,
-                         YOffsetLSB = 0x0c, ZOffsetMSB = 0x0d, ZOffsetLSB = 0x0e, Temperature = 0x0f, Control1 = 0x10,
-                         Control2 = 0x11 }
-
-        #endregion Enums
-
         #region Structures
 
         /// <summary>
-        /// Sensor readings to be passed back when an interrupt is generated.
+        ///     Sensor readings to be passed back when an interrupt is generated.
         /// </summary>
         public struct SensorReading
         {
@@ -30,90 +18,112 @@ namespace Netduino.Foundation.Sensors.Motion
             public short Z;
         }
 
+        /// <summary>
+        ///     Register addresses in the sensor.
+        /// </summary>
+        private static class Registers
+        {
+            public static readonly byte DRStatus = 0x00;
+            public static readonly byte XMSB = 0x01;
+            public static readonly byte XLSB = 0x02;
+            public static readonly byte YMSB = 0x03;
+            public static readonly byte YLSB = 0x04;
+            public static readonly byte ZMSB = 0x05;
+            public static readonly byte ZLSB = 0x06;
+            public static readonly byte WhoAmI = 0x07;
+            public static readonly byte SystemMode = 0x08;
+            public static readonly byte XOffsetMSB = 0x09;
+            public static readonly byte XOffsetLSB = 0x0a;
+            public static readonly byte YOffsetMSB = 0x0b;
+            public static readonly byte YOffsetLSB = 0x0c;
+            public static readonly byte ZOffsetMSB = 0x0d;
+            public static readonly byte ZOffsetLSB = 0x0e;
+            public static readonly byte Temperature = 0x0f;
+            public static readonly byte Control1 = 0x10;
+            public static readonly byte Control2 = 0x11;
+        }
+
         #endregion Structures
 
         #region Delegates and events
 
         /// <summary>
-        /// Delegate for the OnDataReceived event.
+        ///     Delegate for the OnDataReceived event.
         /// </summary>
         /// <param name="sensorReading">Sensor readings from the MAG3110.</param>
         public delegate void ReadingComplete(SensorReading sensorReading);
 
         /// <summary>
-        /// Generated when the sensor indicates that data is ready for processing.
+        ///     Generated when the sensor indicates that data is ready for processing.
         /// </summary>
-        public event ReadingComplete OnReadingComplete = null;
+        public event ReadingComplete OnReadingComplete;
 
         #endregion Delegates and events
 
         #region Member variables / fields
 
         /// <summary>
-        /// MAG3110 object.
+        ///     MAG3110 object.
         /// </summary>
-        private I2CBus _mag3110 = null;
+        private readonly I2CBus _mag3110;
 
         /// <summary>
-        /// Interrupt port used to detect then end of a conversion.
+        ///     Interrupt port used to detect then end of a conversion.
         /// </summary>
-        private InterruptPort _interruptPort = null;
+        private readonly InterruptPort _interruptPort;
 
         #endregion Member variables / fields
 
         #region Properties
 
         /// <summary>
-        /// Reading from the X axis.
+        ///     Reading from the X axis.
         /// </summary>
         /// <remarks>
-        /// Data in this property is only current after a call to Read.
+        ///     Data in this property is only current after a call to Read.
         /// </remarks>
         public short X { get; private set; }
 
         /// <summary>
-        /// Reading from the Y axis.
+        ///     Reading from the Y axis.
         /// </summary>
         /// <remarks>
-        /// Data in this property is only current after a call to Read.
+        ///     Data in this property is only current after a call to Read.
         /// </remarks>
         public short Y { get; private set; }
 
         /// <summary>
-        /// Reading from the Z axis.
+        ///     Reading from the Z axis.
         /// </summary>
         /// <remarks>
-        /// Data in this property is only current after a call to Read.
+        ///     Data in this property is only current after a call to Read.
         /// </remarks>
         public short Z { get; private set; }
 
         /// <summary>
-        /// Temperature of the sensor die.
+        ///     Temperature of the sensor die.
         /// </summary>
         public sbyte Temperature
         {
-            get
-            {
-                return((sbyte) _mag3110.ReadRegister((byte) Registers.Temperature));
-            }
+            get { return(sbyte) _mag3110.ReadRegister((byte) Registers.Temperature); }
         }
 
         /// <summary>
-        /// Change or get the standby status of the sensor.
+        ///     Change or get the standby status of the sensor.
         /// </summary>
         public bool Standby
         {
             get
             {
-                byte controlRegister = _mag3110.ReadRegister((byte) Registers.Control1);
-                return ((controlRegister & 0x03) == 0);
+                var controlRegister = _mag3110.ReadRegister((byte) Registers.Control1);
+                return (controlRegister & 0x03) == 0;
             }
             set
             {
-                byte controlRegister = _mag3110.ReadRegister((byte) Registers.Control1);
+                var controlRegister = _mag3110.ReadRegister((byte) Registers.Control1);
                 if (value)
                 {
-                    controlRegister &= 0xfc;    // ~0x03
+                    controlRegister &= 0xfc; // ~0x03
                 }
                 else
                 {
@@ -124,38 +134,33 @@ namespace Netduino.Foundation.Sensors.Motion
         }
 
         /// <summary>
-        /// Indicate if there is any data ready for reading (x, y or z).
+        ///     Indicate if there is any data ready for reading (x, y or z).
         /// </summary>
         /// <remarks>
-        /// See section 5.1.1 of the datasheet.
+        ///     See section 5.1.1 of the datasheet.
         /// </remarks>
         public bool DataReady
         {
-            get
-            {
-               return((_mag3110.ReadRegister((byte) Registers.DRStatus) & 0x08) > 0);
-            }
+            get { return(_mag3110.ReadRegister((byte) Registers.DRStatus) & 0x08) > 0; }
         }
 
         /// <summary>
-        /// Enable or disable interrupts.
+        ///     Enable or disable interrupts.
         /// </summary>
         /// <remarks>
-        /// Interrupts can be triggered when a conversion completes (see section 4.2.5 
-        /// of the datasheet).  The interrupts are tied to the ZYXDR bit in the DR Status
-        /// register.
+        ///     Interrupts can be triggered when a conversion completes (see section 4.2.5
+        ///     of the datasheet).  The interrupts are tied to the ZYXDR bit in the DR Status
+        ///     register.
         /// </remarks>
-        private bool _interruptsEnabled = false;
+        private bool _interruptsEnabled;
+
         public bool InterruptsEnabled
         {
-            get
-            {
-                return (_interruptsEnabled);
-            }
+            get { return _interruptsEnabled; }
             set
             {
                 Standby = true;
-                byte cr2 = _mag3110.ReadRegister((byte) Registers.Control2);
+                var cr2 = _mag3110.ReadRegister((byte) Registers.Control2);
                 if (value)
                 {
                     cr2 |= 0x80;
@@ -174,14 +179,14 @@ namespace Netduino.Foundation.Sensors.Motion
         #region Constructors
 
         /// <summary>
-        /// Default constructor is private to prevent the developer from calling it.
+        ///     Default constructor is private to prevent the developer from calling it.
         /// </summary>
         private MAG3110()
         {
         }
 
         /// <summary>
-        /// Create a new MAG3110 object using the default parameters for the component.
+        ///     Create a new MAG3110 object using the default parameters for the component.
         /// </summary>
         /// <param name="address">Address of the MAG3110 (default = 0x0e).</param>
         /// <param name="speed">Speed of the I2C bus (default = 400 KHz).</param>
@@ -189,14 +194,15 @@ namespace Netduino.Foundation.Sensors.Motion
         public MAG3110(byte address = 0x0e, ushort speed = 400, Cpu.Pin interruptPin = Cpu.Pin.GPIO_NONE)
         {
             _mag3110 = new I2CBus(address, speed);
-            byte deviceID = _mag3110.ReadRegister((byte) Registers.WhoAmI);
+            var deviceID = _mag3110.ReadRegister((byte) Registers.WhoAmI);
             if (deviceID != 0xc4)
             {
-                throw new Exception("Unknown device ID, " + deviceID.ToString() + " retruend, 0xc4 expected");
+                throw new Exception("Unknown device ID, " + deviceID + " retruend, 0xc4 expected");
             }
             if (interruptPin != Cpu.Pin.GPIO_NONE)
             {
-                _interruptPort = new InterruptPort(interruptPin, false, Microsoft.SPOT.Hardware.Port.ResistorMode.Disabled, 
+                _interruptPort = new InterruptPort(interruptPin, false,
+                                                   Microsoft.SPOT.Hardware.Port.ResistorMode.Disabled,
                                                    Microsoft.SPOT.Hardware.Port.InterruptMode.InterruptEdgeHigh);
                 _interruptPort.OnInterrupt += _interruptPort_OnInterrupt;
             }
@@ -208,7 +214,7 @@ namespace Netduino.Foundation.Sensors.Motion
         #region Methods
 
         /// <summary>
-        /// Reset the sensor.
+        ///     Reset the sensor.
         /// </summary>
         public void Reset()
         {
@@ -219,32 +225,32 @@ namespace Netduino.Foundation.Sensors.Motion
         }
 
         /// <summary>
-        /// Force the sensor to make a reading and update the relevanyt properties.
+        ///     Force the sensor to make a reading and update the relevanyt properties.
         /// </summary>
         public void Read()
         {
-            byte controlRegister = _mag3110.ReadRegister((byte) Registers.Control1);
+            var controlRegister = _mag3110.ReadRegister((byte) Registers.Control1);
             controlRegister |= 0x02;
             _mag3110.WriteRegister((byte) Registers.Control1, controlRegister);
-            byte[] data = _mag3110.ReadRegisters((byte) Registers.XMSB, 6);
+            var data = _mag3110.ReadRegisters((byte) Registers.XMSB, 6);
             X = (short) ((data[0] << 8) | data[1]);
             Y = (short) ((data[2] << 8) | data[3]);
             Z = (short) ((data[4] << 8) | data[5]);
         }
 
-        #endregion
+        #endregion Methods
 
         #region Interrupt handlers
 
         /// <summary>
-        /// Interrupt from the MAG3110 conversion complete interrupt.
+        ///     Interrupt from the MAG3110 conversion complete interrupt.
         /// </summary>
-        void _interruptPort_OnInterrupt(uint data1, uint data2, DateTime time)
+        private void _interruptPort_OnInterrupt(uint data1, uint data2, DateTime time)
         {
             if (OnReadingComplete != null)
             {
                 Read();
-                SensorReading readings = new SensorReading();
+                var readings = new SensorReading();
                 readings.X = X;
                 readings.Y = Y;
                 readings.Z = Z;
