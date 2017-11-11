@@ -50,20 +50,6 @@ namespace ServoTest
 
 ## API
 
-Describe the API.
-
-### Constructors
-
-#### `Servo()`
-
-The default constructor creates a new 'Servo' object with the `MinimumPulseWidth` set to 544 and the `MaximumPulseWidth` set to 2400.
-
-In this case the `Servo` object is not connected to a `PWM` pin.
-
-#### `Servo(pin, minimum, maximum)`
-
-Create a new `Servo` object and connect it to the specified `PWM` pin.  The `MinimumPulseWidth` and `MaximumPulseWidth` are set to the specified values.
-
 ### Properties
 
 #### `Angle`
@@ -74,13 +60,27 @@ Get or set the servo angle where the angle is specified in degrees and should be
 
 Indicate if the servo has a `PWM` pin associated with it.
 
+### Constructors
+
+#### `Servo(Cpu.PWMChannel pin, int minimum = 544, int maximum = 2400)`
+
+The default constructor creates a new 'Servo' object with the `MinimumPulseWidth` set to 544 and the `MaximumPulseWidth` set to 2400.
+
+In this case the `Servo` object is not connected to a `PWM` pin.
+
+```csharp
+Servo(pin, minimum, maximum)
+```
+
+Create a new `Servo` object and connect it to the specified `PWM` pin.  The `MinimumPulseWidth` and `MaximumPulseWidth` are set to the specified values.
+
 ### Methods
 
-#### `Attach(pin, minimum, maximum)`
+#### `void Attach(pin, minimum, maximum)`
 
 Attach the `Servo` object to a `PWM` pin
 
-#### `Write(angle)`
+#### `void Write(angle)`
 
 This is equivalent to setting the `Angle` property.
 
@@ -88,14 +88,14 @@ This is equivalent to setting the `Angle` property.
 
 This is the equivalent to reading the `Angle` property.
 
-#### `Detach()`
+#### `void Detach()`
 
 If the `Servo` is attached to a pin then this method will stop the `PWM` pulses and release the `PWM` pin being used to control the servo.
 
-#### `Stop()`
+#### `void Stop()`
 
 Turn off the `PWM` pulses being used to control the servo.
 
-#### `WriteMicroseconds(microseconds)`
+#### `void WriteMicroseconds(microseconds)`
 
 This method is not implemented and will throw an exception if called.
