@@ -1,86 +1,87 @@
 ﻿using System;
 using Microsoft.SPOT.Hardware;
-using Microsoft.SPOT;
 
 namespace Netduino.Foundation.Sensors.Temperature.Analog
 {
     /// <summary>
-    /// Provide the ability to read the temperature from the following sensors:
+    ///     Provide the ability to read the temperature from the following sensors:
     ///     - TMP35 / 36 / 37
     ///     - LM35 / 45
     /// </summary>
     /// <remarks>
-    /// <i>AnalogTemperatureSensor</i> provides a method of reading the temperature from
-    /// linear analog temperature sensors.  There are a number of these sensors available
-    /// including the commonly available TMP and LM series.
-    /// 
-    /// Sensors of this type obey the following equation:
-    /// 
+    ///     <i>AnalogTemperatureSensor</i> provides a method of reading the temperature from
+    ///     linear analog temperature sensors.  There are a number of these sensors available
+    ///     including the commonly available TMP and LM series.
+    ///     Sensors of this type obey the following equation:
     ///     y = mx + c
-    ///     
-    /// where y is the reading in millivolts, m is the gradient (number of millivolts per
-    /// degree centigrade and C is the point where the line would intercept the y axis.
-    ///
-    /// The <i>SensorType</i> enum defines the list of sensors with default settings in the 
-    /// library.  Unsupported sensors that use the same linear algorithm can be constructed
-    /// by setting the sensor type to <i>SensorType.Custom</i> and providing the settings for 
-    /// the linear calculations.
-    ///
-    /// The default sensors have the following settings:
-    ///
-    /// Sensor              Millvolts at 25C    Millivolts per degree C
-    /// TMP35, LM35, LM45       250                     10
-    /// TMP36, LM50             750                     10
-    /// TMP37                   500                     20
+    ///     where y is the reading in millivolts, m is the gradient (number of millivolts per
+    ///     degree centigrade and C is the point where the line would intercept the y axis.
+    ///     The <i>SensorType</i> enum defines the list of sensors with default settings in the
+    ///     library.  Unsupported sensors that use the same linear algorithm can be constructed
+    ///     by setting the sensor type to <i>SensorType.Custom</i> and providing the settings for
+    ///     the linear calculations.
+    ///     The default sensors have the following settings:
+    ///     Sensor              Millvolts at 25C    Millivolts per degree C
+    ///     TMP35, LM35, LM45       250                     10
+    ///     TMP36, LM50             750                     10
+    ///     TMP37                   500                     20
     /// </remarks>
     public class AnalogTemperatureSensor : IDisposable
     {
         #region Private member variables (fields)
 
         /// <summary>
-        /// Millivolts per degree centigrade for the sensor attached to the analog port.
+        ///     Millivolts per degree centigrade for the sensor attached to the analog port.
         /// </summary>
         /// <remarks>
-        /// This will be the gradient of the 
+        ///     This will be the gradient of the
         /// </remarks>
-        private int _millivoltsPerDegreeCentigrade;
+        private readonly int _millivoltsPerDegreeCentigrade;
 
         /// <summary>
-        /// Point where the line y = mx +c would intercept the y-axis.
+        ///     Point where the line y = mx +c would intercept the y-axis.
         /// </summary>
-        private float _yIntercept;
+        private readonly float _yIntercept;
 
         #endregion Private member variables (fields)
 
         #region Properties
 
         /// <summary>
-        /// Type of temperature sensor.
+        ///     Type of temperature sensor.
         /// </summary>
-        public enum SensorType { Custom, TMP35, TMP36, TMP37, LM35, LM45, LM50 };
+        public enum SensorType
+        {
+            Custom,
+            TMP35,
+            TMP36,
+            TMP37,
+            LM35,
+            LM45,
+            LM50
+        }
 
         /// <summary>
-        /// Analog port that the temperature sensor is attached to.
+        ///     Analog port that the temperature sensor is attached to.
         /// </summary>
         /// <value>Analog port connected to the temperature sensor.</value>
         private AnalogInput AnalogPort { get; set; }
 
         /// <summary>
-        /// Temperature in degrees centigrade.
+        ///     Temperature in degrees centigrade.
         /// </summary>
         /// <remarks>
-        /// The temperature is given by the following calculation:
-        ///
-        /// temperature = (reading in millivolts - yIntercept) / millivolts per degree centigrade
+        ///     The temperature is given by the following calculation:
+        ///     temperature = (reading in millivolts - yIntercept) / millivolts per degree centigrade
         /// </remarks>
         public float Temperature
         {
             get
             {
-                float reading = (float) (AnalogPort.Read() * 3300);
+                var reading = (float) (AnalogPort.Read() * 3300);
                 reading -= _yIntercept;
                 reading /= _millivoltsPerDegreeCentigrade;
-                return (reading);
+                return reading;
             }
         }
 
@@ -89,22 +90,22 @@ namespace Netduino.Foundation.Sensors.Temperature.Analog
         #region Constructor(s)
 
         /// <summary>
-        /// Default constructor, private to prevent this being used.
+        ///     Default constructor, private to prevent this being used.
         /// </summary>
         private AnalogTemperatureSensor()
         {
         }
 
         /// <summary>
-        /// New instance of the AnalogTemperatureSensor class.
+        ///     New instance of the AnalogTemperatureSensor class.
         /// </summary>
         /// <param name="analogPin">Analog pin the temperature sensor is connected to.</param>
         /// <param name="sensor">Type of sensor attached to the analog port.</param>
         /// <param name="sampleReading">Sample sensor reading in degrees centigrade (Optional)</param>
         /// <param name="millivoltsAtSampleReading">Number of millivolts representing the sample reading (Optional)</param>
         /// <param name="millivoltsPerDegreeCentigrade">Number of millivolts pre degree centigrade (Optional)</param>
-        public AnalogTemperatureSensor(Cpu.AnalogChannel analogPin, SensorType sensor, int sampleReading = 25, 
-                                       int millivoltsAtSampleReading = 250, int millivoltsPerDegreeCentigrade = 10)
+        public AnalogTemperatureSensor(Cpu.AnalogChannel analogPin, SensorType sensor, int sampleReading = 25,
+            int millivoltsAtSampleReading = 250, int millivoltsPerDegreeCentigrade = 10)
         {
             AnalogPort = new AnalogInput(analogPin);
             switch (sensor)
@@ -141,7 +142,7 @@ namespace Netduino.Foundation.Sensors.Temperature.Analog
         #region IDisposable
 
         /// <summary>
-        /// Implement IDisposable interface.
+        ///     Implement IDisposable interface.
         /// </summary>
         public void Dispose()
         {

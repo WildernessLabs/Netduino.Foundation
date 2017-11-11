@@ -4,56 +4,57 @@ using Microsoft.SPOT.Hardware;
 namespace Netduino.Foundation.Sensors.Motion
 {
     /// <summary>
-    /// Create a new Parallax PIR object.
+    ///     Create a new Parallax PIR object.
     /// </summary>
     public class ParallaxPIR
     {
         #region Member variables and fields
 
         /// <summary>
-        /// Interrupt port 
+        ///     Interrupt port
         /// </summary>
-        private InterruptPort _interruptPort = null;
+        private readonly InterruptPort _interruptPort;
 
         #endregion Member variables and fields
 
         #region Delegates and events
 
         /// <summary>
-        /// Delgate for the motion start and end events.
+        ///     Delgate for the motion start and end events.
         /// </summary>
         public delegate void MotionChange(object sender);
 
         /// <summary>
-        /// Event raied when motion is detected.
+        ///     Event raied when motion is detected.
         /// </summary>
-        public event MotionChange OnMotionStart = null;
+        public event MotionChange OnMotionStart;
 
         /// <summary>
-        /// Event raised when the PIR indicates that there is not longer any motion.
+        ///     Event raised when the PIR indicates that there is not longer any motion.
         /// </summary>
-        public event MotionChange OnMotionEnd = null;
+        public event MotionChange OnMotionEnd;
 
         #endregion Delegates and events
 
         #region Constructors
 
         /// <summary>
-        /// Default constructor is private to prevent it being called.
+        ///     Default constructor is private to prevent it being called.
         /// </summary>
         private ParallaxPIR()
         {
         }
 
         /// <summary>
-        /// Create a new Parallax PIR object and hook up the interrupt handler.
+        ///     Create a new Parallax PIR object and hook up the interrupt handler.
         /// </summary>
         /// <param name="interruptPin"></param>
         public ParallaxPIR(Cpu.Pin interruptPin)
         {
             if (interruptPin != Cpu.Pin.GPIO_NONE)
             {
-                _interruptPort = new InterruptPort(interruptPin, false, Port.ResistorMode.Disabled, Port.InterruptMode.InterruptEdgeBoth);
+                _interruptPort = new InterruptPort(interruptPin, false, Port.ResistorMode.Disabled,
+                                                   Port.InterruptMode.InterruptEdgeBoth);
                 _interruptPort.OnInterrupt += _interruptPort_OnInterrupt;
             }
             else
@@ -67,9 +68,9 @@ namespace Netduino.Foundation.Sensors.Motion
         #region Interrupt handlers
 
         /// <summary>
-        /// Catch the PIR motion change interrupts and work out which interrupt should be raised.
+        ///     Catch the PIR motion change interrupts and work out which interrupt should be raised.
         /// </summary>
-        void _interruptPort_OnInterrupt(uint data1, uint data2, DateTime time)
+        private void _interruptPort_OnInterrupt(uint data1, uint data2, DateTime time)
         {
             if (_interruptPort.Read())
             {
