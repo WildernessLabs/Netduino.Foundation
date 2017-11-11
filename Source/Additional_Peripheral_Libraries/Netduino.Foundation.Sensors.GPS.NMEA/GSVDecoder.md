@@ -7,17 +7,29 @@
 Generated when the list of satellites in view is received from the GPS unit.
 
 ```csharp
-/// <summary>
-/// Satellite information to use in the GSV (Satellites in View) decoder.
-/// </summary>
-public struct Satellite
-{
-    public string ID;
+    /// <summary>
+    ///     Satellite information to use in the GSV (Satellites in View) decoder.
+    /// </summary>
+    public struct Satellite
+    {
+        /// <summary>
+        ///     Satellite ID.
+        /// </summary>
+        public string ID;
 
-    public int Elevation;
+        /// <summary>
+        ///     Angle of elevation.
+        /// </summary>
+        public int Elevation;
 
-    public int Azimuth;
+        /// <summary>
+        ///     Satellite azimuth.
+        /// </summary>
+        public int Azimuth;
 
-    public int SignalTolNoiseRatio;
-}
+        /// <summary>
+        ///     Signal to noise ratio of the signal.
+        /// </summary>
+        public int SignalTolNoiseRatio;
+    }
 ```

@@ -113,14 +113,14 @@ Note that this does not start to process the text from the GPS unit, a call to `
 
 ### Methods
 
-#### `Open()`
+#### `void Open()`
 
 Open the connection to the GPS unit.
 
-#### `Close()`
+#### `void Close()`
 
 Close the connection to the GPS unit.
 
-#### `AddDecoder(NMEACecoder decoder)`
+#### `void AddDecoder(NMEADecoder decoder)`
 
 Add a new decoder to the list of registered decoders.
