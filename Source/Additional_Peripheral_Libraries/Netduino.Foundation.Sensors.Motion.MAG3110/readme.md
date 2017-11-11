@@ -82,7 +82,7 @@ namespace MAG3110Test
 
 ## API
 
-This library supports polling and interrupts
+This library supports polling and interrupts.
 
 ### Structures
 
@@ -104,7 +104,7 @@ Create a new `MAG3110` object using the default settings as specified in the dat
 
 Magnetometer readings for the x, y and z axes.  These three properties are only valid when `Read` has been called.
 
-#### `Standby`
+#### `bool Standby`
 
 Set or retrieve the `Standby` state for the sensor.  The following puts the sensor into standby mode.
 
@@ -114,11 +114,11 @@ Standby = true;
 
 ### Methods
 
-#### `Reset()`
+#### `void Reset()`
 
 Put the sensor into standby mode and reset the sensor control and offset registers.
 
-#### `Read()`
+#### `void Read()`
 
 Read sensor values from the magnetometer and set the `X`, `Y` and `Z` properties.
 
