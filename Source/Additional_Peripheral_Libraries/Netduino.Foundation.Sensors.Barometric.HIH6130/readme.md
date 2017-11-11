@@ -57,17 +57,17 @@ Create a new HIH6130 object with the default address and I2C bus speed.
 
 ### Properties
 
-#### `Temperature`
+#### `float Temperature`
 
 Retrieve the last read temperature.  The property is only valid after a call to `Read`.
 
-#### `Humidity`
+#### `float Humidity`
 
 Retrieve the last read humidity.  This property is only valid following a call to `Read`.
 
 ### Methods
 
-#### `Read`
+#### `void Read()`
 
 Force the temperature and humidity reading.  This will set the `Humidity` and `Temperature` properties with the current temperature and humidity.
 
