@@ -3,8 +3,8 @@ using System;
 namespace Netduino.Foundation.Sensors.GPS
 {
     /// <summary>
-    /// Position recorded in degrees and minutes along with an indiction of the direction
-    /// of the position..
+    ///     Position recorded in degrees and minutes along with an indiction of the direction
+    ///     of the position..
     /// </summary>
     public struct DegreeMinutePosition
     {
@@ -14,159 +14,171 @@ namespace Netduino.Foundation.Sensors.GPS
     }
 
     /// <summary>
-    /// Satellite information to use in the GSV (Satellites in View) decoder.
+    ///     Satellite information to use in the GSV (Satellites in View) decoder.
     /// </summary>
     public struct Satellite
     {
+        /// <summary>
+        ///     Satellite ID.
+        /// </summary>
         public string ID;
 
+        /// <summary>
+        ///     Angle of elevation.
+        /// </summary>
         public int Elevation;
 
+        /// <summary>
+        ///     Satellite azimuth.
+        /// </summary>
         public int Azimuth;
 
+        /// <summary>
+        ///     Signal to noise ratio of the signal.
+        /// </summary>
         public int SignalTolNoiseRatio;
     }
 
     /// <summary>
-    /// Decoded data for the VTG - Course over ground and ground speed messages.
+    ///     Decoded data for the VTG - Course over ground and ground speed messages.
     /// </summary>
     public struct CourseOverGround
     {
         /// <summary>
-        /// True heading in degrees.
+        ///     True heading in degrees.
         /// </summary>
         public double TrueHeading;
 
         /// <summary>
-        /// Magnetic heading.
+        ///     Magnetic heading.
         /// </summary>
         public double MagneticHeading;
 
         /// <summary>
-        /// Speed measured in knots.
+        ///     Speed measured in knots.
         /// </summary>
         public double Knots;
 
         /// <summary>
-        /// Speed measured in kilometers per hour.
+        ///     Speed measured in kilometers per hour.
         /// </summary>
         public double KPH;
     }
 
     /// <summary>
-    /// Hold the location taken from a GPS reading.
+    ///     Hold the location taken from a GPS reading.
     /// </summary>
     public struct GPSLocation
     {
         /// <summary>
-        ///    Time that the reading was taken.  The date component is fixed for each reading.
+        ///     Time that the reading was taken.  The date component is fixed for each reading.
         /// </summary>
         public DateTime ReadingTime;
 
         /// <summary>
-        /// Latitude of the reading.
+        ///     Latitude of the reading.
         /// </summary>
         public DegreeMinutePosition Latitude;
 
         /// <summary>
-        /// Longitude of the reading.
+        ///     Longitude of the reading.
         /// </summary>
         public DegreeMinutePosition Longitude;
 
         /// <summary>
-        /// Quality of the fix.
+        ///     Quality of the fix.
         /// </summary>
         public FixType FixQuality;
 
         /// <summary>
-        /// Number of satellites used to generate the positional information.
+        ///     Number of satellites used to generate the positional information.
         /// </summary>
         public int NumberOfSatellites;
 
         /// <summary>
-        /// Horizontal dilution of position (HDOP).
+        ///     Horizontal dilution of position (HDOP).
         /// </summary>
         public double HorizontalDilutionOfPrecision;
 
         /// <summary>
-        /// Altitude above mean sea level (m).
+        ///     Altitude above mean sea level (m).
         public double Altitude;
     }
 
     /// <summary>
-    /// Active satellite information (GSA message information).
+    ///     Active satellite information (GSA message information).
     /// </summary>
     public struct ActiveSatellites
     {
         /// <summary>
-        /// Dimensional fix type (No fix, 2D or 3D?)
+        ///     Dimensional fix type (No fix, 2D or 3D?)
         /// </summary>
         public DimensionalFixType Demensions;
 
         /// <summary>
-        /// Satellite selection type (Automatic or manual).
+        ///     Satellite selection type (Automatic or manual).
         /// </summary>
         public ActiveSatelliteSelection SatelliteSelection;
 
         /// <summary>
-        /// PRNs of the satellites used in the fix.
+        ///     PRNs of the satellites used in the fix.
         /// </summary>
         public string[] SatellitesUsedForFix;
-        
+
         /// <summary>
-        /// Dilution of precision for the reading.
+        ///     Dilution of precision for the reading.
         /// </summary>
         public double DilutionOfPrecision;
 
         /// <summary>
-        /// Horizontal dilution of precision for the reading.
+        ///     Horizontal dilution of precision for the reading.
         /// </summary>
         public double HorizontalDilutionOfPrecision;
 
         /// <summary>
-        /// Vertical dilution of precision for the reading.
+        ///     Vertical dilution of precision for the reading.
         /// </summary>
         public double VerticalDilutionOfPrecision;
     }
 
     /// <summary>
-    /// Recommended Minimum message - this is the equivalent of GPS position and
-    /// course data.
+    ///     Recommended Minimum message - this is the equivalent of GPS position and
+    ///     course data.
     /// </summary>
     public struct PositionCourseAndTime
     {
         /// <summary>
-        /// Time the reading was generated.
+        ///     Time the reading was generated.
         /// </summary>
         public DateTime TimeOfReading;
 
         /// <summary>
-        /// Indicate if the data is valid or not.
+        ///     Indicate if the data is valid or not.
         /// </summary>
         public bool Valid;
 
         /// <summary>
-        /// Latitude reading.
+        ///     Latitude reading.
         /// </summary>
         public DegreeMinutePosition Latitude;
 
         /// <summary>
-        /// Longitude reading.
+        ///     Longitude reading.
         /// </summary>
         public DegreeMinutePosition Longitude;
 
         /// <summary>
-        /// Current speed in Knots.
+        ///     Current speed in Knots.
         /// </summary>
         public double Speed;
 
         /// <summary>
-        /// Course in degrees (true heading).
+        ///     Course in degrees (true heading).
         /// </summary>
         public double Course;
 
         /// <summary>
-        /// Magnetic variation.
+        ///     Magnetic variation.
         /// </summary>
         public DirectionIndicator MagneticVariation;
     }

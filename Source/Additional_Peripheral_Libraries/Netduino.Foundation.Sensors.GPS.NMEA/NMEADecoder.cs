@@ -1,28 +1,26 @@
-﻿using System;
-
-namespace Netduino.Foundation.Sensors.GPS
+﻿namespace Netduino.Foundation.Sensors.GPS
 {
     /// <summary>
-    /// Base class for NMEADecoder classes.
+    ///     Base class for NMEADecoder classes.
     /// </summary>
     public abstract class NMEADecoder
     {
         /// <summary>
-        /// Prefix for the decoder (text that occurs at the start of a GPS message
-        /// including the $ symbol - $GPGSA etc.).
+        ///     Prefix for the decoder (text that occurs at the start of a GPS message
+        ///     including the $ symbol - $GPGSA etc.).
         /// </summary>
-        abstract public string Prefix { get; }
+        public abstract string Prefix { get; }
 
         /// <summary>
-        /// Friendly name for the decoder.
+        ///     Friendly name for the decoder.
         /// </summary>
         /// <returns></returns>
-        abstract public string Name { get; }
+        public abstract string Name { get; }
 
         /// <summary>
-        /// Process the message from the GPS.
+        ///     Process the message from the GPS.
         /// </summary>
         /// <param name="elements">String array of the elements of the message.</param>
-        abstract public void Process(string[] elements);
+        public abstract void Process(string[] elements);
     }
 }

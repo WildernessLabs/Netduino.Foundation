@@ -3,34 +3,23 @@
 namespace Netduino.Foundation.Sensors.GPS
 {
     /// <summary>
-    /// Provide common functionality for the decode classes.
+    ///     Provide common functionality for the decode classes.
     /// </summary>
     public class NMEAHelpers
     {
-        #region Constructors
-
-        /// <summary>
-        /// Default constructor for the NMEA Helpers class.
-        /// </summary>
-        public NMEAHelpers()
-        {
-        }
-
-        #endregion Constructors
-
         #region Methods
 
         /// <summary>
-        /// Extract the time of the reading.
+        ///     Extract the time of the reading.
         /// </summary>
         /// <param name="date">Date the reading was taken (this can be null)</param>
         /// <param name="time">String containing the time of the reading in the format hhmmss.sss</param>
         /// <returns>DateTime object containing the time.</returns>
         public static DateTime TimeOfReading(string date, string time)
         {
-            int day = 1;
-            int month = 1;
-            int year = 2000;
+            var day = 1;
+            var month = 1;
+            var year = 2000;
             double d = 0;
             if (date != null)
             {
@@ -38,7 +27,7 @@ namespace Netduino.Foundation.Sensors.GPS
                 {
                     day = (int) (d / 10000);
                     month = (int) ((d - (day * 10000)) / 100);
-                    year = 2000 + (((int) d) - (day * 10000) - (month * 100));
+                    year = 2000 + ((int) d - (day * 10000) - (month * 100));
                 }
                 else
                 {
@@ -62,11 +51,11 @@ namespace Netduino.Foundation.Sensors.GPS
             {
                 throw new ArgumentException("Unable to decode the time");
             }
-            return (new DateTime(year, month, day, hour, minute, second, milliseconds));
+            return new DateTime(year, month, day, hour, minute, second, milliseconds);
         }
 
         /// <summary>
-        /// Decode the degrees / minutes location and return a DMPosition.
+        ///     Decode the degrees / minutes location and return a DMPosition.
         /// </summary>
         /// <param name="location">Location in the format dddmm.mmmm or ddmm.mmmm</param>
         /// <param name="direction">Direction of the reading, one of N, S, E, W.</param>
@@ -80,7 +69,7 @@ namespace Netduino.Foundation.Sensors.GPS
             if (double.TryParse(location, out loc))
             {
                 position.Degrees = (int) (loc / 100);
-                position.Minutes = (loc - (position.Degrees * 100));
+                position.Minutes = loc - (position.Degrees * 100);
                 switch (direction.ToLower())
                 {
                     case "n":
@@ -104,10 +93,9 @@ namespace Netduino.Foundation.Sensors.GPS
             {
                 throw new ArgumentException("Invalid location");
             }
-            return (position);
+            return position;
         }
 
         #endregion Methods
-
     }
 }

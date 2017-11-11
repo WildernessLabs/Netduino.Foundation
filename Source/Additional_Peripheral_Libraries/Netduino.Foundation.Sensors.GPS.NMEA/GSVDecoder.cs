@@ -1,97 +1,89 @@
-﻿using System;
-
-namespace Netduino.Foundation.Sensors.GPS
+﻿namespace Netduino.Foundation.Sensors.GPS
 {
     /// <summary>
-    /// Process the Satellites in view messages from a GPS module.
+    ///     Process the Satellites in view messages from a GPS module.
     /// </summary>
     /// <remarks>
-    /// The satellites in view messages can contain multiple packets one for
-    /// each satelite.  There can also be multiple messages making up the total list
-    /// of satelites.
-    /// 
-    /// This class brings all of the messages together in a single message for the 
-    /// consumer.
+    ///     The satellites in view messages can contain multiple packets one for
+    ///     each satelite.  There can also be multiple messages making up the total list
+    ///     of satelites.
+    ///     This class brings all of the messages together in a single message for the
+    ///     consumer.
     /// </remarks>
     public class GSVDecoder : NMEADecoder
     {
         #region Member variables / fields
 
         /// <summary>
-        /// Current sentence being processed, 0 indicates nothing being processed.
+        ///     Current sentence being processed, 0 indicates nothing being processed.
         /// </summary>
-        private int _currentSentence = 0;
+        private int _currentSentence;
 
         /// <summary>
-        /// Total number of sentences expected in the sequence, -1 indicates nothing
-        /// is being processed at the moment.
+        ///     Total number of sentences expected in the sequence, -1 indicates nothing
+        ///     is being processed at the moment.
         /// </summary>
         private int _totalSentences = -1;
 
         /// <summary>
-        /// List of satellites.
+        ///     List of satellites.
         /// </summary>
-        private Satellite[] _satelliteList = null;
+        private Satellite[] _satelliteList;
 
         /// <summary>
-        /// Next entry in the _satelliteList to receive satellite data.
+        ///     Next entry in the _satelliteList to receive satellite data.
         /// </summary>
-        private int _nextSatelliteEntry = 0;
+        private int _nextSatelliteEntry;
 
         #endregion Member variables / fields
 
         #region Delegates and events
 
         /// <summary>
-        /// Delegate for the GSV data received event.
+        ///     Delegate for the GSV data received event.
         /// </summary>
         /// <param name="activeSatellites">Active satellites.</param>
         /// <param name="sender">Reference to the object generating the event.</param>
         public delegate void SatellitesInViewReceived(object sender, Satellite[] satellites);
 
         /// <summary>
-        /// Event raised when valid GSV data is received.
+        ///     Event raised when valid GSV data is received.
         /// </summary>
-        public event SatellitesInViewReceived OnSatellitesInViewReceived = null;
+        public event SatellitesInViewReceived OnSatellitesInViewReceived;
 
         #endregion Delegates and events
-
-        #region Constructors
-
-        /// <summary>
-        /// Default constructor.
-        /// </summary>
-        public GSVDecoder()
-        {
-        }
-
-        #endregion Constructors
 
         #region NMEADecoder methods & properties
 
         /// <summary>
-        /// Get the prefix for the decoder.
+        ///     Get the prefix for the decoder.
         /// </summary>
         /// <remarks>
-        /// The lines of text from the GPS start with text such as $GPGGA, $GPGLL, $GPGSA etc.  The prefix
-        /// is the start of the line (i.e. $GPCGA).
+        ///     The lines of text from the GPS start with text such as $GPGGA, $GPGLL, $GPGSA etc.  The prefix
+        ///     is the start of the line (i.e. $GPCGA).
         /// </remarks>
-        public override string Prefix { get { return("$GPGSV"); } }
+        public override string Prefix
+        {
+            get { return"$GPGSV"; }
+        }
 
         /// <summary>
-        /// Get the friendly (human readable) name for the decoder.
+        ///     Get the friendly (human readable) name for the decoder.
         /// </summary>
-        public override string Name { get { return("Satellites in view"); } }
+        public override string Name
+        {
+            get { return"Satellites in view"; }
+        }
 
         /// <summary>
-        /// Process the message from the GPS.
+        ///     Process the message from the GPS.
         /// </summary>
         /// <param name="data">String array of the elements of the message.</param>
         public override void Process(string[] data)
         {
             if (OnSatellitesInViewReceived != null)
             {
-                int thisSentenceNumber = int.Parse(data[2]);
+                var thisSentenceNumber = int.Parse(data[2]);
                 if (_currentSentence == 0)
                 {
                     if (thisSentenceNumber == 1)
@@ -105,9 +97,9 @@ namespace Netduino.Foundation.Sensors.GPS
                 if (thisSentenceNumber == _currentSentence)
                 {
                     _currentSentence++;
-                    for (int currentSatellite = 0; currentSatellite < ((data.Length - 4) / 4); currentSatellite++)
+                    for (var currentSatellite = 0; currentSatellite < ((data.Length - 4) / 4); currentSatellite++)
                     {
-                        int satelliteBase = (currentSatellite * 4) + 4;
+                        var satelliteBase = (currentSatellite * 4) + 4;
                         _satelliteList[_nextSatelliteEntry].ID = data[satelliteBase];
                         _satelliteList[_nextSatelliteEntry].Elevation = int.Parse(data[satelliteBase + 1]);
                         _satelliteList[_nextSatelliteEntry].Azimuth = int.Parse(data[satelliteBase + 2]);
