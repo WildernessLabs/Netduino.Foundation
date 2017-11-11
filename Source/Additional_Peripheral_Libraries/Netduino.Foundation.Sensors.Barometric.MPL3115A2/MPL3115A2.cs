@@ -9,58 +9,6 @@ namespace Netduino.Foundation.Sensors.Barometric
         #region Enums
 
         /// <summary>
-        ///     Registers for non-FIFO mode.
-        /// </summary>
-        private enum Registers : byte
-        {
-            Status = 0x06,
-            PressureMSB = 0x01,
-            PressureCSB = 0x02,
-            PressureLSB = 0x03,
-            TemperatureMSB = 0x04,
-            TemperatureLSB = 0x05,
-            DataReadyStatus = 0x06,
-            PressureDeltaMSB = 0x07,
-            PressureDeltaCSB = 0x08,
-            PressureDeltaLSB = 0x09,
-            TemperatureDeltaMSB = 0x0a,
-            TemperatureDeltaLSB = 0x0b,
-            WhoAmI = 0x0c,
-            FifoStatus = 0x0d,
-            FiFoDataAccess = 0x0e,
-            FifoSetup = 0x0f,
-            TimeDelay = 0x11,
-            InterruptSource = 0x12,
-            DataConfiguration = 0x13,
-            BarometricMSB = 0x14,
-            BarometricLSB = 0x15,
-            PressureTargetMSB = 0x16,
-            PressureTargetLSB = 0x17,
-            TemperatureTarget = 0x18,
-            PressureWindowMSB = 0x19,
-            PressureWindowLSB = 0x1a,
-            TemperatureWindow = 0x1b,
-            PressureMinimumMSB = 0x1c,
-            PressureMinimumCSB = 0x1d,
-            PressureMinimumLSB = 0x1e,
-            TemperatureMinimumMSB = 0x1f,
-            TemperatureMinimumLSB = 0x20,
-            PressureMaximumMSB = 0x21,
-            PressureMaximumCSB = 0x22,
-            PressureMaximumSB = 0x23,
-            TemperatureMaximumMSB = 0x24,
-            TemperatureMaximumLSB = 0x25,
-            Control1 = 0x26,
-            Control2 = 0x27,
-            Control3 = 0x28,
-            Control4 = 0x29,
-            Control5 = 0x2a,
-            PressureOffset = 0x2b,
-            TemperatureOffset = 0x2c,
-            AltitudeOffset = 0x2d
-        }
-
-        /// <summary>
         ///     Status register bits.
         /// </summary>
         private enum ReadingStatus : byte
@@ -76,6 +24,58 @@ namespace Netduino.Foundation.Sensors.Barometric
         #endregion Enums
 
         #region Classes / structures
+
+        /// <summary>
+        ///     Registers for non-FIFO mode.
+        /// </summary>
+        private static class Registers
+        {
+            public static readonly byte Status = 0x06;
+            public static readonly byte PressureMSB = 0x01;
+            public static readonly byte PressureCSB = 0x02;
+            public static readonly byte PressureLSB = 0x03;
+            public static readonly byte TemperatureMSB = 0x04;
+            public static readonly byte TemperatureLSB = 0x05;
+            public static readonly byte DataReadyStatus = 0x06;
+            public static readonly byte PressureDeltaMSB = 0x07;
+            public static readonly byte PressureDeltaCSB = 0x08;
+            public static readonly byte PressureDeltaLSB = 0x09;
+            public static readonly byte TemperatureDeltaMSB = 0x0a;
+            public static readonly byte TemperatureDeltaLSB = 0x0b;
+            public static readonly byte WhoAmI = 0x0c;
+            public static readonly byte FifoStatus = 0x0d;
+            public static readonly byte FiFoDataAccess = 0x0e;
+            public static readonly byte FifoSetup = 0x0f;
+            public static readonly byte TimeDelay = 0x11;
+            public static readonly byte InterruptSource = 0x12;
+            public static readonly byte DataConfiguration = 0x13;
+            public static readonly byte BarometricMSB = 0x14;
+            public static readonly byte BarometricLSB = 0x15;
+            public static readonly byte PressureTargetMSB = 0x16;
+            public static readonly byte PressureTargetLSB = 0x17;
+            public static readonly byte TemperatureTarget = 0x18;
+            public static readonly byte PressureWindowMSB = 0x19;
+            public static readonly byte PressureWindowLSB = 0x1a;
+            public static readonly byte TemperatureWindow = 0x1b;
+            public static readonly byte PressureMinimumMSB = 0x1c;
+            public static readonly byte PressureMinimumCSB = 0x1d;
+            public static readonly byte PressureMinimumLSB = 0x1e;
+            public static readonly byte TemperatureMinimumMSB = 0x1f;
+            public static readonly byte TemperatureMinimumLSB = 0x20;
+            public static readonly byte PressureMaximumMSB = 0x21;
+            public static readonly byte PressureMaximumCSB = 0x22;
+            public static readonly byte PressureMaximumSB = 0x23;
+            public static readonly byte TemperatureMaximumMSB = 0x24;
+            public static readonly byte TemperatureMaximumLSB = 0x25;
+            public static readonly byte Control1 = 0x26;
+            public static readonly byte Control2 = 0x27;
+            public static readonly byte Control3 = 0x28;
+            public static readonly byte Control4 = 0x29;
+            public static readonly byte Control5 = 0x2a;
+            public static readonly byte PressureOffset = 0x2b;
+            public static readonly byte TemperatureOffset = 0x2c;
+            public static readonly byte AltitudeOffset = 0x2d;
+        }
 
         /// <summary>
         ///     Byte values for the various masks in the control registers.
@@ -281,19 +281,19 @@ namespace Netduino.Foundation.Sensors.Barometric
         /// </remarks>
         public bool Standby
         {
-            get { return(_mpl3115a2.ReadRegister((byte) Registers.Control1) & 0x01) > 0; }
+            get { return(_mpl3115a2.ReadRegister(Registers.Control1) & 0x01) > 0; }
             set
             {
-                var status = _mpl3115a2.ReadRegister((byte) Registers.Control1);
+                var status = _mpl3115a2.ReadRegister(Registers.Control1);
                 if (value)
                 {
-                    status &= (byte) ~(ControlRegisterBits.Active);
+                    status &= (byte) ~ControlRegisterBits.Active;
                 }
                 else
                 {
                     status |= ControlRegisterBits.Active;
                 }
-                _mpl3115a2.WriteRegister((byte) Registers.Control1, status);
+                _mpl3115a2.WriteRegister(Registers.Control1, status);
             }
         }
 
@@ -302,7 +302,7 @@ namespace Netduino.Foundation.Sensors.Barometric
         /// </summary>
         public byte Status
         {
-            get { return _mpl3115a2.ReadRegister((byte) Registers.Status); }
+            get { return _mpl3115a2.ReadRegister(Registers.Status); }
         }
 
         #endregion Properties
@@ -325,13 +325,13 @@ namespace Netduino.Foundation.Sensors.Barometric
         {
             var device = new I2CBus(address, speed);
             _mpl3115a2 = device;
-            if (_mpl3115a2.ReadRegister((byte) Registers.WhoAmI) != 0xc4)
+            if (_mpl3115a2.ReadRegister(Registers.WhoAmI) != 0xc4)
             {
                 throw new Exception("Unexpected device ID, expected 0xc4");
             }
-            _mpl3115a2.WriteRegister((byte) Registers.Control1,
+            _mpl3115a2.WriteRegister(Registers.Control1,
                                      (byte) (ControlRegisterBits.Active | ControlRegisterBits.OverSample128));
-            _mpl3115a2.WriteRegister((byte) Registers.DataConfiguration,
+            _mpl3115a2.WriteRegister(Registers.DataConfiguration,
                                      (byte) (ConfigurationRegisterBits.DataReadyEvent |
                                              ConfigurationRegisterBits.EnablePressureEvent |
                                              ConfigurationRegisterBits.EnableTemperatureEvent));
@@ -429,7 +429,7 @@ namespace Netduino.Foundation.Sensors.Barometric
                 Thread.Sleep(5);
             }
             Thread.Sleep(100);
-            var data = _mpl3115a2.ReadRegisters((byte) Registers.PressureMSB, 5);
+            var data = _mpl3115a2.ReadRegisters(Registers.PressureMSB, 5);
             Pressure = DecodePresssure(data[0], data[1], data[2]);
             Temperature = DecodeTemperature(data[3], data[4]);
         }
@@ -439,9 +439,9 @@ namespace Netduino.Foundation.Sensors.Barometric
         /// </summary>
         public void Reset()
         {
-            var data = _mpl3115a2.ReadRegister((byte) Registers.Control1);
+            var data = _mpl3115a2.ReadRegister(Registers.Control1);
             data |= 0x04;
-            _mpl3115a2.WriteRegister((byte) Registers.Control1, data);
+            _mpl3115a2.WriteRegister(Registers.Control1, data);
         }
 
         #endregion Methods
