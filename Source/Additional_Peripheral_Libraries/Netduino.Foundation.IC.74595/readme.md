@@ -1,7 +1,5 @@
 ﻿# 74595 Shift Register
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/uLxth43EwIQ?rel=0" frameborder="0" gesture="media" allowfullscreen></iframe>
-
 Shift registers offer the ability to increase the number of outputs on a microcontroller by using I2C or SPI interfaces.  In the case of the 74xx595 series of shift registers, the SPI interface is used to output a series of bits that are then latched to the output pins of the chip.
 
 This class allows the Netduino to control the output pins on a 74HCT595 shift register using the SPI interface.
@@ -54,6 +52,8 @@ namespace ShiftRegisterTest
     }
 }
 ```
+
+The hardware and software configuration above can be seen running on the [Netduino YouTube channel](https://youtu.be/uLxth43EwIQ).
 
 ## API
 
