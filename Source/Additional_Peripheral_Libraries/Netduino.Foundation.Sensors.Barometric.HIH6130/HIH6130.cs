@@ -1,33 +1,33 @@
 ﻿using System;
-using Netduino.Foundation.Devices;
 using System.Threading;
+using Netduino.Foundation.Devices;
 
 namespace Netduino.Foundation.Sensors.Barometric
 {
     /// <summary>
-    /// Provide a mechanism for reading the Temperature and Humidity from
-    /// a HIH6130 temperature and Humidity sensor.
+    ///     Provide a mechanism for reading the Temperature and Humidity from
+    ///     a HIH6130 temperature and Humidity sensor.
     /// </summary>
     public class HIH6130
     {
         #region Member variables / fields
 
         /// <summary>
-        /// MAG3110 object.
+        ///     MAG3110 object.
         /// </summary>
-        private ICommunicationBus _hih6130 = null;
+        private readonly ICommunicationBus _hih6130;
 
         #endregion Member variables / fields
 
         #region Properties
 
         /// <summary>
-        /// Humidity reading from the last call to Read.
+        ///     Humidity reading from the last call to Read.
         /// </summary>
         public float Humidity { get; private set; }
 
         /// <summary>
-        /// Temperature reading from last call to Read.
+        ///     Temperature reading from last call to Read.
         /// </summary>
         public float Temperature { get; private set; }
 
@@ -36,21 +36,20 @@ namespace Netduino.Foundation.Sensors.Barometric
         #region Constructors
 
         /// <summary>
-        /// Default constructor is private to prevent the developer from calling it.
+        ///     Default constructor is private to prevent the developer from calling it.
         /// </summary>
         private HIH6130()
         {
         }
 
         /// <summary>
-        /// Create a new HIH6130 object using the default parameters for the component.
+        ///     Create a new HIH6130 object using the default parameters for the component.
         /// </summary>
         /// <param name="address">Address of the HIH6130 (default = 0x27).</param>
         /// <param name="speed">Speed of the I2C bus (default = 100 KHz).</param>
         public HIH6130(byte address = 0x27, ushort speed = 100)
         {
-            I2CBus device = new I2CBus(address, speed);
-            _hih6130 = (ICommunicationBus) device;
+            _hih6130 = new I2CBus(address, speed);
             Read();
         }
 
@@ -59,7 +58,7 @@ namespace Netduino.Foundation.Sensors.Barometric
         #region Methods
 
         /// <summary>
-        /// Force the sensor to make a reading and update the relevant properties.
+        ///     Force the sensor to make a reading and update the relevant properties.
         /// </summary>
         public void Read()
         {
@@ -68,7 +67,7 @@ namespace Netduino.Foundation.Sensors.Barometric
             //  Sensor takes 35ms to make a valid reading.
             //
             Thread.Sleep(50);
-            byte[] data = _hih6130.ReadBytes(4);
+            var data = _hih6130.ReadBytes(4);
             //
             //  Data format:
             //
@@ -81,12 +80,12 @@ namespace Netduino.Foundation.Sensors.Barometric
             {
                 throw new Exception("Status indicates readings are invalid.");
             }
-            int reading = ((data[0] << 8) | data[1]) & 0x3fff;
-            Humidity = (((float) reading) / 16383) * 100;
+            var reading = ((data[0] << 8) | data[1]) & 0x3fff;
+            Humidity = ((float) reading / 16383) * 100;
             reading = ((data[2] << 8) | data[3]) >> 2;
-            Temperature = ((((float) reading) / 16383) * 165) - 40;
+            Temperature = (((float) reading / 16383) * 165) - 40;
         }
 
-        #endregion
+        #endregion Methods
     }
 }
