@@ -10,7 +10,7 @@ The MPL115A2 is a low cost device for reading barometric pressure.
 
 The MPL115A2 sensor is available on a breakout board from Adafruit
 
-* [Adafruit MPL115A2 Breakout Doard](https://www.adafruit.com/product/992)
+* [Adafruit MPL115A2 Breakout Board](https://www.adafruit.com/product/992)
 
 ## Hardware
 
@@ -63,13 +63,13 @@ Create a new MPL115A2 object.
 
 ### Properties
 
-#### `Pressure`
+#### `double Pressure`
 
 Return the pressure reading returned by the last call to the `Read` method.
 
 This value is recorded in kPa.
 
-#### `Temperature`
+#### `double Temperature`
 
 Return the temperature reading returned by the last call to the `Read` method.
 
@@ -77,6 +77,6 @@ This value is recorded in degrees C.
 
 ### Methods
 
-#### `Read()`
+#### `void Read()`
 
 Force the sensor to take a reading and record the readings in the `Pressure` and `Temperature` properties.
