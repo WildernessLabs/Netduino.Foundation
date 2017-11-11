@@ -3,18 +3,18 @@
 namespace Netduino.Foundation.Sensors.Motion
 {
     /// <summary>
-    /// Provide an interface for the ADXL335 triple axis accelerometer.
+    ///     Provide an interface for the ADXL335 triple axis accelerometer.
     /// </summary>
     public class ADXL335
     {
         #region Structures
 
         /// <summary>
-        /// Structure to hold the X, Y & Z readings.
+        ///     Structure to hold the X, Y & Z readings.
         /// </summary>
         /// <remarks>
-        /// This can be used to hold either the raw sensor data or the G forces
-        /// depending upon which method is called.
+        ///     This can be used to hold either the raw sensor data or the G forces
+        ///     depending upon which method is called.
         /// </remarks>
         public struct Readings
         {
@@ -28,59 +28,57 @@ namespace Netduino.Foundation.Sensors.Motion
         #region Member variables / fields
 
         /// <summary>
-        /// Analog input channel connected to the x axis.
+        ///     Analog input channel connected to the x axis.
         /// </summary>
-        private AnalogInput _x = null;
+        private readonly AnalogInput _x;
 
         /// <summary>
-        /// Analog input channel connected to the x axis.
+        ///     Analog input channel connected to the x axis.
         /// </summary>
-        private AnalogInput _y = null;
+        private readonly AnalogInput _y;
 
         /// <summary>
-        /// Analog input channel connected to the x axis.
+        ///     Analog input channel connected to the x axis.
         /// </summary>
-        private AnalogInput _z = null;
+        private readonly AnalogInput _z;
 
         /// <summary>
-        /// Voltage that represents 0g.  This is the supply voltage / 2.
+        ///     Voltage that represents 0g.  This is the supply voltage / 2.
         /// </summary>
-        private double _zeroGVoltage = 0;
+        private double _zeroGVoltage;
 
         #endregion Member variables / fields
 
         #region Properties
 
         /// <summary>
-        /// Volts per G for the X axis.
+        ///     Volts per G for the X axis.
         /// </summary>
         public double XVoltsPerG { get; set; }
 
         /// <summary>
-        /// Volts per G for the X axis.
+        ///     Volts per G for the X axis.
         /// </summary>
         public double YVoltsPerG { get; set; }
 
         /// <summary>
-        /// Volts per G for the X axis.
+        ///     Volts per G for the X axis.
         /// </summary>
         public double ZVoltsPerG { get; set; }
 
         /// <summary>
-        /// Power supply voltage applied to the sensor.  This will be set (in the constructor) 
-        /// to 3.3V by default.
+        ///     Power supply voltage applied to the sensor.  This will be set (in the constructor)
+        ///     to 3.3V by default.
         /// </summary>
         private double _supplyVoltage;
+
         public double SupplyVoltage
         {
-            get
-            {
-                return (_supplyVoltage);
-            }
+            get { return _supplyVoltage; }
             set
             {
                 _supplyVoltage = value;
-                _zeroGVoltage = (value / 2);
+                _zeroGVoltage = value / 2;
             }
         }
 
@@ -89,14 +87,14 @@ namespace Netduino.Foundation.Sensors.Motion
         #region Constructors
 
         /// <summary>
-        /// Make the default constructor private so that the developer cannot access it.
+        ///     Make the default constructor private so that the developer cannot access it.
         /// </summary>
         private ADXL335()
         {
         }
 
         /// <summary>
-        /// Create anew ADXL335 sensor object.
+        ///     Create anew ADXL335 sensor object.
         /// </summary>
         /// <param name="x">Analog pin connected to the X axis output from the ADXL335 sensor.</param>
         /// <param name="y">Analog pin connected to the Y axis output from the ADXL335 sensor.</param>
@@ -120,31 +118,26 @@ namespace Netduino.Foundation.Sensors.Motion
         #region Methods
 
         /// <summary>
-        /// Read the sensor output and convert the sensor readings into acceleration values.
+        ///     Read the sensor output and convert the sensor readings into acceleration values.
         /// </summary>
-        /// <returns><see cref="Readings"/> structure containing the acceleration in g.</returns>
+        /// <returns><see cref="Readings" /> structure containing the acceleration in g.</returns>
         public Readings GetAcceleration()
         {
-            Readings data = new Readings();
+            var data = new Readings();
 
             data.X = ((_x.Read() * SupplyVoltage) - _zeroGVoltage) / XVoltsPerG;
             data.Y = ((_y.Read() * SupplyVoltage) - _zeroGVoltage) / YVoltsPerG;
             data.Z = ((_z.Read() * SupplyVoltage) - _zeroGVoltage) / ZVoltsPerG;
-            return (data);
+            return data;
         }
 
         /// <summary>
-        /// Get the raw analog input values from the sensor.
+        ///     Get the raw analog input values from the sensor.
         /// </summary>
-        /// <returns><see cref="Readings"/> structure containing the raw sensor data from the analog pins.</returns>
+        /// <returns><see cref="Readings" /> structure containing the raw sensor data from the analog pins.</returns>
         public Readings GetRawSensorData()
         {
-            Readings data = new Readings();
-
-            data.X = _x.Read();
-            data.Y = _y.Read();
-            data.Z = _z.Read();
-            return (data);
+            return new Readings { X = _x.Read(), Y = _y.Read(), Z = _z.Read() };
         }
 
         #endregion Methods
