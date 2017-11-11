@@ -80,9 +80,9 @@ var lcd = new SerialLCD();
 
 The properties for a particular display can be set by supplying values for the parameters in the constructor.
 
-#### Methods
+### Methods
 
-### `void SetSplashScreen(string line1, string line2)`
+#### `void SetSplashScreen(string line1, string line2)`
 
 A splash screen is displayed when the LCD is first powered up.  This can be changed or turned off.
 
@@ -97,7 +97,7 @@ SetSplashScreen("Weather Station", "Version 1.0");
 This code will set the splash screen to:
 
 ```
-Weather Station
+Weat#her Station
 Version 1.0
 ```
 
@@ -105,15 +105,15 @@ Version 1.0
 
 `ToggleSplashScreen` will turn the splash screen on or off depending upon the current setting.
 
-### `void SetBaudRate(LCDBaudRate baudRate)`
+#### `void SetBaudRate(LCDBaudRate baudRate)`
 
 `SetBaudRate` will change the baud rate of the display.  A new `SerialLCD` object will need to be created once the baud rate is changed as the serial port will still be using the old baud rate.
 
-### `void Clear()`
+#### `void Clear()`
 
 The `Clear` method will clear the display.
 
-### `void SetCursorPosition(byte column, byte line)`
+#### `void SetCursorPosition(byte column, byte line)`
 
 This method will set the cursor position on the LCD display.  The cursor locations are zero based.
 
@@ -125,11 +125,11 @@ SetCursorPosition(0, 0);
 
 This moves the cursor to the top left corner of a 16x2 LCD.
 
-### `void MoveCursor(Direction direction)`
+#### `void MoveCursor(Direction direction)`
 
 `MoveCursor` moves the cursor left or right on the LCD.
 
-### `void ScrollDisplay(Direction direction)`
+#### `void ScrollDisplay(Direction direction)`
 
 `ScrollDisplay` moves the contents of the display left or right.
 
@@ -137,14 +137,14 @@ It is possible to scroll the contents of the display all the way to the left (or
 
 Writing to the display when the scrolled fully left or right will change the contents of the display memory but not the actual display.  It is necessary to scroll the display in the reverse direction in order to view the updated contents.
 
-### `void SetCursorStyle(CursorStyle style)`
+#### `void SetCursorStyle(CursorStyle style)`
 
 Two cursors are available, box or underline.
 
-### `void DisplayText(string text)`
+#### `void DisplayText(string text)`
 
 Write the text to the current cursor position in the display memory.
 
-### `void SetDisplayVisualState(DisplayPowerState state)`
+#### `void SetDisplayVisualState(DisplayPowerState state)`
 
 Turn the display on or off.
