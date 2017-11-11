@@ -75,27 +75,27 @@ Create a new SI7021 object.
 
 ### Properties
 
-#### `Humidity`
+#### `float Humidity`
 
 Humidity reading from the last call to `Read`.
 
-#### `Temperature`
+#### `float Temperature`
 
 Temperature reading from the last call to `Read`.
 
-#### `SerialNumber`
+#### `ulong SerialNumber`
 
 The serial number from the sensor.
 
-#### `SensorType`
+#### `DeviceType SensorType`
 
 Type of sensor attached to the Netduino.
 
-#### `FirmwareRevision`
+#### `byte FirmwareRevision`
 
 Firmware revision number as read from the sensor.
 
-#### `Resolution`
+#### `byte Resolution`
 
 Resolution of the sensor:
 
@@ -108,14 +108,14 @@ Resolution of the sensor:
 
 ### Methods
 
-#### `Read`
+#### `void Read()`
 
 Read the current humidity and temperature from the sensor.
 
-#### `Reset`
+#### `void Reset()`
 
 Perform a soft reset and then read the humidity and temperature from the sensor.
 
-#### `Heater`
+#### `void Heater(bool onOrOff)`
 
-Turn the heater on or off.
+Turn the heater on (`true`) or off (`false`).
