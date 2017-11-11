@@ -56,17 +56,21 @@ Note that the voltage per axes have been set for the sensor installed in this se
 
 ## API
 
-### `Readings` Structure
+### Structures
 
-The `Readings` structure can be used to hold the X, Y and Z acceleration data either in G or as raw sensor readings.  The exact contents will be determined by the method called (see `GetRawSensorData` and `GetAcceleration`).
+### `Readings`
 
-### Constructor `ADXL335(Cpu.AnalogChannel x, Cpu.AnalogChannel y, Cpu.AnalogChannel z)`
+The `Readings` structure can be used to hold the `X`, `Y` and `Z` acceleration data either in G or as raw sensor readings.  The exact contents will be determined by the method called (see `GetRawSensorData` and `GetAcceleration`).
+
+### Constructor
+
+#### `ADXL335(Cpu.AnalogChannel x, Cpu.AnalogChannel y, Cpu.AnalogChannel z)`
 
 The constructor takes three `Cpu.AnalogChannel` inputs, one for each axis.  The specified channels will be attached to the respective X, Y, and Z readings.
 
 ### Properties
 
-#### `SupplyVoltage`
+#### `double SupplyVoltage`
 
 This property holds the supply voltage for the sensor.  By default this will be set to 3.3V when the constructor is executed.  This value will be used to determine the centre point (0g) for the sensor.
 
@@ -78,10 +82,10 @@ These are set to the default values from the data sheet (X: 0.325, Y: 0.325, Z: 
 
 ### Methods
 
-#### `GetAcceleration`
+#### `void GetAcceleration()`
 
 Get a `Readings` structure holding the acceleration for the X, Y and Z axes.  This method uses the `SupplyVoltage`, `XVoltsPerG`, `YVoltsPerG` and `ZVoltsPerG` properties to determine the current acceleration being experienced.
 
-#### `GetRawSensorData`
+#### `void GetRawSensorData()`
 
 This method returns a `Readings` structure that holds the data from the analog inputs for each of the X, Y and Z axes.  These values are in the range 0-1.
