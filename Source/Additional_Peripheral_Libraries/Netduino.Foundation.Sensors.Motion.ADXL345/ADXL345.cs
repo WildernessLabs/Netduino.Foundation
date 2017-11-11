@@ -19,6 +19,38 @@ namespace Netduino.Foundation.Sensors.Motion
 
         #endregion Member variables / fields
 
+        #region enums
+
+        /// <summary>
+        ///     Possible values for the range (see DataFormat register).
+        /// </summary>
+        /// <remarks>
+        ///     See page 27 of the data sheet.
+        /// </remarks>
+        public enum Range : byte
+        {
+            TwoG = 0x00,
+            FourG = 0x01,
+            EightG = 0x02,
+            SixteenG = 0x03
+        }
+
+        /// <summary>
+        ///     Frequency of the sensor readings when the device is in sleep mode.
+        /// </summary>
+        /// <remarks>
+        ///     See page 26 of the data sheet.
+        /// </remarks>
+        public enum  Frequency : byte
+        {
+            EightHz = 0x00,
+            FourHz = 0x01,
+            TwoHz = 0x02,
+            OneHz = 0x03,
+        }
+
+        #endregion enums
+
         #region Classes / structures
 
         /// <summary>
@@ -59,34 +91,6 @@ namespace Netduino.Foundation.Sensors.Motion
             public static readonly byte Y1 = 0x34;
             public static readonly byte Z0 = 0x36;
             public static readonly byte Z1 = 0x37;
-        }
-
-        /// <summary>
-        ///     Possible values for the range (see DataFormat register).
-        /// </summary>
-        /// <remarks>
-        ///     See page 27 of the data sheet.
-        /// </remarks>
-        public static class Range
-        {
-            public static readonly byte TwoG = 0x00;
-            public static readonly byte FourG = 0x01;
-            public static readonly byte EightG = 0x02;
-            public static readonly byte SixteenG = 0x03;
-        }
-
-        /// <summary>
-        ///     Frequency of the sensor readings when the device is in sleep mode.
-        /// </summary>
-        /// <remarks>
-        ///     See page 26 of the data sheet.
-        /// </remarks>
-        public static class Frequency
-        {
-            public static readonly byte EightHz = 0x00;
-            public static readonly byte FourHz = 0x01;
-            public static readonly byte TwoHz = 0x02;
-            public static readonly byte OneHz = 0x03;
         }
 
         #endregion Classes / structures
@@ -219,7 +223,7 @@ namespace Netduino.Foundation.Sensors.Motion
         /// <param name="measuring">Enable or disable measurements (turn on or off).</param>
         /// <param name="sleep">Put the part to sleep (true) or run in normal more (false).</param>
         /// <param name="frequency">Frequency of measurements when the part is in sleep mode.</param>
-        public void SetPowerState(bool linkActivityAndInactivity, bool autoASleep, bool measuring, bool sleep, byte frequency)
+        public void SetPowerState(bool linkActivityAndInactivity, bool autoASleep, bool measuring, bool sleep, Frequency frequency)
         {
             byte data = 0;
             if (linkActivityAndInactivity)
@@ -238,7 +242,7 @@ namespace Netduino.Foundation.Sensors.Motion
             {
                 data |= 0x40;
             }
-            data |= frequency;
+            data |= (byte) frequency;
             _adxl345.WriteRegister(Registers.PowerControl, data);
         }
 
@@ -260,7 +264,7 @@ namespace Netduino.Foundation.Sensors.Motion
         ///         2:  +/- 8g
         ///         3:  +/ 16g
         /// </remarks>
-        public void SetDataFormat(bool selfTest, bool spiMode, bool fullResolution, bool justification, byte range)
+        public void SetDataFormat(bool selfTest, bool spiMode, bool fullResolution, bool justification, Range range)
         {
             byte data = 0;
             if (selfTest)
@@ -279,7 +283,7 @@ namespace Netduino.Foundation.Sensors.Motion
             {
                 data |= 0x02;
             }
-            data |= range;
+            data |= (byte) range;
             _adxl345.WriteRegister(Registers.DataFormat, data);
         }
 
