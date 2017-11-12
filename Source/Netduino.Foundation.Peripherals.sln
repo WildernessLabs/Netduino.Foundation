@@ -71,6 +71,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.IC.EEPR
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Displays.MicroLiquidCrystal", "Additional_Peripheral_Libraries\Netduino.Foundation.Displays.MicroLiquidCrystal\Netduino.Foundation.Displays.MicroLiquidCrystal.csproj", "{B925A846-5EDE-436F-B217-6B35DAF5AFA1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Displays.GraphicsLibrary", "Additional_Peripheral_Libraries\Netduino.Foundation.Displays.GraphicsLibrary\Netduino.Foundation.Displays.GraphicsLibrary.csproj", "{F99B3A2B-8E77-4A8E-AD2B-C43C65153C9B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Displays.SSD1306", "Additional_Peripheral_Libraries\Netduino.Foundation.Displays.SSD1306\Netduino.Foundation.Displays.SSD1306.csproj", "{CC0BB903-7EA1-4C44-BD4E-FCBE41CE7B20}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -351,6 +355,22 @@ Global
 		{B925A846-5EDE-436F-B217-6B35DAF5AFA1}.Debug|x86.Build.0 = Debug|Any CPU
 		{B925A846-5EDE-436F-B217-6B35DAF5AFA1}.Release|x86.ActiveCfg = Release|Any CPU
 		{B925A846-5EDE-436F-B217-6B35DAF5AFA1}.Release|x86.Build.0 = Release|Any CPU
+		{F99B3A2B-8E77-4A8E-AD2B-C43C65153C9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F99B3A2B-8E77-4A8E-AD2B-C43C65153C9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F99B3A2B-8E77-4A8E-AD2B-C43C65153C9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F99B3A2B-8E77-4A8E-AD2B-C43C65153C9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F99B3A2B-8E77-4A8E-AD2B-C43C65153C9B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F99B3A2B-8E77-4A8E-AD2B-C43C65153C9B}.Debug|x86.Build.0 = Debug|Any CPU
+		{F99B3A2B-8E77-4A8E-AD2B-C43C65153C9B}.Release|x86.ActiveCfg = Release|Any CPU
+		{F99B3A2B-8E77-4A8E-AD2B-C43C65153C9B}.Release|x86.Build.0 = Release|Any CPU
+		{CC0BB903-7EA1-4C44-BD4E-FCBE41CE7B20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC0BB903-7EA1-4C44-BD4E-FCBE41CE7B20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC0BB903-7EA1-4C44-BD4E-FCBE41CE7B20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC0BB903-7EA1-4C44-BD4E-FCBE41CE7B20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC0BB903-7EA1-4C44-BD4E-FCBE41CE7B20}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CC0BB903-7EA1-4C44-BD4E-FCBE41CE7B20}.Debug|x86.Build.0 = Debug|Any CPU
+		{CC0BB903-7EA1-4C44-BD4E-FCBE41CE7B20}.Release|x86.ActiveCfg = Release|Any CPU
+		{CC0BB903-7EA1-4C44-BD4E-FCBE41CE7B20}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0} = {82E59041-71D9-420E-B3FE-836243B81E1E}
