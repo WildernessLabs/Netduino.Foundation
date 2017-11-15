@@ -36,6 +36,8 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Graphics.cs" />
+    <Compile Include="FontBase.cs" />
+    <Compile Include="Font8x8.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Netduino.Foundation\Netduino.Foundation.csproj">

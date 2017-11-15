@@ -11,18 +11,28 @@ namespace Netduino.Foundation.Displays
 
         /// <summary>
         /// </summary>
-        private readonly IDisplay _display;
+        private readonly DisplayBase _display;
 
         #endregion Member variables / fields
+
+        #region Properties
+
+        /// <summary>
+        ///     Current font used for displaying text on the display.
+        /// </summary>
+        public FontBase CurrentFont { get; set; }
+
+        #endregion Properties
 
         #region Constructors
 
         /// <summary>
         /// </summary>
         /// <param name="display"></param>
-        public GraphicsLibrary(IDisplay display)
+        public GraphicsLibrary(DisplayBase display)
         {
             _display = display;
+            CurrentFont = null;
         }
 
         #endregion Constructors
@@ -221,9 +231,35 @@ namespace Netduino.Foundation.Displays
             DrawRectangle(xLeft, yTop, width, height, colored, true);
         }
 
+        /// <summary>
+        ///     Draw a text message on the display using the current font.
+        /// </summary>
+        /// <param name="x">Abscissa of the location of the text.</param>
+        /// <param name="y">Ordinate of the location of the text.</param>
+        /// <param name="spacing">Number of pixels between characters.</param>
+        /// <param name="text">Text to display.</param>
+        /// <param name="wrap">Wrap the text at the end of the display?</param>
+        public void DrawText(int x, int y, int spacing, string text, bool wrap = false)
+        {
+            if (CurrentFont == null)
+            {
+                throw new Exception("Current font must be set before calling DrawText.");
+            }
+            byte[] bitMap = new byte[text.Length * CurrentFont.Height];
+            for (int index = 0; index < text.Length; index++)
+            {
+                byte[] characterMap = CurrentFont[text[index]];
+                for (int characterSegment = 0; characterSegment < CurrentFont.Height; characterSegment++)
+                {
+                    bitMap[index + (characterSegment * text.Length)] = characterMap[characterSegment];
+                }
+            }
+            DrawBitmap(x, y, text.Length, CurrentFont.Height, bitMap, DisplayBase.BitmapMode.And);
+        }
+
         #endregion Methods
 
-        #region IDisplay
+        #region Display
 
         /// <summary>
         ///     Show the changes on the display.
@@ -242,6 +278,22 @@ namespace Netduino.Foundation.Displays
             _display.Clear(updateDisplay);
         }
 
-        #endregion IDisplay
+        /// <summary>
+        ///     Display a bitmap on the display.
+        /// 
+        ///     This method simply calls a similar method in the display hardware.
+        /// </summary>
+        /// <param name="x">Abscissa of the top left corner of the bitmap.</param>
+        /// <param name="y">Ordinate of the top left corner of the bitmap.</param>
+        /// <param name="width">Width of the bitmap in bytes.</param>
+        /// <param name="height">Height of the bitmap in bytes.</param>
+        /// <param name="bitmap">Bitmap to display.</param>
+        /// <param name="bitmapMode">How should the bitmap be transferred to the display?</param>
+        public void DrawBitmap(int x, int y, int width, int height, byte[] bitmap, DisplayBase.BitmapMode bitmapMode)
+        {
+            _display.DrawBitmap(x, y, width, height, bitmap, bitmapMode);
+        }
+
+        #endregion Display
     }
 }

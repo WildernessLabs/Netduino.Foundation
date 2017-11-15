@@ -81,7 +81,7 @@
     <Compile Include="Helpers\DebugInformation.cs" />
     <Compile Include="Helpers\Converters.cs" />
     <Compile Include="Helpers\IniFile.cs" />
-    <Compile Include="Interfaces\IDisplay.cs" />
+    <Compile Include="BaseClasses\DisplayBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Hardware" />
@@ -98,7 +98,7 @@
   <ItemGroup />
   <ItemGroup>
     <Folder Include="Sensors\Location\" />
-    <Folder Include="Interfaces\" />
+    <Folder Include="BaseClasses\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
