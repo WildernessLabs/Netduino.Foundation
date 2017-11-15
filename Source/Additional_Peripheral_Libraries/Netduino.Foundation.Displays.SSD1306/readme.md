@@ -64,6 +64,10 @@ Determine how bitmaps should be placed into the display buffer.  Possible option
 
 *Note:* This property is derived from the [`DisplayBase`](/Source/Netduino.Foundation/BaseClasses) base class.
 
+#### `bool InvertDisplay`
+
+Setting this property to `true` will invert the display immediately.  A value of `false` returns the display to normal.
+
 ### Constructors
 
 #### `SSD1306(byte address = 0x3c, ushort speed = 400, ushort width = 128, ushort height = 64)`
