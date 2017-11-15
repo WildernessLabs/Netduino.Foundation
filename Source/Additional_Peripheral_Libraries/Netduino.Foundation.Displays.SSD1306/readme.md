@@ -58,6 +58,18 @@ Determine how bitmaps should be placed into the display buffer.  Possible option
 | `XOr`  | Logically XOR the bitmap with the buffer contents.            |
 | `Copy` | Copy the bytes in the bitmap over the contents of the buffer. |
 
+#### `enum ScrollDirection`
+
+Defines the scroll direction for the `StartScroll` method.
+
+| Value              | Description                                                             |
+|--------------------|-------------------------------------------------------------------------|
+| `Left`             | Scroll the display to the left.                                         |
+| `Right`            | Scroll the display to the right.                                        |
+| `BottomToTop`      | Scroll the display from the bottom to the top.                          |
+| `RightAndVertical` | Scroll the display from the bottom left corner to the top right corner. |
+| `LeftAndVertical`  | Scroll the display from the bottom right corner to the top left corner. |
+
 ### Properties
 
 #### `bool IgnoreOutOfBoundsPixels`
@@ -99,3 +111,17 @@ Copy a bitmap into the display buffer.  The top left corner of the bitmap is giv
 The `width` parameter gives the number of bytes per ine in the bitmap and the `height` parameter gives the number lines in the bitmap.
 
 `bitmapMode` determines how the bitmap is copied into the display buffer.  Currently `BitmapMode.Copy` is the only mode supported by this driver.
+
+#### `void StartScrolling(ScrollDirection direction)`
+
+Start scrolling in the specified direction using reasonable default settings.
+
+#### `void void StartScrolling(ScrollDirection direction, byte startPage, byte endPage)`
+
+Scroll in the specified direction.  This method allows the application finer control over the scrolling compared with the default settings.
+
+#### `void StopScrolling()`
+
+Stop scrolling the display.
+
+This method will be called automatically before any current change is made to the scroll direction.  It can also be called when the application needs to stop the display scrolling.  In this case it may be necessary for the application to re-display the current buffer using the `Show` method.

@@ -4,9 +4,45 @@ using Netduino.Foundation.Devices;
 namespace Netduino.Foundation.Displays
 {
     /// <summary>
+    ///     Provide an interface to the SSD1306 family of OLED displays.
     /// </summary>
     public class SSD1306 : DisplayBase
     {
+        #region Enums
+
+        /// <summary>
+        ///     Allow the programmer to set the scroll direction.
+        /// </summary>
+        public enum ScrollDirection
+        {
+            /// <summary>
+            ///     Scroll the display to the left.
+            /// </summary>
+            Left,
+
+            /// <summary>
+            ///     Scroll the display to the right.
+            /// </summary>
+            Right,
+
+            /// <summary>
+            ///     Scroll the display from the bottom to the top.
+            /// </summary>
+            BottomToTop,
+
+            /// <summary>
+            ///     Scroll the display from the bottom left and vertically.
+            /// </summary>
+            RightAndVertical,
+
+            /// <summary>
+            ///     Scroll the display from the bottom right and vertically.
+            /// </summary>
+            LeftAndVertical
+        };
+
+        #endregion Enums
+
         #region Member variables / fields
 
         /// <summary>
@@ -109,6 +145,7 @@ namespace Netduino.Foundation.Displays
                 0x12, 0x81, 0xcf, 0xd9, 0xf1, 0xdb, 0x40, 0xa4, 0xa6, 0xaf
             });
             InvertDisplay = false;
+            StopScrolling();
             _showPreamble = new byte[] { 0x21, 0x00, (byte) (_width - 1), 0x22, 0x00, (byte) (_pages - 1) };
         }
 
@@ -193,7 +230,7 @@ namespace Netduino.Foundation.Displays
             {
                 if (!IgnoreOutOfBoundsPixels)
                 {
-                    throw new ArgumentException("DisplayPixel: co-ordinates oout of bounds");
+                    throw new ArgumentException("DisplayPixel: co-ordinates out of bounds");
                 }
                 //
                 //  If we get here then we have a problem but the application wants the
@@ -244,6 +281,65 @@ namespace Netduino.Foundation.Displays
                     }
                 }
             }
+        }
+
+        /// <summary>
+        ///     Start the display scrollling in the specified direction.
+        /// </summary>
+        /// <param name="direction">Direction that the display should scroll.</param>
+        public void StartScrolling(ScrollDirection direction)
+        {
+            StartScrolling(direction, 0x00, 0xff);
+        }
+
+        /// <summary>
+        ///     Start the display scrolling.
+        /// </summary>
+        /// <remarks>
+        ///     In most cases setting startPage to 0x00 and endPage to 0xff will achieve an
+        ///     acceptable scrolling effect.
+        /// </remarks>
+        /// <param name="direction">Direction that the display should scroll.</param>
+        /// <param name="startPage">Start page for the scroll.</param>
+        /// <param name="endPage">End oage for the scroll.</param>
+        public void StartScrolling(ScrollDirection direction, byte startPage, byte endPage)
+        {
+            StopScrolling();
+            byte[] commands;
+            if ((direction == ScrollDirection.Left) || (direction == ScrollDirection.Right))
+            {
+                commands = new byte[] { 0x26, 0x00, startPage, 0x00, endPage, 0x00, 0xff, 0x2f };
+                if (direction == ScrollDirection.Left)
+                {
+                    commands[0] = 0x27;
+                }
+            }
+            else
+            {
+                byte scrollDirection;
+                if (direction == ScrollDirection.LeftAndVertical)
+                {
+                    scrollDirection = 0x2a;              
+                }
+                else
+                {
+                    scrollDirection = 0x29;
+                }
+                commands = new byte[] { 0xa3, 0x00, (byte) _height, scrollDirection, 0x00, startPage, 0x00, endPage, 0x01, 0x2f };
+            }
+            SendCommands(commands);
+        }
+
+        /// <summary>
+        ///     Turn off scrolling.
+        /// </summary>
+        /// <remarks>
+        ///     Datasheet states that scrolling must be turned off before changing the
+        ///     scroll direction in order to prevent RAM corruption.
+        /// </remarks>
+        public void StopScrolling()
+        {
+            SendCommand(0x2e);
         }
 
         #endregion Methods
