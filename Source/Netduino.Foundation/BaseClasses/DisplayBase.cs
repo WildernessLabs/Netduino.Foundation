@@ -12,7 +12,8 @@
         {
             And,
             Or,
-            XOr
+            XOr,
+            Copy
         };
 
         /// <summary>

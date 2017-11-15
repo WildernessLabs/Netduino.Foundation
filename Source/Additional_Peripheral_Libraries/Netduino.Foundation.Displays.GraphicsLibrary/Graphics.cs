@@ -243,7 +243,7 @@ namespace Netduino.Foundation.Displays
         {
             if (CurrentFont == null)
             {
-                throw new Exception("Current font must be set before calling DrawText.");
+                throw new Exception("CurrentFont must be set before calling DrawText.");
             }
             byte[] bitMap = new byte[text.Length * CurrentFont.Height];
             for (int index = 0; index < text.Length; index++)

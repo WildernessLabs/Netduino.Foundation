@@ -42,6 +42,34 @@ namespace Netduino.Foundation.Displays
 
         #endregion Member variables / fields
 
+        #region Properties
+
+        /// <summary>
+        ///     Invert the entire display (true) or return to normal mode (false).
+        /// </summary>
+        /// <remarks>
+        ///     See section 10.1.10 in the datasheet.
+        /// </remarks>
+        private bool _invertDisplay;
+        public bool InvertDisplay
+        {
+            get { return(_invertDisplay); }
+            set
+            {
+                _invertDisplay = value;
+                if (value)
+                {
+                    SendCommand(0xa7);
+                }
+                else
+                {
+                    SendCommand(0xa6);
+                }
+            }
+        }
+
+        #endregion Properties
+
         #region Constructors
 
         /// <summary>
@@ -56,7 +84,7 @@ namespace Netduino.Foundation.Displays
         /// </summary>
         /// <remarks>
         ///     Note that by default, any pixels out of bounds will throw and exception.
-        ///     This can be changed by setting the <seealso cref="IgnoreOutOfBoundsPixels"/>
+        ///     This can be changed by setting the <seealso cref="IgnoreOutOfBoundsPixels" />
         ///     property to true.
         /// </remarks>
         /// <param name="address">Address of the bus on the I2C display.</param>
@@ -71,7 +99,7 @@ namespace Netduino.Foundation.Displays
             _height = height;
             _pages = _height / 8;
             _buffer = new byte[width * _pages];
-            IgnoreOutofBoundsPixels = false;
+            IgnoreOutOfBoundsPixels = false;
             //
             //  Now setup the display.
             //
@@ -80,6 +108,7 @@ namespace Netduino.Foundation.Displays
                 0xae, 0xd5, 0x80, 0xa8, 0x3f, 0xd3, 0x00, 0x40 | 0x0, 0x8d, 0x14, 0x20, 0x00, 0xa0 | 0x1, 0xc8, 0xda,
                 0x12, 0x81, 0xcf, 0xd9, 0xf1, 0xdb, 0x40, 0xa4, 0xa6, 0xaf
             });
+            InvertDisplay = false;
             _showPreamble = new byte[] { 0x21, 0x00, (byte) (_width - 1), 0x22, 0x00, (byte) (_pages - 1) };
         }
 
@@ -162,7 +191,7 @@ namespace Netduino.Foundation.Displays
         {
             if ((x >= _width) || (y >= _height))
             {
-                if (!IgnoreOutofBoundsPixels)
+                if (!IgnoreOutOfBoundsPixels)
                 {
                     throw new ArgumentException("DisplayPixel: co-ordinates oout of bounds");
                 }
@@ -186,6 +215,10 @@ namespace Netduino.Foundation.Displays
         /// <summary>
         ///     Copy a bitmap to the display.
         /// </summary>
+        /// <remarks>
+        ///     Currently, this method only supports copying the bitmap over the contents
+        ///     of the display buffer.
+        /// </remarks>
         /// <param name="x">Abscissa of the top left corner of the bitmap.</param>
         /// <param name="y">Ordinate of the top left corner of the bitmap.</param>
         /// <param name="width">Width of the bitmap in bytes.</param>
@@ -194,19 +227,19 @@ namespace Netduino.Foundation.Displays
         /// <param name="bitmapMode">How should the bitmap be transferred to the display?</param>
         public override void DrawBitmap(int x, int y, int width, int height, byte[] bitmap, BitmapMode bitmapMode)
         {
-            if ((width * height != bitmap.Length))
+            if ((width * height) != bitmap.Length)
             {
                 throw new ArgumentException("Width and height do not match the bitmap size.");
             }
-            for (int ordinate = 0; ordinate < height; ordinate++)
+            for (var ordinate = 0; ordinate < height; ordinate++)
             {
-                for (int abscissa = 0; abscissa < width; abscissa++)
+                for (var abscissa = 0; abscissa < width; abscissa++)
                 {
-                    byte b = bitmap[(ordinate * width) + abscissa];
+                    var b = bitmap[(ordinate * width) + abscissa];
                     byte mask = 0x01;
-                    for (int pixel = 0; pixel < 8; pixel++)
+                    for (var pixel = 0; pixel < 8; pixel++)
                     {
-                        DrawPixel(x + (8 * abscissa) + pixel, y + ordinate, ((b & mask) > 0));
+                        DrawPixel(x + (8 * abscissa) + pixel, y + ordinate, (b & mask) > 0);
                         mask <<= 1;
                     }
                 }
