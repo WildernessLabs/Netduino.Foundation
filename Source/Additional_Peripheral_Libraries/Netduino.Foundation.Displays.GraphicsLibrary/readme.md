@@ -4,4 +4,8 @@ The `GraphicsLibrary` class contains a general set of graphics primitives for us
 
 ## API
 
-ToDo: - Document the API.
+### Properties
+
+### Constructors
+
+### Methods
