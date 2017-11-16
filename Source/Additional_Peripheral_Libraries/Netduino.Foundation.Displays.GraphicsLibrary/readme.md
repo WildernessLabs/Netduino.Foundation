@@ -8,7 +8,9 @@ The `GraphicsLibrary` class contains a general set of graphics primitives for us
 
 #### `FontBase CurrentFont`
 
-Font to be used for any text operations.
+Font to be used for any text operations.  Fonts should be derived from the [`FontBase`](FontBase.md) class.
+
+The [`Font8x8`](Font8x8.md) class contains a font for the ASCII characters 32 to 127.
 
 ### Constructors
 
