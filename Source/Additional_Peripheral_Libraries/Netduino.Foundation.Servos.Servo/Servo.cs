@@ -4,7 +4,7 @@ using Microsoft.SPOT.Hardware;
 namespace Netduino.Foundation.Servos
 {
     /// <summary>
-    ///     Implement a Servo xlass.
+    ///     Implement a Servo class.
     /// </summary>
     public class Servo
     {
@@ -99,10 +99,10 @@ namespace Netduino.Foundation.Servos
 
         #endregion
 
-        #region Contructor(s)
+        #region Constructor(s)
 
         /// <summary>
-        ///     Initialise a new instance of the Servo class.  Use the defaul settings for the properties.
+        ///     Initialise a new instance of the Servo class.  Use the default settings for the properties.
         /// </summary>
         /// <remarks>
         ///     Defaults are:
@@ -151,7 +151,7 @@ namespace Netduino.Foundation.Servos
         }
 
         /// <summary>
-        ///     Set the angle of the servo to the specified nuber of degrees.
+        ///     Set the angle of the servo to the specified number of degrees.
         /// </summary>
         /// <param name="angle">Angle for the servo which should be between 0 and 180 degrees inclusive.</param>
         private void Write(int angle)
