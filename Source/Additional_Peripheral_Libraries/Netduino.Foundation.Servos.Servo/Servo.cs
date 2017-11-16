@@ -30,7 +30,7 @@ namespace Netduino.Foundation.Servos
         #region Properties
 
         /// <Summary>
-        ///     Determine if this instance of the servo class is associated with a digitsal output pin.
+        ///     Determine if this instance of the servo class is associated with a digital output pin.
         /// </Summary>
         /// <Returns>true if the instance is attached to a PWM pin, false otherwise.</Returns>
         public bool Attached
