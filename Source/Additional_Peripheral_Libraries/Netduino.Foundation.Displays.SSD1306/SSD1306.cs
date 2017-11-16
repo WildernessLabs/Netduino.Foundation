@@ -26,11 +26,6 @@ namespace Netduino.Foundation.Displays
             Right,
 
             /// <summary>
-            ///     Scroll the display from the bottom to the top.
-            /// </summary>
-            BottomToTop,
-
-            /// <summary>
             ///     Scroll the display from the bottom left and vertically.
             /// </summary>
             RightAndVertical,

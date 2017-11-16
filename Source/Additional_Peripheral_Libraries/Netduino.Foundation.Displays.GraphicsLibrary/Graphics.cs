@@ -124,7 +124,7 @@ namespace Netduino.Foundation.Displays
         }
 
         /// <summary>
-        ///     Draw a circle.
+        ///     Draw a dircle.
         /// </summary>
         /// <remarks>
         ///     This algorithm draws the circle by splitting the full circle into eight
@@ -184,7 +184,7 @@ namespace Netduino.Foundation.Displays
         /// <param name="centerY">Ordinate of the centre point of the circle.</param>
         /// <param name="radius">Radius of the circle.</param>
         /// <param name="colored">Show the circle when true, </param>
-        public void DrawFilledCircle(int centerX, int centerY, int radius, bool colored)
+        public void DrawFilledCircle(int centerX, int centerY, int radius, bool colored = true)
         {
             DrawCircle(centerX, centerY, radius, colored, true);
         }

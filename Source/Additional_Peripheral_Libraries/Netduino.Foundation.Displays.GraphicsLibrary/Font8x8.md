@@ -2,13 +2,13 @@
 
 ## API
 
-## Properties
+### Properties
 
-### `int Width`
+#### `int Width`
 
 Width of a character in pixels.
 
-### `int Height`
+#### `int Height`
 
 Height of a character in pixels.
 
