@@ -124,7 +124,7 @@ namespace Netduino.Foundation.Displays
         }
 
         /// <summary>
-        ///     Draw a dircle.
+        ///     Draw a circle.
         /// </summary>
         /// <remarks>
         ///     This algorithm draws the circle by splitting the full circle into eight

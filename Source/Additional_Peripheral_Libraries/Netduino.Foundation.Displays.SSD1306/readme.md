@@ -1,10 +1,20 @@
 # SSD1306 - Hardware Driver for SSD1306 Family of Displays
 
-
+OLED displays based upon the SSD1306 chip set are small, high contract display.  These displays generate their own light and so no backlight is required.
 
 ## Purchasing
 
+There are a number of breakout board available using these displays.  This driver has been tested with the following:
+
+* [Diymall 0.96" 128x64 pixel OLED Display](https://www.amazon.co.uk/gp/product/B0156CO67O/ref=oh_aui_detailpage_o01_s00?ie=UTF8&psc=1)
+
+Board are also available from [Adafruit](www.adafruit.com).
+
 ## Hardware
+
+The OLED displays are available with a SPI or I2C interfaces.  Wiring for the I2C interface is as follows:
+
+![OLED Display on Breadboard](OLEDOnBreadboard.png)
 
 ## Software
 
@@ -66,7 +76,6 @@ Defines the scroll direction for the `StartScroll` method.
 |--------------------|-------------------------------------------------------------------------|
 | `Left`             | Scroll the display to the left.                                         |
 | `Right`            | Scroll the display to the right.                                        |
-| `BottomToTop`      | Scroll the display from the bottom to the top.                          |
 | `RightAndVertical` | Scroll the display from the bottom left corner to the top right corner. |
 | `LeftAndVertical`  | Scroll the display from the bottom right corner to the top left corner. |
 
