@@ -79,6 +79,15 @@ Defines the scroll direction for the `StartScroll` method.
 | `RightAndVertical` | Scroll the display from the bottom left corner to the top right corner. |
 | `LeftAndVertical`  | Scroll the display from the bottom right corner to the top left corner. |
 
+#### `enum DisplayType`
+
+Display types supported by this class.
+
+| Display Type | Description / Supported Displays |
+|--------------|----------------------------------|
+| OLED128x64   | 128x64 pixels (Diymall)          |
+| OLED128x32   | 128x32 pixels |
+
 ### Properties
 
 #### `bool IgnoreOutOfBoundsPixels`
@@ -91,7 +100,7 @@ Setting this property to `true` will invert the display immediately.  A value of
 
 ### Constructors
 
-#### `SSD1306(byte address = 0x3c, ushort speed = 400, ushort width = 128, ushort height = 64)`
+#### `SSD1306(byte address = 0x3c, ushort speed = 400, DisplayType displayType = DisplayType.OLED128x64)`
 
 Create a `SSD1306` object with the default settings for a 128x64 pixel OLED display with an I2C interface.
 

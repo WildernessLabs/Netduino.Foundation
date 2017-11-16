@@ -34,7 +34,23 @@ namespace Netduino.Foundation.Displays
             ///     Scroll the display from the bottom right and vertically.
             /// </summary>
             LeftAndVertical
-        };
+        }
+
+        /// <summary>
+        ///     Supported display types.
+        /// </summary>
+        public enum DisplayType
+        {
+            /// <summary>
+            ///     0.96 128x64 pixel display.
+            /// </summary>
+            OLED128x64,
+
+            /// <summary>
+            ///     0.91 128x32 pixel display.
+            /// </summary>
+            OLED128x32
+        }
 
         #endregion Enums
 
@@ -71,6 +87,18 @@ namespace Netduino.Foundation.Displays
         /// </summary>
         private readonly byte[] _showPreamble;
 
+        private readonly byte[] _oled128x64InitialisationSequence =
+        {
+            0xae, 0xd5, 0x80, 0xa8, 0x3f, 0xd3, 0x00, 0x40 | 0x0, 0x8d, 0x14, 0x20, 0x00, 0xa0 | 0x1, 0xc8, 0xda,
+            0x12, 0x81, 0xcf, 0xd9, 0xf1, 0xdb, 0x40, 0xa4, 0xa6, 0xaf
+        };
+
+        private readonly byte[] _oled128x32InitialisationSequence =
+        {
+            0xae, 0xd5, 0x80, 0xa8, 0x1f, 0xd3, 0x00, 0x40, 0x8d, 0x14, 0xa1, 0xc8, 0xda, 0x00, 0x81, 0xcf, 0xd9, 0x1f,
+            0xdb, 0x40, 0xa4, 0xaf
+        };
+
         #endregion Member variables / fields
 
         #region Properties
@@ -82,9 +110,10 @@ namespace Netduino.Foundation.Displays
         ///     See section 10.1.10 in the datasheet.
         /// </remarks>
         private bool _invertDisplay;
+
         public bool InvertDisplay
         {
-            get { return(_invertDisplay); }
+            get { return _invertDisplay; }
             set
             {
                 _invertDisplay = value;
@@ -120,25 +149,28 @@ namespace Netduino.Foundation.Displays
         /// </remarks>
         /// <param name="address">Address of the bus on the I2C display.</param>
         /// <param name="speed">Speed of the I2C bus.</param>
-        /// <param name="width">Width of the display (default to 128 pixels).</param>
-        /// <param name="height">Height of the display (default to 64 pixels).</param>
-        public SSD1306(byte address = 0x3c, ushort speed = 400, ushort width = 128, ushort height = 64)
+        /// <param name="displayType">Type of SSD1306 display (default = 128x64 pixel display).</param>
+        public SSD1306(byte address = 0x3c, ushort speed = 400, DisplayType displayType = DisplayType.OLED128x64)
         {
             var display = new I2CBus(address, speed);
             _ssd1306 = display;
-            _width = width;
-            _height = height;
-            _pages = _height / 8;
-            _buffer = new byte[width * _pages];
-            IgnoreOutOfBoundsPixels = false;
-            //
-            //  Now setup the display.
-            //
-            SendCommands(new byte[]
+            switch (displayType)
             {
-                0xae, 0xd5, 0x80, 0xa8, 0x3f, 0xd3, 0x00, 0x40 | 0x0, 0x8d, 0x14, 0x20, 0x00, 0xa0 | 0x1, 0xc8, 0xda,
-                0x12, 0x81, 0xcf, 0xd9, 0xf1, 0xdb, 0x40, 0xa4, 0xa6, 0xaf
-            });
+                case DisplayType.OLED128x64:
+                    _width = 128;
+                    _height = 64;
+                    SendCommands(_oled128x64InitialisationSequence);
+                    break;
+                case DisplayType.OLED128x32:
+                    _width = 128;
+                    _height = 32;
+                    SendCommands(_oled128x64InitialisationSequence);
+                    break;
+            }
+            _buffer = new byte[_width * _pages];
+            _pages = _height / 8;
+            IgnoreOutOfBoundsPixels = false;
+            SendCommands(_oled128x32InitialisationSequence);
             InvertDisplay = false;
             StopScrolling();
             _showPreamble = new byte[] { 0x21, 0x00, (byte) (_width - 1), 0x22, 0x00, (byte) (_pages - 1) };
@@ -314,13 +346,14 @@ namespace Netduino.Foundation.Displays
                 byte scrollDirection;
                 if (direction == ScrollDirection.LeftAndVertical)
                 {
-                    scrollDirection = 0x2a;              
+                    scrollDirection = 0x2a;
                 }
                 else
                 {
                     scrollDirection = 0x29;
                 }
-                commands = new byte[] { 0xa3, 0x00, (byte) _height, scrollDirection, 0x00, startPage, 0x00, endPage, 0x01, 0x2f };
+                commands = new byte[]
+                    { 0xa3, 0x00, (byte) _height, scrollDirection, 0x00, startPage, 0x00, endPage, 0x01, 0x2f };
             }
             SendCommands(commands);
         }
