@@ -72,28 +72,29 @@ namespace Netduino.Foundation.Displays
         private readonly int _height;
 
         /// <summary>
-        ///     Number of pages in the display.
-        /// </summary>
-        private readonly int _pages;
-
-        /// <summary>
         ///     Buffer holding the pixels in the display.
         /// </summary>
         private readonly byte[] _buffer;
 
         /// <summary>
-        ///     Sequence of cammnd bytes that must be set to the display before
+        ///     Sequence of commans bytes that must be set to the display before
         ///     the Show method can send the data buffer.
         /// </summary>
         private readonly byte[] _showPreamble;
 
-        private readonly byte[] _oled128x64InitialisationSequence =
+        /// <summary>
+        ///     Sequence of bytes that should be sent to a 128x64 OLED display to setup the device.
+        /// </summary>
+        private readonly byte[] _oled128x64SetupSequence =
         {
             0xae, 0xd5, 0x80, 0xa8, 0x3f, 0xd3, 0x00, 0x40 | 0x0, 0x8d, 0x14, 0x20, 0x00, 0xa0 | 0x1, 0xc8, 0xda,
             0x12, 0x81, 0xcf, 0xd9, 0xf1, 0xdb, 0x40, 0xa4, 0xa6, 0xaf
         };
 
-        private readonly byte[] _oled128x32InitialisationSequence =
+        /// <summary>
+        ///     Sequence of bytes that should be sent to a 128x32 OLED display to setup the device.
+        /// </summary>
+        private readonly byte[] _oled128x32SetupSequence =
         {
             0xae, 0xd5, 0x80, 0xa8, 0x1f, 0xd3, 0x00, 0x40, 0x8d, 0x14, 0xa1, 0xc8, 0xda, 0x00, 0x81, 0xcf, 0xd9, 0x1f,
             0xdb, 0x40, 0xa4, 0xaf
@@ -159,21 +160,23 @@ namespace Netduino.Foundation.Displays
                 case DisplayType.OLED128x64:
                     _width = 128;
                     _height = 64;
-                    SendCommands(_oled128x64InitialisationSequence);
+                    SendCommands(_oled128x64SetupSequence);
                     break;
                 case DisplayType.OLED128x32:
                     _width = 128;
                     _height = 32;
-                    SendCommands(_oled128x64InitialisationSequence);
+                    SendCommands(_oled128x32SetupSequence);
                     break;
             }
-            _buffer = new byte[_width * _pages];
-            _pages = _height / 8;
+            int pages = _height / 8;
+            _buffer = new byte[_width * pages];
+            _showPreamble = new byte[] { 0x21, 0x00, (byte) (_width - 1), 0x22, 0x00, (byte) (pages - 1) };
             IgnoreOutOfBoundsPixels = false;
-            SendCommands(_oled128x32InitialisationSequence);
+            //
+            //  Finally, put the display into a known state.
+            //
             InvertDisplay = false;
             StopScrolling();
-            _showPreamble = new byte[] { 0x21, 0x00, (byte) (_width - 1), 0x22, 0x00, (byte) (_pages - 1) };
         }
 
         #endregion Constructors
