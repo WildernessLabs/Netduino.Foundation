@@ -75,6 +75,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Display
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Displays.SSD1306", "Additional_Peripheral_Libraries\Netduino.Foundation.Displays.SSD1306\Netduino.Foundation.Displays.SSD1306.csproj", "{CC0BB903-7EA1-4C44-BD4E-FCBE41CE7B20}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.BNO055", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Motion.BNO055\Netduino.Foundation.Sensors.Motion.BNO055.csproj", "{F8B3DE4F-9D4F-48EC-944C-31D0D81DB516}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -371,6 +373,14 @@ Global
 		{CC0BB903-7EA1-4C44-BD4E-FCBE41CE7B20}.Debug|x86.Build.0 = Debug|Any CPU
 		{CC0BB903-7EA1-4C44-BD4E-FCBE41CE7B20}.Release|x86.ActiveCfg = Release|Any CPU
 		{CC0BB903-7EA1-4C44-BD4E-FCBE41CE7B20}.Release|x86.Build.0 = Release|Any CPU
+		{F8B3DE4F-9D4F-48EC-944C-31D0D81DB516}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8B3DE4F-9D4F-48EC-944C-31D0D81DB516}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8B3DE4F-9D4F-48EC-944C-31D0D81DB516}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8B3DE4F-9D4F-48EC-944C-31D0D81DB516}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8B3DE4F-9D4F-48EC-944C-31D0D81DB516}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F8B3DE4F-9D4F-48EC-944C-31D0D81DB516}.Debug|x86.Build.0 = Debug|Any CPU
+		{F8B3DE4F-9D4F-48EC-944C-31D0D81DB516}.Release|x86.ActiveCfg = Release|Any CPU
+		{F8B3DE4F-9D4F-48EC-944C-31D0D81DB516}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0} = {82E59041-71D9-420E-B3FE-836243B81E1E}
