@@ -229,6 +229,8 @@ namespace Netduino.Foundation.Displays
             //  Finally, put the display into a known state.
             //
             InvertDisplay = false;
+            Sleep = false;
+            Contrast = 0xff;
             StopScrolling();
         }
 
