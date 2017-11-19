@@ -105,13 +105,16 @@ namespace Netduino.Foundation.Displays
         #region Properties
 
         /// <summary>
+        ///     Backing variable for the InvertDisplay property.
+        /// </summary>
+        private bool _invertDisplay;
+
+        /// <summary>
         ///     Invert the entire display (true) or return to normal mode (false).
         /// </summary>
         /// <remarks>
         ///     See section 10.1.10 in the datasheet.
         /// </remarks>
-        private bool _invertDisplay;
-
         public bool InvertDisplay
         {
             get { return _invertDisplay; }
@@ -128,6 +131,56 @@ namespace Netduino.Foundation.Displays
                 }
             }
         }
+
+        /// <summary>
+        ///     Indicate if the driver should throw away output bounds pixels or
+        ///     if the driver should generate an exception.
+        /// </summary>
+        public bool IgnoreOutOfBoundsPixels { get; set; }
+
+        /// <summary>
+        ///     Backing variable for the Contrast property.
+        /// </summary>
+        private byte _contrast;
+
+        /// <summary>
+        ///     Get / Set the contrast of the display.
+        /// </summary>
+        public byte Contrast
+        {
+            get { return _contrast; }
+
+            set
+            {
+                _contrast = value;
+                SendCommands(new byte[] { 0x81, _contrast });
+            }
+        }
+
+        /// <summary>
+        ///     Put the display to sleep (turns the display off).
+        /// </summary>
+        public bool Sleep
+        {
+            get { return(_sleep); }
+            set
+            {
+                _sleep = value;
+                if (_sleep)
+                {
+                    SendCommand(0xae);
+                }
+                else
+                {
+                    SendCommand(0xaf);
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Backing variable for the Sleep property.
+        /// </summary>
+        private bool _sleep;
 
         #endregion Properties
 
@@ -168,7 +221,7 @@ namespace Netduino.Foundation.Displays
                     SendCommands(_oled128x32SetupSequence);
                     break;
             }
-            int pages = _height / 8;
+            var pages = _height / 8;
             _buffer = new byte[_width * pages];
             _showPreamble = new byte[] { 0x21, 0x00, (byte) (_width - 1), 0x22, 0x00, (byte) (pages - 1) };
             IgnoreOutOfBoundsPixels = false;

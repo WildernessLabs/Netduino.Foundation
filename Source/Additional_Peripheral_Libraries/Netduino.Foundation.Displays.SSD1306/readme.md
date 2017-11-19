@@ -90,6 +90,10 @@ Display types supported by this class.
 
 ### Properties
 
+#### `byte Contrast`
+
+Change the contrast of the display.  A value of `0` will dim the display.
+
 #### `bool IgnoreOutOfBoundsPixels`
 
 *Note:* This property is derived from the [`DisplayBase`](/Source/Netduino.Foundation/BaseClasses) base class.
@@ -97,6 +101,10 @@ Display types supported by this class.
 #### `bool InvertDisplay`
 
 Setting this property to `true` will invert the display immediately.  A value of `false` returns the display to normal.
+
+#### `bool Sleep`
+
+Put the display to sleep (`true`) or wake up the display (`true`).  This reduces the amount of power that the display consumes.
 
 ### Constructors
 
