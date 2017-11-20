@@ -1,11 +1,22 @@
 ﻿using System;
-using Microsoft.SPOT;
 using Netduino.Foundation.Devices;
 using Netduino.Foundation.Helpers;
 using System.Threading;
 
 namespace Netduino.Foundation.Sensors.Motion
 {
+    /// <summary>
+    ///     Provide methods / properties to allow an application to control a BNO055 
+    ///     9-axis absolute orientation sensor.
+    /// </summary>
+    /// <remarks>
+    ///     By defult the sensor will start with the following configuration:
+    /// 
+    ///     Range           Range       Bandwidth
+    ///     Accelerometer   4G          62.5 Hz
+    ///     Magnetometer    N/A         10 Hz
+    ///     Gyroscope       2000 dps    32 Hz
+    /// </remarks>
 	public class BNO055
 	{
         #region Enums
@@ -105,6 +116,64 @@ namespace Netduino.Foundation.Sensors.Motion
             ///     System is running without using the fusion algorithm.
             /// </summary>
             FusionAlgorithmNotUsed = 0x06
+	    }
+
+
+        /// <summary>
+        ///     Units of measurement used by this sensor.
+        /// </summary>
+	    public enum Units
+	    {
+	        /// <summary>
+	        ///     Meters per second (used for accelerometer, linear acceleration, gravity vector)
+	        /// </summary>
+	        MetersPerSecond = 0x01,
+
+	        /// <summary>
+	        ///     MilliG per second (used for accelerometer, linear acceleration, gravity vector)
+	        /// </summary>
+
+	        MilliG = 0xfe,
+
+            /// <summary>
+            ///     Degrees per second (angular rate) or degrees (Euler angles)
+            /// </summary>
+	        Degrees = 0x02,
+
+            /// <summary>
+            ///     Radians per second (angular rate) or (radians for Euler angles)
+            /// </summary>
+	        Radians = 0xfd,
+
+            /// <summary>
+            ///     Degrees per centigrade.
+            /// </summary>
+	        Centigrade = 0x20,
+
+            /// <summary>
+            ///     Degrees Fahrenheit
+            /// </summary>
+	        Fahrenheit = 0xef,
+
+            /// <summary>
+            ///     Readings are presented in Windows application format.
+            /// </summary>
+            /// <remarks>
+            ///     Pich angles -180 tp +180 degrees increasing counter clockwise.
+            ///     Roll angles - -90 to +90 degrees increasing with increasing inclination.
+            ///     Heading / Yaw angles - 0 to 360 turning clockwise increases values
+            /// </remarks>
+	        Windows = 0x80,
+
+            /// <summary>
+            ///     Readings are presented in Android application format.
+            /// </summary>
+	        /// <remarks>
+	        ///     Pich angles -180 tp +180 degrees increasing counter clockwise.
+	        ///     Roll angles - -90 to +90 degrees increasing with increasing inclination.
+	        ///     Heading / Yaw angles - 0 to 360 turning clockwise increases values
+	        /// </remarks>
+	        Android = 0x7f
 	    }
 
         /// <summary>
@@ -1362,7 +1431,10 @@ namespace Netduino.Foundation.Sensors.Motion
         /// </summary>
 	    public Sensor TemperatureSource
 	    {
-	        get { return (Sensor) _bno055.ReadRegister(Registers.TemperatureSource); }
+            get
+            {
+                return (Sensor) _bno055.ReadRegister(Registers.TemperatureSource);
+            }
 	        set
 	        {
 	            if ((value == Sensor.Accelerometer) || (value == Sensor.Gyroscope))
@@ -1381,7 +1453,10 @@ namespace Netduino.Foundation.Sensors.Motion
         /// </summary>
 	    public byte PowerMode
 	    {
-            get { return(_bno055.ReadRegister(Registers.PowerMode)); }
+            get
+            {
+                return(_bno055.ReadRegister(Registers.PowerMode));
+            }
             set
             {
                 _bno055.WriteRegister(Registers.PowerMode, value);
@@ -1397,7 +1472,10 @@ namespace Netduino.Foundation.Sensors.Motion
         /// </remarks>
 	    public byte OperatingMode
 	    {
-	        get { return(_bno055.ReadRegister(Registers.OperatingMode)); }
+	        get
+	        {
+                return(_bno055.ReadRegister(Registers.OperatingMode)); 
+	        }
 	        set
 	        {
 	            if (value > OperatingModes.MaximumValue)
@@ -1406,6 +1484,32 @@ namespace Netduino.Foundation.Sensors.Motion
 	            }
                 _bno055.WriteRegister(Registers.OperatingMode, value);
                 Thread.Sleep(20);
+	        }
+	    }
+
+        /// <summary>
+        ///     Get / set the register page.  Page 1 contains a number of configuration registers.
+        ///     Page 0 contains the sensor information.
+        /// </summary>
+        /// <remarks>
+        ///     Most of the operating in this class are on the sensor data.  It is therefore
+        ///     crucial that the sensor is left accessing Page 0.  Methods / properties that
+        ///     require access to the registers in Page 1 should change to Page 1, complete
+        ///     the work and then return the system back to Page 0.
+        /// </remarks>
+	    private byte Page
+	    {
+            get
+            {
+                return _bno055.ReadRegister(Registers.PageID);
+            }
+	        set
+	        {
+	            if ((value != 0) && (value != 1))
+	            {
+	                throw new ArgumentOutOfRangeException();
+	            }
+	            _bno055.WriteRegister(Registers.PageID, value);
 	        }
 	    }
 
