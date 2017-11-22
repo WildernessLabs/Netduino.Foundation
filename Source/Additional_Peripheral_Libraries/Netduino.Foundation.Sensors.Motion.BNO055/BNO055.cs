@@ -1660,6 +1660,31 @@ namespace Netduino.Foundation.Sensors.Motion
 	    }
 
         /// <summary>
+        ///     Get the Quaterion orientation.
+        /// </summary>
+	    public Quaternion QuaterionOrientation
+	    {
+            get
+            {
+                if (_sensorReadings == null)
+                {
+                    throw new InvalidOperationException("Read() must be called before the sensor readings are available.");
+                }
+                if (!IsInFusionMode)
+                {
+                    throw new InvalidOperationException("Quaterionorientation is only available in fusion mode.");
+                }
+                int start = Registers.QuaternionDataWLSB - Registers.StartOfSensorData;
+                short w = (short) ((_sensorReadings[start + 1] << 8) | _sensorReadings[start]);
+                short x = (short) ((_sensorReadings[start + 3] << 8) | _sensorReadings[start + 2]);
+                short y = (short) ((_sensorReadings[start + 5] << 8) | _sensorReadings[start + 4]);
+                short z = (short) ((_sensorReadings[start + 5] << 8) | _sensorReadings[start + 4]);
+                double factor = 1.0 / (1 << 14);
+                return new Quaternion(w * factor, x * factor, y * factor, z * factor);
+            }
+	    }
+
+        /// <summary>
         ///     Retrieve the linear acceleration vector (fusion mode only).
         /// </summary>
 	    public Vector LinearAcceleration
@@ -1704,6 +1729,63 @@ namespace Netduino.Foundation.Sensors.Motion
 	                divisor = 100.0;
 	            }
 	            return ConvertReadingsToVector(Registers.GravityVectorXLSB, divisor);
+	        }
+	    }
+
+	    /// <summary>
+	    ///     Get the system calibration status.
+	    /// </summary>
+	    public bool IsSystemCalibrated
+	    {
+	        get
+	        {
+	            return (((_bno055.ReadRegister(Registers.CalibrationStatus) >> 6) & 0x03) != 0);
+	        }
+	    }
+
+	    /// <summary>
+	    ///     Get the accelerometer calibration status.
+	    /// </summary>
+	    public bool IsAccelerometerCalibrated
+	    {
+	        get
+	        {
+	            return (((_bno055.ReadRegister(Registers.CalibrationStatus) >> 2) & 0x03) != 0);
+	        }
+	    }
+
+	    /// <summary>
+	    ///     Get the gyroscope calibration status.
+	    /// </summary>
+	    public bool IsGyroscopeCalibrated
+	    {
+	        get
+	        {
+	            return (((_bno055.ReadRegister(Registers.CalibrationStatus) >> 4) & 0x03) != 0);
+	        }
+	    }
+
+	    /// <summary>
+	    ///     Get the magnetometer status.
+	    /// </summary>
+	    public bool IsMagnetometerCalibrated
+	    {
+	        get { return ((_bno055.ReadRegister(Registers.CalibrationStatus) & 0x03) != 0); }
+	    }
+
+	    /// <summary>
+	    ///     Is the system fully calibrated?
+	    /// </summary>
+	    /// <remarks>
+	    ///     The sensor is fully calibrated if the system, accelerometer, gyroscope and megnetometer
+	    ///     are all calibrated.
+	    /// </remarks>
+	    public bool IsFullyCalibrated
+	    {
+	        get
+	        {
+	            return (IsAccelerometerCalibrated && IsGyroscopeCalibrated && IsSystemCalibrated &&
+	                    IsMagnetometerCalibrated);
 	        }
 	    }
 
