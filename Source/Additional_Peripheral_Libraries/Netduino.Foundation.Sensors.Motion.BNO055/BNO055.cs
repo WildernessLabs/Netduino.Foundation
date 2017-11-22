@@ -118,7 +118,6 @@ namespace Netduino.Foundation.Sensors.Motion
             FusionAlgorithmNotUsed = 0x06
 	    }
 
-
         /// <summary>
         ///     Units of measurement used by this sensor.
         /// </summary>
@@ -248,6 +247,15 @@ namespace Netduino.Foundation.Sensors.Motion
             ///     This defaults to 0 on reset.
             /// </summary>
             public static readonly byte PageID = 0x07;
+
+            /// <summary>
+            ///     Register containing the first byte of the sensor readings.
+            /// </summary>
+            /// <remarks>
+            ///     This is used in the calculation of the various sensor readings
+            /// in the _sensorReadings member.
+            /// </remarks>
+            public static readonly byte StartOfSensorData = 0x08;
 
             /// <summary>
             ///     LSB of the X acceleration data.
@@ -1383,25 +1391,28 @@ namespace Netduino.Foundation.Sensors.Motion
 	        public static readonly byte InertialMeasurementUnit = 0x08;
 
             /// <summary>
-            ///     Operate as a compass.
+            ///     Operate as a compass (fusion mode).
             /// </summary>
 	        public static readonly byte Compass = 0x09;
 
             /// <summary>
-            ///     Similar to IMU mode but uses the magnetometer instead of the gyroscope.
+            ///     Similar to IMU mode but uses the magnetometer instead of the gyroscope (fusion mode).
             /// </summary>
 	        public static readonly byte MagnetForGyroscope = 0x0a;
 
             /// <summary>
-            ///     Same as the NineDegreesOfFreedom but with the Fast Magnetometer Calibration turned off.
+            ///     Same as the NineDegreesOfFreedom but with the Fast Magnetometer Calibration turned off (fusion mode).
             /// </summary>
 	        public static readonly byte NineDegreesOfFreedomMagnetometerCalibrationOff = 0x0b;
 
             /// <summary>
-            ///     Fusion of the accelerometer, gyroscope and megnetometer readings.
+            ///     Fusion of the accelerometer, gyroscope and megnetometer readings (fusion mode).
             /// </summary>
 	        public static readonly byte NineDegreesOfFreedom = 0x0c;
 
+            /// <summary>
+            ///     Maximum value for the operating modes.
+            /// </summary>
 	        public static readonly byte MaximumValue = 0x0c;
 	    }
 
@@ -1413,6 +1424,26 @@ namespace Netduino.Foundation.Sensors.Motion
 		///     BNO055 object.
 		/// </summary>
 		private ICommunicationBus _bno055 = null;
+
+        /// <summary>
+        ///     Sensor readings from the last time the BNO055 was polled.
+        /// </summary>
+        private byte[] _sensorReadings = null;
+
+        /// <summary>
+        ///     Current accelerometer units.
+        /// </summary>
+	    private Units _accelerometerUnits;
+
+        /// <summary>
+        ///     Units to use for the gyroscope.
+        /// </summary>
+	    private Units _gyroscopeUnits;
+
+        /// <summary>
+        ///     Units used for measuring angles.
+        /// </summary>
+	    private Units _orientationUnits;
 
 		#endregion Member variables / fields
 
@@ -1513,11 +1544,174 @@ namespace Netduino.Foundation.Sensors.Motion
 	        }
 	    }
 
-		#endregion
+        /// <summary>
+        ///     Check if sensor is currently working in Fusion mode.
+        /// </summary>
+	    public bool IsInFusionMode
+	    {
+	        get
+	        {
+	            return ((OperatingMode == OperatingModes.Compass) || 
+                        (OperatingMode == OperatingModes.MagnetForGyroscope) ||
+	                    (OperatingMode == OperatingModes.NineDegreesOfFreedom) ||
+	                    (OperatingMode == OperatingModes.InertialMeasurementUnit) ||
+	                    (OperatingMode == OperatingModes.NineDegreesOfFreedom));
+	        }
+	    }
 
-		#region Constructors
+	    /// <summary>
+	    ///     Get the accelerometer readings from the last call to Read().
+	    /// </summary>
+	    public Vector AccelerometerReading
+	    {
+	        get
+	        {
+	            if (_sensorReadings == null)
+	            {
+	                throw new InvalidOperationException("Read() must be called before the sensor readings are available.");
+	            }
+	            if ((OperatingMode != OperatingModes.Accelerometer) &&
+	                (OperatingMode != OperatingModes.AccelerometerMagnetometer) &&
+	                (OperatingMode != OperatingModes.AccelerometerMagnetometerGyroscope) &&
+	                (OperatingMode != OperatingModes.AccelerometeraGyroscope))
+	            {
+	                throw new Exception("Accelerometer is not currently enabled.");
+	            }
+	            double divisor = 1.0;
+	            if (_accelerometerUnits == Units.MetersPerSecond)
+	            {
+	                divisor = 100.0;
+	            }
+	            return ConvertReadingsToVector(Registers.AccelerometerXLSB - Registers.StartOfSensorData, divisor);
+	        }
+	    }
 
-		/// <summary>
+        /// <summary>
+        ///     Get the magnetometer readings.
+        /// </summary>
+	    public Vector MagnetometerReading
+	    {
+	        get
+	        {
+	            if (_sensorReadings == null)
+	            {
+	                throw new InvalidOperationException("Read() must be called before the sensor readings are available.");
+	            }
+	            if ((OperatingMode != OperatingModes.Magnetometer) &&
+	                (OperatingMode != OperatingModes.AccelerometerMagnetometer) &&
+	                (OperatingMode != OperatingModes.AccelerometerMagnetometerGyroscope) &&
+	                (OperatingMode != OperatingModes.MagnetometerGyroscope))
+	            {
+	                throw new Exception("Magnetometer is not currently enabled.");
+	            }
+	            return ConvertReadingsToVector(Registers.MagnetometerXLSB - Registers.StartOfSensorData, 16.0);
+	        }
+	    }
+
+        /// <summary>
+        ///     Get the gyroscope readings.
+        /// </summary>
+	    public Vector GyroscopeReading
+	    {
+	        get
+	        {
+	            if (_sensorReadings == null)
+	            {
+	                throw new InvalidOperationException("Read() must be called before the sensor readings are available.");
+	            }
+	            if ((OperatingMode != OperatingModes.Gyroscope) &&
+	                (OperatingMode != OperatingModes.AccelerometeraGyroscope) &&
+	                (OperatingMode != OperatingModes.AccelerometerMagnetometerGyroscope) &&
+	                (OperatingMode != OperatingModes.MagnetometerGyroscope))
+	            {
+	                throw new Exception("Gyroscope is not currently enabled.");
+	            }
+	            double divisor = 16.0;
+	            if (_gyroscopeUnits == Units.Radians)
+	            {
+	                divisor = 900.0;
+	            }
+	            return ConvertReadingsToVector(Registers.GyroscopeXLSB - Registers.StartOfSensorData, divisor);
+	        }
+	    }
+
+        /// <summary>
+        ///     Orientation in Euler angles.
+        /// </summary>
+	    public EulerAngles EulerOrientation
+	    {
+	        get
+	        {
+	            if (_sensorReadings == null)
+	            {
+	                throw new InvalidOperationException("Read() must be called before the sensor readings are available.");
+	            }
+	            if (!IsInFusionMode)
+	            {
+	                throw new InvalidOperationException("Euler angles are only available in fusion mode.");
+	            }
+	            double divisor = 16.0;
+	            if (_orientationUnits == Units.Radians)
+	            {
+	                divisor = 900.0;
+	            }
+	            return ConvertReadingToEulerAngles(Registers.EulerAngleXLSB, divisor);
+	        }
+	    }
+
+        /// <summary>
+        ///     Retrieve the linear acceleration vector (fusion mode only).
+        /// </summary>
+	    public Vector LinearAcceleration
+	    {
+	        get
+	        {
+	            if (_sensorReadings == null)
+	            {
+	                throw new InvalidOperationException("Read() must be called before the sensor readings are available.");
+	            }
+	            if (!IsInFusionMode)
+	            {
+	                throw new InvalidOperationException("Linear accelration vectors are only available in fusion mode.");
+	            }
+	            double divisor = 1.0;
+	            if (_accelerometerUnits == Units.MetersPerSecond)
+	            {
+	                divisor = 100.0;
+	            }
+	            return ConvertReadingsToVector(Registers.LinearAccelerationXLSB, divisor);
+	        }
+	    }
+
+        /// <summary>
+        ///     Retrieve the gravity vector (fusion mode only).
+        /// </summary>
+	    public Vector GravityVector
+	    {
+	        get
+	        {
+	            if (_sensorReadings == null)
+	            {
+	                throw new InvalidOperationException("Read() must be called before the sensor readings are available.");
+	            }
+	            if (!IsInFusionMode)
+	            {
+	                throw new InvalidOperationException("Linear accelration vectors are only available in fusion mode.");
+	            }
+	            double divisor = 1.0;
+	            if (_accelerometerUnits == Units.MetersPerSecond)
+	            {
+	                divisor = 100.0;
+	            }
+	            return ConvertReadingsToVector(Registers.GravityVectorXLSB, divisor);
+	        }
+	    }
+
+        #endregion Properties
+
+        #region Constructors
+
+        /// <summary>
 		///     Default constructor is private to prevent the developer from calling it.
 		/// </summary>
 		private BNO055()
@@ -1545,6 +1739,9 @@ namespace Netduino.Foundation.Sensors.Motion
             {
                 throw new Exception("Sensor ID should be 0xa0.");
             }
+		    _accelerometerUnits = Units.MetersPerSecond;
+		    _gyroscopeUnits = Units.Degrees;
+		    _orientationUnits = Units.Degrees;
 		}
 
 		#endregion Constructors
@@ -1556,8 +1753,37 @@ namespace Netduino.Foundation.Sensors.Motion
 		/// </summary>
 		public void Read()
 		{
-
+		    _sensorReadings = _bno055.ReadRegisters(Registers.AccelerometerXLSB,
+		                                            (ushort) (Registers.GravityVectorZMSB - Registers.AccelerometerXLSB));
 		}
+
+        /// <summary>
+        ///     Convert a section of the sensor data into a vector.
+        /// </summary>
+        /// <param name="start">Start of the data in the _sensorReadings member variable.</param>
+        /// <param name="divisor">Divisor to use to convert the data into the correct scale.</param>
+        /// <returns>New Vector object containing the specified data.</returns>
+	    private Vector ConvertReadingsToVector(int start, double divisor)
+	    {
+	        short x = (short) ((_sensorReadings[start + 1] << 8) | _sensorReadings[start]);
+	        short y = (short) ((_sensorReadings[start + 3] << 8) | _sensorReadings[start + 2]);
+	        short z = (short) ((_sensorReadings[start + 5] << 8) | _sensorReadings[start + 4]);
+	        return new Vector(x / divisor, y / divisor, z / divisor);
+	    }
+
+        /// <summary>
+        ///     Convert the sensor readings into an orientation in Euler angles.
+        /// </summary>
+        /// <param name="start">First of the sensor readings to convert.</param>
+        /// <param name="divisor">Divisor to apply to the sensor data.</param>
+        /// <returns>EulerAngles object containing the orientation informaiton.</returns>
+	    private EulerAngles ConvertReadingToEulerAngles(int start, double divisor)
+	    {
+	        short x = (short) ((_sensorReadings[start + 1] << 8) | _sensorReadings[start]);
+	        short y = (short) ((_sensorReadings[start + 3] << 8) | _sensorReadings[start + 2]);
+	        short z = (short) ((_sensorReadings[start + 5] << 8) | _sensorReadings[start + 4]);
+            return new EulerAngles(x / divisor, y / divisor, z / divisor);
+	    }
 
         /// <summary>
         ///     Read all of the registers and display their values on the Debug output.
