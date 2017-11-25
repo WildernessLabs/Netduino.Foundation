@@ -1655,7 +1655,7 @@ namespace Netduino.Foundation.Sensors.Motion
 	            {
 	                divisor = 900.0;
 	            }
-	            return ConvertReadingToEulerAngles(Registers.EulerAngleXLSB, divisor);
+	            return ConvertReadingToEulerAngles(Registers.EulerAngleXLSB - Registers.StartOfSensorData, divisor);
 	        }
 	    }
 
@@ -1704,7 +1704,7 @@ namespace Netduino.Foundation.Sensors.Motion
 	            {
 	                divisor = 100.0;
 	            }
-	            return ConvertReadingsToVector(Registers.LinearAccelerationXLSB, divisor);
+	            return ConvertReadingsToVector(Registers.LinearAccelerationXLSB - Registers.StartOfSensorData, divisor);
 	        }
 	    }
 
@@ -1728,7 +1728,7 @@ namespace Netduino.Foundation.Sensors.Motion
 	            {
 	                divisor = 100.0;
 	            }
-	            return ConvertReadingsToVector(Registers.GravityVectorXLSB, divisor);
+	            return ConvertReadingsToVector(Registers.GravityVectorXLSB - Registers.StartOfSensorData, divisor);
 	        }
 	    }
 
