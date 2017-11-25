@@ -1301,17 +1301,17 @@ namespace Netduino.Foundation.Sensors.Motion
             /// <summary>
             ///     Magnetometer bit mask.
             /// </summary>
-            public static readonly byte Magnetometer = 0x01;
+            public static readonly byte Magnetometer = 0x02;
 
             /// <summary>
             ///     Gyroscope bit mask.
             /// </summary>
-            public static readonly byte Gyroscope = 0x01;
+            public static readonly byte Gyroscope = 0x04;
 
             /// <summary>
             ///     Microcontroller bit mask.
             /// </summary>
-            public static readonly byte Microcontroller = 0x01;
+            public static readonly byte Microcontroller = 0x08;
         }
 
         /// <summary>
