@@ -8,6 +8,7 @@
 | ADXL345 Accelerometer | [ADXL345 Triple axis accelerometer](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Motion.ADXL345) (+/-16g, I2C digital output) |
 | AT24Cxx Family of EEPROMS | [AT24Cxx](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.IC.EEPROM.AT24Cxx) Family of EEPROMs including AT24C32 |
 | BME280 Temperature, Humidity and Pressure Sensor | [BME280 combined temperature, humidity and pressure sensor](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.BME280) |
+| BNO055 Orientation | [BNO055 9-Axis Oreintation Sensor](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Motion.BNO055) |
 | DS323x Real Time Clock | [DS323x Real Time Clock modules](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.RTC.DS323x) |
 | HIH6130 Temperature and Humidity | [HIH6130 Temperature and Humidity breakout board](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.HIH6130) |
 | MAG3110 Magnetometer | [MAG3110 Three axis magnetometer](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Motion.MAG3110) |
