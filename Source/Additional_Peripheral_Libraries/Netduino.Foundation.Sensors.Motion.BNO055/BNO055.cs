@@ -1505,7 +1505,7 @@ namespace Netduino.Foundation.Sensors.Motion
 	    {
 	        get
 	        {
-                return(_bno055.ReadRegister(Registers.OperatingMode)); 
+                return(_bno055.ReadRegister(Registers.OperatingMode));
 	        }
 	        set
 	        {
