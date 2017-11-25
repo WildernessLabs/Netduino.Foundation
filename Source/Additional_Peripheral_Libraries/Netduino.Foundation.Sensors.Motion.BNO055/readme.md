@@ -1,4 +1,4 @@
-# Title
+# BNO055 9-axis Orientation Sensor
 
 BNO055 is a 9-axis absolute orientation sensor.  The three sensors (accelerometer, gyroscope and megnetometer) with a 32-bit cortex M0 microcontroller.
 
