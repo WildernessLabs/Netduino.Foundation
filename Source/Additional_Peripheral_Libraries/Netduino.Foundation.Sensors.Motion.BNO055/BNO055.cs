@@ -1291,7 +1291,7 @@ namespace Netduino.Foundation.Sensors.Motion
         /// <summary>
         ///     Self test result bit mask.
         /// </summary>
-	    public static class SefTestResultMask
+	    public static class SelfTestResultMask
         {
             /// <summary>
             ///     Accelerometer bit mask.
