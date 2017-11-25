@@ -2,11 +2,14 @@
 
 BNO055 is a 9-axis absolute orientation sensor.  The three sensors (accelerometer, gyroscope and megnetometer) with a 32-bit cortex M0 microcontroller.
 
-## Purchasingv
+## Purchasing
 * [Tindie BNO-055 9-axis motion sensor with fusion hardware](https://www.tindie.com/products/onehorse/bno-055-9-axis-motion-sensor-with-hardware-fusion/)
 
 ## Hardware
 
+The following diagram shows the BNO055 configured for bas
+
+![BNO-055 on breadboard](BNO055OnBreadboard.png)
 
 ## Software
 
@@ -176,7 +179,27 @@ Return the x, y and z gyroscope readings as a `Vector`.
 
 #### `EulerAngles EulerOrientation`
 
-Return the orientation as Euler Angles.  
+Return the orientation as Euler Angles.  The sensor must be operating in fusion mode in order for a valid reading.
+
+#### `Quaternion QuaterionOrientation`
+
+Return the orientation as a quaternion.  The sensor must be operating in fusion mode in order for a valid reading.
+
+#### `Vector LinearAcceleration`
+
+Return the linear acceleration measurement as a `Vector`.  The sensor must be operating in fusion mode in order for a valid reading.
+
+#### `Vector GravityVector`
+
+Retrieve the gravity measurement as a `Vector`.  The sensor must be in fusion mode in order for the reading to be valid.
+
+#### `bool IsSystemCalibrated`, `bool IsAccelerometerCalibrated`, `bool IsGyroscopeCalibrated`, `bool IsMagnetometerCalibrated`
+
+Indicate if the system, gyroscope, magnetometer or accelerometer are calibrated.
+
+#### `bool IsFullyCalibrated`
+
+Indicate if the sensor is fully calibrated (all of `IsSystemCalibrated`, `IsAccelerometerCalibrated`, `IsGyroscopeCalibrated`, `IsMagnetometerCalibrated` are true).
 
 ### Constructors
 
