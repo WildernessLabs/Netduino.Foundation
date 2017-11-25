@@ -988,7 +988,7 @@ namespace Netduino.Foundation.Sensors.Motion
             /// </summary>
             /// <remarks>
             ///     The register is in page 1.
-            /// </register>
+            /// </remarks>
             public static readonly byte AccelerometerConfiguration = 0x08;
 
             /// <summary>
@@ -999,7 +999,7 @@ namespace Netduino.Foundation.Sensors.Motion
             /// </summary>
             /// <remarks>
             ///     The register is in page 1.
-            /// </register>
+            /// </remarks>
             public static readonly byte MagnetometerConfiguration = 0x09;
 
             /// <summary>
@@ -1009,7 +1009,7 @@ namespace Netduino.Foundation.Sensors.Motion
             /// </summary>
             /// <remarks>
             ///     The register is in page 1.
-            /// </register>
+            /// </remarks>
             public static readonly byte GyroscopeConfiguration0 = 0x0a;
 
             /// <summary>
@@ -1018,7 +1018,7 @@ namespace Netduino.Foundation.Sensors.Motion
             ///  <remarks>
             ///     The register is in page 1.
             ///         b0-b2: 
-            /// </register>
+            /// </remarks>
             public static readonly byte GyroscopeConfiguration1 = 0x0b;
 
             /// <summary>
@@ -1032,7 +1032,7 @@ namespace Netduino.Foundation.Sensors.Motion
             /// </summary>
             /// <remarks>
             ///     The register is in page 1.
-            /// </register>
+            /// </remarks>
             public static readonly byte AccelerometerSleepConfiguration = 0x0c;
 
             /// <summary>
@@ -1043,7 +1043,7 @@ namespace Netduino.Foundation.Sensors.Motion
             /// </summary>
             /// <remarks>
             ///     The register is in page 1.
-            /// </register>
+            /// </remarks>
             public static readonly byte GyrosscopeSleepConfiguration = 0x0d;
 
             /// <summary>
@@ -1061,7 +1061,7 @@ namespace Netduino.Foundation.Sensors.Motion
             /// </summary>
             /// <remarks>
             ///     The register is in page 1.
-            /// </register>
+            /// </remarks>
             public static readonly byte InterruptMask = 0x0f;
 
             /// <summary>
@@ -1076,7 +1076,7 @@ namespace Netduino.Foundation.Sensors.Motion
             /// </summary>
             /// <remarks>
             ///     The register is in page 1.
-            /// </register>
+            /// </remarks>
             public static readonly byte InterruptEnable = 0x10;
 
             /// <summary>
@@ -1092,7 +1092,7 @@ namespace Netduino.Foundation.Sensors.Motion
             /// </summary>
             /// <remarks>
             ///     The register is in page 1.
-            /// </register>
+            /// </remarks>
             public static readonly byte AccelerometerMotionThreshold = 0x11;
 
             /// <summary>
@@ -1109,7 +1109,7 @@ namespace Netduino.Foundation.Sensors.Motion
             /// </summary>
             /// <remarks>
             ///     The register is in page 1.
-            /// </register>
+            /// </remarks>
             public static readonly byte AccelerometerInterruptSettings = 0x12;
 
             /// <summary>
@@ -1120,7 +1120,7 @@ namespace Netduino.Foundation.Sensors.Motion
             /// </summary>
             /// <remarks>
             ///     The register is in page 1.
-            /// </register>
+            /// </remarks>
             public static readonly byte AccelerometerHighGDuration = 0x013;
 
             /// <summary>
@@ -1133,7 +1133,7 @@ namespace Netduino.Foundation.Sensors.Motion
             /// </summary>
             /// <remarks>
             ///     The register is in page 1.
-            /// </register>
+            /// </remarks>
             public static readonly byte AccelerometerHighGThreshold = 0x14;
 
             /// <summary>
@@ -1146,7 +1146,7 @@ namespace Netduino.Foundation.Sensors.Motion
             /// </summary>
             /// <remarks>
             ///     The register is in page 1.
-            /// </register>
+            /// </remarks>
             public static readonly byte AccelerometerNoMotionThreshold = 0x15;
 
             /// <summary>
@@ -1157,7 +1157,7 @@ namespace Netduino.Foundation.Sensors.Motion
             /// </summary>
             /// <remarks>
             ///     The register is in page 1.
-            /// </register>
+            /// </remarks>
             public static readonly byte AccelerometerNoMotionSetting = 0x16;
 
             /// <summary>
@@ -1174,7 +1174,7 @@ namespace Netduino.Foundation.Sensors.Motion
             /// </summary>
             /// <remarks>
             ///     The register is in page 1.
-            /// </register>
+            /// </remarks>
             public static readonly byte GyroscopeInterruptSetting = 0x17;
 
             /// <summary>
@@ -1192,7 +1192,7 @@ namespace Netduino.Foundation.Sensors.Motion
             /// </summary>
             /// <remarks>
             ///     The register is in page 1.
-            /// </register>
+            /// </remarks>
             public static readonly byte GyroscopeHighRateX = 0x18;
 
             /// <summary>
@@ -1202,7 +1202,7 @@ namespace Netduino.Foundation.Sensors.Motion
             /// </summary>
             /// <remarks>
             ///     The register is in page 1.
-            /// </register>
+            /// </remarks>
             public static readonly byte GyroscopeDurationX = 0x19;
 
             /// <summary>
@@ -1220,7 +1220,7 @@ namespace Netduino.Foundation.Sensors.Motion
             /// </summary>
             /// <remarks>
             ///     The register is in page 1.
-            /// </register>
+            /// </remarks>
             public static readonly byte GyroscopeHighRateY = 0x1a;
 
             /// <summary>
@@ -1230,7 +1230,7 @@ namespace Netduino.Foundation.Sensors.Motion
             /// </summary>
             /// <remarks>
             ///     The register is in page 1.
-            /// </register>
+            /// </remarks>
             public static readonly byte GyroscopeDurationY = 0x1b;
 
             /// <summary>
@@ -1248,7 +1248,7 @@ namespace Netduino.Foundation.Sensors.Motion
             /// </summary>
             /// <remarks>
             ///     The register is in page 1.
-            /// </register>
+            /// </remarks>
             public static readonly byte GyroscopeHighRateZ = 0x1c;
 
             /// <summary>
@@ -1258,7 +1258,7 @@ namespace Netduino.Foundation.Sensors.Motion
             /// </summary>
             /// <remarks>
             ///     The register is in page 1.
-            /// </register>
+            /// </remarks>
             public static readonly byte GyroscopeDurationZ = 0x1d;
 
             /// <summary>
@@ -1270,7 +1270,7 @@ namespace Netduino.Foundation.Sensors.Motion
             /// </summary>
             /// <remarks>
             ///     The register is in page 1.
-            /// </register>
+            /// </remarks>
             public static readonly byte GyroscopeAnyMotionThreshold = 0x1e;
 
             /// <summary>
@@ -1284,7 +1284,7 @@ namespace Netduino.Foundation.Sensors.Motion
             /// </summary>
             /// <remarks>
             ///     The register is in page 1.
-            /// </register>
+            /// </remarks>
             public static readonly byte GyroscopeAnyMotionSetting = 0x1f;
         }
 
