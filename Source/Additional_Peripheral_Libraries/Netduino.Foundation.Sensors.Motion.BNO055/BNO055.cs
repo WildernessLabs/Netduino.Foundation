@@ -1662,7 +1662,7 @@ namespace Netduino.Foundation.Sensors.Motion
         /// <summary>
         ///     Get the Quaterion orientation.
         /// </summary>
-	    public Quaternion QuaterionOrientation
+	    public Quaternion QuaternionOrientation
 	    {
             get
             {
