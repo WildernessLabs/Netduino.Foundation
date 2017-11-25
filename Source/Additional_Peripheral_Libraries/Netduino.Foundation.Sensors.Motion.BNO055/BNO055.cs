@@ -1721,7 +1721,7 @@ namespace Netduino.Foundation.Sensors.Motion
 	            }
 	            if (!IsInFusionMode)
 	            {
-	                throw new InvalidOperationException("Linear accelration vectors are only available in fusion mode.");
+	                throw new InvalidOperationException("Linear acceleration vectors are only available in fusion mode.");
 	            }
 	            double divisor = 1.0;
 	            if (_accelerometerUnits == Units.MetersPerSecond)
