@@ -47,14 +47,14 @@ namespace Netduino.Foundation.Sensors.Light
             ///     Measuremeant rate 0
             /// </summary>
             /// <remarks>
-            /// MEAS_RATE1 and MEAS_RATE0 together form a 16-bit value: MEAS_RATE [15:0].
-            /// The 16-bit value, when multiplied by 31.25 us, represents the time duration between
-            /// wake-up periods where measurements are made. Once the device wakes up, all
-            /// measurements specified in CHLIST are made.
+            ///     MEAS_RATE1 and MEAS_RATE0 together form a 16-bit value: MEAS_RATE [15:0].
+            ///     The 16-bit value, when multiplied by 31.25 us, represents the time duration between
+            ///     wake-up periods where measurements are made. Once the device wakes up, all
+            ///     measurements specified in CHLIST are made.
             /// 
-            /// Note that for the Si1145/6/7 with SEQ_ID=0x01, there is a code error that places
-            /// MEAS_RATE0 at 0x0A with MEAS_RATE1 at 0x08 instead. This will be fixed in
-            /// future revisions of the Si1145/6/7.
+            ///     Note that for the Si1145/6/7 with SEQ_ID=0x01, there is a code error that places
+            ///     MEAS_RATE0 at 0x0A with MEAS_RATE1 at 0x08 instead. This will be fixed in
+            ///     future revisions of the Si1145/6/7.
             /// </remarks>
             public static readonly byte MeasureRate0 = 0x08;
             
@@ -62,14 +62,14 @@ namespace Netduino.Foundation.Sensors.Light
             ///     Measuremeant rate 1
             /// </summary>
             /// <remarks>
-            /// MEAS_RATE1 and MEAS_RATE0 together form a 16-bit value: MEAS_RATE [15:0].
-            /// The 16-bit value, when multiplied by 31.25 us, represents the time duration between
-            /// wake-up periods where measurements are made. Once the device wakes up, all
-            /// measurements specified in CHLIST are made.
+            ///     MEAS_RATE1 and MEAS_RATE0 together form a 16-bit value: MEAS_RATE [15:0].
+            ///     The 16-bit value, when multiplied by 31.25 us, represents the time duration between
+            ///     wake-up periods where measurements are made. Once the device wakes up, all
+            ///     measurements specified in CHLIST are made.
             /// 
-            /// Note that for the Si1145/6/7 with SEQ_ID=0x01, there is a code error that places
-            /// MEAS_RATE0 at 0x0A with MEAS_RATE1 at 0x08 instead. This will be fixed in
-            /// future revisions of the Si1145/6/7.
+            ///     Note that for the Si1145/6/7 with SEQ_ID=0x01, there is a code error that places
+            ///     MEAS_RATE0 at 0x0A with MEAS_RATE1 at 0x08 instead. This will be fixed in
+            ///     future revisions of the Si1145/6/7.
             /// </remarks>
             public static readonly byte MeasurementRate1 = 0x09;
             
