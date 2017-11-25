@@ -169,29 +169,43 @@ Indicate if the sensor is using one of the fusion modes.
 
 Return the x, y abd z accelerometer readings as a `Vactor`.
 
+`Read()` must be called before accessing this property.
+
 #### `Vector MagnetometerReading`
 
 Return the x, y and z magnetometer readings as a `Vector`.
+
+`Read()` must be called before accessing this property.
 
 #### `Vector GyroscopeReading`
 
 Return the x, y and z gyroscope readings as a `Vector`.
 
+`Read()` must be called before accessing this property.
+
 #### `EulerAngles EulerOrientation`
 
 Return the orientation as Euler Angles.  The sensor must be operating in fusion mode in order for a valid reading.
+
+`Read()` must be called before accessing this property.
 
 #### `Quaternion QuaterionOrientation`
 
 Return the orientation as a quaternion.  The sensor must be operating in fusion mode in order for a valid reading.
 
+`Read()` must be called before accessing this property.
+
 #### `Vector LinearAcceleration`
 
 Return the linear acceleration measurement as a `Vector`.  The sensor must be operating in fusion mode in order for a valid reading.
 
+`Read()` must be called before accessing this property.
+
 #### `Vector GravityVector`
 
 Retrieve the gravity measurement as a `Vector`.  The sensor must be in fusion mode in order for the reading to be valid.
+
+`Read()` must be called before accessing this property.
 
 #### `bool IsSystemCalibrated`, `bool IsAccelerometerCalibrated`, `bool IsGyroscopeCalibrated`, `bool IsMagnetometerCalibrated`
 
