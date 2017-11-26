@@ -1833,6 +1833,12 @@ namespace Netduino.Foundation.Sensors.Motion
 		/// <summary>
 		///     Force the sensor to make a reading and update the relevant properties.
 		/// </summary>
+		/// <remarks>
+		/// 	This method reads ony the sensor motion / orientation registers.  When
+		/// 	accessing the data from a register it is necessary to subtract the
+		/// 	accress of the start of the sensor registers from the register required
+		/// 	in order to get the correct offset into the _sensorReadings array.
+		/// </remarks>
 		public void Read()
 		{
 		    _sensorReadings = _bno055.ReadRegisters(Registers.AccelerometerXLSB,
