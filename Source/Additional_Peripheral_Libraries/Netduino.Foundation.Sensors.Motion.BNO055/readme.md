@@ -1,6 +1,6 @@
 # BNO055 9-axis Orientation Sensor
 
-BNO055 is a 9-axis absolute orientation sensor.  The three sensors (accelerometer, gyroscope and megnetometer) with a 32-bit cortex M0 microcontroller.
+BNO055 is a 9-axis absolute orientation sensor.  The three sensors (accelerometer, gyroscope and magnetometer) with a 32-bit cortex M0 microcontroller.
 
 ## Purchasing
 * [Tindie BNO-055 9-axis motion sensor with fusion hardware](https://www.tindie.com/products/onehorse/bno-055-9-axis-motion-sensor-with-hardware-fusion/)
