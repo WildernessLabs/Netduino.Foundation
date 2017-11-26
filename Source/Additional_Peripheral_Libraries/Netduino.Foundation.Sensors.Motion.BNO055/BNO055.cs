@@ -1423,7 +1423,7 @@ namespace Netduino.Foundation.Sensors.Motion
 		/// <summary>
 		///     BNO055 object.
 		/// </summary>
-		private ICommunicationBus _bno055 = null;
+		private readonly ICommunicationBus _bno055 = null;
 
         /// <summary>
         ///     Sensor readings from the last time the BNO055 was polled.
@@ -1853,9 +1853,9 @@ namespace Netduino.Foundation.Sensors.Motion
         /// <returns>New Vector object containing the specified data.</returns>
 	    private Vector ConvertReadingsToVector(int start, double divisor)
 	    {
-	        short x = (short) ((_sensorReadings[start + 1] << 8) | _sensorReadings[start]);
-	        short y = (short) ((_sensorReadings[start + 3] << 8) | _sensorReadings[start + 2]);
-	        short z = (short) ((_sensorReadings[start + 5] << 8) | _sensorReadings[start + 4]);
+	        var x = (short) ((_sensorReadings[start + 1] << 8) | _sensorReadings[start]);
+	        var y = (short) ((_sensorReadings[start + 3] << 8) | _sensorReadings[start + 2]);
+	        var z = (short) ((_sensorReadings[start + 5] << 8) | _sensorReadings[start + 4]);
 	        return new Vector(x / divisor, y / divisor, z / divisor);
 	    }
 
@@ -1867,9 +1867,9 @@ namespace Netduino.Foundation.Sensors.Motion
         /// <returns>EulerAngles object containing the orientation informaiton.</returns>
 	    private EulerAngles ConvertReadingToEulerAngles(int start, double divisor)
 	    {
-	        short x = (short) ((_sensorReadings[start + 1] << 8) | _sensorReadings[start]);
-	        short y = (short) ((_sensorReadings[start + 3] << 8) | _sensorReadings[start + 2]);
-	        short z = (short) ((_sensorReadings[start + 5] << 8) | _sensorReadings[start + 4]);
+	        var x = (short) ((_sensorReadings[start + 1] << 8) | _sensorReadings[start]);
+	        var y = (short) ((_sensorReadings[start + 3] << 8) | _sensorReadings[start + 2]);
+	        var z = (short) ((_sensorReadings[start + 5] << 8) | _sensorReadings[start + 4]);
             return new EulerAngles(x / divisor, y / divisor, z / divisor);
 	    }
 
@@ -1878,7 +1878,7 @@ namespace Netduino.Foundation.Sensors.Motion
         /// </summary>
 	    public void DisplayRegisters()
         {
-            byte[] registers = _bno055.ReadRegisters(Registers.ChipID, 0x6a);
+            var registers = _bno055.ReadRegisters(Registers.ChipID, 0x6a);
             DebugInformation.DisplayRegisters(0x00, registers);
         }
 
