@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.SPOT;
+using Netduino.Foundation.Devices;
 
 namespace Netduino.Foundation.Sensors.Motion
 {
@@ -467,14 +468,40 @@ namespace Netduino.Foundation.Sensors.Motion
         
         #endregion Classes / structures
         
-        
         #region Member varialbes / fields
-        
+
+        /// <summary>
+        ///     ADXL362 sensor object.
+        /// </summary>
+        private ICommunicationBus _adxl362;
         
         #endregion Member variables / fields
         
         #region Properties
         
+        /// <summary>
+        ///     X-axis sensor reading.
+        /// </summary>
+        /// <remarks>
+        ///     Read must be called before this property is valid.
+        /// </remarks>
+        public short X { get; private set; }
+        
+        /// <summary>
+        ///     Y-axis sensor reading.
+        /// </summary>
+        /// <remarks>
+        ///     Read must be called before this property is valid.
+        /// </remarks>
+        public short Y { get; private set; }
+        
+        /// <summary>
+        ///     Z-axis sensor reading.
+        /// </summary>
+        /// <remarks>
+        ///     Read must be called before this property is valid.
+        /// </remarks>
+        public short Z { get; private set; }
         
         #endregion Properties
         
@@ -492,11 +519,15 @@ namespace Netduino.Foundation.Sensors.Motion
         #region Methods
 
         /// <summary>
-        ///     Read the sensors and make the readings available through the properties.
+        ///     Read the sensors and make the readings available through the 
+        ///     X, Y and Z properties.
         /// </summary>
         public void Read()
         {
-            //  TODO: Implement the read method for ADXL362.
+            var sensorReading = _adxl362.ReadRegisters(Registers.XAxisLSB, 6);
+            X = (short) ((sensorReading[1] << 8) | sensorReading[0]);
+            Y = (short) ((sensorReading[3] << 8) | sensorReading[2]);
+            Z = (short) ((sensorReading[5] << 8) | sensorReading[4]);
         }
         
         #endregion Methods
