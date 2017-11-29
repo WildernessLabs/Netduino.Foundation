@@ -6,7 +6,7 @@ This library originally appeared on Codeplex (retired 2017).  The original notes
 
 ## Purchasing
 
-LCD displays are available from a number of suppliers including [Adafruit](www.adafruit.com) and [Sparfun](www.sparkfun.com).  The example blow uses a standard 16x2 LCD fitted with the [I2C / SPI backpack](https://www.adafruit.com/product/292).
+LCD displays are available from a number of suppliers including [Adafruit](www.adafruit.com) and [Sparkfun](www.sparkfun.com).  The example blow uses a standard 16x2 LCD fitted with the [I2C / SPI backpack](https://www.adafruit.com/product/292).
 
 ## Hardware
 
