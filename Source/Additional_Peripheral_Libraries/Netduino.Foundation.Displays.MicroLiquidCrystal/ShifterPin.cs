@@ -11,7 +11,7 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
     /// </summary>
     /// <remarks>
     ///     The Flags attribute below is commented out at the moment as this causes
-    ///     compilation problems in NTEMF 4.3.
+    ///     compilation problems in NETMF 4.3.
     /// </remarks>
     //[Flags]
     public enum ShifterPin : byte
