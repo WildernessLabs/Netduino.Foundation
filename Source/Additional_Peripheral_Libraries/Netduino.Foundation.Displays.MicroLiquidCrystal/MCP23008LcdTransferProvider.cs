@@ -13,6 +13,40 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
     /// </summary>
     public class MCP23008LcdTransferProvider : BaseShifterLcdTransferProvider
     {
+        #region IDisposable interface
+
+        /// <summary>
+        ///     Implement the Dispose method in the IDisposable interface.
+        /// </summary>
+        /// <param name="disposing">True if disposing.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (!IsDisposed)
+            {
+                if (disposing)
+                {
+                    _expander.Dispose();
+                }
+
+                IsDisposed = true;
+            }
+        }
+
+        #endregion IDisposable interface
+
+        #region Methods
+
+        /// <summary>
+        ///     Output a byte to the MCP230008.
+        /// </summary>
+        /// <param name="output">Byte to write to the MCP230008.</param>
+        protected override void SendByte(byte output)
+        {
+            _expander.Output(output);
+        }
+
+        #endregion Methods
+
         #region Member varialbes / fileds
 
         /// <summary>
@@ -85,39 +119,5 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
         }
 
         #endregion Constructors
-
-        #region IDisposable interface
-
-        /// <summary>
-        ///     Implement the Dispose method in the IDisposable interface.
-        /// </summary>
-        /// <param name="disposing">True if disposing.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (!IsDisposed)
-            {
-                if (disposing)
-                {
-                    _expander.Dispose();
-                }
-
-                IsDisposed = true;
-            }
-        }
-
-        #endregion IDisposable interface
-
-        #region Methods
-
-        /// <summary>
-        ///     Output a byte to the MCP230008.
-        /// </summary>
-        /// <param name="output">Byte to write to the MCP230008.</param>
-        protected override void SendByte(byte output)
-        {
-            _expander.Output(output);
-        }
-
-        #endregion Methods
     }
 }

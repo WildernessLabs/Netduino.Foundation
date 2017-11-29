@@ -13,6 +13,15 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
     /// </summary>
     public class GpioLcdTransferProvider : ILcdTransferProvider, IDisposable
     {
+        #region Properties
+
+        /// <summary>
+        ///     True if the interface is operating in four bit mode.
+        /// </summary>
+        public bool FourBitMode { get; private set; }
+
+        #endregion Properties
+
         #region Member variables / fields
 
         /// <summary>
@@ -43,26 +52,18 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
 
         #endregion Member variables / fields
 
-        #region Properties
-
-        /// <summary>
-        ///     True if the interface is operating in four bit mode.
-        /// </summary>
-        public bool FourBitMode { get; private set; }
-
-        #endregion Properties
-
         #region Constructors and Destructors
 
         /// <summary>
-        /// Construct a new GPIO LCD Transfer Objects using RS / Enable / D4, D5, D6 and D7.
+        ///     Construct a new GPIO LCD Transfer Objects using RS / Enable / D4, D5, D6 and D7.
         /// </summary>
         /// <param name="rs">GPIO pin on the microcontroller connected to the Register Select pin on the LCD display.</param>
         /// <param name="enable">GPIO pin on the microcontroller connected to the Enable pin on the LCD display.</param>
         /// <param name="d4">GPIO pin on the microcontroller connected to digital pin 4 pin on the LCD display.</param>
         /// <param name="d5">GPIO pin on the microcontroller connected to digital pin 5 pin on the LCD display.</param>
         /// <param name="d6">GPIO pin on the microcontroller connected to digital pin 6 pin on the LCD display.</param>
-        /// <param name="d7">GPIO pin on the microcontroller connected to digital pin 7 pin on the LCD display.</param></param>
+        /// <param name="d7">GPIO pin on the microcontroller connected to digital pin 7 pin on the LCD display.</param>
+        /// </param>
         public GpioLcdTransferProvider(Cpu.Pin rs, Cpu.Pin enable, Cpu.Pin d4, Cpu.Pin d5, Cpu.Pin d6, Cpu.Pin d7)
             : this(true, rs, Cpu.Pin.GPIO_NONE, enable, Cpu.Pin.GPIO_NONE, Cpu.Pin.GPIO_NONE, Cpu.Pin.GPIO_NONE,
                    Cpu.Pin.GPIO_NONE, d4, d5, d6, d7)
@@ -70,7 +71,7 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
         }
 
         /// <summary>
-        /// Construct a new GPIO LCD Transfer Objects using RS / RW / Enable / D4, D5, D6 and D7.
+        ///     Construct a new GPIO LCD Transfer Objects using RS / RW / Enable / D4, D5, D6 and D7.
         /// </summary>
         /// <param name="rs">GPIO pin on the microcontroller connected to the Register Select pin on the LCD display.</param>
         /// <param name="rw">GPIO pin on the microcontroller connected to the Read/Write pin on the LCD display.</param>
@@ -78,7 +79,8 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
         /// <param name="d4">GPIO pin on the microcontroller connected to digital pin 4 pin on the LCD display.</param>
         /// <param name="d5">GPIO pin on the microcontroller connected to digital pin 5 pin on the LCD display.</param>
         /// <param name="d6">GPIO pin on the microcontroller connected to digital pin 6 pin on the LCD display.</param>
-        /// <param name="d7">GPIO pin on the microcontroller connected to digital pin 7 pin on the LCD display.</param></param>
+        /// <param name="d7">GPIO pin on the microcontroller connected to digital pin 7 pin on the LCD display.</param>
+        /// </param>
         public GpioLcdTransferProvider(Cpu.Pin rs, Cpu.Pin rw, Cpu.Pin enable, Cpu.Pin d4, Cpu.Pin d5, Cpu.Pin d6,
             Cpu.Pin d7)
             : this(true, rs, rw, enable, Cpu.Pin.GPIO_NONE, Cpu.Pin.GPIO_NONE, Cpu.Pin.GPIO_NONE, Cpu.Pin.GPIO_NONE, d4,
@@ -87,7 +89,7 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
         }
 
         /// <summary>
-        /// Construct a new GPIO LCD Transfer Objects using RS / Enable / D0, D1, D2, D3, D4, D5, D6 and D7.
+        ///     Construct a new GPIO LCD Transfer Objects using RS / Enable / D0, D1, D2, D3, D4, D5, D6 and D7.
         /// </summary>
         /// <param name="rs">GPIO pin on the microcontroller connected to the Register Select pin on the LCD display.</param>
         /// <param name="enable">GPIO pin on the microcontroller connected to the Enable pin on the LCD display.</param>
@@ -98,7 +100,8 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
         /// <param name="d4">GPIO pin on the microcontroller connected to digital pin 4 pin on the LCD display.</param>
         /// <param name="d5">GPIO pin on the microcontroller connected to digital pin 5 pin on the LCD display.</param>
         /// <param name="d6">GPIO pin on the microcontroller connected to digital pin 6 pin on the LCD display.</param>
-        /// <param name="d7">GPIO pin on the microcontroller connected to digital pin 7 pin on the LCD display.</param></param>
+        /// <param name="d7">GPIO pin on the microcontroller connected to digital pin 7 pin on the LCD display.</param>
+        /// </param>
         public GpioLcdTransferProvider(Cpu.Pin rs, Cpu.Pin enable, Cpu.Pin d0, Cpu.Pin d1, Cpu.Pin d2, Cpu.Pin d3,
             Cpu.Pin d4, Cpu.Pin d5, Cpu.Pin d6, Cpu.Pin d7)
             : this(false, rs, Cpu.Pin.GPIO_NONE, enable, d0, d1, d2, d3, d4, d5, d6, d7)
@@ -106,7 +109,7 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
         }
 
         /// <summary>
-        /// Construct a new GPIO LCD Transfer Objects using RS / RW / Enable / D0, D1, D2, D3, D4, D5, D6 and D7.
+        ///     Construct a new GPIO LCD Transfer Objects using RS / RW / Enable / D0, D1, D2, D3, D4, D5, D6 and D7.
         /// </summary>
         /// <param name="rs">GPIO pin on the microcontroller connected to the Register Select pin on the LCD display.</param>
         /// <param name="rw">GPIO pin on the microcontroller connected to the Read/Write pin on the LCD display.</param>
@@ -118,7 +121,8 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
         /// <param name="d4">GPIO pin on the microcontroller connected to digital pin 4 pin on the LCD display.</param>
         /// <param name="d5">GPIO pin on the microcontroller connected to digital pin 5 pin on the LCD display.</param>
         /// <param name="d6">GPIO pin on the microcontroller connected to digital pin 6 pin on the LCD display.</param>
-        /// <param name="d7">GPIO pin on the microcontroller connected to digital pin 7 pin on the LCD display.</param></param>
+        /// <param name="d7">GPIO pin on the microcontroller connected to digital pin 7 pin on the LCD display.</param>
+        /// </param>
         public GpioLcdTransferProvider(Cpu.Pin rs, Cpu.Pin rw, Cpu.Pin enable, Cpu.Pin d0, Cpu.Pin d1, Cpu.Pin d2,
             Cpu.Pin d3, Cpu.Pin d4, Cpu.Pin d5, Cpu.Pin d6, Cpu.Pin d7)
             : this(false, rs, rw, enable, d0, d1, d2, d3, d4, d5, d6, d7)
@@ -141,7 +145,8 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
         /// <param name="d4">GPIO pin on the microcontroller connected to digital pin 4 pin on the LCD display.</param>
         /// <param name="d5">GPIO pin on the microcontroller connected to digital pin 5 pin on the LCD display.</param>
         /// <param name="d6">GPIO pin on the microcontroller connected to digital pin 6 pin on the LCD display.</param>
-        /// <param name="d7">GPIO pin on the microcontroller connected to digital pin 7 pin on the LCD display.</param></param>
+        /// <param name="d7">GPIO pin on the microcontroller connected to digital pin 7 pin on the LCD display.</param>
+        /// </param>
         public GpioLcdTransferProvider(bool fourBitMode, Cpu.Pin rs, Cpu.Pin rw, Cpu.Pin enable,
             Cpu.Pin d0, Cpu.Pin d1, Cpu.Pin d2, Cpu.Pin d3,
             Cpu.Pin d4, Cpu.Pin d5, Cpu.Pin d6, Cpu.Pin d7)
@@ -192,7 +197,6 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
         #region IDisposable interface methods
 
         /// <summary>
-        /// 
         /// </summary>
         public void Dispose()
         {

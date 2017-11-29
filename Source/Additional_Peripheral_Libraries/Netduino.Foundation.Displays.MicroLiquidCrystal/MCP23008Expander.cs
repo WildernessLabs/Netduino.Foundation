@@ -11,24 +11,10 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
     /// </summary>
     public class MCP23008Expander : I2CDeviceDriver
     {
-        #region Constants
-
-        /// <summary>
-        ///     Address mask to be combined with the address specified in the constructor.
-        /// </summary>
-        public const byte AddressMask = 0x20;
-
-        /// <summary>
-        ///     Clock speed for the I2C bus.  Possible values are 100 KHz, 400 KHz and 1.7 MHz.
-        /// </summary>
-        private const int ClockRateKhz = 100;
-
-        #endregion Constants
-
         #region Enums
 
         /// <summary>
-        /// Indicate if a pin is an input or output.
+        ///     Indicate if a pin is an input or output.
         /// </summary>
         public enum PinMode : byte
         {
@@ -102,6 +88,20 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
         }
 
         #endregion Classes / structures.
+
+        #region Constants
+
+        /// <summary>
+        ///     Address mask to be combined with the address specified in the constructor.
+        /// </summary>
+        public const byte AddressMask = 0x20;
+
+        /// <summary>
+        ///     Clock speed for the I2C bus.  Possible values are 100 KHz, 400 KHz and 1.7 MHz.
+        /// </summary>
+        private const int ClockRateKhz = 100;
+
+        #endregion Constants
 
         #region Constructors
 

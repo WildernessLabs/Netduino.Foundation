@@ -2,8 +2,6 @@
 // http://microliquidcrystal.codeplex.com
 // Appache License Version 2.0 
 
-using System;
-
 namespace Netduino.Foundation.Displays.MicroLiquidCrystal
 {
     #region Enums

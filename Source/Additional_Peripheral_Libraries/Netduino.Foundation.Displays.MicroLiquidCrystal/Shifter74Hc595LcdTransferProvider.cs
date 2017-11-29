@@ -7,7 +7,6 @@ using Microsoft.SPOT.Hardware;
 namespace Netduino.Foundation.Displays.MicroLiquidCrystal
 {
     /// <summary>
-    /// 
     /// </summary>
     public class Shifter74Hc595LcdTransferProvider : BaseShifterLcdTransferProvider
     {
@@ -23,6 +22,64 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
         }
 
         #endregion Enums
+
+        #region Properties
+
+        /// <summary>
+        /// </summary>
+        /// <remarks>
+        ///     By default bytes are sent in the following order.
+        ///     +--------- 0x80 d7
+        ///     |+-------- 0x40 d6
+        ///     ||+------- 0x20 d5
+        ///     |||+------ 0x10 d4
+        ///     |||| +---- 0x08 enable
+        ///     |||| |+--- 0x04 rw
+        ///     |||| ||+-- 0x02 rs
+        ///     |||| |||+- 0x01 backlight
+        ///     7654 3210
+        /// </remarks>
+        public static ShifterSetup DefaultSetup
+        {
+            get
+            {
+                return new ShifterSetup
+                {
+                    BL = ShifterPin.GP0,
+                    RS = ShifterPin.GP1,
+                    RW = ShifterPin.GP2,
+                    Enable = ShifterPin.GP3,
+                    D4 = ShifterPin.GP4,
+                    D5 = ShifterPin.GP5,
+                    D6 = ShifterPin.GP6,
+                    D7 = ShifterPin.GP7
+                };
+            }
+        }
+
+        #endregion Properties
+
+        #region IDisposable interface
+
+        /// <summary>
+        ///     Dispose of the resources allocated to this object.
+        /// </summary>
+        /// <param name="disposing">Dispose of the resources if true.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (!IsDisposed)
+            {
+                if (disposing)
+                {
+                    _spi.Dispose();
+                    _latchPort.Dispose();
+                }
+
+                IsDisposed = true;
+            }
+        }
+
+        #endregion IDisposable interface
 
         #region Member variables / fields
 
@@ -47,43 +104,6 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
         private readonly byte[] _writeBuf = new byte[1];
 
         #endregion Member variables / fields
-
-        #region Properties
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        ///     By default bytes are sent in the following order.
-        ///         +--------- 0x80 d7
-        ///         |+-------- 0x40 d6
-        ///         ||+------- 0x20 d5
-        ///         |||+------ 0x10 d4
-        ///         |||| +---- 0x08 enable  
-        ///         |||| |+--- 0x04 rw  
-        ///         |||| ||+-- 0x02 rs  
-        ///         |||| |||+- 0x01 backlight
-        ///         7654 3210
-        /// </remarks>
-        public static ShifterSetup DefaultSetup
-        {
-            get
-            {
-                return new ShifterSetup
-                {
-                    BL = ShifterPin.GP0,
-                    RS = ShifterPin.GP1,
-                    RW = ShifterPin.GP2,
-                    Enable = ShifterPin.GP3,
-                    D4 = ShifterPin.GP4,
-                    D5 = ShifterPin.GP5,
-                    D6 = ShifterPin.GP6,
-                    D7 = ShifterPin.GP7
-                };
-            }
-        }
-
-        #endregion Properties
 
         #region Constructors
 
@@ -120,44 +140,20 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
             : base(setup)
         {
             _bitOrder = bitOrder;
-
-            var spiConfig = new SPI.Configuration(
-                Cpu.Pin.GPIO_NONE, //latchPin,
-                false, // active state
-                0, // setup time
-                0, // hold time 
-                false, // clock idle state
-                true, // clock edge
-                1000, // clock rate
-                spiBus);
-
+            SPI.Configuration spiConfig = new SPI.Configuration(
+                ChipSelect_Port: Cpu.Pin.GPIO_NONE,     // No chip select.
+                ChipSelect_ActiveState: false,          // Chip select is active low.
+                ChipSelect_SetupTime: 0,                // Amount of time between selection and the clock starting
+                ChipSelect_HoldTime: 0,                 // Amount of time the device must be active after the data has been read.
+                Clock_Edge: false,                      // Sample on the falling edge.
+                Clock_IdleState: true,                  // Clock is idle when low.
+                Clock_RateKHz: 1000,                    // 1MHz clock speed.
+                SPI_mod: spiBus);
             _spi = new SPI(spiConfig);
-            _latchPort = new OutputPort(latchPin, true);
+            _latchPort = new OutputPort(latchPin, false);
         }
 
         #endregion Constructors
-
-        #region IDisposable interface
-
-        /// <summary>
-        ///     Dispose of the resources allocated to this object.
-        /// </summary>
-        /// <param name="disposing">Dispose of the resources if true.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (!IsDisposed)
-            {
-                if (disposing)
-                {
-                    _spi.Dispose();
-                    _latchPort.Dispose();
-                }
-
-                IsDisposed = true;
-            }
-        }
-
-        #endregion IDisposable interface
 
         #region Methods
 

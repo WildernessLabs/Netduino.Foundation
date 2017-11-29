@@ -10,6 +10,36 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
 {
     public class Lcd
     {
+        #region Constructors
+
+        /// <summary>
+        ///     Create a new LCD object.
+        /// </summary>
+        /// <param name="provider">Communication transfer provider for the LCD display.</param>
+        public Lcd(ILcdTransferProvider provider)
+        {
+            Encoding = Encoding.UTF8;
+
+            if (provider == null)
+            {
+                throw new ArgumentNullException("provider");
+            }
+            Provider = provider;
+
+            if (Provider.FourBitMode)
+            {
+                _displayFunction = LCD_4BITMODE | LCD_1LINE | LCD_5x8DOTS;
+            }
+            else
+            {
+                _displayFunction = LCD_8BITMODE | LCD_1LINE | LCD_5x8DOTS;
+            }
+
+            Begin(16, 1);
+        }
+
+        #endregion Constructors
+
         #region Constants
 
         // commands
@@ -60,12 +90,12 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
         #region Member variables / field
 
         /// <summary>
-        /// Hold the mode (4 or 8 bits), number of lines and number of dots per character.
+        ///     Hold the mode (4 or 8 bits), number of lines and number of dots per character.
         /// </summary>
         private byte _displayFunction;
 
         /// <summary>
-        /// Number of lines on the display.
+        ///     Number of lines on the display.
         /// </summary>
         private byte _numLines;
 
@@ -81,26 +111,24 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
         /// </remarks>
         private static byte[] RowOffsets
         {
-            get
-            {
-                return (new byte[] { 0x00, 0x40, 0x14, 0x54 });
-            }
+            get { return new byte[] { 0x00, 0x40, 0x14, 0x54 }; }
         }
 
         /// <summary>
         ///     Transport provider for the LCD display.
         /// </summary>
         /// <remarks>
-        ///     This object provides the microcontroller with a way of communicating 
+        ///     This object provides the microcontroller with a way of communicating
         ///     with the LCD display.
         /// </remarks>
         protected ILcdTransferProvider Provider { get; private set; }
 
         /// <summary>
-        ///     Display or hide the LCD cursor: an underscore (line) at the position to 
+        ///     Display or hide the LCD cursor: an underscore (line) at the position to
         ///     which the next character will be written.
         /// </summary>
         private bool _showCursor;
+
         public bool ShowCursor
         {
             get { return _showCursor; }
@@ -115,10 +143,11 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
         }
 
         /// <summary>
-        ///     Display or hide the blinking block cursor at the position to which the next 
+        ///     Display or hide the blinking block cursor at the position to which the next
         ///     character will be written.
         /// </summary>
         private bool _blinkCursor;
+
         public bool BlinkCursor
         {
             get { return _blinkCursor; }
@@ -137,6 +166,7 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
         ///     that was on the display.
         /// </summary>
         private bool _visible = true;
+
         public bool Visible
         {
             get { return _visible; }
@@ -154,6 +184,7 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
         ///     Turns the LCD backlight on or off.
         /// </summary>
         private bool _backlight = true;
+
         public bool Backlight
         {
             get { return _backlight; }
@@ -191,36 +222,6 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
         public Encoding Encoding { get; set; }
 
         #endregion Properties
-
-        #region Constructors
-
-        /// <summary>
-        ///     Create a new LCD object.
-        /// </summary>
-        /// <param name="provider">Communication transfer provider for the LCD display.</param>
-        public Lcd(ILcdTransferProvider provider)
-        {
-            Encoding = Encoding.UTF8;
-
-            if (provider == null)
-            {
-                throw new ArgumentNullException("provider");
-            }
-            Provider = provider;
-
-            if (Provider.FourBitMode)
-            {
-                _displayFunction = LCD_4BITMODE | LCD_1LINE | LCD_5x8DOTS;
-            }
-            else
-            {
-                _displayFunction = LCD_8BITMODE | LCD_1LINE | LCD_5x8DOTS;
-            }
-
-            Begin(16, 1);
-        }
-
-        #endregion Constructors
 
         #region Methods
 
