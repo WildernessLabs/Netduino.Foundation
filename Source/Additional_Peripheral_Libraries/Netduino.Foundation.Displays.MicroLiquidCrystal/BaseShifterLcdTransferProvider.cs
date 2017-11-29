@@ -33,7 +33,7 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
         #region Member variables / fields
 
         /// <summary>
-        ///     ShfiterSetup object indicating the how the data, backlight etc lines
+        ///     ShifterSetup object indicating the how the data, backlight etc lines
         ///     are connected to the shift register.
         /// </summary>
         private readonly ShifterSetup _setup;
@@ -45,7 +45,7 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
         /// <summary>
         ///     Constructor for the class.
         /// </summary>
-        /// <param name="setup">Configuration of he pin assignmnt between the shift register and the display.</param>
+        /// <param name="setup">Configuration of he pin assignment between the shift register and the display.</param>
         protected BaseShifterLcdTransferProvider(ShifterSetup setup)
         {
             _setup = setup;
@@ -68,7 +68,7 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
         #region Methods
 
         /// <summary>
-        ///     Set a data byte to the display and
+        ///     Set a data byte to the display and set the backlight if requested.
         /// </summary>
         /// <param name="data">Data to be sent to the display (8-bit value).</param>
         /// <param name="mode">Indicate if this is data (true) or a command (false).</param>
@@ -149,7 +149,7 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
         /// <summary>
         ///     Toggler the pulse enable [in.
         /// </summary>
-        /// <param name="output">Setup for this whift register (used to work out which pin is the pulse enable line).</param>
+        /// <param name="output">Setup for this shift register (used to work out which pin is the pulse enable line).</param>
         private void PulseEnable(int output)
         {
             var enable = (int) _setup.Enable;
