@@ -163,7 +163,7 @@ Write a single byte to the display at the current cursor position.
 
 Send the specified `command` byte to the LCD display.
 
-#### 'void CreateChar(int location, byte[] charmap, int offset)`
+#### `void CreateChar(int location, byte[] charmap, int offset)`
 
 Create a customs character at `location` in the custom character buffer.  `location` should be in the range 0-7.
 
