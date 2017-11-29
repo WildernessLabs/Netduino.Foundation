@@ -61,6 +61,16 @@ namespace MicroLiquidCrystal595Test
 
 ## API
 
+The API defined below is usually adequate for most developers using the shift register method of communicating with LCD displays.
+
+The following documentation is also for developers requiring more information or who wish to use other communication methods:
+
+* [ILcdTransferProvider.cs](ILcdTransferProvider.md)
+* [BaseShifterLcdTransferProvider.cs](BaseShifterLcdTransferProvider.md)
+* [Shifter74Hc595TransferProvider.cs](Shifter74Hc595TransferProvider.md)
+* [GpioLcdTransferProvider.cs](GpioLcdTransferProvider.md)
+* [Lcd.cs](Lcd.md)
+
 ### Enum
 
 #### `ShifterPin`
@@ -69,7 +79,7 @@ The `ShifterPin` enum allows the assignment of the LCD pins on the display to sp
 
 ### Classes and Structures
 
-#### `ShifterSetup` (member of the `BaseShifterLcdTransferProvider` class)
+#### `ShifterSetup` (member of the [`BaseShifterLcdTransferProvider`](BaseShifterLcdTransferProvider.md) class)
 
 The members of the `ShifterSetup` class allow the mapping of the functions on the LCD display pins to shift register pins.
 

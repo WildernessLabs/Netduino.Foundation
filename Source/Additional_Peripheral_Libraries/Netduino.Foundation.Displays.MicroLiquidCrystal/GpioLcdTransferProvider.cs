@@ -273,7 +273,7 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
         /// <summary>
         ///     Write the byte as a single 8 bit value.
         /// </summary>
-        /// <param name="value">Value to write tothe GPIO pins.</param>
+        /// <param name="value">Value to write to the GPIO pins.</param>
         private void Write8Bits(byte value)
         {
             for (var i = 0; i < 8; i++)
