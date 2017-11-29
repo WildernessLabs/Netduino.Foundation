@@ -12,6 +12,7 @@
 | DS323x Real Time Clock | [DS323x Real Time Clock modules](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.RTC.DS323x) |
 | HIH6130 Temperature and Humidity | [HIH6130 Temperature and Humidity breakout board](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.HIH6130) |
 | MAG3110 Magnetometer | [MAG3110 Three axis magnetometer](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Motion.MAG3110) |
+| `MicroLiquidCrystal` library | [LCD](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Displays.MicroLiquidCrystal) using the `MicroLiquidCrystal` library. |
 | MPL115A2             | [MPL115A2](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.MPL115A2) Temperature and pressure sensor |
 | MPL3115A2            | [MPL3115A2](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.MPL3115A2) Pressure and temperature sensor |
 | NMEA GPS Decoder          | [Generic GPS decoders](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.GPS.NMEA) |
