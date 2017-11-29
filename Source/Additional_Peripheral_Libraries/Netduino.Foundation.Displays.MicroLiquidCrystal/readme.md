@@ -67,7 +67,7 @@ The following documentation is also for developers requiring more information or
 
 * [ILcdTransferProvider.cs](ILcdTransferProvider.md)
 * [BaseShifterLcdTransferProvider.cs](BaseShifterLcdTransferProvider.md)
-* [Shifter74Hc595TransferProvider.cs](Shifter74Hc595TransferProvider.md)
+* [Shifter74Hc595TransferProvider.cs](Shifter74Hc595LcdTransferProvider.md)
 * [GpioLcdTransferProvider.cs](GpioLcdTransferProvider.md)
 * [Lcd.cs](Lcd.md)
 
