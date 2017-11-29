@@ -241,7 +241,7 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
         /// <param name="columns">Number of columns on the display.</param>
         /// <param name="lines">Number of lines on the display.</param>
         /// <param name="leftToRight">Set the scroll entry mode.</param>
-        /// <param name="dotSize"></param>
+        /// <param name="dotSize">Allow the selection of a 10 pixel high font for one line displays.</param>
         public void Begin(byte columns, byte lines, bool leftToRight, bool dotSize)
         {
             if (lines > 1)
@@ -351,8 +351,8 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
         /// <summary>
         ///     Position the LCD cursor; that is, set the location at which subsequent text written to the LCD will be displayed
         /// </summary>
-        /// <param name="column"></param>
-        /// <param name="row"></param>
+        /// <param name="column">Column number to move the cursor to (0 indexed).</param>
+        /// <param name="row">Row number to move the cursor to (0 indexed).</param>
         public void SetCursorPosition(int column, int row)
         {
             if (row > _numLines)
@@ -436,7 +436,7 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
         }
 
         /// <summary>
-        ///     Create a custom character (gylph) for use on the LCD.
+        ///     Create a custom character (glyph) for use on the LCD.
         /// </summary>
         /// <remarks>
         ///     Up to eight characters of 5x8 pixels are supported (numbered 0 to 7).
@@ -446,7 +446,7 @@ namespace Netduino.Foundation.Displays.MicroLiquidCrystal
         /// </remarks>
         /// <param name="location">Which character to create (0 to 7).</param>
         /// <param name="charmap">The character's pixel data.</param>
-        /// <param name="offset">Offset in the charmap wher character data is found.</param>
+        /// <param name="offset">Offset in the charmap where character data is found.</param>
         public void CreateChar(int location, byte[] charmap, int offset)
         {
             location &= 0x7; // we only have 8 locations 0-7
