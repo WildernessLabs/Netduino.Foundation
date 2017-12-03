@@ -7,6 +7,7 @@ OLED displays based upon the SSD1306 chip set are small, high contract display. 
 There are a number of breakout board available using these displays.  This driver has been tested with the following:
 
 * [Diymall 0.96" 128x64 pixel OLED Display](https://www.amazon.co.uk/gp/product/B0156CO67O/ref=oh_aui_detailpage_o01_s00?ie=UTF8&psc=1)
+* [HALJIA 0.91 128x32 pixel OLED Display](https://www.amazon.co.uk/gp/product/B071Z18R1M/ref=oh_aui_detailpage_o03_s00?ie=UTF8&psc=1)
 
 Board are also available from [Adafruit](www.adafruit.com).
 
