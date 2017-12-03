@@ -40,7 +40,7 @@ We maintain a list of peripherals that we'd like to support. Feel free to add to
 
 # Documentation and Guides
 
-* [Blocks and Scopes Architectural Guide](documentation/architecture.md)
+* [Blocks and Scopes Architectural Guide]/(Documentation/architecture.md)
 * [API Documentation] TODO - move old xml [API Documentation](Documentation/API_Docs/) into markdown
 
 
