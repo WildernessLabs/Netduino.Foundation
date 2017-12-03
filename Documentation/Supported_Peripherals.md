@@ -22,7 +22,7 @@
 | Servo                     | [Generic Servo Library](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Servos.Servo) |
 | SHT31D                    | [SHT31D](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.SHT31D) Temperature and humidity sensor |
 | SI7021                    | [SI7021](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.SI7021) Temperature and humidity sensor |
-| SSD1306                   | [SSD1306 OLED Display](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Displays.SSD1306).  Currently supports 128x64 pixel displays. |
+| SSD1306                   | [SSD1306 OLED Display](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Displays.SSD1306).  Currently supports 128x64 and 128x32 pixel I2C displays. |
 | TMP102                    | [TMP102](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Temperature.TMP102) Temperature sensor |
 | TSL2561                                          | [Luminosity sensor](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Light.TSL2561) |
 
