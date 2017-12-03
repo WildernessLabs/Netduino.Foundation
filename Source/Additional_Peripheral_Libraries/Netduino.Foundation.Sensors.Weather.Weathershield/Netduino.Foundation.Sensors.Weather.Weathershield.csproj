@@ -6,7 +6,7 @@
     <ProjectGuid>{CF1D2665-E746-48F0-AAC8-81086EB3FF86}</ProjectGuid>
     <ProjectTypeGuids>{B69E3092-B931-443C-ABE7-7E7B65F2A37F};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>Netduino.Foundation.Sensors.Weather.Weathershield</RootNamespace>
+    <RootNamespace>Netduino.Foundation.Sensors.Weather</RootNamespace>
     <AssemblyName>Netduino.Foundation.Sensors.Weather.Weathershield</AssemblyName>
     <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>
   </PropertyGroup>
@@ -27,10 +27,30 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Native" />
+    <Reference Include="Microsoft.SPOT.Hardware" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Weathershield.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\Netduino.Foundation\Netduino.Foundation.csproj">
+      <Project>{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}</Project>
+      <Name>Netduino.Foundation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Netduino.Foundation.Sensors.Barometric.SI7021\Netduino.Foundation.Sensors.Barometric.SI7021.csproj">
+      <Project>{46810344-EB9D-47DD-A7F1-CAD71E702B59}</Project>
+      <Name>Netduino.Foundation.Sensors.Barometric.SI7021</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Netduino.Foundation.Sensors.Light.ALSPT19315C\Netduino.Foundation.Sensors.Light.ALSPT19315C.csproj">
+      <Project>{2F9EEB9E-D4F0-4C17-B159-D6D66410A2CC}</Project>
+      <Name>Netduino.Foundation.Sensors.Light.ALSPT19315C</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Netduino.Foundation.Sensors.Barometric.MPL3115A2\Netduino.Foundation.Sensors.Barometric.MPL3115A2.csproj">
+      <Project>{CEC7105C-617B-4C4F-8654-A65718AE7217}</Project>
+      <Name>Netduino.Foundation.Sensors.Barometric.MPL3115A2</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\$(TargetFrameworkVersion)\CSharp.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\$(TargetFrameworkVersion)\CSharp.targets')" />
+  <Import Project="$([System.Environment]::GetFolderPath(SpecialFolder.LocalApplicationData))\.NETMicroFramework\xbuild\Microsoft\.NET Micro Framework\$(TargetFrameworkVersion)\CSharp.targets" Condition="!Exists('$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\$(TargetFrameworkVersion)\CSharp.targets')" />
 </Project>
