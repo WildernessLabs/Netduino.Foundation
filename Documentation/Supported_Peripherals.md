@@ -6,6 +6,7 @@
 | Analog Temperature Sensor                        | [Generic analog temperature sensor](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Temperature.Analog) (TMP35 / 36 / 37 / LM35)|
 | ADXL335 Accelerometer | [ADXL335 Triple axis accelerometer](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Motion.ADXL335) (+/-3g, Analog output) |
 | ADXL345 Accelerometer | [ADXL345 Triple axis accelerometer](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Motion.ADXL345) (+/-16g, I2C digital output) |
+| ALS-PT19 | [ALS-PT19](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Light.ALSPT19315C) series of light sensors |
 | AT24Cxx Family of EEPROMS | [AT24Cxx](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.IC.EEPROM.AT24Cxx) Family of EEPROMs including AT24C32 |
 | BME280 Temperature, Humidity and Pressure Sensor | [BME280 combined temperature, humidity and pressure sensor](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.BME280) |
 | BNO055 Orientation | [BNO055 9-Axis Oreintation Sensor](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Motion.BNO055) |
@@ -22,6 +23,7 @@
 | SHT31D                    | [SHT31D](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.SHT31D) Temperature and humidity sensor |
 | SI7021                    | [SI7021](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Barometric.SI7021) Temperature and humidity sensor |
 | SSD1306                   | [SSD1306 OLED Display](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Displays.SSD1306).  Currently supports 128x64 pixel displays. |
+| TMP102                    | [TMP102](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Temperature.TMP102) Temperature sensor |
 | TSL2561                                          | [Luminosity sensor](/Source/Additional_Peripheral_Libraries/Netduino.Foundation.Sensors.Light.TSL2561) |
 
 
