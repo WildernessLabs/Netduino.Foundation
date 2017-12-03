@@ -6,7 +6,6 @@ namespace Netduino.Foundation.Sensors.Temperature
 {
     public class TMP102
     {
-        /*
         /// <summary>
         /// Convert a byte to a two character hex string.
         /// </summary>
@@ -103,8 +102,6 @@ namespace Netduino.Foundation.Sensors.Temperature
                 Debug.Print(centigrade.ToString() + " C / " + fahrenheit.ToString() + " F");
                 Thread.Sleep(1000);
             }
-        
         }
-         */ 
     }
 }
