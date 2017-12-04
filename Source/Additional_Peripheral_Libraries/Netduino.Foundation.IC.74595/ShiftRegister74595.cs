@@ -38,7 +38,7 @@ namespace Netduino.Foundation.IC
         ///     Default constructor.
         /// </summary>
         /// <remarks>
-        ///     This is private to prevent the programmer from calling it explicity.
+        ///     This is private to prevent the programmer from calling it explicitly.
         /// </remarks>
         private ShiftRegister74595()
         {
