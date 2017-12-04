@@ -11,7 +11,7 @@ namespace Netduino.Foundation.Helpers
         /// </summary>
         /// <param name="b">Value to convert.</param>
         /// <returns>Two hexadecimal digits representing the byte.</returns>
-        public static string HexadecimalDigits(byte b)
+        private static string HexadecimalDigits(byte b)
         {
             char[] digits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
             return"" + digits[b >> 4] + digits[b & 0xf];
@@ -31,14 +31,25 @@ namespace Netduino.Foundation.Helpers
         ///     Convert an unsigned short into hexadecimal.
         /// </summary>
         /// <param name="us">Unsigned short value to convert.</param>
-        /// <returns>Hexadecimal reporesentation of the unsigned short.</returns>
+        /// <returns>Hexadecimal representation of the unsigned short.</returns>
         public static string Hexadecimal(ushort us)
         {
             return "0x" + HexadecimalDigits((byte) ((us >> 8) & 0xff)) + HexadecimalDigits((byte) (us & 0xff));
         }
 
         /// <summary>
-        ///     Dump the array of bytes to the debug output in hexadeciaml.
+        ///     Convert an integer into hexadecimal.
+        /// </summary>
+        /// <param name="i">Integer to convert to hexadecimal.</param>
+        /// <returns>Hexadecimal representation of the unsigned short.</returns>
+        public static string Hexadecimal(int i)
+        {
+            return "0x" + HexadecimalDigits((byte) ((i >> 24) & 0xff)) + HexadecimalDigits((byte) ((i >> 16) & 0xff)) +
+                   HexadecimalDigits((byte) ((i >> 8) & 0xff)) + HexadecimalDigits((byte) (i & 0xff));
+        }
+
+        /// <summary>
+        ///     Dump the array of bytes to the debug output in hexadecimal.
         /// </summary>
         /// <param name="startAddress">Starting address of the register.</param>
         /// <param name="registers">Byte array of the register contents.</param>
