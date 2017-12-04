@@ -2,6 +2,9 @@
 
 namespace Netduino.Foundation.Sensors.Temperature
 {
+    /// <summary>
+    ///     TMP102 Temperature sensor object.
+    /// </summary>    
     public class TMP102
     {
         #region Enums
@@ -36,10 +39,13 @@ namespace Netduino.Foundation.Sensors.Temperature
         #region Properties
 
         /// <summary>
-        ///     Get / set the resolution of the sensor.
+        ///     Backing variable for the SensorResolution property.
         /// </summary>
         private Resolution _sensorResolution;
 
+        /// <summary>
+        ///     Get / set the resolution of the sensor.
+        /// </summary>
         public Resolution SensorResolution
         {
             get { return _sensorResolution; }
