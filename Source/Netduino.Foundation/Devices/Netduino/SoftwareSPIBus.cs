@@ -1,4 +1,5 @@
 ﻿using System;
+using MSH = Microsoft.SPOT.Hardware;
 
 namespace Netduino.Foundation.Devices
 {
@@ -7,14 +8,66 @@ namespace Netduino.Foundation.Devices
     /// </summary>
     public class SoftwareSPIBus : ICommunicationBus
     {
+        #region Member variables / fields
+
+        /// <summary>
+        ///     MOSI output port.
+        /// </summary>
+        private MSH.OutputPort _mosi;
+
+        /// <summary>
+        ///     MISO Input port.
+        /// </summary>
+        private MSH.InputPort _miso;
+
+        /// <summary>
+        ///     Clock output port.
+        /// </summary>
+        private MSH.OutputPort _clock;
+
+        /// <summary>
+        ///     Chip select port.
+        /// </summary>
+        private MSH.OutputPort _chipSelect;
+
+        /// <summary>
+        ///     Boolean representation of the clock polarity.
+        /// </summary>
+        private readonly bool _polarity;
+
+        /// <summary>
+        ///     Boolean representation of the clock phase.
+        /// </summary>
+        private readonly bool _phase;
+
+        #endregion Member variables / fields
+
         #region Constructors
 
         /// <summary>
-        ///     Create a new Software SPI object.
+        ///     Default constructor (private to prevent it from being used).
         /// </summary>
-        public SoftwareSPIBus()
+        private SoftwareSPIBus()
         {
-            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        ///     Create a new SoftwareSPIBus object using the specified pins.
+        /// </summary>
+        /// <param name="mosi">MOSI pin.</param>
+        /// <param name="miso">MISO pin</param>
+        /// <param name="clock">Clock pin.</param>
+        /// <param name="chipSelect">Chip select pin.</param>
+        /// <param name="cpha">Clock phase (0 or 1, default is 0).</param>
+        /// <param name="cpol">Clock polarity (0 or 1, default is 0).</param>
+        public SoftwareSPIBus(MSH.Cpu.Pin mosi, MSH.Cpu.Pin miso, MSH.Cpu.Pin clock, MSH.Cpu.Pin chipSelect, byte cpha = 0, byte cpol = 0)
+        {
+            _phase = (cpha == 1);
+            _polarity = (cpol == 1);
+            _mosi = new MSH.OutputPort(mosi, false);
+            _miso = new MSH.InputPort(miso, false, MSH.Port.ResistorMode.Disabled);
+            _clock = new MSH.OutputPort(clock, _polarity);
+            _chipSelect = new MSH.OutputPort(chipSelect, true);
         }
 
         #endregion Constructors
@@ -45,7 +98,7 @@ namespace Netduino.Foundation.Devices
         /// <summary>
         ///     Write data a register in the device.
         /// </summary>
-        /// <param name="address">Address of the register to write to.</param>
+        /// <param name="register">Address of the register to write to.</param>
         /// <param name="value">Data to write into the register.</param>
         public void WriteRegister(byte register, byte value)
         {
@@ -130,7 +183,7 @@ namespace Netduino.Foundation.Devices
         }
 
         /// <summary>
-        ///     Read an usingned short from a pair of registers.
+        ///     Read an unsigned short from a pair of registers.
         /// </summary>
         /// <param name="address">Register address of the low byte (the high byte will follow).</param>
         /// <param name="order">Order of the bytes in the register (little endian is the default).</param>
