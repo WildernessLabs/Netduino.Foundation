@@ -141,6 +141,42 @@ namespace Netduino.Foundation.Devices
         }
 
         /// <summary>
+        ///     Write and read a single byte.
+        /// </summary>
+        /// <param name="value">Value to write.</param>
+        /// <returns>Byte read from the SPI interface.</returns>
+        public byte WriteRead(byte value)
+        {
+            byte result = 0;
+            byte mask = 0x80;
+            var clock = _phase;
+
+            for (var index = 0; index < 8; index++)
+            {
+                _mosi.Write((value & mask) > 0);
+                _clock.Write(!clock);
+                bool data;
+                if (_phase)
+                {
+                    _clock.Write(clock);
+                    data = _miso.Read();
+                }
+                else
+                {
+                    data = _miso.Read();
+                    _clock.Write(clock);
+                }
+                result <<= 1;
+                if (data)
+                {
+                    result |= 0x01;
+                }
+                mask >>= 1;
+            }
+            return(result);
+        }
+
+        /// <summary>
         ///     Write data to the device and also read some data from the device.
         /// </summary>
         /// <remarks>
@@ -150,21 +186,39 @@ namespace Netduino.Foundation.Devices
         /// <param name="length">Amount of data to read from the device.</param>
         public byte[] WriteRead(byte[] write, ushort length)
         {
-            throw new NotImplementedException();
+            if (length < write.Length)
+            {
+                throw new ArgumentException("length");
+            }
+            bool chipSelect = _chipSelect.Read();
+            _chipSelect.Write(!chipSelect);
+            byte[] result = new byte[length];
+            for (var index = 0; index < length; index++)
+            {
+                byte value = 0;
+                if (index < write.Length)
+                {
+                    value = write[index];
+                }
+                result[index] = WriteRead(value);
+            }
+            _chipSelect.Write(chipSelect);
+            _mosi.Write(false);
+            return(result);
         }
 
         /// <summary>
-        ///     Read the specified number of bytes from the I2C device.
+        ///     Read the specified number of bytes from the SPI device.
         /// </summary>
-        /// <returns>The bytes.</returns>
         /// <param name="numberOfBytes">Number of bytes.</param>
+        /// <returns>The bytes read from the device.</returns>
         public byte[] ReadBytes(ushort numberOfBytes)
         {
             throw new NotImplementedException();
         }
 
         /// <summary>
-        ///     Read a registers from the device.
+        ///     Read a register from the device.
         /// </summary>
         /// <param name="address">Address of the register to read.</param>
         public byte ReadRegister(byte address)
