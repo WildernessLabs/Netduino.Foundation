@@ -53,8 +53,8 @@ namespace Netduino.Foundation.Sensors.Motion
         {
             if (interruptPin != Cpu.Pin.GPIO_NONE)
             {
-                _interruptPort = new InterruptPort(interruptPin, false, Port.ResistorMode.Disabled,
-                                                   Port.InterruptMode.InterruptEdgeBoth);
+                _interruptPort = new InterruptPort(interruptPin, false, Microsoft.SPOT.Hardware.Port.ResistorMode.Disabled,
+                                                   Microsoft.SPOT.Hardware.Port.InterruptMode.InterruptEdgeBoth);
                 _interruptPort.OnInterrupt += _interruptPort_OnInterrupt;
             }
             else

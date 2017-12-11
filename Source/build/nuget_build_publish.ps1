@@ -4,7 +4,7 @@
 $buildNumber = 123 
 
 #set path for peripherals dir
-$path = "Source\Additional_Peripheral_Libraries"
+$path = "Source\Peripheral_Libs"
 
 #################################################################
 
