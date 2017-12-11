@@ -1,9 +1,11 @@
 # Supported Peripheral Libraries
 
+**TODO: Add Netduino.Core supported stuff**
+
 
 ## Integrated Circuits (ICs)
 
-| Component or Sensor       | Description                         |
+| Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
 | 74595 Shift Register      | [74595 shift register](/Source/Peripheral_Libs/ICs.74595) |
 | AT24Cxx Family of EEPROMS | [AT24Cxx](/Source/Peripheral_Libs/ICs.EEPROM.AT24Cxx) Family of EEPROMs including AT24C32 |
@@ -11,7 +13,7 @@
 
 ## Display and Graphics Drivers
 
-| Component or Sensor       | Description                         |
+| Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
 | GraphicsLibrary | [General purpose graphics library](/Source/Peripheral_Libs/Displays.GraphicsLibrary) |
 | `MicroLiquidCrystal` library | [LCD](/Source/Peripheral_Libs/Displays.MicroLiquidCrystal) using the `MicroLiquidCrystal` library. |
@@ -22,54 +24,66 @@
 
 ### Atmospheric (Temperature, Humidity, Barometer, Altitude) Sensors
 
-| Component or Sensor       | Description                         |
+| Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
-| SHT31D                    | [SHT31D](/Source/Peripheral_Libs/Sensors.Atmospheric.SHT31D) Temperature and humidity sensor |
-| SI7021                    | [SI7021](/Source/Peripheral_Libs/Sensors.Atmospheric.SI7021) Temperature and humidity sensor |
-| BME280 Temperature, Humidity and Pressure Sensor | [BME280 combined temperature, humidity and pressure sensor](/Source/Peripheral_Libs/Sensors.Atmospheric.BME280) |
 | Analog Temperature Sensor | [Generic analog temperature sensor](/Source/Peripheral_Libs/Sensors.Temperature.Analog) (TMP35 / 36 / 37 / LM35)|
+| BME280 Temperature, Humidity and Pressure Sensor | [BME280 combined temperature, humidity and pressure sensor](/Source/Peripheral_Libs/Sensors.Atmospheric.BME280) |
+| BMP085                    | In development |
+| DS18B20                   | In development |
+| GroveTH02                 | In development |
 | HIH6130 Temperature and Humidity | [HIH6130 Temperature and Humidity breakout board](/Source/Peripheral_Libs/Sensors.Atmospheric.HIH6130) |
+| HTU21DF                   | In development |
 | MPL115A2                  | [MPL115A2](/Source/Peripheral_Libs/Sensors.Barometric.MPL115A2) Temperature and pressure sensor |
 | MPL3115A2                 | [MPL3115A2](/Source/Peripheral_Libs/Sensors.Barometric.MPL3115A2) Pressure and temperature sensor |
+| SHT31D                    | [SHT31D](/Source/Peripheral_Libs/Sensors.Atmospheric.SHT31D) Temperature and humidity sensor |
+| SI7021                    | [SI7021](/Source/Peripheral_Libs/Sensors.Atmospheric.SI7021) Temperature and humidity sensor |
 | TMP102                    | [TMP102](/Source/Peripheral_Libs/Sensors.Temperature.TMP102) Temperature sensor |
+
+### Distance Sensors
+
+| Peripheral                | Description                         |
+|---------------------------|-------------------------------------|
+| SharpGP2D12               | In Development |
 
 ### GPS Sensors & Libraries
 
-| Component or Sensor       | Description                         |
+| Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
 | NMEA GPS Decoder          | [Generic GPS decoders](/Source/Peripheral_Libs/Sensors.GPS.NMEA) |
 
 ### Light Sensors
 
-| Component or Sensor       | Description                         |
+| Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
 | ALS-PT19                  | [ALS-PT19](/Source/Peripheral_Libs/Sensors.Light.ALSPT19315C) series of light sensors |
+| SI1145                    | In Development |
 | TSL2561                   | [Luminosity sensor](/Source/Peripheral_Libs/Sensors.Light.TSL2561) |
 
 ### Motion and Orientation Sensors
 
-| Component or Sensor       | Description                         |
+| Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
 | ADXL335 Accelerometer     | [ADXL335 Triple axis accelerometer](/Source/Peripheral_Libs/Sensors.Motion.ADXL335) (+/-3g, Analog output) |
 | ADXL345 Accelerometer     | [ADXL345 Triple axis accelerometer](/Source/Peripheral_Libs/Sensors.Motion.ADXL345) (+/-16g, I2C digital output) |
-| MAG3110 Magnetometer      | [MAG3110 Three axis magnetometer](/Source/Peripheral_Libs/Sensors.Motion.MAG3110) |
-| Parallax PIR              | [Parallax PIR Rev B](/Source/Peripheral_Libs/Sensors.Motion.ParallaxPIR) |
+| ADXL362 Accelerometer     | In Development |
 | BNO055 Orientation        | [BNO055 9-Axis Orientation Sensor](/Source/Peripheral_Libs/Sensors.Motion.BNO055) |
+| FXAS21002                 | In Development |
+| FXOS8700CQ                | In Development |
+| MAG3110 Magnetometer      | [MAG3110 Three axis magnetometer](/Source/Peripheral_Libs/Sensors.Motion.MAG3110) |
+| Memsic2125                | In Development |
+| MPU6050                   | In Development |
+| Parallax PIR              | [Parallax PIR Rev B](/Source/Peripheral_Libs/Sensors.Motion.ParallaxPIR) |
 
 
 ## Shields
 
-| Component or Sensor       | Description                         |
+| Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
+| Adafruit Motor Shield     | In Development |
+| SparkFun Weather Shield   | In Development |
 
 ## Servos
 
-| Component or Sensor       | Description                         |
+| Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
-| Servo                     | [Generic Servo Library](/Source/Peripheral_Libs/Servos.Servo) |
-
-## Motors
-
-| Component or Sensor       | Description                         |
-|---------------------------|-------------------------------------|
-
+| Servo Core                  | [Generic Servo Library](/Source/Peripheral_Libs/Servos.Servo) |
