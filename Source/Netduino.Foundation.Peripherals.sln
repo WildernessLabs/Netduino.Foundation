@@ -1,85 +1,161 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.Memsic2125", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Motion.Memsic2125\Netduino.Foundation.Sensors.Motion.Memsic2125.csproj", "{831CCCF7-8F8D-434D-809A-F2995A5B5730}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Foundation.Core", ".Foundation.Core", "{82E59041-71D9-420E-B3FE-836243B81E1E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation", "Netduino.Foundation\Netduino.Foundation.csproj", "{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Foundation Source", "Foundation Source", "{82E59041-71D9-420E-B3FE-836243B81E1E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Motion.Memsic2125", "Peripheral_Libs\Sensors.Motion.Memsic2125\Driver\Sensors.Motion.Memsic2125.csproj", "{831CCCF7-8F8D-434D-809A-F2995A5B5730}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Motors.AdafruitMotorShield", "Additional_Peripheral_Libraries\Netduino.Foundation.Motors.AdafruitMotorShield\Netduino.Foundation.Motors.AdafruitMotorShield.csproj", "{72D2D0F4-3E30-46E3-8EF9-392DDAF77EBE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shields.AdafruitMotorShield", "Peripheral_Libs\Shields.AdafruitMotorShield\Driver\Shields.AdafruitMotorShield.csproj", "{72D2D0F4-3E30-46E3-8EF9-392DDAF77EBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.BMP085", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.BMP085\Netduino.Foundation.Sensors.Barometric.BMP085.csproj", "{29261BF0-47B8-48FA-851F-E24158069228}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Atmospheric.BMP085", "Peripheral_Libs\Sensors.Atmospheric.BMP085\Driver\Sensors.Atmospheric.BMP085.csproj", "{29261BF0-47B8-48FA-851F-E24158069228}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass\Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass.csproj", "{8CD6A83E-A425-417E-BD8E-8C2CFB0B4CB4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Compass.Grove3AxisDigitalCompass", "Peripheral_Libs\Sensors.Compass.Grove3AxisDigitalCompass\Driver\Sensors.Compass.Grove3AxisDigitalCompass.csproj", "{8CD6A83E-A425-417E-BD8E-8C2CFB0B4CB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Distance.SharpGP2D12", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Distance.SharpGP2D12\Netduino.Foundation.Sensors.Distance.SharpGP2D12.csproj", "{105B4678-62F3-49BC-AE86-9ED8F0A00D1F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Distance.SharpGP2D12", "Peripheral_Libs\Sensors.Distance.SharpGP2D12\Driver\Sensors.Distance.SharpGP2D12.csproj", "{105B4678-62F3-49BC-AE86-9ED8F0A00D1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.BME280", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.BME280\Netduino.Foundation.Sensors.Barometric.BME280.csproj", "{565DC80C-9F37-4FF4-9E39-A06BF880C64C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Atmospheric.BME280", "Peripheral_Libs\Sensors.Atmospheric.BME280\Driver\Sensors.Atmospheric.BME280.csproj", "{565DC80C-9F37-4FF4-9E39-A06BF880C64C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Light.TSL2561", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Light.TSL2561\Netduino.Foundation.Sensors.Light.TSL2561.csproj", "{AC24642E-E6DA-47D7-B4F5-9F12F35BE78A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Light.TSL2561", "Peripheral_Libs\Sensors.Light.TSL2561\Driver\Sensors.Light.TSL2561.csproj", "{AC24642E-E6DA-47D7-B4F5-9F12F35BE78A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Temperature.Analog", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Temperature.Analog\Netduino.Foundation.Sensors.Temperature.Analog.csproj", "{79372BE0-C1EC-4AC7-8481-6AB20013FC35}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Temperature.Analog", "Peripheral_Libs\Sensors.Temperature.Analog\Driver\Sensors.Temperature.Analog.csproj", "{79372BE0-C1EC-4AC7-8481-6AB20013FC35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Displays.SerialLCD", "Additional_Peripheral_Libraries\Netduino.Foundation.Displays.SerialLCD\Netduino.Foundation.Displays.SerialLCD.csproj", "{D32F7103-5F7B-4880-8C80-B17570F4380D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Displays.SerialLCD", "Peripheral_Libs\Displays.SerialLCD\Driver\Displays.SerialLCD.csproj", "{D32F7103-5F7B-4880-8C80-B17570F4380D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.HIH6130", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.HIH6130\Netduino.Foundation.Sensors.Barometric.HIH6130.csproj", "{F6428AF2-EC4B-4FB7-AB15-71CCD0B67985}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Atmospheric.HIH6130", "Peripheral_Libs\Sensors.Atmospheric.HIH6130\Driver\Sensors.Atmospheric.HIH6130.csproj", "{F6428AF2-EC4B-4FB7-AB15-71CCD0B67985}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.HTU21DF", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.HTU21DF\Netduino.Foundation.Sensors.Barometric.HTU21DF.csproj", "{25442BC4-A47A-440D-B87B-C628BC4A9F74}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Atmospheric.HTU21DF", "Peripheral_Libs\Sensors.Atmospheric.HTU21DF\Driver\Sensors.Atmospheric.HTU21DF.csproj", "{25442BC4-A47A-440D-B87B-C628BC4A9F74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.MPL3115A2", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.MPL3115A2\Netduino.Foundation.Sensors.Barometric.MPL3115A2.csproj", "{CEC7105C-617B-4C4F-8654-A65718AE7217}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Barometric.MPL3115A2", "Peripheral_Libs\Sensors.Barometric.MPL3115A2\Driver\Sensors.Barometric.MPL3115A2.csproj", "{CEC7105C-617B-4C4F-8654-A65718AE7217}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.SHT31D", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.SHT31D\Netduino.Foundation.Sensors.Barometric.SHT31D.csproj", "{FB02A7ED-4CAF-43FD-A91F-DC0EEB8597CB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Atmospheric.SHT31D", "Peripheral_Libs\Sensors.Atmospheric.SHT31D\Driver\Sensors.Atmospheric.SHT31D.csproj", "{FB02A7ED-4CAF-43FD-A91F-DC0EEB8597CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.SI7021", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.SI7021\Netduino.Foundation.Sensors.Barometric.SI7021.csproj", "{46810344-EB9D-47DD-A7F1-CAD71E702B59}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Atmospheric.SI7021", "Peripheral_Libs\Sensors.Atmospheric.SI7021\Driver\Sensors.Atmospheric.SI7021.csproj", "{46810344-EB9D-47DD-A7F1-CAD71E702B59}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Light.ALSPT19315C", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Light.ALSPT19315C\Netduino.Foundation.Sensors.Light.ALSPT19315C.csproj", "{2F9EEB9E-D4F0-4C17-B159-D6D66410A2CC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Light.ALSPT19315C", "Peripheral_Libs\Sensors.Light.ALSPT19315C\Driver\Sensors.Light.ALSPT19315C.csproj", "{2F9EEB9E-D4F0-4C17-B159-D6D66410A2CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.ADXL362", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Motion.ADXL362\Netduino.Foundation.Sensors.Motion.ADXL362.csproj", "{A9601FA8-73EC-401D-89B1-4405F155928C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Motion.ADXL362", "Peripheral_Libs\Sensors.Motion.ADXL362\Driver\Sensors.Motion.ADXL362.csproj", "{A9601FA8-73EC-401D-89B1-4405F155928C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.ADXL335", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Motion.ADXL335\Netduino.Foundation.Sensors.Motion.ADXL335.csproj", "{798D429C-E6C4-452D-922D-EC0EB23CAF13}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Motion.ADXL335", "Peripheral_Libs\Sensors.Motion.ADXL335\Driver\Sensors.Motion.ADXL335.csproj", "{798D429C-E6C4-452D-922D-EC0EB23CAF13}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.ADXL345", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Motion.ADXL345\Netduino.Foundation.Sensors.Motion.ADXL345.csproj", "{BBC754AC-3108-41DC-BD6A-314F2379F101}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Motion.ADXL345", "Peripheral_Libs\Sensors.Motion.ADXL345\Driver\Sensors.Motion.ADXL345.csproj", "{BBC754AC-3108-41DC-BD6A-314F2379F101}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.FXAS21002", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Motion.FXAS21002\Netduino.Foundation.Sensors.Motion.FXAS21002.csproj", "{B6E0EB06-49A6-47C3-A47E-E850F0053FB2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Motion.FXAS21002", "Peripheral_Libs\Sensors.Motion.FXAS21002\Driver\Sensors.Motion.FXAS21002.csproj", "{B6E0EB06-49A6-47C3-A47E-E850F0053FB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.FXOS8700CQ", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Motion.FXOS8700CQ\Netduino.Foundation.Sensors.Motion.FXOS8700CQ.csproj", "{63FF6729-1B79-451B-8831-20629616EEAA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Motion.FXOS8700CQ", "Peripheral_Libs\Sensors.Motion.FXOS8700CQ\Driver\Sensors.Motion.FXOS8700CQ.csproj", "{63FF6729-1B79-451B-8831-20629616EEAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.MAG3110", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Motion.MAG3110\Netduino.Foundation.Sensors.Motion.MAG3110.csproj", "{E2E681A1-59E1-44E5-8D08-F0BCA48951BC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Motion.MAG3110", "Peripheral_Libs\Sensors.Motion.MAG3110\Driver\Sensors.Motion.MAG3110.csproj", "{E2E681A1-59E1-44E5-8D08-F0BCA48951BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.MPU6050", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Motion.MPU6050\Netduino.Foundation.Sensors.Motion.MPU6050.csproj", "{F969B9F2-D1CE-4DF4-9E09-2E098ADE665A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Motion.MPU6050", "Peripheral_Libs\Sensors.Motion.MPU6050\Driver\Sensors.Motion.MPU6050.csproj", "{F969B9F2-D1CE-4DF4-9E09-2E098ADE665A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Temperature.DS18B20", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Temperature.DS18B20\Netduino.Foundation.Sensors.Temperature.DS18B20.csproj", "{17108484-8789-4439-9C53-A2AFAEEB54BE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Temperature.DS18B20", "Peripheral_Libs\Sensors.Temperature.DS18B20\Driver\Sensors.Temperature.DS18B20.csproj", "{17108484-8789-4439-9C53-A2AFAEEB54BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.IC.74595", "Additional_Peripheral_Libraries\Netduino.Foundation.IC.74595\Netduino.Foundation.IC.74595.csproj", "{B8ECB2CF-11CF-4C06-A817-CC7700360168}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICs.74595", "Peripheral_Libs\ICs.74595\Driver\ICs.74595.csproj", "{B8ECB2CF-11CF-4C06-A817-CC7700360168}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.GPS.NMEA", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.GPS.NMEA\Netduino.Foundation.Sensors.GPS.NMEA.csproj", "{E0526237-4F52-4A82-9433-9308431F1214}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.GPS.NMEA", "Peripheral_Libs\Sensors.GPS.NMEA\Driver\Sensors.GPS.NMEA.csproj", "{E0526237-4F52-4A82-9433-9308431F1214}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Light.SI1145", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Light.SI1145\Netduino.Foundation.Sensors.Light.SI1145.csproj", "{5BCDA33E-90D7-462E-8B4D-768258C92BBB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Light.SI1145", "Peripheral_Libs\Sensors.Light.SI1145\Driver\Sensors.Light.SI1145.csproj", "{5BCDA33E-90D7-462E-8B4D-768258C92BBB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.MPL115A2", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.MPL115A2\Netduino.Foundation.Sensors.Barometric.MPL115A2.csproj", "{ABF79BD5-8EA2-4F42-9C1A-41AFC3A6EAEB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Barometric.MPL115A2", "Peripheral_Libs\Sensors.Barometric.MPL115A2\Driver\Sensors.Barometric.MPL115A2.csproj", "{ABF79BD5-8EA2-4F42-9C1A-41AFC3A6EAEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Servos.Servo", "Additional_Peripheral_Libraries\Netduino.Foundation.Servos.Servo\Netduino.Foundation.Servos.Servo.csproj", "{8EFE2319-3D0D-4E57-B25F-02E6401FC45F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Servos.Servo.Core", "Peripheral_Libs\Servos.Servo\Driver\Servos.Servo.Core.csproj", "{8EFE2319-3D0D-4E57-B25F-02E6401FC45F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.RTC.DS323x", "Additional_Peripheral_Libraries\Netduino.Foundation.RTC.DS323x\Netduino.Foundation.RTC.DS323x.csproj", "{94AA6C5B-5A98-492D-B79E-23C1437EDA8B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RTCs.DS323x", "Peripheral_Libs\RTCs.DS323x\Driver\RTCs.DS323x.csproj", "{94AA6C5B-5A98-492D-B79E-23C1437EDA8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Barometric.GroveTH02", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Barometric.GroveTH02\Netduino.Foundation.Sensors.Barometric.GroveTH02.csproj", "{F54C544C-716D-477C-A7D0-6AAE6F04902D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Atmospheric.GroveTH02", "Peripheral_Libs\Sensors.Atmospheric.GroveTH02\Driver\Sensors.Atmospheric.GroveTH02.csproj", "{F54C544C-716D-477C-A7D0-6AAE6F04902D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.ParallaxPIR", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Motion.ParallaxPIR\Netduino.Foundation.Sensors.Motion.ParallaxPIR.csproj", "{D72E15FF-84F3-41E2-AC15-F8BAFA7FFBD4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Motion.ParallaxPIR", "Peripheral_Libs\Sensors.Motion.ParallaxPIR\Driver\Sensors.Motion.ParallaxPIR.csproj", "{D72E15FF-84F3-41E2-AC15-F8BAFA7FFBD4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.IC.EEPROM.AT24Cxx", "Additional_Peripheral_Libraries\Netduino.Foundation.IC.EEPROM.AT24Cxx\Netduino.Foundation.IC.EEPROM.AT24Cxx.csproj", "{E406EED1-8BE6-4BB1-A498-1FCF485D19B3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICs.EEPROM.AT24Cxx", "Peripheral_Libs\ICs.EEPROM.AT24Cxx\Driver\ICs.EEPROM.AT24Cxx.csproj", "{E406EED1-8BE6-4BB1-A498-1FCF485D19B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Displays.MicroLiquidCrystal", "Additional_Peripheral_Libraries\Netduino.Foundation.Displays.MicroLiquidCrystal\Netduino.Foundation.Displays.MicroLiquidCrystal.csproj", "{B925A846-5EDE-436F-B217-6B35DAF5AFA1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Displays.MicroLiquidCrystal", "Peripheral_Libs\Displays.MicroLiquidCrystal\Driver\Displays.MicroLiquidCrystal.csproj", "{B925A846-5EDE-436F-B217-6B35DAF5AFA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Displays.GraphicsLibrary", "Additional_Peripheral_Libraries\Netduino.Foundation.Displays.GraphicsLibrary\Netduino.Foundation.Displays.GraphicsLibrary.csproj", "{F99B3A2B-8E77-4A8E-AD2B-C43C65153C9B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Displays.GraphicsLibrary", "Peripheral_Libs\Displays.GraphicsLibrary\Driver\Displays.GraphicsLibrary.csproj", "{F99B3A2B-8E77-4A8E-AD2B-C43C65153C9B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Displays.SSD1306", "Additional_Peripheral_Libraries\Netduino.Foundation.Displays.SSD1306\Netduino.Foundation.Displays.SSD1306.csproj", "{CC0BB903-7EA1-4C44-BD4E-FCBE41CE7B20}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Displays.SSD1306", "Peripheral_Libs\Displays.SSD1306\Driver\Displays.SSD1306.csproj", "{CC0BB903-7EA1-4C44-BD4E-FCBE41CE7B20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Motion.BNO055", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Motion.BNO055\Netduino.Foundation.Sensors.Motion.BNO055.csproj", "{F8B3DE4F-9D4F-48EC-944C-31D0D81DB516}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Motion.BNO055", "Peripheral_Libs\Sensors.Motion.BNO055\Driver\Sensors.Motion.BNO055.csproj", "{F8B3DE4F-9D4F-48EC-944C-31D0D81DB516}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Temperature.TMP102", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Temperature.TMP102\Netduino.Foundation.Sensors.Temperature.TMP102.csproj", "{30556790-B657-4468-8022-4EFE710C5235}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Temperature.TMP102", "Peripheral_Libs\Sensors.Temperature.TMP102\Driver\Sensors.Temperature.TMP102.csproj", "{30556790-B657-4468-8022-4EFE710C5235}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Sensors.Weather.Weathershield", "Additional_Peripheral_Libraries\Netduino.Foundation.Sensors.Weather.Weathershield\Netduino.Foundation.Sensors.Weather.Weathershield.csproj", "{CF1D2665-E746-48F0-AAC8-81086EB3FF86}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shields.SparkFunWeatherShield", "Peripheral_Libs\Shields.SparkFunWeatherShield\Driver\Shields.SparkFunWeatherShield.csproj", "{CF1D2665-E746-48F0-AAC8-81086EB3FF86}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Displays.GraphicsLibrary", "Displays.GraphicsLibrary", "{E8FB2C71-6BCF-48F9-9883-0517514009EA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Displays.MicroLiquidCrystal", "Displays.MicroLiquidCrystal", "{2F73834C-B482-47DC-935B-AC04B7D1ED70}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Displays.SerialLCD", "Displays.SerialLCD", "{9E11B915-F2F4-4575-B498-366E71919991}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Displays.SSD1306", "Displays.SSD1306", "{9B0A9511-41D0-40EB-95D5-ADD34F23D232}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ICs.74595", "ICs.74595", "{72B972B7-1631-4B3F-B913-FD71166C06AC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ICs.EEPROM.AT24Cxx", "ICs.EEPROM.AT24Cxx", "{161F1A59-9B46-4CCB-A2A8-FA0A261FC7EB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shields.AdafruitMotorShield", "Shields.AdafruitMotorShield", "{D743A47B-F613-4E69-85C7-E41D306D7106}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RTCs.DS323x", "RTCs.DS323x", "{7D63307D-7376-4065-BCDD-0698A4495D82}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Atmospheric.BME280", "Sensors.Atmospheric.BME280", "{C2E88F6F-808F-4152-ABF6-175E41003563}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Atmospheric.BMP085", "Sensors.Atmospheric.BMP085", "{10350B80-90E2-4704-8BCA-40725890525F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Atmospheric.GroveTH02", "Sensors.Atmospheric.GroveTH02", "{6C1A179F-2671-4A45-A898-585AE8AD06BF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Atmospheric.HIH6130", "Sensors.Atmospheric.HIH6130", "{EE88F7AB-FF9F-4528-A144-DC309F889CFA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Atmospheric.HTU21DF", "Sensors.Atmospheric.HTU21DF", "{88D613DD-6E1E-46E7-A420-B6BA9FDDE66D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Atmospheric.SHT31D", "Sensors.Atmospheric.SHT31D", "{E1FAB84F-2D43-456A-82E8-91F05F38619F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Atmospheric.SI7021", "Sensors.Atmospheric.SI7021", "{BCE79E18-0CA0-4773-835D-D03155FB7288}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Barometric.MPL115A2", "Sensors.Barometric.MPL115A2", "{707C0069-0ABE-450E-A8F4-10A080AC1B00}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensor.Barometric.MPL3115A2", "Sensor.Barometric.MPL3115A2", "{8A381BBE-FF18-4E72-9FCA-B6175AED492C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Compass.Grove3AxisDigitalCompass", "Sensors.Compass.Grove3AxisDigitalCompass", "{B8996D87-8687-4A9C-91FB-7DB4FD6CFA2A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Distance.SharpGP2D12", "Sensors.Distance.SharpGP2D12", "{082CD7FB-C419-4627-845B-E519DB244B05}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.GPS.NMEA", "Sensors.GPS.NMEA", "{2C71582F-14CE-4A63-A4EB-59991E12E1C1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Light.ALSPT19315C", "Sensors.Light.ALSPT19315C", "{02AF3CD8-EA71-46FD-B16D-04DE6B9227CA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Light.SI1145", "Sensors.Light.SI1145", "{D357C67E-69E5-4D82-8A79-7561D17283A8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Light.TSL2561", "Sensors.Light.TSL2561", "{50ED6D3E-6A87-4075-91A3-A9C36902AFDA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Motion.ADXL335", "Sensors.Motion.ADXL335", "{EDDEAD23-FA0A-4FA9-9C2B-31EB80073BC4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Motion.ADXL345", "Sensors.Motion.ADXL345", "{2F0EDA4D-FC32-43C8-80E1-BA272A916493}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Motion.ADXL362", "Sensors.Motion.ADXL362", "{AFDBF25F-ABC5-4A4B-91C7-F910573939AD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Motion.BNO055", "Sensors.Motion.BNO055", "{137A8D92-810B-4CD6-A0BF-0F9F516254B8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Motion.FXAS21002", "Sensors.Motion.FXAS21002", "{4D556A43-DEC3-43D1-930A-A7511379D918}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Motion.FXOS8700CQ", "Sensors.Motion.FXOS8700CQ", "{5AFF6A5A-782C-462C-8CFF-9C8DB04844AB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Motion.MAG3110", "Sensors.Motion.MAG3110", "{C9A566DC-276B-4FDF-BC54-B14094528CAA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Motion.Memsic2125", "Sensors.Motion.Memsic2125", "{E18A1204-A865-4BF7-A0C7-5E04A16FF470}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Motion.MPU6050", "Sensors.Motion.MPU6050", "{4ECA0E95-D92B-4AD6-9187-C4BA9824A615}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Motion.ParallaxPIR", "Sensors.Motion.ParallaxPIR", "{79C8E761-03A5-46D3-A7FB-E6ACF1931820}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shields.WeatherShield", "Shields.WeatherShield", "{89AF19A5-8681-4AAE-8C34-FF81C407871B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Temperature.Analog", "Sensors.Temperature.Analog", "{8613421C-B64B-409C-905B-A0AAD03EAEB8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Temperature.DS18B20", "Sensors.Temperature.DS18B20", "{A010BAF1-2220-49A3-B478-15E05FE8B3EC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Temperature.TMP102", "Sensors.Temperature.TMP102", "{C9267962-0CE4-4904-A4AC-08F4736C8E8D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Servos.Servo.Core", "Servos.Servo.Core", "{FF35EA4A-5CF5-4B70-BF82-D68A11AC1FD8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -404,5 +480,43 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0} = {82E59041-71D9-420E-B3FE-836243B81E1E}
+		{F99B3A2B-8E77-4A8E-AD2B-C43C65153C9B} = {E8FB2C71-6BCF-48F9-9883-0517514009EA}
+		{B925A846-5EDE-436F-B217-6B35DAF5AFA1} = {2F73834C-B482-47DC-935B-AC04B7D1ED70}
+		{D32F7103-5F7B-4880-8C80-B17570F4380D} = {9E11B915-F2F4-4575-B498-366E71919991}
+		{CC0BB903-7EA1-4C44-BD4E-FCBE41CE7B20} = {9B0A9511-41D0-40EB-95D5-ADD34F23D232}
+		{B8ECB2CF-11CF-4C06-A817-CC7700360168} = {72B972B7-1631-4B3F-B913-FD71166C06AC}
+		{E406EED1-8BE6-4BB1-A498-1FCF485D19B3} = {161F1A59-9B46-4CCB-A2A8-FA0A261FC7EB}
+		{72D2D0F4-3E30-46E3-8EF9-392DDAF77EBE} = {D743A47B-F613-4E69-85C7-E41D306D7106}
+		{94AA6C5B-5A98-492D-B79E-23C1437EDA8B} = {7D63307D-7376-4065-BCDD-0698A4495D82}
+		{565DC80C-9F37-4FF4-9E39-A06BF880C64C} = {C2E88F6F-808F-4152-ABF6-175E41003563}
+		{29261BF0-47B8-48FA-851F-E24158069228} = {10350B80-90E2-4704-8BCA-40725890525F}
+		{F54C544C-716D-477C-A7D0-6AAE6F04902D} = {6C1A179F-2671-4A45-A898-585AE8AD06BF}
+		{F6428AF2-EC4B-4FB7-AB15-71CCD0B67985} = {EE88F7AB-FF9F-4528-A144-DC309F889CFA}
+		{25442BC4-A47A-440D-B87B-C628BC4A9F74} = {88D613DD-6E1E-46E7-A420-B6BA9FDDE66D}
+		{FB02A7ED-4CAF-43FD-A91F-DC0EEB8597CB} = {E1FAB84F-2D43-456A-82E8-91F05F38619F}
+		{46810344-EB9D-47DD-A7F1-CAD71E702B59} = {BCE79E18-0CA0-4773-835D-D03155FB7288}
+		{ABF79BD5-8EA2-4F42-9C1A-41AFC3A6EAEB} = {707C0069-0ABE-450E-A8F4-10A080AC1B00}
+		{CEC7105C-617B-4C4F-8654-A65718AE7217} = {8A381BBE-FF18-4E72-9FCA-B6175AED492C}
+		{8CD6A83E-A425-417E-BD8E-8C2CFB0B4CB4} = {B8996D87-8687-4A9C-91FB-7DB4FD6CFA2A}
+		{105B4678-62F3-49BC-AE86-9ED8F0A00D1F} = {082CD7FB-C419-4627-845B-E519DB244B05}
+		{E0526237-4F52-4A82-9433-9308431F1214} = {2C71582F-14CE-4A63-A4EB-59991E12E1C1}
+		{2F9EEB9E-D4F0-4C17-B159-D6D66410A2CC} = {02AF3CD8-EA71-46FD-B16D-04DE6B9227CA}
+		{5BCDA33E-90D7-462E-8B4D-768258C92BBB} = {D357C67E-69E5-4D82-8A79-7561D17283A8}
+		{AC24642E-E6DA-47D7-B4F5-9F12F35BE78A} = {50ED6D3E-6A87-4075-91A3-A9C36902AFDA}
+		{798D429C-E6C4-452D-922D-EC0EB23CAF13} = {EDDEAD23-FA0A-4FA9-9C2B-31EB80073BC4}
+		{BBC754AC-3108-41DC-BD6A-314F2379F101} = {2F0EDA4D-FC32-43C8-80E1-BA272A916493}
+		{A9601FA8-73EC-401D-89B1-4405F155928C} = {AFDBF25F-ABC5-4A4B-91C7-F910573939AD}
+		{F8B3DE4F-9D4F-48EC-944C-31D0D81DB516} = {137A8D92-810B-4CD6-A0BF-0F9F516254B8}
+		{B6E0EB06-49A6-47C3-A47E-E850F0053FB2} = {4D556A43-DEC3-43D1-930A-A7511379D918}
+		{63FF6729-1B79-451B-8831-20629616EEAA} = {5AFF6A5A-782C-462C-8CFF-9C8DB04844AB}
+		{E2E681A1-59E1-44E5-8D08-F0BCA48951BC} = {C9A566DC-276B-4FDF-BC54-B14094528CAA}
+		{831CCCF7-8F8D-434D-809A-F2995A5B5730} = {E18A1204-A865-4BF7-A0C7-5E04A16FF470}
+		{F969B9F2-D1CE-4DF4-9E09-2E098ADE665A} = {4ECA0E95-D92B-4AD6-9187-C4BA9824A615}
+		{D72E15FF-84F3-41E2-AC15-F8BAFA7FFBD4} = {79C8E761-03A5-46D3-A7FB-E6ACF1931820}
+		{CF1D2665-E746-48F0-AAC8-81086EB3FF86} = {89AF19A5-8681-4AAE-8C34-FF81C407871B}
+		{79372BE0-C1EC-4AC7-8481-6AB20013FC35} = {8613421C-B64B-409C-905B-A0AAD03EAEB8}
+		{17108484-8789-4439-9C53-A2AFAEEB54BE} = {A010BAF1-2220-49A3-B478-15E05FE8B3EC}
+		{30556790-B657-4468-8022-4EFE710C5235} = {C9267962-0CE4-4904-A4AC-08F4736C8E8D}
+		{8EFE2319-3D0D-4E57-B25F-02E6401FC45F} = {FF35EA4A-5CF5-4B70-BF82-D68A11AC1FD8}
 	EndGlobalSection
 EndGlobal
