@@ -162,6 +162,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BME280_Sample", "Peripheral
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SHT31D_Sample", "Peripheral_Libs\Sensors.Atmospheric.SHT31D\Samples\SHT31D_Sample\SHT31D_Sample.csproj", "{020C3855-223E-4260-9146-F0C9DD5028A9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HIH6130_Sample", "Peripheral_Libs\Sensors.Atmospheric.HIH6130\Samples\HIH6130_Sample\HIH6130_Sample.csproj", "{1A7056DC-FF2D-4CBB-87DC-CB41AF30E550}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -672,6 +674,20 @@ Global
 		{020C3855-223E-4260-9146-F0C9DD5028A9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{020C3855-223E-4260-9146-F0C9DD5028A9}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
 		{020C3855-223E-4260-9146-F0C9DD5028A9}.Release|x86.ActiveCfg = Release|Any CPU
+		{1A7056DC-FF2D-4CBB-87DC-CB41AF30E550}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A7056DC-FF2D-4CBB-87DC-CB41AF30E550}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A7056DC-FF2D-4CBB-87DC-CB41AF30E550}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{1A7056DC-FF2D-4CBB-87DC-CB41AF30E550}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{1A7056DC-FF2D-4CBB-87DC-CB41AF30E550}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{1A7056DC-FF2D-4CBB-87DC-CB41AF30E550}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
+		{1A7056DC-FF2D-4CBB-87DC-CB41AF30E550}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1A7056DC-FF2D-4CBB-87DC-CB41AF30E550}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A7056DC-FF2D-4CBB-87DC-CB41AF30E550}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A7056DC-FF2D-4CBB-87DC-CB41AF30E550}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{1A7056DC-FF2D-4CBB-87DC-CB41AF30E550}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1A7056DC-FF2D-4CBB-87DC-CB41AF30E550}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{1A7056DC-FF2D-4CBB-87DC-CB41AF30E550}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
+		{1A7056DC-FF2D-4CBB-87DC-CB41AF30E550}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -718,5 +734,6 @@ Global
 		{CF1D2665-E746-48F0-AAC8-81086EB3FF86} = {89AF19A5-8681-4AAE-8C34-FF81C407871B}
 		{3CCD2F7A-E97F-4BBE-82AF-C5F356E93F9B} = {C2E88F6F-808F-4152-ABF6-175E41003563}
 		{020C3855-223E-4260-9146-F0C9DD5028A9} = {E1FAB84F-2D43-456A-82E8-91F05F38619F}
+		{1A7056DC-FF2D-4CBB-87DC-CB41AF30E550} = {EE88F7AB-FF9F-4528-A144-DC309F889CFA}
 	EndGlobalSection
 EndGlobal
