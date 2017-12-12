@@ -46,6 +46,7 @@
     <Compile Include="OutputPort.cs" />
     <Compile Include="Port.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoslynFixHack.cs" />
     <Compile Include="Scopes\DebugScope.cs" />
     <Compile Include="Scopes\IScope.cs" />
     <Compile Include="Sensors\Buttons\IButton.cs" />
@@ -93,12 +94,11 @@
     <Reference Include="Microsoft.SPOT.IO" />
     <Reference Include="System.IO" />
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup />
   <ItemGroup>
     <Folder Include="Sensors\Location\" />
-    <Folder Include="BaseClasses\" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -34,15 +34,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Netduino.Foundation.Sensors.Barometric.SI7021\Netduino.Foundation.Sensors.Barometric.SI7021.csproj">
+    <ProjectReference Include="..\..\Sensors.Atmospheric.SI7021\Driver\Sensors.Atmospheric.SI7021.csproj">
       <Project>{46810344-EB9D-47DD-A7F1-CAD71E702B59}</Project>
       <Name>Sensors.Atmospheric.SI7021</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Netduino.Foundation.Sensors.Light.ALSPT19315C\Netduino.Foundation.Sensors.Light.ALSPT19315C.csproj">
+    <ProjectReference Include="..\..\Sensors.Light.ALSPT19315C\Driver\Sensors.Light.ALSPT19315C.csproj">
       <Project>{2F9EEB9E-D4F0-4C17-B159-D6D66410A2CC}</Project>
       <Name>Sensors.Light.ALSPT19315C</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Netduino.Foundation.Sensors.Barometric.MPL3115A2\Netduino.Foundation.Sensors.Barometric.MPL3115A2.csproj">
+    <ProjectReference Include="..\..\Sensors.Barometric.MPL3115A2\Driver\Sensors.Barometric.MPL3115A2.csproj">
       <Project>{CEC7105C-617B-4C4F-8654-A65718AE7217}</Project>
       <Name>Sensors.Barometric.MPL3115A2</Name>
     </ProjectReference>
