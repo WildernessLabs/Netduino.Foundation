@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>WildernessLabs.Netduino.Foundation.Sensors.Barometric.SI7021</id>
-    <title>Netduino.Foundation.Sensors.Barometric.SI7021</title>
+    <id>WildernessLabs.Netduino.Foundation.Sensors.Atmospheric.SI7021</id>
+    <title>Netduino.Foundation.Sensors.Atmospheric.SI7021</title>
     <version>$version$</version>
     <authors>Mark Stevens</authors>
     <owners>Wilderness Labs</owners>
@@ -19,8 +19,8 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin/Release/Netduino.Foundation.Sensors.Barometric.SI7021.*" target="lib/netmf43" />
-    <file src="bin/Release/le/Netduino.Foundation.Sensors.Barometric.SI7021.*" target="lib/netmf43/le" />
-    <file src="bin/Release/be/Netduino.Foundation.Sensors.Barometric.SI7021.*" target="lib/netmf43/be" />
+    <file src="bin\Release\Netduino.Foundation.Sensors.Barometric.SI7021.*" target="lib\netmf43" />
+    <file src="bin\Release\le\Netduino.Foundation.Sensors.Barometric.SI7021.*" target="lib\netmf43\le" />
+    <file src="bin\Release\be\Netduino.Foundation.Sensors.Barometric.SI7021.*" target="lib\netmf43\be" />
   </files>
 </package>
