@@ -15,7 +15,7 @@
     <copyright>Copyright 2017 Wilderness Labs</copyright>
     <tags>NETMF Netduino</tags>
     <dependencies>
-        <dependency id="WildernessLabs.Netduino.Foundation" version="1.0" />
+        <dependency id="WildernessLabs.Netduino.Foundation" version="0.5" />
     </dependencies>
   </metadata>
   <files>

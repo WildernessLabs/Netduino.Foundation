@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>WildernessLabs.Netduino.Foundation.RTCs.DS323x</id>
-    <title>Netduino.Netduino.Foundation.RTCs.DS323x</title>
+    <id>WildernessLabs.Netduino.Foundation.Displays.MicroLiquidCrystal</id>
+    <title>Netduino.Foundation.Displays.MicroLiquidCrystal</title>
     <version>$version$</version>
     <authors>Mark Stevens</authors>
     <owners>Wilderness Labs</owners>
@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/WildernessLabs/Netduino.Foundation</projectUrl>
 <!--    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>DS323x Real Time Clock Driver</description>
+    <description>MicroLiquidCrystal LCD display driver for Netduino.Foundation</description>
 <!--    <releaseNotes>First release on Nuget.</releaseNotes> -->
     <copyright>Copyright 2017 Wilderness Labs</copyright>
     <tags>NETMF Netduino</tags>
@@ -19,8 +19,8 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin/Release/Netduino.Foundation.RTCs.DS3231.*" target="lib/netmf43" />
-    <file src="bin/Release/le/Netduino.Foundation.RTCs.DS323x.*" target="lib/netmf43/le" />
-    <file src="bin/Release/be/Netduino.Foundation.RTCs.DS323x.*" target="lib/netmf43/be" />
+    <file src="bin/Release/Netduino.Foundation.Displays.MicroLiquidCrystal.*" target="lib/netmf43" />
+    <file src="bin/Release/le/Netduino.Foundation.Displays.MicroLiquidCrystal.*" target="lib/netmf43/le" />
+    <file src="bin/Release/be/Netduino.Foundation.Displays.MicroLiquidCrystal.*" target="lib/netmf43/be" />
   </files>
 </package>

@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("WildernessLabs")]
 [assembly: AssemblyProduct("Netduino.Foundation")]
-[assembly: AssemblyCopyright("Copyright © 2017")]
+[assembly: AssemblyCopyright("Copyright © 2017 WildernessLabs")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

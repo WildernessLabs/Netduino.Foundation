@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>WildernessLabs.Netduino.Foundation.Sensors.Barometric.Bme280</id>
-    <title>Netduino.Foundation.Sensors.Barometric.Bme280</title>
+    <id>WildernessLabs.Netduino.Foundation.Sensors.Atmospheric.BME280</id>
+    <title>Netduino.Foundation.Sensors.Atmospheric.BME280</title>
     <version>$version$</version>
     <authors>Mark Stevens</authors>
     <owners>Wilderness Labs</owners>
@@ -10,17 +10,17 @@
     <projectUrl>https://github.com/WildernessLabs/Netduino.Foundation</projectUrl>
 <!--    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>BME280 barometric sensor driver for Netduino.Foundation</description>
+    <description>BME280 temperature and pressure sensor driver for Netduino.Foundation</description>
 <!--    <releaseNotes>First release on Nuget.</releaseNotes> -->
     <copyright>Copyright 2017 Wilderness Labs</copyright>
     <tags>NETMF Netduino</tags>
     <dependencies>
-        <dependency id="WildernessLabs.Netduino.Foundation" version="1.0" />
+        <dependency id="WildernessLabs.Netduino.Foundation" version="0.5" />
     </dependencies>
   </metadata>
   <files>
-    <file src="bin/Release/Netduino.Foundation.Sensors.Barometric.Bme280.*" target="lib/netmf43" />
-    <file src="bin/Release/le/Netduino.Foundation.Sensors.Barometric.Bme280.*" target="lib/netmf43/le" />
-    <file src="bin/Release/be/Netduino.Foundation.Sensors.Barometric.Bme280.*" target="lib/netmf43/be" />
+    <file src="bin/Release/Netduino.Foundation.Sensors.Atmospheric.BME280.*" target="lib/netmf43" />
+    <file src="bin/Release/le/Netduino.Foundation.Sensors.Atmospheric.BME280.*" target="lib/netmf43/le" />
+    <file src="bin/Release/be/Netduino.Foundation.Sensors.Atmospheric.BME280.*" target="lib/netmf43/be" />
   </files>
 </package>

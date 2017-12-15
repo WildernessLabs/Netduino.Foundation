@@ -7,9 +7,9 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyTitle("Netduino.Foundation.IC.74595")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("${AuthorCopyright}")]
+[assembly: AssemblyCompany("WildernessLabs")]
+[assembly: AssemblyProduct("Netduino.Foundation.IC.74595")]
+[assembly: AssemblyCopyright("Copyright © 2017 WildernessLabs")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

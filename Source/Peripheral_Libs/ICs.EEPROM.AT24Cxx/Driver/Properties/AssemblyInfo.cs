@@ -5,11 +5,11 @@ using System.Runtime.CompilerServices;
 // Change them to the values specific to your project.
 
 [assembly: AssemblyTitle("Netduino.Foundation.IC.EEPROM.AT24Cxx")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("AT24Cxx EEPROM driver for the Netduino.Foundation library.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("${AuthorCopyright}")]
+[assembly: AssemblyCompany("WildernessLabs")]
+[assembly: AssemblyProduct("Netduino.Foundation.IC.EEPROM.AT24Cxx")]
+[assembly: AssemblyCopyright("Copyright © 2017 WildernessLabs")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

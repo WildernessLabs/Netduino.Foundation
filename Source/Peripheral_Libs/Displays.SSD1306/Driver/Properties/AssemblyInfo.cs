@@ -5,11 +5,11 @@ using System.Runtime.CompilerServices;
 // Change them to the values specific to your project.
 
 [assembly: AssemblyTitle("Netduino.Foundation.Displays.SSD1306")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("SSD1306 OLED display driver for the Netduino.Foundation library.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("${AuthorCopyright}")]
+[assembly: AssemblyCompany("WildernessLabs")]
+[assembly: AssemblyProduct("Netduino.Foundation.SSD1306")]
+[assembly: AssemblyCopyright("Copyright © 2017 WildernessLabs")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

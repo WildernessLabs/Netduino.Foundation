@@ -1,6 +1,10 @@
 nuget pack Netduino.Foundation/Netduino.Foundation.nuspec -NoDefaultExcludes
+nuget pack Peripheral_Libs/Displays.GraphicsLibrary/Driver/Displays.GraphicsLibrary.csproj -NoDefaultExcludes -Prop Configuration=Release
+nuget pack Peripheral_Libs/Displays.MicroLiquidCrystal/Driver/Displays.MicroLiquidCrystal.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Peripheral_Libs/Displays.SerialLCD/Driver/Displays.SerialLCD.csproj -NoDefaultExcludes -Prop Configuration=Release
+nuget pack Peripheral_Libs/Displays.SSD1306/Driver/Displays.SSD1306.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Peripheral_Libs/ICs.74595/Driver/ICs.74595.csproj -NoDefaultExcludes -Prop Configuration=Release
+nuget pack Peripheral_Libs/ICs.EEPROM.AT24Cxx/Driver/ICs.EEPROM.AT24Cxx.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Peripheral_Libs/RTCs.DS323x/Driver/RTCs.DS323x.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Peripheral_Libs/Shields.AdafruitMotorShield/Driver/Shields.AdafruitMotorShield.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Peripheral_Libs/Sensors.Atmospheric.BME280/Driver/Sensors.Atmospheric.BME280.csproj -NoDefaultExcludes -Prop Configuration=Release

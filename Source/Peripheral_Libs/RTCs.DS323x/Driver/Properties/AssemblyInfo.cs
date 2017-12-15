@@ -5,11 +5,11 @@ using System.Runtime.CompilerServices;
 // Change them to the values specific to your project.
 
 [assembly: AssemblyTitle("Netduino.Foundation.RTC.DS323x")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("DS323x Real Time Clock driver for the Netduino.Foundation library.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("${AuthorCopyright}")]
+[assembly: AssemblyCompany("WildernessLabs")]
+[assembly: AssemblyProduct("Netduino.Foundation.RTC.DS323x")]
+[assembly: AssemblyCopyright("Copyright © 2017 WildernessLabs")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

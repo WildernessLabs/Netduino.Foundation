@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/WildernessLabs/Netduino.Foundation</projectUrl>
 <!--    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>74595 Level shifter driver for Netduino.Foundation</description>
+    <description>74595 shift register driver for Netduino.Foundation</description>
 <!--    <releaseNotes>First release on Nuget.</releaseNotes> -->
     <copyright>Copyright 2017 Wilderness Labs</copyright>
     <tags>NETMF Netduino</tags>
