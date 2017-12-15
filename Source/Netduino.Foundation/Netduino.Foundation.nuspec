@@ -4,7 +4,7 @@
     <id>WildernessLabs.Netduino.Foundation</id>
     <title>Netduino.Foundation</title>
     <version>$version$</version>
-    <authors>Bryan Costanich, Frank Krueger, Craig Dunn</authors>
+    <authors>Bryan Costanich, Frank Krueger, Craig Dunn, Mark Stevens</authors>
     <owners>Wilderness Labs</owners>
     <licenseUrl>https://github.com/WildernessLabs/Netduino.Foundation/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/WildernessLabs/Netduino.Foundation</projectUrl>
@@ -25,8 +25,8 @@
   </metadata>
   <!-- files to put into the nuget package. target is where they get put into the package. -->
   <files>
-    <file src="bin/Release/Netduino.Foundation.*" target="lib/netmf43" />
-    <file src="bin/Release/le/Netduino.Foundation.*" target="lib/netmf43/le" />
-    <file src="bin/Release/be/Netduino.Foundation.*" target="lib/netmf43/be" />
+    <file src="bin\Release\Netduino.Foundation.*" target="lib\netmf43" />
+    <file src="bin\Release\le\Netduino.Foundation.*" target="lib\netmf43\le" />
+    <file src="bin\Release\be\Netduino.Foundation.*" target="lib\netmf43\be" />
   </files>
 </package>
