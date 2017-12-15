@@ -15,12 +15,12 @@
     <copyright>Copyright 2017 Wilderness Labs</copyright>
     <tags>NETMF Netduino</tags>
     <dependencies>
-        <dependency id="WildernessLabs.Netduino.Foundation" version="1.0" />
+        <dependency id="WildernessLabs.Netduino.Foundation" version="0.5" />
     </dependencies>
   </metadata>
   <files>
-    <file src="bin/Release/Netduino.Foundation.Sensors.Motion.Memsic2125.*" target="lib/netmf43" />
-    <file src="bin/Release/le/Netduino.Foundation.Sensors.Motion.Memsic2125.*" target="lib/netmf43/le" />
-    <file src="bin/Release/be/Netduino.Foundation.Sensors.Motion.Memsic2125.*" target="lib/netmf43/be" />
+    <file src="bin\Release\Netduino.Foundation.Sensors.Motion.Memsic2125.*" target="lib\netmf43" />
+    <file src="bin\Release\le\Netduino.Foundation.Sensors.Motion.Memsic2125.*" target="lib\netmf43\le" />
+    <file src="bin\Release\be\Netduino.Foundation.Sensors.Motion.Memsic2125.*" target="lib\netmf43\be" />
   </files>
 </package>

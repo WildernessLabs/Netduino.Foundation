@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>WildernessLabs.Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass</id>
-    <title>Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass</title>
+    <id>WildernessLabs.Netduino.Foundation.Servos.Servo</id>
+    <title>Netduino.Netduino.Foundation.Servos.Servo</title>
     <version>$version$</version>
     <authors>Mark Stevens</authors>
     <owners>Wilderness Labs</owners>
@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/WildernessLabs/Netduino.Foundation</projectUrl>
 <!--    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Grove 3 axis digital compass sensor driver for Netduino.Foundation</description>
+    <description>Generic Servo</description>
 <!--    <releaseNotes>First release on Nuget.</releaseNotes> -->
     <copyright>Copyright 2017 Wilderness Labs</copyright>
     <tags>NETMF Netduino</tags>
@@ -19,8 +19,8 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass.*" target="lib\netmf43" />
-    <file src="bin\Release\le\Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass.*" target="lib\netmf43\le" />
-    <file src="bin\Release\be\Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass.*" target="lib\netmf43\be" />
+    <file src="bin\Release\Netduino.Foundation.Servos.Servo.*" target="lib\netmf43" />
+    <file src="bin\Release\le\Netduino.Foundation.Servos.Servo.*" target="lib\netmf43\le" />
+    <file src="bin\Release\be\Netduino.Foundation.Servos.Servo.*" target="lib\netmf43\be" />
   </files>
 </package>

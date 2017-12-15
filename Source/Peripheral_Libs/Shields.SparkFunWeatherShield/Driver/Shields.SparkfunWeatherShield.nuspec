@@ -1,26 +1,26 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>WildernessLabs.Netduino.Foundation.Servos.Servo</id>
-    <title>Netduino.Netduino.Foundation.Servos.Servo</title>
+    <id>WildernessLabs.Netduino.Foundation.Shields.SparkfunWeatherShield</id>
+    <title>Netduino.Foundation.Shields.SparkfunWeatherShield</title>
     <version>$version$</version>
-    <authors>Mark Stevens</authors>
+    <authors>Frank Krueger</authors>
     <owners>Wilderness Labs</owners>
     <licenseUrl>https://github.com/WildernessLabs/Netduino.Foundation/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/WildernessLabs/Netduino.Foundation</projectUrl>
 <!--    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Generic Servo</description>
+    <description>Adafruit Motor Shield driver for Netduino.Foundation</description>
 <!--    <releaseNotes>First release on Nuget.</releaseNotes> -->
     <copyright>Copyright 2017 Wilderness Labs</copyright>
     <tags>NETMF Netduino</tags>
     <dependencies>
-        <dependency id="WildernessLabs.Netduino.Foundation" version="1.0" />
+        <dependency id="WildernessLabs.Netduino.Foundation" version="0.5" />
     </dependencies>
   </metadata>
   <files>
-    <file src="bin/Release/Netduino.Foundation.Servos.Servo.*" target="lib/netmf43" />
-    <file src="bin/Release/le/Netduino.Foundation.Servos.Servo.*" target="lib/netmf43/le" />
-    <file src="bin/Release/be/Netduino.Foundation.Servos.Servo.*" target="lib/netmf43/be" />
+    <file src="bin\Release\Netduino.Foundation.Shields.SparkfunWeatherShield.*" target="lib\netmf43" />
+    <file src="bin\Release\le\Netduino.Foundation.Shields.SparkfunWeatherShield.*" target="lib\netmf43\le" />
+    <file src="bin\Release\be\Netduino.Foundation.Shields.SparkfunWeatherShield.*" target="lib\netmf43\be" />
   </files>
 </package>

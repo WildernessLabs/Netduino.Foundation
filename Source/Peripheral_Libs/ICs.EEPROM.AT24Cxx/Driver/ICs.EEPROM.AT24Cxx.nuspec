@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>WildernessLabs.Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass</id>
-    <title>Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass</title>
+    <id>WildernessLabs.Netduino.Foundation.Displays.ICs.EEPROM.AT24Cxx</id>
+    <title>Netduino.Foundation.Displays.ICs.EEPROM.AT24Cxx</title>
     <version>$version$</version>
     <authors>Mark Stevens</authors>
     <owners>Wilderness Labs</owners>
@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/WildernessLabs/Netduino.Foundation</projectUrl>
 <!--    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Grove 3 axis digital compass sensor driver for Netduino.Foundation</description>
+    <description>AT24Cxx EEPROM driver for Netduino.Foundation</description>
 <!--    <releaseNotes>First release on Nuget.</releaseNotes> -->
     <copyright>Copyright 2017 Wilderness Labs</copyright>
     <tags>NETMF Netduino</tags>
@@ -19,8 +19,8 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass.*" target="lib\netmf43" />
-    <file src="bin\Release\le\Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass.*" target="lib\netmf43\le" />
-    <file src="bin\Release\be\Netduino.Foundation.Sensors.Compass.Grove3AxisDigitalCompass.*" target="lib\netmf43\be" />
+    <file src="bin\Release\Netduino.Foundation.Displays.ICs.EEPROM.AT24Cxx.*" target="lib\netmf43" />
+    <file src="bin\Release\le\Netduino.Foundation.Displays.ICs.EEPROM.AT24Cxx.*" target="lib\netmf43\le" />
+    <file src="bin\Release\be\Netduino.Foundation.Displays.ICs.EEPROM.AT24Cxx.*" target="lib\netmf43\be" />
   </files>
 </package>

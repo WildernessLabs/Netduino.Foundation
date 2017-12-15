@@ -10,17 +10,17 @@
     <projectUrl>https://github.com/WildernessLabs/Netduino.Foundation</projectUrl>
 <!--    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>DS323x Real Time Clock Driver</description>
+    <description>DS323x Real Time Clock Driver for the Netduino.</description>
 <!--    <releaseNotes>First release on Nuget.</releaseNotes> -->
     <copyright>Copyright 2017 Wilderness Labs</copyright>
     <tags>NETMF Netduino</tags>
     <dependencies>
-        <dependency id="WildernessLabs.Netduino.Foundation" version="1.0" />
+        <dependency id="WildernessLabs.Netduino.Foundation" version="0.5" />
     </dependencies>
   </metadata>
   <files>
-    <file src="bin/Release/Netduino.Foundation.RTCs.DS3231.*" target="lib/netmf43" />
-    <file src="bin/Release/le/Netduino.Foundation.RTCs.DS323x.*" target="lib/netmf43/le" />
-    <file src="bin/Release/be/Netduino.Foundation.RTCs.DS323x.*" target="lib/netmf43/be" />
+    <file src="bin\Release\Netduino.Foundation.RTCs.DS3231.*" target="lib\netmf43" />
+    <file src="bin\Release\le\Netduino.Foundation.RTCs.DS323x.*" target="lib\netmf43\le" />
+    <file src="bin\Release\be\Netduino.Foundation.RTCs.DS323x.*" target="lib\netmf43\be" />
   </files>
 </package>

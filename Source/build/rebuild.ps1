@@ -1,3 +1,11 @@
+#
+#   Clean the full solution and rebuild all of the Release version of the projects.
+#
+msbuild Netduino.Foundation.Peripherals.sln /property:Configuration=Release /t:Clean
+msbuild Netduino.Foundation.Peripherals.sln /property:Configuration=Release
+#
+#   Regenerate all of the packages
+#
 nuget pack Netduino.Foundation/Netduino.Foundation.nuspec -NoDefaultExcludes
 nuget pack Peripheral_Libs/Displays.GraphicsLibrary/Driver/Displays.GraphicsLibrary.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Peripheral_Libs/Displays.MicroLiquidCrystal/Driver/Displays.MicroLiquidCrystal.csproj -NoDefaultExcludes -Prop Configuration=Release
@@ -37,3 +45,7 @@ nuget pack Peripheral_Libs/Sensors.Temperature.TMP102/Driver/Sensors.Temperature
 nuget pack Peripheral_Libs/Servos.Servo/Driver/Servos.Servo.Core.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Peripheral_Libs/Shields.AdafruitMotorShield/Driver/Shields.AdafruitMotorShield.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Peripheral_Libs/Shields.SparkfunWeatherShield/Driver/Shields.SparkfunWeatherShield.csproj -NoDefaultExcludes -Prop Configuration=Release
+#
+#   Command below moves the packages.
+#
+#nuget init c:\NuGetPackages

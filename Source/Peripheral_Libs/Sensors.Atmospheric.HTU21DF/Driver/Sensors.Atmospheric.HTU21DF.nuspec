@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>WildernessLabs.Netduino.Foundation.Sensors.Barometric.HTU21DF</id>
-    <title>Netduino.Foundation.Sensors.Barometric.HTU21DF</title>
+    <id>WildernessLabs.Netduino.Foundation.Sensors.Atmospheric.HTU21DF</id>
+    <title>Netduino.Foundation.Sensors.Atmospheric.HTU21DF</title>
     <version>$version$</version>
     <authors>Mark Stevens</authors>
     <owners>Wilderness Labs</owners>
@@ -15,12 +15,12 @@
     <copyright>Copyright 2017 Wilderness Labs</copyright>
     <tags>NETMF Netduino</tags>
     <dependencies>
-        <dependency id="WildernessLabs.Netduino.Foundation" version="1.0" />
+        <dependency id="WildernessLabs.Netduino.Foundation" version="0.5" />
     </dependencies>
   </metadata>
   <files>
-    <file src="bin/Release/Netduino.Foundation.Sensors.Barometric.HTU21DF.*" target="lib/netmf43" />
-    <file src="bin/Release/le/Netduino.Foundation.Sensors.Barometric.HTU21DF.*" target="lib/netmf43/le" />
-    <file src="bin/Release/be/Netduino.Foundation.Sensors.Barometric.HTU21DF.*" target="lib/netmf43/be" />
+    <file src="bin\Release\Netduino.Foundation.Sensors.Atmospheric.HTU21DF.*" target="lib\netmf43" />
+    <file src="bin\Release\le\Netduino.Foundation.Sensors.Atmospheric.HTU21DF.*" target="lib\netmf43\le" />
+    <file src="bin\Release\be\Netduino.Foundation.Sensors.Atmospheric.HTU21DF.*" target="lib\netmf43\be" />
   </files>
 </package>

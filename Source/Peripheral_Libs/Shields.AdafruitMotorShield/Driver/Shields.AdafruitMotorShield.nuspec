@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>WildernessLabs.Netduino.Foundation.Motors.AdafruitMotorShield</id>
-    <title>Netduino.Foundation.Motors.AdafruitMotorShield</title>
+    <id>WildernessLabs.Netduino.Foundation.Shields.AdafruitMotorShield</id>
+    <title>Netduino.Foundation.Shields.AdafruitMotorShield</title>
     <version>$version$</version>
     <authors>Frank Krueger</authors>
     <owners>Wilderness Labs</owners>
@@ -15,12 +15,12 @@
     <copyright>Copyright 2017 Wilderness Labs</copyright>
     <tags>NETMF Netduino</tags>
     <dependencies>
-        <dependency id="WildernessLabs.Netduino.Foundation" version="1.0" />
+        <dependency id="WildernessLabs.Netduino.Foundation" version="0.5" />
     </dependencies>
   </metadata>
   <files>
-    <file src="bin/Release/Netduino.Foundation.Motors.AdafruitMotorShield.*" target="lib/netmf43" />
-    <file src="bin/Release/le/Netduino.Foundation.Motors.AdafruitMotorShield.*" target="lib/netmf43/le" />
-    <file src="bin/Release/be/Netduino.Foundation.Motors.AdafruitMotorShield.*" target="lib/netmf43/be" />
+    <file src="bin\Release\Netduino.Foundation.Shields.AdafruitMotorShield.*" target="lib\netmf43" />
+    <file src="bin\Release\le\Netduino.Foundation.Shields.AdafruitMotorShield.*" target="lib\netmf43\le" />
+    <file src="bin\Release\be\Netduino.Foundation.Shields.AdafruitMotorShield.*" target="lib\netmf43\be" />
   </files>
 </package>
