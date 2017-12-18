@@ -9,7 +9,6 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{1A7056DC-FF2D-4CBB-87DC-CB41AF30E550}</ProjectGuid>
     <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>
-    <NetMfTargetsBaseDir Condition="'$(NetMfTargetsBaseDir)'==''">$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\</NetMfTargetsBaseDir>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -59,6 +58,6 @@
       <Name>Sensors.Atmospheric.HIH6130</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Condition="EXISTS('$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets')" Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
-  <Import Condition="!EXISTS('$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets')" Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\$(TargetFrameworkVersion)\CSharp.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\$(TargetFrameworkVersion)\CSharp.targets')" />
+  <Import Project="$([System.Environment]::GetFolderPath(SpecialFolder.LocalApplicationData))\.NETMicroFramework\xbuild\Microsoft\.NET Micro Framework\$(TargetFrameworkVersion)\CSharp.targets" Condition="!Exists('$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\$(TargetFrameworkVersion)\CSharp.targets')" />
 </Project>

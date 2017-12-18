@@ -9,7 +9,6 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{41E656E8-841F-410E-8186-96C107351B0B}</ProjectGuid>
     <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>
-    <NetMfTargetsBaseDir Condition="'$(NetMfTargetsBaseDir)'==''">$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\</NetMfTargetsBaseDir>
     <DeployDevice>Netduino</DeployDevice>
     <DeployTransport>USB</DeployTransport>
   </PropertyGroup>
@@ -33,7 +32,6 @@
   <PropertyGroup>
     <StartupObject>TMP102Sample.Program</StartupObject>
   </PropertyGroup>
-  <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
@@ -59,4 +57,6 @@
       <Name>Sensors.Temperature.TMP102</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\$(TargetFrameworkVersion)\CSharp.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\$(TargetFrameworkVersion)\CSharp.targets')" />
+  <Import Project="$([System.Environment]::GetFolderPath(SpecialFolder.LocalApplicationData))\.NETMicroFramework\xbuild\Microsoft\.NET Micro Framework\$(TargetFrameworkVersion)\CSharp.targets" Condition="!Exists('$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\$(TargetFrameworkVersion)\CSharp.targets')" />
 </Project>
