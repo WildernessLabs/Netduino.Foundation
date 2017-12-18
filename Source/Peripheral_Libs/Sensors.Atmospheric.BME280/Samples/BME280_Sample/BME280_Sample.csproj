@@ -39,6 +39,8 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Native" />
+    <Reference Include="SecretLabs.NETMF.Hardware.NetduinoPlus, Version=4.3.1.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">
@@ -48,6 +50,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Netduino.Foundation\Netduino.Foundation.csproj">
+      <Project>{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}</Project>
+      <Name>Netduino.Foundation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Driver\Sensors.Atmospheric.BME280.csproj">
       <Project>{565DC80C-9F37-4FF4-9E39-A06BF880C64C}</Project>
       <Name>Sensors.Atmospheric.BME280</Name>
