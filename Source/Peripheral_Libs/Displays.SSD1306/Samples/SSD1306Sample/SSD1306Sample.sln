@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSD1306Sample", "SSD1306Sample.csproj", "{39ACBAF9-6225-4687-9A73-B0983C61E6CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Displays.SSD1306", "..\..\Driver\Displays.SSD1306.csproj", "{CC0BB903-7EA1-4C44-BD4E-FCBE41CE7B20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation", "..\..\..\..\Netduino.Foundation\Netduino.Foundation.csproj", "{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Displays.GraphicsLibrary", "..\..\..\Displays.GraphicsLibrary\Driver\Displays.GraphicsLibrary.csproj", "{F99B3A2B-8E77-4A8E-AD2B-C43C65153C9B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{39ACBAF9-6225-4687-9A73-B0983C61E6CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39ACBAF9-6225-4687-9A73-B0983C61E6CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39ACBAF9-6225-4687-9A73-B0983C61E6CD}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{39ACBAF9-6225-4687-9A73-B0983C61E6CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39ACBAF9-6225-4687-9A73-B0983C61E6CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39ACBAF9-6225-4687-9A73-B0983C61E6CD}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{CC0BB903-7EA1-4C44-BD4E-FCBE41CE7B20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC0BB903-7EA1-4C44-BD4E-FCBE41CE7B20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC0BB903-7EA1-4C44-BD4E-FCBE41CE7B20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC0BB903-7EA1-4C44-BD4E-FCBE41CE7B20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F99B3A2B-8E77-4A8E-AD2B-C43C65153C9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F99B3A2B-8E77-4A8E-AD2B-C43C65153C9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F99B3A2B-8E77-4A8E-AD2B-C43C65153C9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F99B3A2B-8E77-4A8E-AD2B-C43C65153C9B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
