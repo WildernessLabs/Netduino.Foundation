@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="703px" height="124px" viewBox="0 0 703 124" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>Netduino_Foundation_Banner_Logo</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Netduino.Foundation-Web-Site" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-144.000000, -177.000000)">
+        <g id="Banner" transform="translate(0.000000, 77.000000)">
+            <g id="Netduino_Foundation_Banner_Logo" transform="translate(148.000000, 96.000000)">
+                <text id="beta" font-family="HelveticaNeue-Light, Helvetica Neue" font-size="31" font-weight="300" fill="#EEEEEE">
+                    <tspan x="639.5" y="36">beta</tspan>
+                </text>
+                <text id="Netduino.Foundation" font-family="BauhausITCbyBT-Medium, Bauhaus Md BT" font-size="72" font-weight="400" fill="#EEEEEE">
+                    <tspan x="4.33789062" y="69">Netduino.Foundation</tspan>
+                </text>
+                <path d="M12.0234375,67.7773438 C12.1747857,70.8518845 12.9278277,73.2633001 14.2825634,75.0115903 C15.6372992,76.7598806 17.8673301,77.6974234 20.9726562,77.8242188 L640.933884,77.8242188" id="Path-2" stroke="#EEEEEE" stroke-width="6.5"></path>
+                <path d="M41.8546134,18.8571739 C41.7625615,16.3720296 40.7444701,14.0153819 38.8003391,11.7872308 C36.8562082,9.5590797 34.344099,8.34642249 31.2640116,8.14925918 L11.9837052,8.14925918 C8.87367398,8.51633299 6.10432989,9.99935369 3.6756729,12.5983213 C1.24701591,15.1972889 0.0971592259,17.2416379 0.226102857,18.7313684 L0.226102857,70.2194775 C0.306536537,77.5116897 1.33242225,82.5907808 3.30375998,85.4567508 C5.27509772,88.3227207 8.16841279,90.2747747 11.9837052,91.312913 L567.979303,90.0800195 C573.237222,90.3369258 576.673573,91.3173037 578.288355,93.0211533 C579.903136,94.725003 580.574874,96.6912128 580.303568,98.9197829" id="Path-3" stroke="#EEEEEE" stroke-width="6.5"></path>
+                <circle id="Oval" stroke="#EEEEEE" stroke-width="6.5" cx="652" cy="78" r="11"></circle>
+                <circle id="Oval-Copy" stroke="#EEEEEE" stroke-width="6.5" cx="580" cy="113" r="11"></circle>
+            </g>
+        </g>
+    </g>
+</svg>
