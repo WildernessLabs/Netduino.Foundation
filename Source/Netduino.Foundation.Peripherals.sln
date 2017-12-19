@@ -166,7 +166,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HIH6130_Sample", "Periphera
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADXL345Sample", "Peripheral_Libs\Sensors.Motion.ADXL345\Samples\ADXL345Sample\ADXL345Sample.csproj", "{54CE0B18-46F8-4586-A40A-A77F8FA7FB2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroLiquidCrystal", "Peripheral_Libs\Displays.MicroLiquidCrystal\Samples\MicroLiquidCrystal\MicroLiquidCrystal.csproj", "{A02478D2-6CB3-420F-88A8-FDD7FDF78FC9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroLiquidCrystalSample", "Peripheral_Libs\Displays.MicroLiquidCrystal\Samples\MicroLiquidCrystal\MicroLiquidCrystalSample.csproj", "{A02478D2-6CB3-420F-88A8-FDD7FDF78FC9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialLCD", "Peripheral_Libs\Displays.SerialLCD\Samples\SerialLCD\SerialLCD.csproj", "{A329C83F-A3D5-4691-817F-E515E9646590}"
 EndProject
@@ -205,6 +205,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMP102Sample", "Peripheral_Libs\Sensors.Temperature.TMP102\Samples\TMP102Sample\TMP102Sample.csproj", "{41E656E8-841F-410E-8186-96C107351B0B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServoSample", "Peripheral_Libs\Servos.Servo\Samples\ServoSample\ServoSample.csproj", "{2BBF1397-50C5-4E99-9649-FF9E7054AB36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParallaxPIRSample", "Peripheral_Libs\Sensors.Motion.ParallaxPIR\Samples\ParallaxPIRSample\ParallaxPIRSample.csproj", "{F14CB0D1-6C9D-442D-82A6-2C96584E4F08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -982,6 +984,18 @@ Global
 		{2BBF1397-50C5-4E99-9649-FF9E7054AB36}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{2BBF1397-50C5-4E99-9649-FF9E7054AB36}.Release|x86.ActiveCfg = Release|Any CPU
 		{2BBF1397-50C5-4E99-9649-FF9E7054AB36}.Release|x86.Build.0 = Release|Any CPU
+		{F14CB0D1-6C9D-442D-82A6-2C96584E4F08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F14CB0D1-6C9D-442D-82A6-2C96584E4F08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F14CB0D1-6C9D-442D-82A6-2C96584E4F08}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F14CB0D1-6C9D-442D-82A6-2C96584E4F08}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F14CB0D1-6C9D-442D-82A6-2C96584E4F08}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F14CB0D1-6C9D-442D-82A6-2C96584E4F08}.Debug|x86.Build.0 = Debug|Any CPU
+		{F14CB0D1-6C9D-442D-82A6-2C96584E4F08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F14CB0D1-6C9D-442D-82A6-2C96584E4F08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F14CB0D1-6C9D-442D-82A6-2C96584E4F08}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F14CB0D1-6C9D-442D-82A6-2C96584E4F08}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F14CB0D1-6C9D-442D-82A6-2C96584E4F08}.Release|x86.ActiveCfg = Release|Any CPU
+		{F14CB0D1-6C9D-442D-82A6-2C96584E4F08}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1050,5 +1064,6 @@ Global
 		{5B598F3F-C1E9-4BBC-A389-C4E3829641C9} = {8613421C-B64B-409C-905B-A0AAD03EAEB8}
 		{41E656E8-841F-410E-8186-96C107351B0B} = {C9267962-0CE4-4904-A4AC-08F4736C8E8D}
 		{2BBF1397-50C5-4E99-9649-FF9E7054AB36} = {FF35EA4A-5CF5-4B70-BF82-D68A11AC1FD8}
+		{F14CB0D1-6C9D-442D-82A6-2C96584E4F08} = {79C8E761-03A5-46D3-A7FB-E6ACF1931820}
 	EndGlobalSection
 EndGlobal
