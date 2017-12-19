@@ -168,13 +168,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADXL345Sample", "Peripheral
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroLiquidCrystalSample", "Peripheral_Libs\Displays.MicroLiquidCrystal\Samples\MicroLiquidCrystal\MicroLiquidCrystalSample.csproj", "{A02478D2-6CB3-420F-88A8-FDD7FDF78FC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialLCD", "Peripheral_Libs\Displays.SerialLCD\Samples\SerialLCD\SerialLCD.csproj", "{A329C83F-A3D5-4691-817F-E515E9646590}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialLCDSample", "Peripheral_Libs\Displays.SerialLCD\Samples\SerialLCD\SerialLCDSample.csproj", "{A329C83F-A3D5-4691-817F-E515E9646590}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSD1306Sample", "Peripheral_Libs\Displays.SSD1306\Samples\SSD1306Sample\SSD1306Sample.csproj", "{39ACBAF9-6225-4687-9A73-B0983C61E6CD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShiftRegister595Sample", "Peripheral_Libs\ICs.74595\Samples\ShiftRegister595Sample\ShiftRegister595Sample.csproj", "{DBB3C3D2-1A10-48D7-A8BC-071ED81CCBF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EEPROM", "Peripheral_Libs\ICs.EEPROM.AT24Cxx\Samples\EEPROM\EEPROM.csproj", "{6BC95B6A-1ADE-4DE2-A7F9-D1015797A7FD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EEPROMSample", "Peripheral_Libs\ICs.EEPROM.AT24Cxx\Samples\EEPROM\EEPROMSample.csproj", "{6BC95B6A-1ADE-4DE2-A7F9-D1015797A7FD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS3231Sample", "Peripheral_Libs\RTCs.DS323x\Samples\DS3231Sample\DS3231Sample.csproj", "{E3BE0D8C-6734-4152-9D7D-91C7080ED496}"
 EndProject
