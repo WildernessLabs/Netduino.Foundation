@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="703px" height="124px" viewBox="0 0 703 124" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="702px" height="124px" viewBox="0 0 702 124" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
     <title>Netduino_Foundation_Banner_Logo</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Netduino.Foundation-Web-Site" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-144.000000, -177.000000)">
+    <g id="Netduino.Foundation-Web-Site-Home" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-144.000000, -177.000000)">
         <g id="Banner" transform="translate(0.000000, 77.000000)">
             <g id="Netduino_Foundation_Banner_Logo" transform="translate(148.000000, 96.000000)">
-                <text id="beta" font-family="HelveticaNeue-Light, Helvetica Neue" font-size="31" font-weight="300" fill="#EEEEEE">
+                <text id="beta" font-family="Roboto-Light, Roboto" font-size="31" font-weight="300" fill="#EEEEEE">
                     <tspan x="639.5" y="36">beta</tspan>
                 </text>
                 <text id="Netduino.Foundation" font-family="BauhausITCbyBT-Medium, Bauhaus Md BT" font-size="72" font-weight="400" fill="#EEEEEE">
