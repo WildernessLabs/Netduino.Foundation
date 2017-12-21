@@ -1,5 +1,5 @@
 ---
-layout: API
+layout: Library
 title: Peripheral Library Reference
 subtitle: Reference documentation for Netduino.Foundation peripheral library.
 ---
