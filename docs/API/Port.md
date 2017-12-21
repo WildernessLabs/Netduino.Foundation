@@ -1,10 +1,10 @@
 ---
-title: Netduino.Foundation.Port Class
+layout: API
+title: Port Class
+subtitle: Represents a connectable input or output on a block.
 ---
 
-Represents a connectable input or output on a block.
-
-## Remarks
+## Info
 
 Ports allow blocks to be bound together such that the output from one port can be directly piped to the input of another port. This allows a reactive programming style paradigm in which the app code more closely resembles the composability of the underlying circuits.
 
