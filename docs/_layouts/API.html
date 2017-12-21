@@ -6,11 +6,16 @@ layout: SiteFrame
     {% include APINavigation.html %}
 </div>
 <div style="float: left;">
-    <h1>
-        {{ page.title }}
-        <br/>
-        {% if page.subtitle %}<small>{{ page.subtitle }}</small>{% endif %}
-    </h1>
+    <div style="background-image: url('/assets/images/Banner_Background.svg'); background-repeat: no-repeat; background-position:right; background-color: #eee; height:265px;">
+        <h1 style="color: #23ABE3;">
+            {{ page.title }}
+            <br/>
+            <div style="color: #524740;">
+                {% if page.subtitle %}<small>{{ page.subtitle }}</small>{% endif %}
+            </div>
+        </h1>
+    </div>
+    
     {{ content }}
 </div>
 <div style="clear: both;"/>
