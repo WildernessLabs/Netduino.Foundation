@@ -1,0 +1,114 @@
+/*!
+ * Start Bootstrap - Scrolling Nav (https://startbootstrap.com/template-overviews/scrolling-nav)
+ * Copyright 2013-2017 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-scrolling-nav/blob/master/LICENSE)
+ */
+
+header {
+  padding: 154px 0 100px;
+}
+
+@media (min-width: 992px) {
+  header {
+    padding: 156px 0 100px;
+  }
+}
+.nav-link.js-scroll-trigger {
+    margin: 2px 1px 3px 73px !important;
+    padding: 0px;
+      
+}
+
+.rightSide {
+    font-size: 24px;
+    text-align: center;
+}
+
+.bg-primary {
+    background-color: #23abe3 !important;
+
+    padding: 39px;
+    margin-top: 60px;
+}
+.nav-item {
+    font-size: 20px !important;
+}
+.py-5.bg-darkfooter {
+    background-color: #555555 ;
+    max-height: 100px;
+}
+.footer {
+    max-height: 29px;
+    margin-top: -11px;
+}
+
+.side.text-gray {
+    font-size: 18px;
+    color: #b47846;
+}
+.color-primary{
+
+background-color: #eeeeee !important;
+
+}
+.colors-primary{
+
+	background-color: #eeeeee !important;
+	padding: 20px;
+    border-radius: 24px;
+    
+}
+.image {
+    margin-top: 31px;
+}
+
+}
+.example {
+    height: 375px;
+}
+.lead {
+    
+    margin-top: -124px !important;
+}
+
+.top {
+    margin-top: -112px !important;
+    margin: 20px;
+}
+.side{
+  margin: 20px!important;
+
+}
+.side_bar{
+
+
+	margin-left: -33px;
+}
+.social {
+    background-color: #EEEEEE;
+    color: black;
+    border: 1px solid #000;
+    border-radius: 3px;
+}
+
+.social:hover {background-color: #e7e7e7;}
+
+.img-thumbnail {
+    width: 92%;
+}
+
+.codeSection {
+    /* max-width: 230px; 
+   max-height: 251px;*/
+}
+.code {
+    /* max-width: 230px; */
+    max-height: 251px;
+}
+
+
+section {
+  padding: 50px 0;
+}
+
+

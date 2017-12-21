@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Scrolling Nav - Start Bootstrap Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+     <link src="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/scrolling-nav.css" rel="stylesheet">
+
+  </head>
+
+  <body id="page-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="image/NF_Small_Logo.svg"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#library">library</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#api">api</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#example">example</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#services">sourse</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#communty">communty</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="bg-primary text-white">
+      <div class="row">
+<div class="col-md-8">
+   <div class="container text-center">
+      <!-- <img class="img-responsive" src="http://localhost/html/image/sidelogo.png"> -->
+      <img src="image/sidelogo.png" class="img-fluid" alt="Responsive image">
+      </div> 
+</div>
+
+<div class="col-md-4">
+<img  class="image"src="image/ByWLabs_Logo.png">
+</div>
+
+      </div>
+     <!--  <div class="container text-center">
+        <h1>Welcome to Scrolling Nav</h1>
+        <p class="lead">A landing page template freshly redesigned for Bootstrap 4</p>
+      </div> -->
+    </header>
+     <header class="color-primary text-black">
+      <div class="container text-left">
+       <p class="lead">Netduino.Foundation is a platform for quickly and easily building connected things using the .NET MicroFramework on Netduino. Created by Wilderness Labs, it’s completely open source and maintained by the Netduino community.</p>
+
+       <div class="row">
+     <div class="col-md-12">
+
+
+       <div class="row pull-right">
+        <div class="col-md-2 socailIcon text-center">
+         <button class="btn btn-primary  social pull-right"><img class="img-fluid" src="image/ButtonIcon_Star(1).png">&nbsp;star</button>
+         <button class="btn btn-primary  social pull-right"><img class="img-fluid" src="image/ButtonIcon_Fork.png">&nbsp;fork</button>
+       </div>
+          <div class="col-md-2">
+         <p class="rightSide">on<strong>  GitHub</strong></p>
+  </div>
+          <div class="col-md-8">
+         <button class="btn btn-primary  social pull-right"><img class="img-fluid" src="image/ButtonIcon_Twitter.png">&nbsp;follow @wildernesslabs</button>
+
+         <button class="btn btn-primary  social pull-right"><img class="img-fluid" src="image/ButtonIcon_Twitter.png">&nbsp;tweet</button>
+       </div>
+     </div>
+       <!-- <button type="button" class="btn btn-default "><span class="glyphicon glyphicon-star"></span> star</button> -->
+       <!-- <button class="btn btn-primary  social"> <img class="img-fluid" src="image/ButtonIcon_Star(1).png">&nbsp;star</button>
+       <button class="btn btn-primary  social"><img class="img-fluid" src="image/ButtonIcon_Fork.png">&nbsp;fork</button>
+       <button class="btn btn-primary  social"><img class="img-fluid" src="image/ButtonIcon_Twitter.png">&nbsp;follow @wildernesslabs</button>
+       <p>on<strong>  GitHub</strong></p>
+       <button class="btn btn-primary  social"><img class="img-fluid" src="image/ButtonIcon_Twitter.png">&nbsp;tweet</button> -->
+       </div>
+      </div>
+      </div>
+       
+
+    </header>
+
+    <section id="library">
+      <div class="container">
+   <div class="row">
+ <div class="col-sm-12">
+    <h3 class="side">Digitel temprature Sample</h3>
+         </div>
+
+          <div class="col-sm-6">
+           <p class="side">Add Netduino.Foundation.TMP36 and .LCD via nuget, and add the following code to a new Netdunio project:</p>
+    
+
+            <div class="colors-primary text-black codeSection">
+        <samp class="codeSub">
+        using Netduino. Foundation; <br>
+
+        public static void Main() <br>
+         { <br>
+            &nbsp;&nbsp;var lcdScreen = new LCDScreen (x, y); <br>
+            &nbsp; var tempSensor = new AnalogTemperature (pin3); <br>
+            &nbsp;&nbsp;var ctoF new CelsiusToFahrenheitBlock (); <br>
+            &nbsp;&nbsp;tempSensor . ConnectTo (ctoF); <br>
+            &nbsp;&nbsp;ctoF .ConnectTo (lcdScreen); <br>
+            &nbsp;&nbsp;while (true) { Thread.Sleep (ieee); } <br>
+        } <br>
+        
+      </samp>
+    </div>
+          <div class="side text-gray">
+       See more examples
+  </div>
+          </div>
+          <div class="col-sm-6">
+            <img class="img-fluid" src="image/Sample_Circuit_Illustration.png">
+            
+          </div>
+        
+      </div>
+    </section>
+
+    <section id="services" class="bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6 mx-auto">
+            <h3 class="side">Huge Peripheral Drive Library</h3>
+            <p class="side">Netduino.Foundation has built in support for most common sensors, motors, and other peripherals available on the market.</p>
+<div class="side text-gray">
+       See the full list
+  </div>
+
+          </div>
+
+           <div class="col-sm-6 mx-auto">
+           <img class="img-fluid" src="image/Library_Icons_Illustration.png">
+
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="api">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 mx-auto">
+            <h3 class="side">Simple,Powerful Architecture and API</h3>
+            <p class="side">Use the Blocks architecture to quickly connect together perihperals for rapid prototyping, or access the full peripheral API manually for more complex behaviors.</p>
+
+            <div class="side text-gray">
+       Explore the documentation
+  </div>
+          </div>
+           <div class="col-lg-6 mx-auto">
+           <img class="img-thumbnail" src="image/Architecture_Illustration@2x.png">
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="communty" class="bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 mx-auto">
+            <h3 class="side">Supportive Communty</h3>
+            <p class="side">Use the Blocks architecture to quickly connect together perihperals for rapid prototyping, or access the full peripheral API manually for more complex behaviors.</p>
+             <div class="side text-gray">
+            Join the community
+          </div>
+          </div>
+           <div class="col-lg-6 mx-auto">
+            <img class="img-thumbnail" src="image/Community_Photo@2x.png">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5 bg-darkfooter">
+      <div class="container">
+
+
+         <div class="row">
+          <div class="col-sm-6 mx-auto">
+            <img class="footer" src="image/WLabs_Footer_logo.png">
+
+          </div>
+
+           <div class="col-sm-6 text-right">
+           <img class="footer" src="image/Twitter_FooterLogo.png">
+           <img class="footer" src="image/GitHub_FooterLogo.png">
+
+
+          </div>
+        
+        <!-- <img class="footer" src="image/WLabs_Footer_logo.png"> -->
+    
+      
+      </div>
+
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/boots trap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom JavaScript for this theme -->
+    <script src="js/scrolling-nav.js"></script>
+
+  </body>
+
+</html>
