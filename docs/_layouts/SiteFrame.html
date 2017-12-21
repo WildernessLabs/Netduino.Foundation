@@ -3,12 +3,13 @@
         <title>{{ site.title }}{% if page.title %} : {{ page.title }}{% endif %}</title>
         <meta name="description" content="{{ site.subtitle }}">
         <link rel="stylesheet" href="/assets/main.css">
+        <link rel="stylesheet" href="/assets/css/temp.css">
     </head>
     <body>
-        <div>Navigation Header</div>
+        <div style="height: 80px;">{% include TopNav.html %}</div>
         <div>
             {{ content }}
         </div>
-        <div>Footer</div>
+        <div>{% include Footer.html %}</div>
     </body>
 </html>
