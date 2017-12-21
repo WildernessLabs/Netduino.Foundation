@@ -1,0 +1,14 @@
+<html>
+    <head>
+        <title>{{ site.title }}{% if page.title %} : {{ page.title }}{% endif %}</title>
+        <meta name="description" content="{{ site.subtitle }}">
+
+    </head>
+    <body>
+        <div>Navigation Header</div>
+        <div>
+            {{ content }}
+        </div>
+        <div>Footer</div>
+    </body>
+</html>
