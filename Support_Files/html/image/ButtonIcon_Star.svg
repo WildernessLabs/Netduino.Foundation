@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="23px" height="22px" viewBox="0 0 23 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>ButtonIcon_Star</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Netduino.Foundation-Web-Site" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-171.000000, -523.000000)">
+        <g id="About" transform="translate(0.000000, 341.000000)" fill="#524740">
+            <g id="Star-Button" transform="translate(161.000000, 175.000000)">
+                <polygon id="ButtonIcon_Star" points="33 15.2142857 24.95 14.1628571 21.5 7 18.05 14.1628571 10 15.2142857 15.9142857 20.57 14.3864286 28.3571429 21.5 24.5292857 28.6135714 28.3571429 27.0857143 20.57"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>
