@@ -27,7 +27,7 @@ header {
 .rightSide {
     font-size: 28px;
     text-align: center;
-     font-family: Roboto !important;
+     font-family: "Roboto script=all rev=1", "Adobe Blank" inherit !important;
       margin-right: 13px;
 }
 
@@ -40,14 +40,27 @@ header {
     margin-top: 60px;
 }
 .nav-item {
-    /*font-size: 20px !important;*/
-    font-family: Roboto !important;
-      font-size: 28px !important;
-      
+    font-family: "Roboto script=all rev=1", "Adobe Blank" inherit !important;
+	font-size: 28px !important;
+	font-weight: lighter;
+  
 }
 .navbar-dark .navbar-nav .nav-link{
 color:#fff;
 
+}
+.left_img {
+  
+   
+}
+.left_row {
+    /* side margin: -13px;*/
+    padding: 6px;
+}
+
+.col-md-12.sampleclass {
+  
+    margin-bottom: 23px;
 }
 
 .bg-dark {
@@ -56,18 +69,34 @@ color:#fff;
 
 
 }
+
+
+
+.pt-5, .py-5 {
+    padding-top: 1.4rem !important;
+}
+
+
+
 .py-5.bg-darkfooter {
     background-color: #555555 ;
-    max-height: 100px;
+    /*max-height: 100px;*/
 }
 .footer {
-    max-height: 29px;
-    margin-top: -11px;
+    max-height: 45px;
+   margin-top: -9px;
 }
+.footer_image {
+    max-height: 45px;
+   margin-top: -9px;
+   padding-right: 83px;
+}
+
 
 .side.text-gray {
     font-size: 18px;
     color: #B09679;
+    font-weight: unset;
 }
 .color-primary{
 
@@ -95,10 +124,10 @@ background-color: #eeeeee !important;
 .lead {
     
     margin-top: -124px !important;
-    font-family: Roboto!important;
+    font-family: "Roboto script=all rev=1", "Adobe Blank" inherit !important;
       font-size: 28px !important;
       color:#555 !important;
-      font-weight: light;
+      font-weight: lighter;
 }
 
 .top {
@@ -106,10 +135,11 @@ background-color: #eeeeee !important;
     margin: 20px;
 }
 .side{
-  margin: 15px!important;
-   font-family: Roboto !important;
-      font-size: 27px !important;
+  margin: 13px!important;
+   font-family: "Roboto script=all rev=1", "Adobe Blank" inherit !important;
+      font-size: 28px !important;
       color:#555;
+	  font-weight: lighter;
 
 }
 .side1{
@@ -133,6 +163,7 @@ background-color: #eeeeee !important;
       font-size: 20px !important;
       color: #B09679;
       margin-right: 18px;
+      max-height: 42px;
 }
 .par{
 
@@ -183,9 +214,13 @@ background-color: #eeeeee !important;
 .top_padding {
     margin-top: 63px;
 }
-.code_set {
+/*.code_set {
     margin: -6px 56px 11px 13px;
     padding: 0px 3px 5px 10px;
+}*/
+.code_set {
+    margin: -5px 18px 14px 10px;
+    padding: 0px 5px 9px 18px;
 }
 .join {
     
