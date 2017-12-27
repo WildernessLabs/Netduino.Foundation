@@ -12,9 +12,9 @@ To use Netduino.Foundation, simply add a nuget reference to the core library (fo
 
 [todo: simple sample app illustrating the manual API of a sensor]
 
-### [Supported Peripherals](Documentation/Supported_Peripherals.md)
+### [Supported Peripherals](http://Netduino.Foundation/Library)
 
-For a list of supported peripherals and their usage info, see the [supported peripherals](Documentation/Supported_Peripherals.md) document.
+For a list of supported peripherals and their usage info, see the [peripheral library](http://Netduino.Foundation/Library) page.
 
 ## Wait, there's more.
 
