@@ -38,7 +38,7 @@ subtitle: Reference documentation for Netduino.Foundation peripheral library.
 | MPL3115A2                 | [MPL3115A2](/Library/Sensors/Barometric/MPL3115A2) Pressure and temperature sensor |
 | SHT31D                    | [SHT31D](/Library/Sensors/Atmospheric/SHT31D) Temperature and humidity sensor |
 | SiI7021                    | [Si7021](/Library/Sensors/Atmospheric/SI7021) Temperature and humidity sensor |
-| TMP102                    | [TMP102](/Source/Peripheral_Libs/Sensors.Temperature.TMP102) Temperature sensor |
+| TMP102                    | [TMP102](/Library/Sensors/Temperature/TMP102) Temperature sensor |
 
 ### Distance Sensors
 
@@ -50,7 +50,7 @@ subtitle: Reference documentation for Netduino.Foundation peripheral library.
 
 | Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
-| NMEA GPS Decoder          | [Generic GPS decoders](/Source/Peripheral_Libs/Sensors.GPS.NMEA) |
+| NMEA GPS Decoder          | [Generic GPS decoders](/Library/Sensors/GPS/NMEA) |
 
 ### Light Sensors
 
