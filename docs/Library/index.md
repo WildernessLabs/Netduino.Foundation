@@ -17,7 +17,7 @@ subtitle: Reference documentation for Netduino.Foundation peripheral library.
 | Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
 | GraphicsLibrary | [General purpose graphics library](/Library/Displays/GraphicsLibrary) |
-| `MicroLiquidCrystal` library | [LCD](/Source/Peripheral_Libs/Displays.MicroLiquidCrystal) using the `MicroLiquidCrystal` library. |
+| `MicroLiquidCrystal` library | [LCD](/Library/Displays/MicroLiquidCrystal) using the `MicroLiquidCrystal` library. |
 | Serial LCD                | [Serial LCD](/Library/Displays/SerialLCD) |
 | SSD1306                   | [SSD1306 OLED Display](/Library/Displays/SSD1306).  Currently supports 128x64 and 128x32 pixel I2C displays. |
 
@@ -56,24 +56,24 @@ subtitle: Reference documentation for Netduino.Foundation peripheral library.
 
 | Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
-| ALS-PT19                  | [ALS-PT19](/Source/Peripheral_Libs/Sensors.Light.ALSPT19315C) series of light sensors |
-| SI1145                    | In Development |
-| TSL2561                   | [Luminosity sensor](/Source/Peripheral_Libs/Sensors.Light.TSL2561) |
+| ALS-PT19                  | [ALS-PT19](/Library/Sensors/Light/ALSPT19315C) series of light sensors |
+| SI1145                    | [SI1145](/Library/Sensors/Light/SI1145) |
+| TSL2561                   | [Luminosity sensor](/Library/Sensors/Light/TSL2561) |
 
 ### Motion and Orientation Sensors
 
 | Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
-| ADXL335 Accelerometer     | [ADXL335 Triple axis accelerometer](/Source/Peripheral_Libs/Sensors.Motion.ADXL335) (+/-3g, Analog output) |
-| ADXL345 Accelerometer     | [ADXL345 Triple axis accelerometer](/Source/Peripheral_Libs/Sensors.Motion.ADXL345) (+/-16g, I2C digital output) |
+| ADXL335 Accelerometer     | [ADXL335 Triple axis accelerometer](/Library/Sensors/Motion/ADXL335) (+/-3g, Analog output) |
+| ADXL345 Accelerometer     | [ADXL345 Triple axis accelerometer](/Library/Sensors/Motion/ADXL345) (+/-16g, I2C digital output) |
 | ADXL362 Accelerometer     | In Development |
-| BNO055 Orientation        | [BNO055 9-Axis Orientation Sensor](/Source/Peripheral_Libs/Sensors.Motion.BNO055) |
+| BNO055 Orientation        | [BNO055 9-Axis Orientation Sensor](/Library/Sensors/Motion/BNO055) |
 | FXAS21002                 | In Development |
 | FXOS8700CQ                | In Development |
-| MAG3110 Magnetometer      | [MAG3110 Three axis magnetometer](/Source/Peripheral_Libs/Sensors.Motion.MAG3110) |
+| MAG3110 Magnetometer      | [MAG3110 Three axis magnetometer](/Library/Sensors/Motion/MAG3110) |
 | Memsic2125                | In Development |
 | MPU6050                   | In Development |
-| Parallax PIR              | [Parallax PIR Rev B](/Source/Peripheral_Libs/Sensors.Motion.ParallaxPIR) |
+| Parallax PIR              | [Parallax PIR Rev B](/Library/Sensors/Motion/ParallaxPIR) |
 
 
 ## Shields
@@ -87,5 +87,5 @@ subtitle: Reference documentation for Netduino.Foundation peripheral library.
 
 | Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
-| Servo Core                  | [Generic Servo Library](/Source/Peripheral_Libs/Servos.Servo) |
+| Servo Core                | [Generic Servo Library](/Library/Servos/Servo) |
 

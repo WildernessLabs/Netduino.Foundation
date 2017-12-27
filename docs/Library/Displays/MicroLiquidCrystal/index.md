@@ -1,8 +1,10 @@
-# Micro Liquid Crystal Display
+---
+layout: Library
+title: μLiquidCrystal
+subtitle: Library for HD44780 based LCD displays.
+---
 
-The μLiquidCrystal is .NET Micro Framework library for popular LCD displays with HD44780 compatible controller.
-
-This library originally appeared on Codeplex (retired 2017).  The original notes and licence agreement can be found [here](licence.md).
+This library originally appeared on Codeplex (retired 2017).  The original notes and license agreement can be found [here](license).
 
 ## Purchasing
 
@@ -65,11 +67,11 @@ The API defined below is usually adequate for most developers using the shift re
 
 The following documentation is also for developers requiring more information or who wish to use other communication methods:
 
-* [ILcdTransferProvider.cs](ILcdTransferProvider.md)
-* [BaseShifterLcdTransferProvider.cs](BaseShifterLcdTransferProvider.md)
-* [Shifter74Hc595TransferProvider.cs](Shifter74Hc595LcdTransferProvider.md)
-* [GpioLcdTransferProvider.cs](GpioLcdTransferProvider.md)
-* [Lcd.cs](Lcd.md)
+* [ILcdTransferProvider.cs](ILcdTransferProvider)
+* [BaseShifterLcdTransferProvider.cs](BaseShifterLcdTransferProvider)
+* [Shifter74Hc595TransferProvider.cs](Shifter74Hc595LcdTransferProvider)
+* [GpioLcdTransferProvider.cs](GpioLcdTransferProvider)
+* [Lcd.cs](Lcd)
 
 ### Enum
 
@@ -79,7 +81,7 @@ The `ShifterPin` enum allows the assignment of the LCD pins on the display to sp
 
 ### Classes and Structures
 
-#### `ShifterSetup` (member of the [`BaseShifterLcdTransferProvider`](BaseShifterLcdTransferProvider.md) class)
+#### `ShifterSetup` (member of the [`BaseShifterLcdTransferProvider`](BaseShifterLcdTransferProvider) class)
 
 The members of the `ShifterSetup` class allow the mapping of the functions on the LCD display pins to shift register pins.
 
