@@ -8,7 +8,7 @@ subtitle: Reference documentation for Netduino.Foundation peripheral library.
 
 | Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
-| 74595 Shift Register      | [74595 shift register](/Source/Peripheral_Libs/ICs.74595) |
+| 74595 Shift Register      | [74595 shift register](/Library/ICs/74595) |
 | AT24Cxx Family of EEPROMS | [AT24Cxx](/Source/Peripheral_Libs/ICs.EEPROM.AT24Cxx) Family of EEPROMs including AT24C32 |
 | DS323x Real Time Clock    | [DS323x Real Time Clock modules](/Source/Peripheral_Libs/RTCs.DS323x) |
 
@@ -16,10 +16,10 @@ subtitle: Reference documentation for Netduino.Foundation peripheral library.
 
 | Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
-| GraphicsLibrary | [General purpose graphics library](/Source/Peripheral_Libs/Displays.GraphicsLibrary) |
+| GraphicsLibrary | [General purpose graphics library](/Library/Displays/GraphicsLibrary) |
 | `MicroLiquidCrystal` library | [LCD](/Source/Peripheral_Libs/Displays.MicroLiquidCrystal) using the `MicroLiquidCrystal` library. |
-| Serial LCD                | [Serial LCD](/Source/Peripheral_Libs/Displays.SerialLCD) |
-| SSD1306                   | [SSD1306 OLED Display](/Source/Peripheral_Libs/Displays.SSD1306).  Currently supports 128x64 and 128x32 pixel I2C displays. |
+| Serial LCD                | [Serial LCD](/Library/Displays/SerialLCD) |
+| SSD1306                   | [SSD1306 OLED Display](/Library/Displays/SSD1306).  Currently supports 128x64 and 128x32 pixel I2C displays. |
 
 ## Sensors
 
