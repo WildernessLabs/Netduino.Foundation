@@ -1,0 +1,63 @@
+/* ===========================================
+   Reference Info
+   =========================================== */
+
+/*
+ * COLORS:
+ *
+ * Text Gray .............. #524740;
+ * Dark Gray .............. #555555; 
+ * Light Gray ............. #b09679;
+ * Lighter Gray ........... #eeeeee;
+ *
+ *
+ *
+ *
+ /
+
+/* ===========================================
+   Base
+   =========================================== */
+
+body {
+  line-height: 1.4;
+  font-family: sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ===========================================
+   Header
+   =========================================== */
+
+header {
+  padding: 1em 0;
+  background: #555555;
+}
+
+header a {
+  color: #eeeeee;
+}
+
+.main-nav ul {
+  text-align: right;
+  padding: 0;
+  margin: 0;
+}
+
+.main-nav li {
+  display: inline-block;
+  list-style-type: none;
+  margin-left: 1em;
+}
+
+.main-nav a {
+  text-decoration: none;
+}
