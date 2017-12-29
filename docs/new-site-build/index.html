@@ -44,6 +44,58 @@
         <img class="wlabs-logo" src="/assets/images/ByWLabs_Logo.svg" alt="Wilderness Labs">
       </div><!-- .container -->
     </section>
+
+    <section class="stripe stripe--dark">
+      <div class="container">
+        <p>Netduino.Foundation is a platform for quickly and easily building connected things using the .NET MicroFramework on Netduino. Created by <a href="">Wilderness Labs</a>, it’s completely <a href="">open source</a> and maintained by the Netduino <a href="">community</a>.</p>
+      </div><!-- .container -->
+    </section>
+
+    <section class="stripe stripe--light">
+      <div class="container">
+        <div class="col col-2-3">
+          <h2>Digital Temperature Sample</h2>
+          <p>Add Netduino.Foundation.TMP36 and .LCD via nuget, and add the following code to a new Netdunio project:</p>
+          
+          <pre class="highlight">
+            <code>
+              using Netduino.Foundation;
+
+              public static void Main()
+              {
+                var lcdScreen = new LCDScreen (x, y);
+                 var tempSensor = new AnalogTemperature (pin3);
+                 var ctoF = new CelsiusToFahrenheitBlock ();
+                 
+                 tempSensor.ConnectTo (ctoF);
+                 ctoF.ConnectTo (lcdScreen);
+
+                 while (true) { Thread.Sleep (1000); }
+              }
+            </code>
+          </pre>
+
+          <p>
+            <a href="">See more examples.</a>
+          </p>
+        </div><!-- .col -->
+        <div class="col col-1-3">
+          <img src="/assets/images/Sample_Circuit_Illustration.svg" alt="Sample Circuit Illustration">
+        </div><!-- .col -->
+      </div><!-- .container -->
+    </section>
+
+    <section class="stripe stripe--dark">
+      <div class="container">
+        <p>Netduino.Foundation is a platform for quickly and easily building connected things using the .NET MicroFramework on Netduino. Created by Wilderness Labs, it’s completely open source and maintained by the Netduino community.</p>
+      </div><!-- .container -->
+    </section>
+
+    <section class="stripe stripe--light">
+      <div class="container">
+        <p>Netduino.Foundation is a platform for quickly and easily building connected things using the .NET MicroFramework on Netduino. Created by Wilderness Labs, it’s completely open source and maintained by the Netduino community.</p>
+      </div><!-- .container -->
+    </section>
     
     <!-- Scripts -->
     <script src="js/main.js"></script>
