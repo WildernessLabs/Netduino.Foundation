@@ -137,14 +137,44 @@ header a {
 .main-nav li {
   display: inline-block;
   list-style-type: none;
-  margin-left: 2.5em;
+  margin-left: 2.75em;
 }
 
 .main-nav a {
   text-decoration: none;
-  font-size: 1.75em;
+  font-size: 1.7em;
   font-weight: 300;
 }
+
+/* ===========================================
+   Footer
+   =========================================== */
+
+footer {
+  padding: 1em 0;
+  background: #555555;
+  overflow: hidden;
+}
+
+.footer__logo {
+  float: left;
+}
+
+.footer__social-block {
+  float: right;
+}
+
+.footer__social-block ul {
+  padding: 0;
+  margin: .25em 0 0;
+}
+
+.footer__social-block li {
+  list-style-type: none;
+  display: inline-block;
+  margin-left: 1.5em;
+}
+
 
 /* ===========================================
    Hero
