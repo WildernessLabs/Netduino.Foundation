@@ -29,10 +29,15 @@ body {
   background: white;
   color: #524740;
   font-size: 1em;
+  font-weight: 300;
 }
 
 a {
   text-decoration: none;
+}
+
+a:hover {
+  opacity: .9;
 }
 
 img {
@@ -216,4 +221,50 @@ footer {
 
 .stripe a {
   color: #b09679;
+}
+
+ul.social-block-buttons {
+  margin: 1.75em 0 0;
+  padding: 0;
+}
+
+.social-block-buttons li {
+  display: inline-block;
+  margin-right: 1em;
+  margin-bottom: 1em;
+}
+
+.social-block-buttons li:last-child {
+  margin-bottom: 0;
+}
+
+.social-block-buttons a {
+  display: inline-block;
+  border-radius: 5px;
+  padding: 4px 10px;
+  border: 1px solid #524740;
+  color: #b09679;
+  font-size: 1.35em;
+  font-weight: 300;
+}
+
+.social-block-buttons .github-tagline {
+  display: inline-block;
+  margin-left: 3px;
+  font-size: 1.5em;
+}
+
+.social-block-buttons .github-tagline strong {
+  font-weight: 900;
+}
+
+.social-block-buttons a img {
+  float: left;
+  margin-right: 7px;
+  position: relative;
+  top: 2px;
+}
+
+.social-block-buttons a img.social-block-buttons--twitter {
+  top: 5px;
 }
