@@ -206,6 +206,37 @@ footer {
 }
 
 /* ===========================================
+   Tables
+   =========================================== */
+
+table {
+  border: 2px solid #555555;
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 1.5em;
+}
+
+th, td {
+  padding: .5em;
+}
+
+th {
+  font-size: 1.5em;
+  font-weight: 400;
+  text-align: left;
+  color: white;
+  background: #555555;
+}
+
+td {
+  font-size: 1.25em;
+}
+
+tbody tr:nth-child(even) {
+   background-color: #eee;
+}
+
+/* ===========================================
    Theme
    =========================================== */
 
@@ -358,7 +389,7 @@ ul.social-block-buttons {
 }
 
 .interior-content .main {
-  padding: 3em 0;
+  padding: 3em 0 5em;
   float: left;
   width: 75%;
   padding-left: 4%;
@@ -369,3 +400,21 @@ ul.social-block-buttons {
   font-size: 3em;
   margin-bottom: .5em;
 }
+
+.interior-content .main h3 {
+  font-size: 2.25em;
+  margin-bottom: .5em;
+  font-weight: 400;
+}
+
+.interior-content .main h4 {
+  font-size: 1.75em;
+  margin-bottom: 1em;
+  font-weight: 400;
+}
+
+.interior-content pre {
+  margin-bottom: 2em;
+}
+
+
