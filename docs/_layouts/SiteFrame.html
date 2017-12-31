@@ -1,29 +1,38 @@
-<html>
+<html class="no-js" lang="en">
     <head>
-        <title>{{ site.title }}{% if page.title %} : {{ page.title }}{% endif %}</title>
-        <meta name="description" content="{{ site.subtitle }}">
-        <link rel="stylesheet" href="/assets/main.css">
-        <link rel="stylesheet" href="/assets/css/temp.css">
-
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-
+      <meta charset="utf-8">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      <title>{{ site.title }}{% if page.title %} : {{ page.title }}{% endif %}</title>
+      <meta name="description" content="{{ site.subtitle }}">
+  
+      <link rel="manifest" href="site.webmanifest">
+      <link rel="apple-touch-icon" href="icon.png">
+      <link rel="alternate" type="application/rss+xml" title="Netduino.Foundation" href="/feed.xml">
+      <!-- Place favicon.ico in the root directory -->
+      
+      <!-- Google Fonts -->
+      <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700" rel="stylesheet">
+      <link rel="stylesheet" href="/assets/css/normalize.css">
+      <link rel="stylesheet" href="/assets/css/main.css">
     </head>
     <body>
-        <div style="height: 80px;">{% include TopNav.html %}</div>
-        <div>
-            {{ content }}
-        </div>
-        <div>{% include Footer.html %}</div>
+        {% include TopNav.html %}
 
-            <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+        
+        {{ content }}
+        
+        
+        {% include Footer.html %}
 
+
+        <!-- Scripts -->
+        <script src="js/main.js"></script>
+
+        <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+        <script>
+            window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
+            ga('create','UA-XXXXX-Y','auto');ga('send','pageview')
+        </script>
+        <script src="https://www.google-analytics.com/analytics.js" async defer></script>
     </body>
 </html>

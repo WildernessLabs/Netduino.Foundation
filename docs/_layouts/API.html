@@ -2,20 +2,24 @@
 layout: SiteFrame
 ---
 
-<div style="float: left; width: 200px; ">
-    {% include APINavigation.html %}
-</div>
-<div style="float: left;">
-    <div style="background-image: url('/assets/images/Banner_Background.svg'); background-repeat: no-repeat; background-position:right; background-color: #eee; height:265px;">
-        <h1 style="color: #23ABE3;">
-            {{ page.title }}
-            <br/>
-            <div style="color: #524740;">
-                {% if page.subtitle %}<small>{{ page.subtitle }}</small>{% endif %}
-            </div>
-        </h1>
-    </div>
-    
+
+<section class="header-interior">
+    <div class="header-interior__background"></div>
+    <div class="container">
+        <h1>{{ page.title }}</h1>
+        <p class="header-interior__subtitle">{% if page.subtitle %}<small>{{ page.subtitle }}</small>{% endif %}</p>
+    </div><!-- .container -->      
+</section>
+  
+<section class="interior-content">
+    <div class="container">
+        <aside>
+            {% include APINavigation.html %}
+        </aside><!-- aside -->
+    </div><!-- .container -->
+</section>    
+
+
+<div class="main">
     {{ content }}
-</div>
-<div style="clear: both;"/>
+</div><!-- .main -->
