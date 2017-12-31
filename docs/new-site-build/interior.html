@@ -1,0 +1,124 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Netduino.Foundation</title>
+    <meta name="description" content="Netduino.Foundation greatly simplifies the task of building complex .NET Microframework (MF) powered connected things with Netduino, by providing drivers and...">
+
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="alternate" type="application/rss+xml" title="Netduino.Foundation" href="/feed.xml">
+    <!-- Place favicon.ico in the root directory -->
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700" rel="stylesheet">
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="main.css">
+  </head>
+  <body>    
+
+    <header>
+      <div class="container">
+        <div class="logo">
+          <a href="/">
+            <img src="/assets/images/NF_Small_Logo.svg" alt="Netduino.Foundation">
+          </a>
+        </div>
+        <nav class="main-nav">
+          <ul>
+            <li><a href="">getting started</a></li>
+            <li><a href="">library</a></li>
+            <li><a href="">api</a></li>
+            <li><a href="">examples</a></li>
+            <li><a href="">source</a></li>
+            <li><a href="">community</a></li>
+          </ul>
+        </nav>
+      </div><!-- .container -->
+    </header>
+
+    <section class="header-interior">
+      <div class="header-interior__background"></div>
+      <div class="container">
+        <h1>Port Class</h1>
+        <p class="header-interior__subtitle">Represents a connectable input or output on a block.</p>
+      </div><!-- .container -->      
+    </section>
+
+    <section class="interior-content">
+      <div class="container">
+        <aside>
+          <div class="heading">Netduino.Foundation</div>
+          <ul>
+            <li><a href="">Block</a></li>
+            <li><a href="">DisplayBase</a></li>
+            <li><a href="">ConfigPort</a></li>
+            <li><a href="">Connection</a></li>
+            <li><a href="">InputPort</a></li>
+            <li><a href="">OutputPort</a></li>
+            <li><a href="">Port</a></li>
+            <li><a href="">Units</a></li>
+          </ul>
+
+          <div class="heading">.Generators</div>
+          <ul>
+            <li><a href="">Constant</a></li>
+            <li><a href="">Generator</a></li>
+            <li><a href="">IPwm</a></li>
+            <li><a href="">SineWave</a></li>
+            <li><a href="">SoftPwm</a></li>
+          </ul>
+
+          <div class="heading">.Sensors (Core only)</div>
+          <ul>
+            <li><a href="">Buttons</a>
+              <ul>
+                <li><a href="">IButton</a></li>
+                <li><a href="">PushButton</a></li>
+              </ul>
+            </li>
+            <li><a href="">Generator</a></li>
+            <li><a href="">IPwm</a></li>
+            <li><a href="">SineWave</a></li>
+            <li><a href="">SoftPwm</a></li>
+          </ul>
+        </aside><!-- aside -->
+
+        <div class="main">
+          <h2>Info</h2>
+          <p>Ports allow blocks to be bound together such that the output from one port can be directly piped to the input of another port. This allows a reactive programming style paradigm in which the app code more closely resembles the composability of the underlying circuits.</p>
+          <p>Ports can come in two different flavors, Input and Output, which indicate the direction of data flow. An InputPort on a Block receives signal data, and an OutputPort sends signal data.</p>
+          <p>Additionally, there is one more specialized Port called a ConfigPort. Certain Blocks can be configured to modify their output based on parameters specified by a ConfigPort. The beauty of ConfigPorts is that as opposed to having set-and-forget parameters, a ConfigPort is itself a port, meaning it can modify configuration in real-time, over time. For example, you could use the SineWave Generator Block to generate a Sine Wave signal, and then feed that into the ConfigPort, so that the configuration values would be constantly changing, in synch with the sine wave.</p>
+          <p>The following example illustrates creating Digital Pin Blocks that are bound to physical pins on the Netduino hardware (in this case pins that correspond to the onboard button and onboard LED), and then connecting the OutputPort of the Button to the InputPort on the LED, such that when the button is pressed (signal goes high), its output is sent directly to the LED and it also goes high (on):</p>
+        </div>
+        
+      </div><!-- .container -->
+    </section>    
+
+    <footer>
+      <div class="container">
+        <div class="footer__logo">
+          <img src="/assets/images/WLabs_Footer_logo.svg" alt="Wilderness Labs">
+        </div>
+
+        <div class="footer__social-block">
+          <ul>
+            <li><a href=""><img src="/assets/images/Twitter_FooterLogo.svg" alt="Twitter"></a></li>
+            <li><a href=""><img src="/assets/images/GitHub_FooterLogo.svg" alt="Github"></a></li>
+          </ul>
+        </div>
+      </div><!-- .container -->
+    </footer>
+    
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+
+    <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+    <script>
+        window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
+        ga('create','UA-XXXXX-Y','auto');ga('send','pageview')
+    </script>
+    <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+  </body>
+</html>

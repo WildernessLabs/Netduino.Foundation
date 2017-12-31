@@ -34,10 +34,11 @@ body {
 
 a {
   text-decoration: none;
+  transition: all .15s ease;
 }
 
 a:hover {
-  opacity: .9;
+  opacity: .7;
 }
 
 img {
@@ -159,6 +160,8 @@ footer {
   padding: 1em 0;
   background: #555555;
   overflow: hidden;
+  float: left;
+  width: 100%;
 }
 
 .footer__logo {
@@ -224,7 +227,7 @@ footer {
 }
 
 ul.social-block-buttons {
-  margin: 1.75em 0 0;
+  margin: 2em 0 0;
   padding: 0;
 }
 
@@ -267,4 +270,102 @@ ul.social-block-buttons {
 
 .social-block-buttons a img.social-block-buttons--twitter {
   top: 5px;
+}
+
+/* Interior Page */
+.header-interior {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding: 3em 0 6em;
+  background: #eeeeee;
+  border-bottom: 6px solid #23abe3;
+}
+
+.header-interior h1 {
+  color: #23abe3;
+  font-weight: 400;
+  margin-bottom: 0;
+  letter-spacing: -2px;
+  font-size: 4.5em;  
+}
+
+.header-interior p {
+  margin: 0;
+}
+
+.header-interior__background {
+  position: absolute;
+  right: 0;
+  background: url('/assets/images/Banner_Background.svg') no-repeat;
+  background-position: right center;
+  height: 187px;
+  width: 551px;
+}
+
+.interior-content aside {
+  padding: 3em 0;
+  float: left;
+  width: 25%;
+}
+
+.interior-content aside .heading {
+  background: #eeeeee;
+  position: relative;
+  font-size: 1.5em;
+  font-weight: 700;
+  color: #555555;
+  padding: .1em 0;
+  margin-bottom: .2em;
+}
+
+.interior-content aside .heading:before {
+  content: '';
+  height: auto;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  width: 9999px;
+  right: 100%;
+  background: #eeeeee;
+}
+
+.interior-content aside ul {
+  margin: 0 0 1em;
+  padding: 0;
+}
+
+.interior-content aside li {
+  list-style-type: none;
+}
+
+.interior-content aside li a {
+  font-weight: 400;
+  font-size: 1.25em;
+  color: #555555;
+}
+
+.interior-content aside li ul {
+  margin-bottom: 0;
+}
+
+.interior-content aside li ul li {
+  padding: 0 0 0 .5em;
+}
+
+.interior-content aside li ul a {
+  font-size: 1em;
+}
+
+.interior-content .main {
+  padding: 3em 0;
+  float: left;
+  width: 75%;
+  padding-left: 4%;
+  border-left: 2px solid #555555;
+}
+
+.interior-content .main h2 {
+  font-size: 3em;
+  margin-bottom: .5em;
 }
