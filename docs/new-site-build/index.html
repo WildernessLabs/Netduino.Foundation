@@ -47,60 +47,88 @@
 
     <section class="stripe stripe--dark">
       <div class="container">
-        <p>Netduino.Foundation is a platform for quickly and easily building connected things using the .NET MicroFramework on Netduino. Created by <a href="">Wilderness Labs</a>, it’s completely <a href="">open source</a> and maintained by the Netduino <a href="">community</a>.</p>
+        <p>Netduino.Foundation is a platform for quickly and easily building connected things using the .NET MicroFramework on Netduino. Created by <a href="">Wilderness Labs</a>, it's completely <a href="">open source</a> and maintained by the Netduino <a href="">community</a>.</p>
       </div><!-- .container -->
     </section>
 
     <section class="stripe stripe--light">
       <div class="container">
-        <div class="col col-3-5">
-          <h2>Digital Temperature Sample</h2>
-          <p>Add Netduino.Foundation.TMP36 and .LCD via nuget, and add the following code to a new Netdunio project:</p>
+        <div class="row">
+          <div class="col col-3-5">
+            <h2>Digital Temperature Sample</h2>
+            <p>Add Netduino.Foundation.TMP36 and .LCD via nuget, and add the following code to a new Netdunio project:</p>
 
-          <pre class="highlight">
-            <code>
-    using Netduino.Foundation;
+            <pre class="highlight">
+              <code>
+      using Netduino.Foundation;
 
-    public static void Main()
-    {
-      var lcdScreen = new LCDScreen (x, y);
-       var tempSensor = new AnalogTemperature (pin3);
-       var ctoF = new CelsiusToFahrenheitBlock ();
-       
-       tempSensor.ConnectTo (ctoF);
-       ctoF.ConnectTo (lcdScreen);
+      public static void Main()
+      {
+        var lcdScreen = new LCDScreen (x, y);
+         var tempSensor = new AnalogTemperature (pin3);
+         var ctoF = new CelsiusToFahrenheitBlock ();
+         
+         tempSensor.ConnectTo (ctoF);
+         ctoF.ConnectTo (lcdScreen);
 
-       while (true) { Thread.Sleep (1000); }
-    }
-            </code>
-          </pre>
+         while (true) { Thread.Sleep (1000); }
+      }
+              </code>
+            </pre>
 
-          <p>
-            <a href="">See more examples.</a>
-          </p>
-        </div><!-- .col -->
-        <div class="col col-2-5">
-          <img src="/assets/images/Sample_Circuit_Illustration.svg" alt="Sample Circuit Illustration">
-        </div><!-- .col -->
+            <p>
+              <a href="">See more examples.</a>
+            </p>
+          </div><!-- .col -->
+          <div class="col col-2-5">
+            <img src="/assets/images/Sample_Circuit_Illustration.svg" alt="Sample Circuit Illustration">
+          </div><!-- .col -->
+        </div><!-- .row -->
       </div><!-- .container -->
     </section>
 
     <section class="stripe stripe--dark">
       <div class="container">
-        <div class="col col-3-5">
-          <h2>Huge Peripheral Driver Library</h2>
-          <p>Netduino.Foundation has built in support for most common sensors, motors, and other peripherals available on the market.</p>
-          <p><a href="">See the full list.</a></p>
-        </div><!-- .col -->
-        <div class="col col-2-5">
-          <img src="/assets/images/Library_Icons_Illustration.svg" alt="Library Icons Illustration">
-        </div><!-- .col -->
+        <div class="row">
+          <div class="col col-3-5">
+            <h2>Huge Peripheral Driver Library</h2>
+            <p>Netduino.Foundation has built in support for most common sensors, motors, and other peripherals available on the market.</p>
+            <p><a href="">See the full list.</a></p>
+          </div><!-- .col -->
+          <div class="col col-2-5">
+            <img src="/assets/images/Library_Icons_Illustration.svg" alt="Library Icons Illustration">
+          </div><!-- .col -->
+        </div><!-- .row -->
       </div><!-- .container -->
     </section>
 
     <section class="stripe stripe--light">
       <div class="container">
-        <p>Netduino.Foundation is a platform for quickly and easily building connected things using the .NET MicroFramework on Netduino. Created by Wilderness Labs, it’s completely open source and maintained by the Netduino community.</p>
+        <div class="row">
+          <div class="col col-3-5">
+            <h2>Simple, Powerful Architecture and API</h2>
+            <p>Use the Blocks architecture to quickly connect together perihperals for rapid prototyping, or access the full peripheral API manually for more complex behaviors.</p>
+            <p><a href="">Explore the documentation.</a></p>
+          </div><!-- .col -->
+          <div class="col col-2-5">
+            <img src="/assets/images/Architecture_Illustration@2x.png" alt="Architecture Illustration">
+          </div><!-- .col -->
+        </div><!-- .row -->
+      </div><!-- .container -->
+    </section>
+
+    <section class="stripe stripe--dark">
+      <div class="container">
+        <div class="row">
+          <div class="col col-3-5">
+            <h2>Supportive Community</h2>
+            <p>Use the Blocks architecture to quickly connect together perihperals for rapid prototyping, or access the full peripheral API manually for more complex behaviors.</p>
+            <p><a href="">Join the community.</a></p>
+          </div><!-- .col -->
+          <div class="col col-2-5">
+            <img src="/assets/images/Community_Photo@2x.png" alt="Community Photo">
+          </div><!-- .col -->
+        </div><!-- .row -->
       </div><!-- .container -->
     </section>
     
