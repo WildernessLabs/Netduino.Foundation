@@ -346,9 +346,10 @@ ul.social-block-buttons {
   width: 25%;
 }
 
-.interior-content aside .heading {
+.interior-content aside ul.top-level > li:first-child a {
   background: #eeeeee;
   position: relative;
+  display: block;
   font-size: 1.5em;
   font-weight: 700;
   font-family: 'Roboto Condensed', Helvetica, Arial, sans-serif;
@@ -357,7 +358,7 @@ ul.social-block-buttons {
   margin-bottom: .2em;
 }
 
-.interior-content aside .heading:before {
+.interior-content aside ul.top-level > li:first-child a:before {
   content: '';
   height: auto;
   top: 0;
@@ -393,7 +394,8 @@ ul.social-block-buttons {
 }
 
 .interior-content aside li ul a {
-  font-size: 1em;
+  font-size: 1.3em;
+  font-weight: 300;
 }
 
 .interior-content .main {
