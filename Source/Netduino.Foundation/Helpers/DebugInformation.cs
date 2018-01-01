@@ -7,6 +7,28 @@ namespace Netduino.Foundation.Helpers
         #region Methods
 
         /// <summary>
+        ///     Convert a byte array to a series of hexadecimal numbers
+        ///     separated by a minus sign.
+        /// </summary>
+        /// <param name="bytes">Array of bytes to convert.</param>
+        /// <returns>series of hexadecimal bytes in the format xx-yy-zz</returns>
+        public static string Hexadecimal(byte[] bytes)
+        {
+            string result = string.Empty;
+
+            for (byte index = 0; index < bytes.Length; index++)
+            {
+                if (index > 0)
+                {
+                    result += "-";
+                }
+                result += HexadecimalDigits(bytes[index]);
+            }
+
+            return (result);
+        }
+
+        /// <summary>
         ///     Convert a byte into the hex representation of the value.
         /// </summary>
         /// <param name="b">Value to convert.</param>
