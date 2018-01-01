@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.SPOT;
 
-namespace DataLoggers
+namespace Netduino.Foundation.DataLoggers
 {
     /// <summary>
     ///     Sensor reading and the date and time the reading was taken.
