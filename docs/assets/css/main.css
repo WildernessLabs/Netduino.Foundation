@@ -322,9 +322,10 @@ ul.social-block-buttons {
 .header-interior h1 {
   color: #23abe3;
   font-weight: 700;
-  margin-bottom: 0;
+  margin-bottom: .25em;
   letter-spacing: -2px;
   font-size: 4.5em;  
+  line-height: 1;
   font-family: 'Roboto Condensed', Helvetica, Arial, sans-serif;
 }
 
@@ -440,6 +441,7 @@ ul.social-block-buttons {
  * Syntax highlighting styles
  */
 .highlight {
+  margin-bottom: 2em;
   border-radius: 15px;
   padding: .5em 1.5em .25em;
   background: #eee; }
