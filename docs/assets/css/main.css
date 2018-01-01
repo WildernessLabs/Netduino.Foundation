@@ -37,10 +37,6 @@ a {
   transition: all .15s ease;
 }
 
-a:hover {
-  opacity: .7;
-}
-
 img {
   max-width: 100%;
   display: block;
@@ -104,7 +100,7 @@ h2 {
 pre {
   background: #eeeeee;
   border-radius: 15px;
-  padding: 1em;
+  padding: .5em 1.5em .25em;
 }
 
 pre, code {
@@ -262,6 +258,10 @@ tbody tr:nth-child(even) {
   color: #b09679;
 }
 
+.stripe a:hover { 
+  color: #23ABE3;
+}
+
 ul.social-block-buttons {
   margin: 2em 0 0;
   padding: 0;
@@ -289,7 +289,8 @@ ul.social-block-buttons {
 
 .social-block-buttons .github-tagline {
   display: inline-block;
-  margin-left: 9px;
+  margin-left: 10px;
+  margin-right: 20px;
   font-size: 1.5em;
 }
 
@@ -346,11 +347,11 @@ ul.social-block-buttons {
   width: 25%;
 }
 
-.interior-content aside ul.top-level > li:first-child a {
+.interior-content aside ul.top-level > li:first-child > a {
   background: #eeeeee;
   position: relative;
   display: block;
-  font-size: 1.5em;
+  font-size: 1.65em;
   font-weight: 700;
   font-family: 'Roboto Condensed', Helvetica, Arial, sans-serif;
   color: #555555;
@@ -358,7 +359,7 @@ ul.social-block-buttons {
   margin-bottom: .2em;
 }
 
-.interior-content aside ul.top-level > li:first-child a:before {
+.interior-content aside ul.top-level > li:first-child > a:before {
   content: '';
   height: auto;
   top: 0;
@@ -380,7 +381,7 @@ ul.social-block-buttons {
 
 .interior-content aside li a {
   font-weight: 400;
-  font-size: 1.4em;
+  font-size: 1.45em;
   color: #555555;
   font-family: 'Roboto Condensed', Helvetica, Arial, sans-serif;
 }
@@ -389,11 +390,11 @@ ul.social-block-buttons {
   margin-bottom: 0;
 }
 
-.interior-content aside li ul li {
+.interior-content aside ul ul {
   padding: 0 0 0 .5em;
 }
 
-.interior-content aside li ul a {
+.interior-content aside ul ul a {
   font-size: 1.3em;
   font-weight: 300;
 }
@@ -404,6 +405,14 @@ ul.social-block-buttons {
   width: 75%;
   padding-left: 4%;
   border-left: 2px solid #555555;
+}
+
+.interior-content .main a {
+  color: #b09679;
+}
+
+.interior-content .main a:hover { 
+  color: #23ABE3;
 }
 
 .interior-content .main h2 {
