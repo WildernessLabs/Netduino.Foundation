@@ -84,6 +84,15 @@
             <li><a href="">SineWave</a></li>
             <li><a href="">SoftPwm</a></li>
           </ul>
+
+        <ul class="top-level">
+            <li><a href="/Library/">Peripheral Library</a>
+                <ul>
+                    <li><a href="">test</li>
+                    <li><a href="/Library/ICs/74595">74595 Shift Register</a></li>
+                </ul>
+            </li>
+        </ul>
         </aside><!-- aside -->
 
         <div class="main">
@@ -95,25 +104,25 @@
 
           <pre class="highlight">
             <code>
-  public class Program
+public class Program
+{
+  static H.Cpu.Pin buttonHardware = Pins.ONBOARD_BTN;
+  static H.Cpu.Pin ledHardware = Pins.ONBOARD_LED;
+
+  public static void Main()
   {
-    static H.Cpu.Pin buttonHardware = Pins.ONBOARD_BTN;
-    static H.Cpu.Pin ledHardware = Pins.ONBOARD_LED;
+    // Create the blocks
+    var button = new DigitalInputPin (buttonHardware);
+    var led = new DigitalOutputPin (ledHardware);
 
-    public static void Main()
-    {
-      // Create the blocks
-      var button = new DigitalInputPin (buttonHardware);
-      var led = new DigitalOutputPin (ledHardware);
+    button.Output.ConnectTo (led.Input);
 
-      button.Output.ConnectTo (led.Input);
-
-      // keep the program alive
-      while (true) {
-        System.Threading.Thread.Sleep (1000);
-      }
+    // keep the program alive
+    while (true) {
+      System.Threading.Thread.Sleep (1000);
     }
   }
+}
             </code>
           </pre>
 

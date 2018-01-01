@@ -66,19 +66,19 @@
 
             <pre class="highlight">
               <code>
-      using Netduino.Foundation;
+using Netduino.Foundation;
 
-      public static void Main()
-      {
-        var lcdScreen = new LCDScreen (x, y);
-         var tempSensor = new AnalogTemperature (pin3);
-         var ctoF = new CelsiusToFahrenheitBlock ();
-         
-         tempSensor.ConnectTo (ctoF);
-         ctoF.ConnectTo (lcdScreen);
+public static void Main()
+{
+  var lcdScreen = new LCDScreen (x, y);
+   var tempSensor = new AnalogTemperature (pin3);
+   var ctoF = new CelsiusToFahrenheitBlock ();
+   
+   tempSensor.ConnectTo (ctoF);
+   ctoF.ConnectTo (lcdScreen);
 
-         while (true) { Thread.Sleep (1000); }
-      }
+   while (true) { Thread.Sleep (1000); }
+}
               </code>
             </pre>
 
