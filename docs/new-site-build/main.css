@@ -91,8 +91,9 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 h2 {
-  font-size: 2em;
-  font-weight: 400;
+  font-family: 'Roboto Condensed', Helvetica, Arial, sans-serif;
+  font-size: 2.1em;
+  font-weight: 700;
   line-height: 1.1;
 }
 
@@ -284,7 +285,7 @@ ul.social-block-buttons {
 
 .social-block-buttons .github-tagline {
   display: inline-block;
-  margin-left: 3px;
+  margin-left: 9px;
   font-size: 1.5em;
 }
 
@@ -416,5 +417,3 @@ ul.social-block-buttons {
 .interior-content pre {
   margin-bottom: 2em;
 }
-
-
