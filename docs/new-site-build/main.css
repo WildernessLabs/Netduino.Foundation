@@ -90,8 +90,12 @@ h1, h2, h3, h4, h5, h6, p {
   margin-top: 0;
 }
 
-h2 {
+h1, h2, h3 {
   font-family: 'Roboto Condensed', Helvetica, Arial, sans-serif;
+  font-weight: 700;
+}
+
+h2 {
   font-size: 2.1em;
   font-weight: 700;
   line-height: 1.1;
@@ -316,10 +320,11 @@ ul.social-block-buttons {
 
 .header-interior h1 {
   color: #23abe3;
-  font-weight: 400;
+  font-weight: 700;
   margin-bottom: 0;
   letter-spacing: -2px;
   font-size: 4.5em;  
+  font-family: 'Roboto Condensed', Helvetica, Arial, sans-serif;
 }
 
 .header-interior p {
@@ -346,6 +351,7 @@ ul.social-block-buttons {
   position: relative;
   font-size: 1.5em;
   font-weight: 700;
+  font-family: 'Roboto Condensed', Helvetica, Arial, sans-serif;
   color: #555555;
   padding: .1em 0;
   margin-bottom: .2em;
@@ -373,8 +379,9 @@ ul.social-block-buttons {
 
 .interior-content aside li a {
   font-weight: 400;
-  font-size: 1.25em;
+  font-size: 1.4em;
   color: #555555;
+  font-family: 'Roboto Condensed', Helvetica, Arial, sans-serif;
 }
 
 .interior-content aside li ul {
@@ -405,7 +412,7 @@ ul.social-block-buttons {
 .interior-content .main h3 {
   font-size: 2.25em;
   margin-bottom: .5em;
-  font-weight: 400;
+  font-weight: 700;
 }
 
 .interior-content .main h4 {
