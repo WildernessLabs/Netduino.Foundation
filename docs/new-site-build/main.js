@@ -20,3 +20,12 @@ document.addEventListener('click', function(event) {
     headerTrigger.classList.remove('has-open-nav');
   }
 });
+
+// Submenu toggle
+const elAside = document.querySelector('.mobile-toggle--aside');
+const navAside = document.querySelector('.interior-content aside');
+
+elAside.addEventListener('click', (e) => {
+  navAside.classList.toggle('is-open');
+  elAside.classList.toggle('has-open-nav');
+});
