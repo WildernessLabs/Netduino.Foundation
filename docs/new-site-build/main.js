@@ -23,9 +23,15 @@ document.addEventListener('click', function(event) {
 
 // Submenu toggle
 const elAside = document.querySelector('.mobile-toggle--aside');
+const elAsideAlt = document.querySelector('.mobile-toggle--aside-alt');
 const navAside = document.querySelector('.interior-content aside');
 
 elAside.addEventListener('click', (e) => {
+  navAside.classList.toggle('is-open');
+  elAside.classList.toggle('has-open-nav');
+});
+
+elAsideAlt.addEventListener('click', (e) => {
   navAside.classList.toggle('is-open');
   elAside.classList.toggle('has-open-nav');
 });
