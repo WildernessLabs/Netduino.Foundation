@@ -112,7 +112,7 @@ pre, code {
 }
 
 p {
-  font-size: 1.65em;
+  font-size: 1.5em;
   line-height: 1.4;
 }
 
@@ -374,6 +374,7 @@ ul.social-block-buttons {
 .interior-content aside ul {
   margin: 0 0 1em;
   padding: 0;
+  font-size: 1em;
 }
 
 .interior-content aside li {
@@ -406,6 +407,10 @@ ul.social-block-buttons {
   width: 75%;
   padding-left: 4%;
   border-left: 2px solid #555555;
+}
+
+.interior .main ul {
+  font-size: 1.5em;
 }
 
 .interior-content .main a {

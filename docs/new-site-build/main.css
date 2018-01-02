@@ -390,11 +390,11 @@ ul.social-block-buttons {
   margin-bottom: 0;
 }
 
-.interior-content aside ul ul {
+.interior-content aside ul li:nth-child(n+2) ul {
   padding: 0 0 0 .5em;
 }
 
-.interior-content aside ul ul a {
+.interior-content aside ul li:nth-child(n+2) ul a {
   font-size: 1.3em;
   font-weight: 300;
 }
