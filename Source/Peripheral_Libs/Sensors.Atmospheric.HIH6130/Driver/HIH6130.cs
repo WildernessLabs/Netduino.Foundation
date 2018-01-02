@@ -8,7 +8,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
     ///     Provide a mechanism for reading the Temperature and Humidity from
     ///     a HIH6130 temperature and Humidity sensor.
     /// </summary>
-    public class HIH6130
+    public class HIH6130 : Block
     {
         #region Member variables / fields
 
@@ -31,6 +31,8 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         /// </summary>
         public float Temperature { get; private set; }
 
+        public OutputPort BlockTemperature { get; private set; }
+
         #endregion
 
         #region Constructors
@@ -50,12 +52,34 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         public HIH6130(byte address = 0x27, ushort speed = 100)
         {
             _hih6130 = new I2CBus(address, speed);
-            Read();
+            BlockTemperature = AddOutput("BlockTemperature", Units.Temperature);
+            //Read();
+            StartReading();
         }
 
         #endregion Constructors
 
         #region Methods
+
+        private void StartReading()
+        {
+            Thread t = new Thread(() => {
+                while (true)
+                {
+                    Read();
+                    Thread.Sleep(100);
+                }
+            }); t.Start();
+
+            //while (true)
+            //{
+            //   await System.Threading.Task.Run(() =>
+            //   {
+            //       Read();
+            //       Thread.Sleep(100);
+            //   });
+            //}
+        }
 
         /// <summary>
         ///     Force the sensor to make a reading and update the relevant properties.
@@ -84,6 +108,9 @@ namespace Netduino.Foundation.Sensors.Atmospheric
             Humidity = ((float) reading / 16383) * 100;
             reading = ((data[2] << 8) | data[3]) >> 2;
             Temperature = (((float) reading / 16383) * 165) - 40;
+
+            // set the temp on the block property
+            BlockTemperature.Value = Temperature;
         }
 
         #endregion Methods
