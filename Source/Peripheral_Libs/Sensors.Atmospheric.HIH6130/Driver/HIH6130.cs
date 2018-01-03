@@ -8,7 +8,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
     ///     Provide a mechanism for reading the Temperature and Humidity from
     ///     a HIH6130 temperature and Humidity sensor.
     /// </summary>
-    public class HIH6130 : Block
+    public class HIH6130
     {
         #region Member variables / fields
 
