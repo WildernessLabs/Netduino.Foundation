@@ -42,10 +42,6 @@ img {
   display: block;
 }
 
-p {
-  font-size: 1.25em
-}
-
 /* ===========================================
    Layout
    =========================================== */
@@ -141,6 +137,14 @@ header a {
   margin: .25em 0 0;
 }
 
+.main-nav ul.is-visible {
+  opacity: 1 !important;
+  height: auto !important;
+  float: right;
+  clear: both;
+  margin-bottom: .5em;
+}
+
 .main-nav li {
   display: inline-block;
   list-style-type: none;
@@ -151,6 +155,23 @@ header a {
   text-decoration: none;
   font-size: 1.7em;
   font-weight: 300;
+}
+
+.mobile-toggle {
+  display: none;
+  float: right;
+  margin-top: 12px;
+  cursor: pointer;
+}
+
+.mobile-toggle span {
+  height: 4px; 
+  width: 40px; 
+  margin-bottom: 6px;
+  border-radius: 2px;
+  background: #eee; 
+  display: block; 
+  text-align: right;
 }
 
 /* ===========================================
@@ -183,7 +204,6 @@ footer {
   display: inline-block;
   margin-left: 1.5em;
 }
-
 
 /* ===========================================
    Hero
@@ -218,7 +238,7 @@ table {
 }
 
 th, td {
-  padding: .5em;
+  padding: .5em .75em;
 }
 
 th {
@@ -230,6 +250,7 @@ th {
 }
 
 td {
+  border: 2px solid #555555;
   font-size: 1.25em;
 }
 
@@ -310,6 +331,75 @@ ul.social-block-buttons {
 }
 
 /* Interior Page */
+.mobile-toggle--aside {
+  display: none;
+  cursor: pointer;
+  position: absolute;
+  top: 12px;
+  left: 4%;
+}
+
+.mobile-toggle--aside-alt {
+  display: none;
+  cursor: pointer;
+  position: absolute;
+  bottom: 24px;
+  right: 12%;
+}
+
+.mobile-toggle--aside .text, 
+.mobile-toggle--aside .text--close,
+.mobile-toggle--aside-alt .text, 
+.mobile-toggle--aside-alt .text--close {
+  position: absolute;
+  top: -1px;
+  left: 40px;
+  font-weight: 700;
+  font-size: 1.15em;
+  color: #23abe3;
+}
+
+.mobile-toggle--aside.has-open-nav .text {
+  display: none;
+}
+
+.mobile-toggle--aside .text--close {
+  display: none;
+}
+
+.mobile-toggle--aside.has-open-nav .text--close {
+  display: block;
+}
+
+.mobile-toggle--aside span,
+.mobile-toggle--aside-alt span {
+  height: 4px; 
+  width: 30px; 
+  margin-bottom: 5px;
+  border-radius: 2px;
+  background: #23abe3; 
+  display: block; 
+  text-align: right;
+  transition: ease all .15s;
+}
+
+.mobile-toggle--aside.has-open-nav span:nth-child(1), 
+.mobile-toggle--aside-alt span:nth-child(1) {
+  transform: rotate(45deg);
+  position: relative;
+  top: 9px;
+}
+
+.mobile-toggle--aside.has-open-nav span:nth-child(2), 
+.mobile-toggle--aside-alt span:nth-child(2) {
+  display: none;
+}
+
+.mobile-toggle--aside.has-open-nav span:nth-child(3), 
+.mobile-toggle--aside-alt span:nth-child(3) {
+  transform: rotate(-45deg);
+}
+
 .header-interior {
   position: relative;
   overflow: hidden;
@@ -322,14 +412,14 @@ ul.social-block-buttons {
 .header-interior h1 {
   color: #23abe3;
   font-weight: 700;
-  margin-bottom: .25em;
+  margin-bottom: 0;
   letter-spacing: -2px;
   font-size: 4.5em;  
-  line-height: 1;
   font-family: 'Roboto Condensed', Helvetica, Arial, sans-serif;
 }
 
 .header-interior p {
+  font-size: 1.65em;
   margin: 0;
 }
 
@@ -374,7 +464,6 @@ ul.social-block-buttons {
 .interior-content aside ul {
   margin: 0 0 1em;
   padding: 0;
-  font-size: 1em;
 }
 
 .interior-content aside li {
@@ -392,11 +481,11 @@ ul.social-block-buttons {
   margin-bottom: 0;
 }
 
-.interior-content aside ul ul {
+.interior-content aside ul li:nth-child(n+2) ul {
   padding: 0 0 0 .5em;
 }
 
-.interior-content aside ul ul a {
+.interior-content aside ul li:nth-child(n+2) ul a {
   font-size: 1.3em;
   font-weight: 300;
 }
@@ -407,10 +496,6 @@ ul.social-block-buttons {
   width: 75%;
   padding-left: 4%;
   border-left: 2px solid #555555;
-}
-
-.interior .main ul {
-  font-size: 1.5em;
 }
 
 .interior-content .main a {
@@ -434,7 +519,7 @@ ul.social-block-buttons {
 
 .interior-content .main h4 {
   font-size: 1.75em;
-  margin-bottom: 1em;
+  margin-bottom: .5em;
   font-weight: 400;
 }
 
@@ -442,14 +527,14 @@ ul.social-block-buttons {
   margin-bottom: 2em;
 }
 
-/**
- * Syntax highlighting styles
- */
+/* ===========================================
+   Syntax Highlighting
+   =========================================== */
+
 .highlight {
-  margin-bottom: 2em;
+  background: #eee;
   border-radius: 15px;
-  padding: .5em 1.5em .25em;
-  background: #eee; }
+  padding: .5em 1.5em .25em; }
   .highlight .c {
     color: #998;
     font-style: italic; }
@@ -583,3 +668,43 @@ ul.social-block-buttons {
     color: #008080; }
   .highlight .il {
     color: #099; }
+
+/* ===========================================
+   Responsive Styles
+   =========================================== */
+
+@media (max-width: 1100px) {
+  .main-nav li { margin-left: 2em; margin-top: .25em; }
+  .main-nav a { font-size: 1.5em; }
+
+  .interior-content aside { position: absolute; padding: 1.5em 0; border-bottom: 1px solid #23abe3; left: 0; right: 0; width: 100%; height: 49px; overflow: hidden; transition: .15s ease all; }
+  .interior-content aside ul.top-level:first-of-type { margin-top: 3em; }
+  .interior-content .main { width: 100%; padding-left: 0; border-left: none; padding-top: 5em; }
+
+  .mobile-toggle--aside,
+  .interior-content aside.is-open .mobile-toggle--aside-alt { display: block; }
+  .interior-content aside.is-open { height: auto; background: #fff; padding: 1.5em 4%; left: 0; box-shadow: 0 2px 8px rgba(0, 0, 0, .15); }
+
+  .interior-content aside ul.top-level > li:first-child > a:after {
+    content: '';
+    height: auto;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    width: 9999px;
+    left: 100%;
+    background: #eeeeee;
+  }
+}
+
+@media (max-width: 930px) {
+  .mobile-toggle { display: block; }
+  .main-nav ul { opacity: 0; z-index: -9999; height: 0; }
+  .main-nav li { display: block; margin-bottom: .5em; }
+  .main-nav a { font-size: 1.25em; }
+}
+
+
+
+
+
