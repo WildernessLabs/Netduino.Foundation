@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -23,7 +23,8 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
-    <DefineConstants></DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoStdLib>false</NoStdLib>
@@ -44,6 +45,7 @@
     <Compile Include="Lcd.cs" />
     <Compile Include="MCP23008Expander.cs" />
     <Compile Include="MCP23008LcdTransferProvider.cs" />
+    <Compile Include="RoslynHackFix.cs" />
     <Compile Include="Shifter74Hc595LcdTransferProvider.cs" />
     <Compile Include="ShifterPin.cs" />
   </ItemGroup>

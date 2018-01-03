@@ -30,6 +30,7 @@ namespace MicroLiquidCrystal595Test
             {
                 lcd.SetCursorPosition(0, 1);
                 lcd.Write((Utility.GetMachineTime().Ticks / 10000).ToString());
+                Microsoft.SPOT.Debug.Print("here");
                 Thread.Sleep(100);
             }
         }
