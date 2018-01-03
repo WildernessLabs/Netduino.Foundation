@@ -1,10 +1,8 @@
 ---
 layout: Library
-title: Si7021
+title: MPL115A2
 subtitle: I2C pressure and temperature sensor.
 ---
-
-# MPL115A2 - Pressure and Temperature Sensor
 
 The MPL115A2 is a low cost device for reading barometric pressure.
 
