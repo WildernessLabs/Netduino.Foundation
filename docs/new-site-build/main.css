@@ -260,6 +260,33 @@ tbody tr:nth-child(even) {
 }
 
 /* ===========================================
+   Helpers
+   =========================================== */
+ 
+.show-desktop { display: block; }
+.show-tablet  { display: none; }
+.show-mobile  { display: none; }
+
+.hide-desktop { display: block; }
+.hide-tablet  { display: block; }
+.hide-mobile  { display: block; }
+
+@media (max-width: 1024px) {
+  .show-desktop { display: block; }
+  .hide-desktop { display: none; }
+}
+
+@media (max-width: 768px) {
+  .show-tablet  { display: block; }
+  .hide-tablet  { display: none; }
+}
+
+@media (max-width: 600px) {
+  .show-mobile  { display: block; }
+  .hide-mobile  { display: none; }
+}
+
+/* ===========================================
    Theme
    =========================================== */
 
@@ -703,6 +730,16 @@ ul.social-block-buttons {
   .main-nav ul { opacity: 0; z-index: -9999; height: 0; }
   .main-nav li { display: block; margin-bottom: .5em; }
   .main-nav a { font-size: 1.25em; }
+}
+
+@media (max-width: 768px) { 
+  .stripe .col {
+    width: 100%;
+  }
+
+  .stripe img.show-tablet {
+    margin-bottom: 1.5em;
+  }
 }
 
 @media (max-width: 650px) {
