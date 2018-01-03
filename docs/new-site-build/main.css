@@ -440,7 +440,8 @@ ul.social-block-buttons {
 .header-interior h1 {
   color: #23abe3;
   font-weight: 700;
-  margin-bottom: 0;
+  margin-bottom: .1em;
+  line-height: 1;
   letter-spacing: -2px;
   font-size: 4.5em;  
   font-family: 'Roboto Condensed', Helvetica, Arial, sans-serif;
