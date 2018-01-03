@@ -16,6 +16,10 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         ///     MAG3110 object.
         /// </summary>
         private readonly ICommunicationBus _hih6130;
+        /// <summary>
+        /// Update interval in miliseconds
+        /// </summary>
+        protected int _updateInterval = 100;
 
         #endregion Member variables / fields
 
@@ -30,8 +34,6 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         ///     Temperature reading from last call to Read.
         /// </summary>
         public float Temperature { get; private set; }
-
-        public OutputPort BlockTemperature { get; private set; }
 
         #endregion
 
@@ -49,10 +51,10 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         /// </summary>
         /// <param name="address">Address of the HIH6130 (default = 0x27).</param>
         /// <param name="speed">Speed of the I2C bus (default = 100 KHz).</param>
-        public HIH6130(byte address = 0x27, ushort speed = 100)
+        public HIH6130(byte address = 0x27, ushort speed = 100, int updateInterval = 100)
         {
+            this._updateInterval = updateInterval;
             _hih6130 = new I2CBus(address, speed);
-            BlockTemperature = AddOutput("BlockTemperature", Units.Temperature);
             //Read();
             StartReading();
         }
@@ -67,18 +69,9 @@ namespace Netduino.Foundation.Sensors.Atmospheric
                 while (true)
                 {
                     Read();
-                    Thread.Sleep(100);
+                    Thread.Sleep(this._updateInterval);
                 }
             }); t.Start();
-
-            //while (true)
-            //{
-            //   await System.Threading.Task.Run(() =>
-            //   {
-            //       Read();
-            //       Thread.Sleep(100);
-            //   });
-            //}
         }
 
         /// <summary>
@@ -108,9 +101,6 @@ namespace Netduino.Foundation.Sensors.Atmospheric
             Humidity = ((float) reading / 16383) * 100;
             reading = ((data[2] << 8) | data[3]) >> 2;
             Temperature = (((float) reading / 16383) * 165) - 40;
-
-            // set the temp on the block property
-            BlockTemperature.Value = Temperature;
         }
 
         #endregion Methods

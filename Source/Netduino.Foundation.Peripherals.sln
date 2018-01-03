@@ -215,8 +215,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLoggers.ThingSpeak", "P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Network", "Peripheral_Libs\Network\Driver\Network.csproj", "{2C7BDE6F-433C-4AF2-B82F-A4AD26BD0301}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HIH6130_Block_Sample", "Peripheral_Libs\Sensors.Atmospheric.HIH6130\Samples\HIH6130_Block_Sample\HIH6130_Block_Sample.csproj", "{BDFD26B4-8484-4547-B37A-352FFA8143B2}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1105,24 +1103,6 @@ Global
 		{2C7BDE6F-433C-4AF2-B82F-A4AD26BD0301}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{2C7BDE6F-433C-4AF2-B82F-A4AD26BD0301}.Release|x86.ActiveCfg = Release|Any CPU
 		{2C7BDE6F-433C-4AF2-B82F-A4AD26BD0301}.Release|x86.Build.0 = Release|Any CPU
-		{BDFD26B4-8484-4547-B37A-352FFA8143B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BDFD26B4-8484-4547-B37A-352FFA8143B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BDFD26B4-8484-4547-B37A-352FFA8143B2}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{BDFD26B4-8484-4547-B37A-352FFA8143B2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{BDFD26B4-8484-4547-B37A-352FFA8143B2}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{BDFD26B4-8484-4547-B37A-352FFA8143B2}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
-		{BDFD26B4-8484-4547-B37A-352FFA8143B2}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{BDFD26B4-8484-4547-B37A-352FFA8143B2}.Debug|x86.Build.0 = Debug|Any CPU
-		{BDFD26B4-8484-4547-B37A-352FFA8143B2}.Debug|x86.Deploy.0 = Debug|Any CPU
-		{BDFD26B4-8484-4547-B37A-352FFA8143B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BDFD26B4-8484-4547-B37A-352FFA8143B2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BDFD26B4-8484-4547-B37A-352FFA8143B2}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{BDFD26B4-8484-4547-B37A-352FFA8143B2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{BDFD26B4-8484-4547-B37A-352FFA8143B2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{BDFD26B4-8484-4547-B37A-352FFA8143B2}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
-		{BDFD26B4-8484-4547-B37A-352FFA8143B2}.Release|x86.ActiveCfg = Release|Any CPU
-		{BDFD26B4-8484-4547-B37A-352FFA8143B2}.Release|x86.Build.0 = Release|Any CPU
-		{BDFD26B4-8484-4547-B37A-352FFA8143B2}.Release|x86.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1192,6 +1172,5 @@ Global
 		{41E656E8-841F-410E-8186-96C107351B0B} = {C9267962-0CE4-4904-A4AC-08F4736C8E8D}
 		{2BBF1397-50C5-4E99-9649-FF9E7054AB36} = {FF35EA4A-5CF5-4B70-BF82-D68A11AC1FD8}
 		{F14CB0D1-6C9D-442D-82A6-2C96584E4F08} = {79C8E761-03A5-46D3-A7FB-E6ACF1931820}
-		{BDFD26B4-8484-4547-B37A-352FFA8143B2} = {EE88F7AB-FF9F-4528-A144-DC309F889CFA}
 	EndGlobalSection
 EndGlobal
