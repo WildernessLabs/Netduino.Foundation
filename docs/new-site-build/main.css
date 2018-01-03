@@ -706,6 +706,29 @@ ul.social-block-buttons {
 }
 
 @media (max-width: 650px) {
+  .hero--home {
+    text-align: center;
+  }
+
+  .hero--home img {
+    display: inline-block;
+  }
+
+  .hero--home .banner-logo {
+    margin-bottom: .25em;
+  }
+
+  .hero--home .banner-logo,
+  .hero--home .wlabs-logo {
+    float: none;
+    width: 100%;
+  }
+
+  .hero--home .wlabs-logo {
+    width: 50%;
+    max-width: 200px;
+  }
+
   .footer__logo {
     float: none;
     width: 100%;
