@@ -13,8 +13,8 @@ namespace Netduino.Foundation.Sensors.Atmospheric
     {
         #region Member variables / fields
 
-        public event EventHandler TemperatureChanged = delegate {};
-        public event EventHandler HumidityChanged = delegate { };
+        public event SensorFloatEventHandler TemperatureChanged = delegate {};
+        public event SensorFloatEventHandler HumidityChanged = delegate { };
 
         /// <summary>
         ///     MAG3110 object.
@@ -41,7 +41,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
                 // if it's changed enough to trigger an event
                 if (value != _lastNotifiedHumidity && System.Math.Abs(_lastNotifiedHumidity - value) >= HumidityChangeNotificationThreshold)
                 {
-                    this.HumidityChanged(this, new EventArgs());
+                    this.HumidityChanged(this, new SensorFloatEventArgs(_lastNotifiedHumidity, value));
                     _lastNotifiedHumidity = value;
                 }
             }
@@ -60,7 +60,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
                 // if it's changed enough to trigger an event
                 if (value != _lastNotifiedTemperature && System.Math.Abs(_lastNotifiedTemperature - value) >= TemperatureChangeNotificationThreshold)
                 {
-                    this.TemperatureChanged(this, new EventArgs());
+                    this.TemperatureChanged(this, new SensorFloatEventArgs(_lastNotifiedTemperature, value));
                     _lastNotifiedTemperature = value;
                 }
             }

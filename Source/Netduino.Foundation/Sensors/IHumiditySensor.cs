@@ -5,7 +5,7 @@ namespace Netduino.Foundation.Sensors
 {
     public interface IHumiditySensor : ISensor
     {
-        event EventHandler TemperatureChanged;
+        event SensorFloatEventHandler TemperatureChanged;
 
         float Humidity { get; }
 

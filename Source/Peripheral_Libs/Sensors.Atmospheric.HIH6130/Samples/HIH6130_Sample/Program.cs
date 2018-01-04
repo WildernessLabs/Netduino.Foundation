@@ -12,7 +12,7 @@ namespace HIH6130_Sample
             HIH6130 hih6130 = new HIH6130(temperatureChangeNotificationThreshold: 0.5F);
 
             hih6130.TemperatureChanged += (s, e) => {
-                Debug.Print("temp changed: " + hih6130.Temperature.ToString());
+                Debug.Print("temp changed: " + e.CurrentValue.ToString());
             };
             
             while (true)
