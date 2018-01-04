@@ -8,7 +8,13 @@ namespace HIH6130_Sample
     {
         public static void Main()
         {
-            HIH6130 hih6130 = new HIH6130();
+            // create a new HIH6130 and set the temp change threshold to half a degree
+            HIH6130 hih6130 = new HIH6130(temperatureChangeNotificationThreshold: 0.5F);
+
+            hih6130.TemperatureChanged += (s, e) => {
+                Debug.Print("temp changed: " + hih6130.Temperature.ToString());
+            };
+            
             while (true)
             {
                 //hih6130.Read();

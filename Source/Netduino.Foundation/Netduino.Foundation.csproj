@@ -37,6 +37,9 @@
     <Compile Include="RoslynFixHack.cs" />
     <Compile Include="Sensors\Buttons\IButton.cs" />
     <Compile Include="Sensors\Buttons\PushButton.cs" />
+    <Compile Include="Sensors\IHumiditySensor.cs" />
+    <Compile Include="Sensors\ISensor.cs" />
+    <Compile Include="Sensors\ITemperatureSensor.cs" />
     <Compile Include="Sensors\Light\GenericAmbientLightSensor.cs" />
     <Compile Include="Sensors\Light\IAmbientLightSensor.cs" />
     <Compile Include="Sensors\Motion\IAccelerometer.cs" />

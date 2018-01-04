@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Netduino.Foundation.Devices;
+using Microsoft.SPOT;
 
 namespace Netduino.Foundation.Sensors.Atmospheric
 {
@@ -8,9 +9,12 @@ namespace Netduino.Foundation.Sensors.Atmospheric
     ///     Provide a mechanism for reading the Temperature and Humidity from
     ///     a HIH6130 temperature and Humidity sensor.
     /// </summary>
-    public class HIH6130
+    public class HIH6130 : ITemperatureSensor, IHumiditySensor
     {
         #region Member variables / fields
+
+        public event EventHandler TemperatureChanged = delegate {};
+        public event EventHandler HumidityChanged = delegate { };
 
         /// <summary>
         ///     MAG3110 object.
@@ -28,12 +32,45 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         /// <summary>
         ///     Humidity reading from the last call to Read.
         /// </summary>
-        public float Humidity { get; private set; }
+        public float Humidity {
+            get { return _humidity; }
+            protected set
+            {
+                _humidity = value;
+
+                // if it's changed enough to trigger an event
+                if (value != _lastNotifiedHumidity && System.Math.Abs(_lastNotifiedHumidity - value) >= HumidityChangeNotificationThreshold)
+                {
+                    this.HumidityChanged(this, new EventArgs());
+                    _lastNotifiedHumidity = value;
+                }
+            }
+        }
+        protected float _humidity;
+        protected float _lastNotifiedHumidity = 0.0F;
 
         /// <summary>
         ///     Temperature reading from last call to Read.
         /// </summary>
-        public float Temperature { get; private set; }
+        public float Temperature {
+            get { return _temperature; }
+            protected set {
+                _temperature = value;
+
+                // if it's changed enough to trigger an event
+                if (value != _lastNotifiedTemperature && System.Math.Abs(_lastNotifiedTemperature - value) >= TemperatureChangeNotificationThreshold)
+                {
+                    this.TemperatureChanged(this, new EventArgs());
+                    _lastNotifiedTemperature = value;
+                }
+            }
+        }
+        protected float _temperature;
+        protected float _lastNotifiedTemperature = 0.0F;
+
+        public float TemperatureChangeNotificationThreshold { get; set; } = 0.001F;
+
+        public float HumidityChangeNotificationThreshold { get; set; } = 0.001F;
 
         #endregion
 
@@ -51,24 +88,28 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         /// </summary>
         /// <param name="address">Address of the HIH6130 (default = 0x27).</param>
         /// <param name="speed">Speed of the I2C bus (default = 100 KHz).</param>
-        public HIH6130(byte address = 0x27, ushort speed = 100, int updateInterval = 100)
+        public HIH6130(byte address = 0x27, ushort speed = 100, int updateInterval = 100
+            , float humidityChangeNotificationThreshold = 0.001F, float temperatureChangeNotificationThreshold = 0.001F)
         {
             this._updateInterval = updateInterval;
+            this.HumidityChangeNotificationThreshold = humidityChangeNotificationThreshold;
+            this.TemperatureChangeNotificationThreshold = temperatureChangeNotificationThreshold;
+
             _hih6130 = new I2CBus(address, speed);
             //Read();
-            StartReading();
+            StartUpdating();
         }
 
         #endregion Constructors
 
         #region Methods
 
-        private void StartReading()
+        private void StartUpdating()
         {
             Thread t = new Thread(() => {
                 while (true)
                 {
-                    Read();
+                    Update();
                     Thread.Sleep(this._updateInterval);
                 }
             }); t.Start();
@@ -77,7 +118,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         /// <summary>
         ///     Force the sensor to make a reading and update the relevant properties.
         /// </summary>
-        public void Read()
+        public void Update()
         {
             _hih6130.WriteByte(0);
             //
