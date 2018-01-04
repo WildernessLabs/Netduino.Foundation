@@ -1,20 +1,26 @@
 ---
 layout: API
 title: API Reference
-subtitle: Reference documentation for Netduino.Foundation core library.
+subtitle: Reference documentation for Netduino.Foundation core library and peripherals.
 ---
 
 
 
 # Core Peripherals
 
-Netduino.Foundation has two sets of peripheral drivers; [built-in ones that cover common, generic, components](/API/CorePeripherals) that are built into the Netduino.Foundation core library, and the [specialized set of third party components](/Library) which are added via their individual Nuget packages.
+Netduino.Foundation has two sets of peripheral drivers; the ones listed below, that cover common, generic, components and are built into the Netduino.Foundation core library, and the [specialized set of third party components](/Library) which are added via their individual Nuget packages.
 
 ## LEDs
 
 | Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
 | [RgbPwmLed](/API/CorePeripherals/LEDs/RgbPwmLed)      | Pulse-Width-Modulation powered RGB LED. |
+
+## Relays
+
+| Peripheral                | Description                         |
+|---------------------------|-------------------------------------|
+| [Relay](/API/CorePeripherals/Relays/Relay)      | Electrically isolated switch. |
 
 ## Sensors
 

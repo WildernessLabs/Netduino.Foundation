@@ -16,6 +16,12 @@ The built-in peripherals are as follows:
 |---------------------------|-------------------------------------|
 | [RgbPwmLed](/API/CorePeripherals/LEDs/RgbPwmLed)      | Pulse-Width-Modulation powered RGB LED. |
 
+## Relays
+
+| Peripheral                | Description                         |
+|---------------------------|-------------------------------------|
+| [Relay](/API/CorePeripherals/Relays/Relay)      | Electrically isolated switch. |
+
 ## Sensors
 
 ### Buttons
