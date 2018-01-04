@@ -1,14 +1,14 @@
 ---
 layout: API
-title: API Reference
-subtitle: Reference documentation for Netduino.Foundation core library.
+title: Core Peripherals
+subtitle: Built-in peripheral drivers.
 ---
 
-
-
-# Core Peripherals
+# About
 
 Netduino.Foundation has two sets of peripheral drivers; [built-in ones that cover common, generic, components](/API/CorePeripherals) that are built into the Netduino.Foundation core library, and the [specialized set of third party components](/Library) which are added via their individual Nuget packages.
+
+The built-in peripherals are as follows:
 
 ## LEDs
 
@@ -23,17 +23,3 @@ Netduino.Foundation has two sets of peripheral drivers; [built-in ones that cove
 | Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
 | [Button](/API/CorePeripherals/Sensors/Button)      | Generic push button. |
-
-
-# API Documentation
-
-## Root Namespaces
-
-* [Netduino.Foundation](/API/Netduino.Foundation)
-* [Netduino.Foundation.Devices](/API/Netduino.Foundation/Devices/)
-* [Netduino.Foundation.Helpers](/API/Netduino.Foundation/Helpers/)
-* [Netduino.Foundation.Motors](/API/Netduino.Foundation/Motors/)
-* [Netduino.Foundation.Sensors](/API/Netduino.Foundation/Sensors/)
-
-
-
