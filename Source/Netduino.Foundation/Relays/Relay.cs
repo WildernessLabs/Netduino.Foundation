@@ -4,7 +4,7 @@ using H = Microsoft.SPOT.Hardware;
 
 namespace Netduino.Foundation.Relays
 {
-    public class Relay
+    public class Relay : IRelay
     {
         public H.OutputPort DigitalOut { get; protected set; }
 
@@ -42,11 +42,5 @@ namespace Netduino.Foundation.Relays
             this.IsOn = !this.IsOn;
         }
         
-    }
-
-    public enum RelayType
-    {
-        NormallyOpen,
-        NormallyClosed
     }
 }

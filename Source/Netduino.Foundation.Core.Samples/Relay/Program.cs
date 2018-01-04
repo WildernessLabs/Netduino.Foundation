@@ -1,8 +1,8 @@
 using System;
 using System.Threading;
 using Microsoft.SPOT;
-using H = Microsoft.SPOT.Hardware;
 using Netduino.Foundation;
+using N = SecretLabs.NETMF.Hardware.Netduino;
 
 namespace Relay
 {
@@ -10,7 +10,7 @@ namespace Relay
     {
         public static void Main()
         {
-            var relay = new Netduino.Foundation.Relays.Relay(SecretLabs.NETMF.Hardware.Netduino.Pins.GPIO_PIN_D1);
+            var relay = new Netduino.Foundation.Relays.Relay(N.Pins.GPIO_PIN_D1);
 
             while (true)
             {
