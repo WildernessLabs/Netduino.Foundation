@@ -24,12 +24,18 @@ Netduino.Foundation has two sets of peripheral drivers; the ones listed below, t
 
 ## Sensors
 
+
 ### Buttons
 
 | Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
-| [Button](/API/CorePeripherals/Sensors/Button)      | Generic push button. |
+| [PushButton](/API/CorePeripherals/Sensors/Buttons/PushButton)      | Generic push button. |
 
+### Switches
+
+| Peripheral                | Description                         |
+|---------------------------|-------------------------------------|
+| [SimpleSwitch](/API/CorePeripherals/Sensors/Switches/SimpleSwitch)      | A simple single pole, single throw, switch. |
 
 # API Documentation
 
