@@ -49,7 +49,7 @@
     <Compile Include="Sensors\Proximity\IRangeFinder.cs" />
     <Compile Include="Sensors\SensorFloatEventArgs.cs" />
     <Compile Include="Sensors\Switches\ISwitch.cs" />
-    <Compile Include="Sensors\Switches\SimpleSwitch.cs" />
+    <Compile Include="Sensors\Switches\SpstSwitch.cs" />
     <Compile Include="Units.cs" />
     <Compile Include="Devices\Netduino\Enums.cs" />
     <Compile Include="Devices\Netduino\I2CBus.cs" />

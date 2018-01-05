@@ -221,6 +221,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RgbPwmLed", "Netduino.Found
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Relay", "Netduino.Foundation.Core.Samples\Relay\Relay.csproj", "{AC98F4A0-7B73-47E6-9805-EBF2D27C2D16}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpstSwitch", "Netduino.Foundation.Core.Samples\SpstSwitch\SpstSwitch.csproj", "{F654673A-80D8-441F-AE51-8CE4B656D44B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1145,6 +1147,24 @@ Global
 		{AC98F4A0-7B73-47E6-9805-EBF2D27C2D16}.Release|x86.ActiveCfg = Release|Any CPU
 		{AC98F4A0-7B73-47E6-9805-EBF2D27C2D16}.Release|x86.Build.0 = Release|Any CPU
 		{AC98F4A0-7B73-47E6-9805-EBF2D27C2D16}.Release|x86.Deploy.0 = Release|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44B}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44B}.Debug|x86.Build.0 = Debug|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44B}.Debug|x86.Deploy.0 = Debug|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44B}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44B}.Release|x86.ActiveCfg = Release|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44B}.Release|x86.Build.0 = Release|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44B}.Release|x86.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1217,5 +1237,6 @@ Global
 		{B1CB9A4C-0FA0-4D20-AC92-18B3D23EBD45} = {82E59041-71D9-420E-B3FE-836243B81E1E}
 		{00ABCBE3-2CB5-4C2B-9F83-E9F17F97AA66} = {B1CB9A4C-0FA0-4D20-AC92-18B3D23EBD45}
 		{AC98F4A0-7B73-47E6-9805-EBF2D27C2D16} = {B1CB9A4C-0FA0-4D20-AC92-18B3D23EBD45}
+		{F654673A-80D8-441F-AE51-8CE4B656D44B} = {B1CB9A4C-0FA0-4D20-AC92-18B3D23EBD45}
 	EndGlobalSection
 EndGlobal
