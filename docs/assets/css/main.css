@@ -263,25 +263,32 @@ tbody tr:nth-child(even) {
    Helpers
    =========================================== */
  
-.show-desktop { display: block; }
-.show-tablet  { display: none; }
-.show-mobile  { display: none; }
+.show-desktop     { display: block; }
+.show-tablet-lg   { display: none; }
+.show-tablet      { display: none; }
+.show-mobile      { display: none; }
 
-.hide-desktop { display: block; }
-.hide-tablet  { display: block; }
-.hide-mobile  { display: block; }
+.hide-desktop     { display: block; }
+.hide-tablet-lg   { display: block; }
+.hide-tablet      { display: block; }
+.hide-mobile      { display: block; }
 
-@media (max-width: 1024px) {
+@media only screen and (max-width: 1024px) {
   .show-desktop { display: block; }
   .hide-desktop { display: none; }
 }
 
-@media (max-width: 768px) {
+@media only screen and (max-width: 960px) {
+  .show-tablet-lg { display: block; }
+  .hide-tablet-lg { display: none; }
+}
+
+@media only screen and (max-width: 960px) {
   .show-tablet  { display: block; }
   .hide-tablet  { display: none; }
 }
 
-@media (max-width: 600px) {
+@media only screen and (max-width: 600px) {
   .show-mobile  { display: block; }
   .hide-mobile  { display: none; }
 }
@@ -499,9 +506,10 @@ ul.social-block-buttons {
   list-style-type: none;
 }
 
-.interior-content aside li a {
+.interior-content aside li a,
+.interior-content aside ul.top-level > li:not(:first-child) {
   font-weight: 400;
-  font-size: 1.45em;
+  font-size: 24px;
   color: #555555;
   font-family: 'Roboto Condensed', Helvetica, Arial, sans-serif;
 }
@@ -515,7 +523,8 @@ ul.social-block-buttons {
 }
 
 .interior-content aside ul li:nth-child(n+2) ul a {
-  font-size: 1.3em;
+  font-size: 21px;
+  line-height: 24px;
   font-weight: 300;
 }
 
@@ -550,6 +559,10 @@ ul.social-block-buttons {
   font-size: 1.75em;
   margin-bottom: .5em;
   font-weight: 400;
+}
+
+.interior-content .main ul {
+  font-size: 1.5em;
 }
 
 .interior-content pre {
@@ -702,7 +715,7 @@ ul.social-block-buttons {
    Responsive Styles
    =========================================== */
 
-@media (max-width: 1100px) {
+@media only screen and (max-width: 1100px) {
   .main-nav li { margin-left: 2em; margin-top: .25em; }
   .main-nav a { font-size: 1.5em; }
 
@@ -726,24 +739,24 @@ ul.social-block-buttons {
   }
 }
 
-@media (max-width: 930px) {
+@media only screen and (max-width: 960px) {
   .mobile-toggle { display: block; }
   .main-nav ul { opacity: 0; z-index: -9999; height: 0; }
   .main-nav li { display: block; margin-bottom: .5em; }
   .main-nav a { font-size: 1.25em; }
-}
 
-@media (max-width: 768px) { 
   .stripe .col {
     width: 100%;
   }
 
-  .stripe img.show-tablet {
+  .stripe img.show-tablet-lg {
     margin-bottom: 1.5em;
+    width: 25em;
+    max-width: 100%;
   }
 }
 
-@media (max-width: 650px) {
+@media only screen and (max-width: 650px) {
   .hero--home {
     text-align: center;
   }
