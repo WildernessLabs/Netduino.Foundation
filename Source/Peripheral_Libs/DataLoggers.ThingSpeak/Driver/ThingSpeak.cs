@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Microsoft.SPOT;
+using System;
 using System.IO;
 using System.Net;
 using System.Text;
-using Microsoft.SPOT;
+using System.Threading;
 
 namespace Netduino.Foundation.DataLoggers
 {
@@ -78,24 +79,43 @@ namespace Netduino.Foundation.DataLoggers
         /// <returns>Record number for the reading(s) just added.</returns>
         private int PostData(string data)
         {
-            using (var request = (HttpWebRequest) WebRequest.Create(URI))
+            int retryCount = 0;
+            int result = 0;
+            while (retryCount < 3)
             {
-                request.Headers.Add("X-THINGSPEAKAPIKEY: " + WriteKey);
-                request.Method = "POST";
-                request.ContentType = "application/x-www-form-urlencoded";
-                byte[] bytesToSend = UTF8Encoding.UTF8.GetBytes(data);
-                request.ContentLength = bytesToSend.Length;
-
-                using (var stream = request.GetRequestStream())
+                try
                 {
-                    stream.Write(bytesToSend, 0, bytesToSend.Length);
+                    using (var request = (HttpWebRequest) WebRequest.Create(URI))
+                    {
+                        request.Headers.Add("X-THINGSPEAKAPIKEY: " + WriteKey);
+                        request.Method = "POST";
+                        request.ContentType = "application/x-www-form-urlencoded";
+                        byte[] bytesToSend = UTF8Encoding.UTF8.GetBytes(data);
+                        request.ContentLength = bytesToSend.Length;
+
+                        using (var stream = request.GetRequestStream())
+                        {
+                            stream.Write(bytesToSend, 0, bytesToSend.Length);
+                        }
+
+                        var response = (HttpWebResponse) request.GetResponse();
+
+                        var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                        result = int.Parse(responseString);
+                        retryCount = 4;
+                    }
                 }
-
-                var response = (HttpWebResponse) request.GetResponse();
-
-                var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-                return (int.Parse(responseString));
+                catch (Exception e)
+                {
+                    retryCount++;
+                    if (retryCount == 3)
+                    {
+                        throw;
+                    }
+                    Thread.Sleep(1000);
+                }
             }
+            return(result);
         }
 
         #endregion Methods
