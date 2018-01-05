@@ -577,6 +577,7 @@ ul.social-block-buttons {
 .highlight {
   background: #eee;
   border-radius: 15px;
+  margin-bottom: 2em;
   padding: .5em 1.5em .25em; }
   .highlight .c {
     color: #998;
