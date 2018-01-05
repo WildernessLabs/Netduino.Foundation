@@ -31,6 +31,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ArrayEventArgs.cs" />
     <Compile Include="LEDs\RgbPwmLed.cs" />
     <Compile Include="Motors\IDCMotor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -49,7 +50,9 @@
     <Compile Include="Sensors\Proximity\IRangeFinder.cs" />
     <Compile Include="Sensors\SensorFloatEventArgs.cs" />
     <Compile Include="Sensors\Switches\ISwitch.cs" />
+    <Compile Include="Sensors\Switches\DipSwitch.cs" />
     <Compile Include="Sensors\Switches\SpstSwitch.cs" />
+    <Compile Include="Sensors\Switches\SwitchCircuitTerminationType.cs" />
     <Compile Include="Units.cs" />
     <Compile Include="Devices\Netduino\Enums.cs" />
     <Compile Include="Devices\Netduino\I2CBus.cs" />
