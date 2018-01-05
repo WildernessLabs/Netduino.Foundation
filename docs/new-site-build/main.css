@@ -511,7 +511,8 @@ ul.social-block-buttons {
 }
 
 .interior-content aside li a,
-.interior-content aside ul.top-level > li:not(:first-child) {
+.interior-content aside ul.top-level > li:not(:first-child),
+.interior-content aside ul ul li {
   font-weight: 400;
   font-size: 24px;
   color: #555555;
