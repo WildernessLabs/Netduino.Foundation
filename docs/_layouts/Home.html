@@ -30,21 +30,21 @@ layout: SiteFrame
           <p>Add Netduino.Foundation.TMP36 and .LCD via nuget, and add the following code to a new Netdunio project:</p>
 
           <div class="highlight-alt">
-              {% highlight csharp%}
-              using Netduino.Foundation;
-              
-              public static void Main()
-              {
-              var lcdScreen = new LCDScreen (x, y);
-                var tempSensor = new AnalogTemperature (pin3);
-                var ctoF = new CelsiusToFahrenheitBlock ();
-                
-                tempSensor.ConnectTo (ctoF);
-                ctoF.ConnectTo (lcdScreen);
-              
-                while (true) { Thread.Sleep (1000); }
-              }
-              {% endhighlight %}
+{% highlight csharp%}
+using Netduino.Foundation;
+
+public static void Main()
+{
+  var lcdScreen = new LCDScreen (x, y);
+  var tempSensor = new AnalogTemperature (pin3);
+  var ctoF = new CelsiusToFahrenheitBlock ();
+  
+  tempSensor.ConnectTo (ctoF);
+  ctoF.ConnectTo (lcdScreen);
+
+  while (true) { Thread.Sleep (1000); }
+}
+{% endhighlight %}
           </div> 
 
           <p>
