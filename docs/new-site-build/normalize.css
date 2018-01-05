@@ -67,9 +67,11 @@ main { /* 1 */
  * Add the correct margin in IE 8.
  */
 
+/*
 figure {
   margin: 1em 40px;
 }
+*/
 
 /**
  * 1. Add the correct box sizing in Firefox.
