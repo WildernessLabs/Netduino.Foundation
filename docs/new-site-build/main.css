@@ -561,7 +561,8 @@ ul.social-block-buttons {
   font-weight: 400;
 }
 
-.interior-content .main ul {
+.interior-content .main ul, 
+.interior-content .main ol {
   font-size: 1.5em;
 }
 
