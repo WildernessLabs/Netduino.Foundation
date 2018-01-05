@@ -31,46 +31,26 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ConfigPort.cs" />
-    <Compile Include="Connection.cs" />
-    <Compile Include="Devices\Netduino\AnalogInputPin.cs" />
-    <Compile Include="Devices\Netduino\PwmOutputPin.cs" />
-    <Compile Include="Devices\Netduino\DigitalInputPin.cs" />
-    <Compile Include="Devices\Netduino\DigitalOutputPin.cs" />
-    <Compile Include="Generators\Constant.cs" />
-    <Compile Include="Generators\IPwm.cs" />
-    <Compile Include="Generators\SoftPwm.cs" />
-    <Compile Include="InputPort.cs" />
-    <Compile Include="Motors\HBridgeMotor.cs" />
+    <Compile Include="LEDs\RgbPwmLed.cs" />
     <Compile Include="Motors\IDCMotor.cs" />
-    <Compile Include="OutputPort.cs" />
-    <Compile Include="Port.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Relays\IRelay.cs" />
+    <Compile Include="Relays\Relay.cs" />
+    <Compile Include="Relays\RelayType.cs" />
     <Compile Include="RoslynFixHack.cs" />
-    <Compile Include="Scopes\DebugScope.cs" />
-    <Compile Include="Scopes\IScope.cs" />
     <Compile Include="Sensors\Buttons\IButton.cs" />
     <Compile Include="Sensors\Buttons\PushButton.cs" />
+    <Compile Include="Sensors\IHumiditySensor.cs" />
+    <Compile Include="Sensors\ISensor.cs" />
+    <Compile Include="Sensors\ITemperatureSensor.cs" />
     <Compile Include="Sensors\Light\GenericAmbientLightSensor.cs" />
     <Compile Include="Sensors\Light\IAmbientLightSensor.cs" />
     <Compile Include="Sensors\Motion\IAccelerometer.cs" />
     <Compile Include="Sensors\Proximity\IRangeFinder.cs" />
-    <Compile Include="Sensors\Temperature\Thermistor.cs" />
-    <Compile Include="SpecializedBlocks\CelsiusToFahrenheit.cs" />
-    <Compile Include="SpecializedBlocks\DutyCycleMeter.cs" />
-    <Compile Include="Generators\Generator.cs" />
-    <Compile Include="SpecializedBlocks\I2CBlock.cs" />
-    <Compile Include="SpecializedBlocks\LookupTable.cs" />
-    <Compile Include="SpecializedBlocks\PollingBlock.cs" />
-    <Compile Include="SpecializedBlocks\PollingI2CBlock.cs" />
-    <Compile Include="Generators\SineWave.cs" />
-    <Compile Include="SpecializedBlocks\Switch.cs" />
-    <Compile Include="SpecializedBlocks\Transform.cs" />
+    <Compile Include="Sensors\SensorFloatEventArgs.cs" />
+    <Compile Include="Sensors\Switches\ISwitch.cs" />
+    <Compile Include="Sensors\Switches\SimpleSwitch.cs" />
     <Compile Include="Units.cs" />
-    <Compile Include="Block.cs" />
-    <Compile Include="Messaging\Control.cs" />
-    <Compile Include="Messaging\ControlServer.cs" />
-    <Compile Include="Messaging\Message.cs" />
     <Compile Include="Devices\Netduino\Enums.cs" />
     <Compile Include="Devices\Netduino\I2CBus.cs" />
     <Compile Include="Devices\Netduino\ICommunicationBus.cs" />
@@ -90,12 +70,13 @@
     <Reference Include="Microsoft.SPOT.Native">
     </Reference>
     <Reference Include="Microsoft.SPOT.TinyCore" />
+    <Reference Include="SecretLabs.NETMF.Hardware.Netduino, Version=4.3.1.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="Microsoft.SPOT.IO" />
     <Reference Include="System.IO" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Sensors\Location\" />
+    <Folder Include="Sensors\Temperature\" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup />

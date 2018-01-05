@@ -4,8 +4,8 @@ namespace Netduino.Foundation.Sensors.Motion
 {
 	public interface IAccelerometer
 	{
-		OutputPort XAcceleration { get; }
-		OutputPort YAcceleration { get; }
-		OutputPort ZAcceleration { get; }
+		float XAcceleration { get; }
+		float YAcceleration { get; }
+		float ZAcceleration { get; }
 	}
 }

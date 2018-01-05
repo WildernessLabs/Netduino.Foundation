@@ -11,12 +11,12 @@ layout: SiteFrame
 
   <section class="stripe stripe--dark">
     <div class="container">
-      <p>Netduino.Foundation is a platform for quickly and easily building connected things using the .NET MicroFramework on Netduino. Created by <a href="">Wilderness Labs</a>, it's completely <a href="">open source</a> and maintained by the Netduino <a href="">community</a>.</p>
+      <p>Netduino.Foundation is a platform for quickly and easily building connected things using the .NET MicroFramework on Netduino. Created by <a href="http://www.wildernesslabs.co">Wilderness Labs</a>, it's completely <a href="https://github.com/WildernessLabs/Netduino.Foundation">open source</a> and maintained by the Netduino <a href="https://community.wildernesslabs.co/c/netduino-development/netduino-foundation">community</a>.</p>
       <ul class="social-block-buttons">
-        <li><a href=""><img src="/assets/images/ButtonIcon_Star.svg" alt="Star">star</a></li>
-        <li><a href=""><img src="/assets/images/ButtonIcon_Fork.svg" alt="Fork">fork</a> <span class="github-tagline">on <strong>GitHub</strong></span></li>
-        <li><a href=""><img src="/assets/images/ButtonIcon_Twitter.svg" alt="Twitter" class="social-block-buttons--twitter">follow @wildernesslabs</a></li>
-        <li><a href=""><img src="/assets/images/ButtonIcon_Twitter.svg" alt="Twitter" class="social-block-buttons--twitter">tweet</a></li>
+        <li><a href="https://github.com/WildernessLabs/Netduino.Foundation" target="_blank"><img src="/assets/images/ButtonIcon_Star.svg" alt="Star">star</a></li>
+        <li><a href="https://github.com/WildernessLabs/Netduino.Foundation" target="_blank"><img src="/assets/images/ButtonIcon_Fork.svg" alt="Fork">fork</a> <span class="github-tagline">on <strong>GitHub</strong></span></li>
+        <li><a href="https://twitter.com/wildernesslabs" target="_blank"><img src="/assets/images/ButtonIcon_Twitter.svg" alt="Twitter" class="social-block-buttons--twitter">follow @wildernesslabs</a></li>
+        <li><a href="https://twitter.com/intent/tweet?text=I'm%20building%20cool%20stuff%20with%20%23Netduino.Foundation%20by%20@wildernesslabs!" target="_blank"><img src="/assets/images/ButtonIcon_Twitter.svg" alt="Twitter" class="social-block-buttons--twitter">tweet</a></li>
       </ul>
     </div><!-- .container -->
   </section>
@@ -31,6 +31,7 @@ layout: SiteFrame
 
           <pre class="highlight">
             <code>
+                {% highlight csharp %}
 using Netduino.Foundation;
 
 public static void Main()
@@ -44,6 +45,7 @@ var lcdScreen = new LCDScreen (x, y);
 
  while (true) { Thread.Sleep (1000); }
 }
+              {% endhighlight %}
             </code>
           </pre>
 
@@ -65,7 +67,7 @@ var lcdScreen = new LCDScreen (x, y);
           <h2>Huge Peripheral Driver Library</h2>
           <img class="show-tablet" src="/assets/images/Library_Icons_Illustration.svg" alt="Library Icons Illustration">
           <p>Netduino.Foundation has built in support for most common sensors, motors, and other peripherals available on the market.</p>
-          <p><a href="">See the full list.</a></p>
+          <p><a href="/Library">See the full list.</a></p>
         </div><!-- .col -->
         <div class="col col-2-5">
           <img class="hide-tablet" src="/assets/images/Library_Icons_Illustration.svg" alt="Library Icons Illustration">
@@ -81,7 +83,7 @@ var lcdScreen = new LCDScreen (x, y);
           <h2>Simple, Powerful Architecture and API</h2>
           <img class="show-tablet" src="/assets/images/Architecture_Illustration@2x.png" alt="Architecture Illustration">
           <p>Use the Blocks architecture to quickly connect together perihperals for rapid prototyping, or access the full peripheral API manually for more complex behaviors.</p>
-          <p><a href="">Explore the documentation.</a></p>
+          <p><a href="/API">Explore the documentation.</a></p>
         </div><!-- .col -->
         <div class="col col-2-5">
           <img class="hide-tablet" src="/assets/images/Architecture_Illustration@2x.png" alt="Architecture Illustration">
@@ -97,7 +99,7 @@ var lcdScreen = new LCDScreen (x, y);
           <h2>Supportive Community</h2>
           <img class="show-tablet" src="/assets/images/Community_Photo@2x.png" alt="Community Photo">
           <p>Use the Blocks architecture to quickly connect together perihperals for rapid prototyping, or access the full peripheral API manually for more complex behaviors.</p>
-          <p><a href="">Join the community.</a></p>
+          <p><a href="https://community.wildernesslabs.co/c/netduino-development/netduino-foundation">Join the community.</a></p>
         </div><!-- .col -->
         <div class="col col-2-5">
           <img class="hide-tablet" src="/assets/images/Community_Photo@2x.png" alt="Community Photo">

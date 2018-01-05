@@ -1,15 +1,12 @@
 using System;
-
-#if MF_FRAMEWORK_VERSION_V4_3
 using Microsoft.SPOT;
-#endif
 
 namespace Netduino.Foundation.Sensors.Buttons
 {
 	/// <summary>
 	/// A simple push button. 
 	/// </summary>
-	public class PushButton : Block, IButton
+	public class PushButton : IButton
 	{
 		/// <summary>
 		/// This duration controls the debounce filter. It also has the effect
@@ -18,23 +15,29 @@ namespace Netduino.Foundation.Sensors.Buttons
 		/// </summary>
 		public TimeSpan DebounceDuration { get; set; }
 
-		public InputPort DigitalInput { get; private set; }
+		public Microsoft.SPOT.Hardware.InputPort DigitalInput { get; private set; }
 
 		public event EventHandler Clicked = delegate { };
 
 		DateTime clickTime;
 
-		public PushButton() 
+		public PushButton(Microsoft.SPOT.Hardware.InputPort input) 
 		{
-			DigitalInput = AddInput ("DigitalInput", Units.Digital);
+            DigitalInput = input;
 			DebounceDuration = TimeSpan.FromTicks (500 * 10000);
 
 			clickTime = DateTime.UtcNow;
 
-			DigitalInput.ValueChanged += HandleValueChanged;
+            DigitalInput.OnInterrupt += DigitalInput_OnInterrupt;
 		}
 
-		void HandleValueChanged (object sender, EventArgs e)
+        //TODO: Wire this up
+        private void DigitalInput_OnInterrupt(uint data1, uint data2, DateTime time)
+        {
+            throw new NotImplementedException();
+        }
+
+        void HandleValueChanged (object sender, EventArgs e)
 		{
 			var time = DateTime.UtcNow;
 
