@@ -3,7 +3,7 @@ using Microsoft.SPOT;
 
 namespace Netduino.Foundation.Sensors.Switches
 {
-    interface ISwitch
+    public interface ISwitch
     {
         event EventHandler Changed;
 
