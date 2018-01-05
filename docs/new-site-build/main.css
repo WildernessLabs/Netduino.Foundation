@@ -100,7 +100,7 @@ h2 {
 pre {
   background: #eeeeee;
   border-radius: 15px;
-  padding: .5em 1.5em .25em;
+  padding: 0;
 }
 
 pre, code {
