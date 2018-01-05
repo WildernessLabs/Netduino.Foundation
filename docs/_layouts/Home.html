@@ -29,23 +29,24 @@ layout: SiteFrame
           <img class="show-tablet-lg" src="/assets/images/Sample_Circuit_Illustration.svg" alt="Sample Circuit Illustration">
           <p>Add Netduino.Foundation.TMP36 and .LCD via nuget, and add the following code to a new Netdunio project:</p>
 
-          <div class="highlight-alt">
-{% highlight csharp%}
-using Netduino.Foundation;
+          <pre>
+            <code class="language-csharp" data-lang="csharp">
+              using Netduino.Foundation;
 
-public static void Main()
-{
-var lcdScreen = new LCDScreen (x, y);
-  var tempSensor = new AnalogTemperature (pin3);
-  var ctoF = new CelsiusToFahrenheitBlock ();
-  
-  tempSensor.ConnectTo (ctoF);
-  ctoF.ConnectTo (lcdScreen);
+              public static void Main()
+              {
+              var lcdScreen = new LCDScreen (x, y);
+                var tempSensor = new AnalogTemperature (pin3);
+                var ctoF = new CelsiusToFahrenheitBlock ();
+                
+                tempSensor.ConnectTo (ctoF);
+                ctoF.ConnectTo (lcdScreen);
+              
+                while (true) { Thread.Sleep (1000); }
+              }
+            </code>
+          </pre>
 
-  while (true) { Thread.Sleep (1000); }
-}
-{% endhighlight %}
-          </div> 
           <p>
             <a href="">See more examples.</a>
           </p>
