@@ -283,7 +283,7 @@ tbody tr:nth-child(even) {
   .hide-tablet-lg { display: none; }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 960px) {
   .show-tablet  { display: block; }
   .hide-tablet  { display: none; }
 }
