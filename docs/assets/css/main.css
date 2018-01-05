@@ -511,7 +511,8 @@ ul.social-block-buttons {
 }
 
 .interior-content aside li a,
-.interior-content aside ul.top-level > li:not(:first-child) {
+.interior-content aside ul.top-level > li:not(:first-child),
+.interior-content aside ul ul li {
   font-weight: 400;
   font-size: 24px;
   color: #555555;
@@ -548,19 +549,25 @@ ul.social-block-buttons {
   color: #23ABE3;
 }
 
-.interior-content .main h2 {
+.interior-content .main h1 {
   font-size: 3em;
   margin-bottom: .5em;
 }
 
-.interior-content .main h3 {
+.interior-content .main h2 {
   font-size: 2.25em;
   margin-bottom: .5em;
   font-weight: 700;
 }
 
-.interior-content .main h4 {
+.interior-content .main h3 {
   font-size: 1.75em;
+  margin-bottom: .5em;
+  font-weight: 400;
+}
+
+.interior-content .main h4 {
+  font-size: 1.5em;
   margin-bottom: .5em;
   font-weight: 400;
 }
@@ -577,6 +584,10 @@ ul.social-block-buttons {
 /* ===========================================
    Syntax Highlighting
    =========================================== */
+
+pre.highlight {
+  padding: 0;
+}
 
 .highlight {
   background: #eee;
