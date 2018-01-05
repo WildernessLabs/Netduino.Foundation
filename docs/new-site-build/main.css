@@ -273,22 +273,22 @@ tbody tr:nth-child(even) {
 .hide-tablet      { display: block; }
 .hide-mobile      { display: block; }
 
-@media (max-width: 1024px) {
+@media only screen and (max-width: 1024px) {
   .show-desktop { display: block; }
   .hide-desktop { display: none; }
 }
 
-@media (max-width: 960px) {
+@media only screen and (max-width: 960px) {
   .show-tablet-lg { display: block; }
   .hide-tablet-lg { display: none; }
 }
 
-@media (max-width: 768px) {
+@media only screen and (max-width: 768px) {
   .show-tablet  { display: block; }
   .hide-tablet  { display: none; }
 }
 
-@media (max-width: 600px) {
+@media only screen and (max-width: 600px) {
   .show-mobile  { display: block; }
   .hide-mobile  { display: none; }
 }
@@ -715,7 +715,7 @@ ul.social-block-buttons {
    Responsive Styles
    =========================================== */
 
-@media (max-width: 1100px) {
+@media only screen and (max-width: 1100px) {
   .main-nav li { margin-left: 2em; margin-top: .25em; }
   .main-nav a { font-size: 1.5em; }
 
@@ -739,7 +739,7 @@ ul.social-block-buttons {
   }
 }
 
-@media (max-width: 960px) {
+@media only screen and (max-width: 960px) {
   .mobile-toggle { display: block; }
   .main-nav ul { opacity: 0; z-index: -9999; height: 0; }
   .main-nav li { display: block; margin-bottom: .5em; }
@@ -756,7 +756,7 @@ ul.social-block-buttons {
   }
 }
 
-@media (max-width: 650px) {
+@media only screen and (max-width: 650px) {
   .hero--home {
     text-align: center;
   }
