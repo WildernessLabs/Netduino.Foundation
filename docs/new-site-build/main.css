@@ -585,6 +585,10 @@ ul.social-block-buttons {
    Syntax Highlighting
    =========================================== */
 
+pre.highlight {
+  padding: 0;
+}
+
 .highlight {
   background: #eee;
   border-radius: 15px;
