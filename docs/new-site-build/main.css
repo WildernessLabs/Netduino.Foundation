@@ -559,6 +559,10 @@ ul.social-block-buttons {
   font-weight: 400;
 }
 
+.interior-content .main ul {
+  font-size: 1.5em;
+}
+
 .interior-content pre {
   margin-bottom: 2em;
 }
