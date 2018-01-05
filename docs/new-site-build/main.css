@@ -506,9 +506,10 @@ ul.social-block-buttons {
   list-style-type: none;
 }
 
-.interior-content aside li a {
+.interior-content aside li a,
+.interior-content aside ul.top-level > li:not(:first-child) {
   font-weight: 400;
-  font-size: 1.45em;
+  font-size: 24px;
   color: #555555;
   font-family: 'Roboto Condensed', Helvetica, Arial, sans-serif;
 }
@@ -522,7 +523,8 @@ ul.social-block-buttons {
 }
 
 .interior-content aside ul li:nth-child(n+2) ul a {
-  font-size: 1.3em;
+  font-size: 21px;
+  line-height: 24px;
   font-weight: 300;
 }
 
