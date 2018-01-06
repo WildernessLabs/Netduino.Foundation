@@ -109,6 +109,7 @@ pre, code {
   white-space: -pre-wrap;     
   white-space: -o-pre-wrap;   
   word-wrap: break-word;
+  word-break: break-all;
 }
 
 p {
@@ -530,9 +531,9 @@ ul.social-block-buttons {
   padding: 0 0 0 .5em;
 }
 
-.interior-content aside ul li:nth-child(n+2) ul a {
+.interior-content aside ul li:nth-child(n+2) ul a,
+.interior-content aside ul ul ul li {
   font-size: 21px;
-  line-height: 24px;
   font-weight: 300;
 }
 
@@ -555,6 +556,7 @@ ul.social-block-buttons {
 .interior-content .main h1 {
   font-size: 3em;
   margin-bottom: .5em;
+  line-height: 1;
 }
 
 .interior-content .main h2 {
@@ -819,4 +821,18 @@ pre.highlight {
   .footer__social-block li {
     margin: 0 .5em;
   }
+}
+
+@media only screen and (max-width: 500px) {
+
+  td {
+    font-size: 1em;
+    padding: .25em .5em;
+  }
+
+  th {
+    font-size: 1.25em;
+    padding: .25em .5em;
+  }
+
 }
