@@ -4,6 +4,47 @@ title: Peripheral Library Reference
 subtitle: Reference documentation for Netduino.Foundation peripheral library.
 ---
 
+# Core Peripherals
+
+Netduino.Foundation has two sets of peripheral drivers; the ones listed below, that cover common, generic, components and are built into the Netduino.Foundation core library, and the [specialized set of third party components](/Library) which are added via their individual Nuget packages.
+
+## Buttons
+
+| Peripheral                | Description                         |
+|---------------------------|-------------------------------------|
+| [PushButton](/API/CorePeripherals/Buttons/PushButton)      | Simple push-button. |
+
+## LEDs
+
+| Peripheral                | Description                         |
+|---------------------------|-------------------------------------|
+| [PwmLed](/API/CorePeripherals/LEDs/PwmLed)      | Pulse-Width-Modulation powered LED. |
+| [RgbPwmLed](/API/CorePeripherals/LEDs/RgbPwmLed)      | Pulse-Width-Modulation powered RGB LED. |
+
+## Relays
+
+| Peripheral                | Description                         |
+|---------------------------|-------------------------------------|
+| [Relay](/API/CorePeripherals/Relays/Relay)      | Electrically isolated switch. |
+
+## Sensors
+
+
+### Buttons
+
+| Peripheral                | Description                         |
+|---------------------------|-------------------------------------|
+| [PushButton](/API/CorePeripherals/Sensors/Buttons/PushButton)      | Generic push button. |
+
+### Switches
+
+| Peripheral                | Description                         |
+|---------------------------|-------------------------------------|
+| [SpstSwitch](/API/CorePeripherals/Sensors/Switches/SpstSwitch)      | A simple single-pole, single-throw (SPST), switch. |
+| [DipSwitch](/API/CorePeripherals/Sensors/Switches/DipSwitch)      | A multi-pole dip switch. |
+
+# External Peripherals
+
 ## Integrated Circuits (ICs)
 
 | Peripheral                | Description                         |
