@@ -31,18 +31,28 @@ layout: SiteFrame
 
           <div class="highlight-alt">
 {% highlight csharp%}
-using Netduino.Foundation;
+using N = SecretLabs.NETMF.Hardware.Netduino;
+using System.Threading;
 
-public static void Main()
+namespace Netduino.Foundation.Core.Samples
 {
-  var lcdScreen = new LCDScreen (x, y);
-  var tempSensor = new AnalogTemperature (pin3);
-  var ctoF = new CelsiusToFahrenheitBlock ();
-  
-  tempSensor.ConnectTo (ctoF);
-  ctoF.ConnectTo (lcdScreen);
+    public class HelloWorldProgram
+    {
+        public static void Main()
+        {
+            var pwmLed = new LEDs.PwmLed(
+               N.PWMChannels.PWM_PIN_D11, 
+               LEDs.TypicalForwardVoltage.Green);
 
-  while (true) { Thread.Sleep (1000); }
+            while (true)
+            {
+                pwmLed.Brightness = 1;
+                Thread.Sleep(50);
+                pwmLed.Brightness = 0;
+                Thread.Sleep(500);
+            }
+        }
+    }
 }
 {% endhighlight %}
           </div> 
