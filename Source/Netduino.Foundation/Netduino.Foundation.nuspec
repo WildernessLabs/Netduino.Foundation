@@ -3,24 +3,26 @@
   <metadata>
     <id>WildernessLabs.Netduino.Foundation</id>
     <title>Netduino.Foundation</title>
-    <version>0.5.0.0</version>
+    <version>0.4.0.0</version>
     <authors>Bryan Costanich, Frank Krueger, Craig Dunn, Mark Stevens</authors>
     <owners>Wilderness Labs</owners>
     <licenseUrl>https://github.com/WildernessLabs/Netduino.Foundation/blob/master/LICENSE</licenseUrl>
-    <projectUrl>https://github.com/WildernessLabs/Netduino.Foundation</projectUrl>
+    <projectUrl>http://Netduino.Foundation</projectUrl>
 <!--    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Netduino.Foundation greatly simplifies the task of building complex .NET Microframework (MF) powered connected things with Netduino.</description>
 <!--    <releaseNotes>First release on Nuget.</releaseNotes> -->
     <copyright>Copyright 2017 Wilderness Labs</copyright>
-    <tags>NETMF Netduino</tags>
+    <tags>NETMF Netduino WildernessLabs</tags>
     <!-- NET MF assemblies needed for core to build -->
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="Microsoft.SPOT.Hardware" targetFramework="netmf" />
       <frameworkAssembly assemblyName="Microsoft.SPOT.Hardware.PWM" targetFramework="netmf" />
       <frameworkAssembly assemblyName="Microsoft.SPOT.Hardware.SerialPort" targetFramework="netmf" />
+      <frameworkAssembly assemblyName="Microsoft.SPOT.IO" targetFramework="netmf" />
       <frameworkAssembly assemblyName="Microsoft.SPOT.Native" targetFramework="netmf" />
       <frameworkAssembly assemblyName="Microsoft.SPOT.TinyCore" targetFramework="netmf" />
+      <frameworkAssembly assemblyName="SecretLabs.NETMF.Hardware.Netduino" targetFramework="netmf" />
     </frameworkAssemblies>
   </metadata>
   <!-- files to put into the nuget package. target is where they get put into the package. -->
