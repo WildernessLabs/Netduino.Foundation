@@ -10,7 +10,7 @@ subtitle: Getting up and running with Netduino.Foundation
 2. Create a new .NET MicroFramework console application.
 3. Add a reference to the `Netduino.Foundation` Nuget package.
 4. Plug the longer leg (cathode) of a green LED into pin `11` and the other leg into `GND`:
-![](PwmLed_bb.svg)
+![](Pulse_Large.svg)
 5. Add the following code to the `program.cs` file in your application:
  
 ```csharp
