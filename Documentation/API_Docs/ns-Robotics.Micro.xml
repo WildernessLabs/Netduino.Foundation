@@ -1,6 +1,0 @@
-<Namespace Name="Robotics.Micro">
-  <Docs>
-    <summary>The core Robotics micro library that runs on .NET Microframework (MF) devices such as the Netduino.</summary>
-    <remarks>To be added.</remarks>
-  </Docs>
-</Namespace>
