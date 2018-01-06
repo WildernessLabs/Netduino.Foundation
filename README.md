@@ -24,7 +24,7 @@ Netduino.Foundation, is open source and community powered, much like Netduino it
  * **Documentation** - Including a Fritzing breadboard schematic on wiring it up, sourcing info, and API docs. Please see other drivers for examples. Documentation is hosted on the [Netduino.Foundation](http://Netduino.Foundation) GitHub pages site and should be placed in the appropriate place in the `/docs/` folder.
  * **Datasheet** - For the peripheral, if applicable.
  * **Sample** - Application illustrating usage of the peripheral.
- * **Nuspec file** - For building the peripheral's Nuget package (if it's an external peripheral). See other peripherals for an example.
+ * **Nuspec file** - For building the peripheral's Nuget package (if it's an external peripheral). See other peripherals for an example. [**TODO** explain how nuget packages are automatically built and the requirements for publishing]
 
 ### List of Peripherals TODO
 
