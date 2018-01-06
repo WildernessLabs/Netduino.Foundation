@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using H = Microsoft.SPOT.Hardware;
 
 namespace Netduino.Foundation.LEDs
@@ -43,8 +44,9 @@ namespace Netduino.Foundation.LEDs
 
         //
         protected float _maximumPwmDuty = 1;
-
         protected H.PWM _pwm = null;
+        protected Thread _animationThread = null;
+
 
         /// <summary>
         /// Creates a new PwmLed on the specified PWM pin and limited to the appropriate 
@@ -64,6 +66,91 @@ namespace Netduino.Foundation.LEDs
             this._maximumPwmDuty = CalculateMaximumDutyCycle(forwardVoltage);
 
             this._pwm = new H.PWM(pin, 100, this._maximumPwmDuty, false);
+        }
+
+
+        public void StartBlink(int onDuration = 200, int offDuration = 200, float onBrightness = 1, float offBrightness = 0)
+        {
+            if (onBrightness > 1 || onBrightness <= 0)
+            {
+                throw new ArgumentOutOfRangeException("onBrightness", "onBrightness must be > 0 and <= 1");
+            }
+            if (offBrightness >= 1 || offBrightness < 0)
+            {
+                throw new ArgumentOutOfRangeException("offBrightness", "lowBrightness must be >= 0 and < 1");
+            }
+            if (offBrightness >= onBrightness)
+            {
+                throw new Exception("offBrightness must be less than onBrightness");
+            }
+
+            // stop any existing animations
+            this.Stop();
+            this._animationThread = new Thread(() => {
+                while (true)
+                {
+                    this.Brightness = onBrightness;
+                    Thread.Sleep(onDuration);
+                    this.Brightness = offBrightness;
+                    Thread.Sleep(offDuration);
+                }
+            });
+            this._animationThread.Start();
+        }
+
+        public void StartPulse(int pulseDuration = 600, float highBrightness = 1, float lowBrightness = 0)
+        {
+            if (highBrightness > 1 || highBrightness <= 0) {
+                throw new ArgumentOutOfRangeException("highBrightness", "highBrightness must be > 0 and <= 1");
+            }
+            if (lowBrightness >= 1 || lowBrightness < 0)
+            {
+                throw new ArgumentOutOfRangeException("lowBrightness", "lowBrightness must be >= 0 and < 1");
+            }
+            if (lowBrightness >= highBrightness)
+            {
+                throw new Exception("lowBrightness must be less than highbrightness");
+            }
+
+            // stop any existing animations
+            this.Stop();
+            this._animationThread = new Thread(() => {
+                // pulse the LED by taking the brightness from low to high and back again.
+                float brightness = lowBrightness;
+                bool ascending = true;
+                int intervalTime = 60; // 60 miliseconds is probably the fastest update we want to do, given that threads are given 20 miliseconds by default. 
+                float steps = pulseDuration / intervalTime;
+                float changeAmount = (highBrightness - lowBrightness) / steps;
+                float changeUp = changeAmount;
+                float changeDown = -1 * changeAmount;
+
+                while (true)
+                {
+                    // are we brightening or dimming?
+                    if (brightness <= lowBrightness) { ascending = true; }
+                    else if (brightness == highBrightness) { ascending = false; }
+                    brightness += (ascending) ? changeUp : changeDown;
+
+                    // float math error clamps
+                    if (brightness < 0) { brightness = 0; }
+                    else if (brightness > 1) { brightness = 1; }
+
+                    // set our actual brightness
+                    this.Brightness = brightness;
+
+                    // go to sleep, my friend.
+                    Thread.Sleep(intervalTime);
+                }
+            });
+            this._animationThread.Start();
+        }
+
+        public void Stop()
+        {
+            if(this._animationThread != null)
+            {
+                this._animationThread.Abort();
+            }
         }
 
         /// <summary>

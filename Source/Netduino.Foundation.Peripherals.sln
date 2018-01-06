@@ -227,6 +227,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PwmLed", "Netduino.Foundati
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld", "Netduino.Foundation.Core.Samples\HelloWorld\HelloWorld.csproj", "{2CED9621-85F0-427E-895C-121FE07982B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PwmLed_BlinkAndPulse", "PwmLed_BlinkAndPulse\PwmLed_BlinkAndPulse.csproj", "{18A73976-7A23-4088-98EB-DDAC169BB543}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1205,6 +1207,24 @@ Global
 		{2CED9621-85F0-427E-895C-121FE07982B7}.Release|x86.ActiveCfg = Release|Any CPU
 		{2CED9621-85F0-427E-895C-121FE07982B7}.Release|x86.Build.0 = Release|Any CPU
 		{2CED9621-85F0-427E-895C-121FE07982B7}.Release|x86.Deploy.0 = Release|Any CPU
+		{18A73976-7A23-4088-98EB-DDAC169BB543}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18A73976-7A23-4088-98EB-DDAC169BB543}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18A73976-7A23-4088-98EB-DDAC169BB543}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{18A73976-7A23-4088-98EB-DDAC169BB543}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{18A73976-7A23-4088-98EB-DDAC169BB543}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{18A73976-7A23-4088-98EB-DDAC169BB543}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
+		{18A73976-7A23-4088-98EB-DDAC169BB543}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{18A73976-7A23-4088-98EB-DDAC169BB543}.Debug|x86.Build.0 = Debug|Any CPU
+		{18A73976-7A23-4088-98EB-DDAC169BB543}.Debug|x86.Deploy.0 = Debug|Any CPU
+		{18A73976-7A23-4088-98EB-DDAC169BB543}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18A73976-7A23-4088-98EB-DDAC169BB543}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18A73976-7A23-4088-98EB-DDAC169BB543}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{18A73976-7A23-4088-98EB-DDAC169BB543}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{18A73976-7A23-4088-98EB-DDAC169BB543}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{18A73976-7A23-4088-98EB-DDAC169BB543}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
+		{18A73976-7A23-4088-98EB-DDAC169BB543}.Release|x86.ActiveCfg = Release|Any CPU
+		{18A73976-7A23-4088-98EB-DDAC169BB543}.Release|x86.Build.0 = Release|Any CPU
+		{18A73976-7A23-4088-98EB-DDAC169BB543}.Release|x86.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1280,5 +1300,6 @@ Global
 		{F654673A-80D8-441F-AE51-8CE4B656D44B} = {B1CB9A4C-0FA0-4D20-AC92-18B3D23EBD45}
 		{A1517FC4-786F-4374-845B-5A6209938890} = {B1CB9A4C-0FA0-4D20-AC92-18B3D23EBD45}
 		{2CED9621-85F0-427E-895C-121FE07982B7} = {B1CB9A4C-0FA0-4D20-AC92-18B3D23EBD45}
+		{18A73976-7A23-4088-98EB-DDAC169BB543} = {B1CB9A4C-0FA0-4D20-AC92-18B3D23EBD45}
 	EndGlobalSection
 EndGlobal
