@@ -9,24 +9,18 @@ Netduino.Foundation has two sets of peripheral drivers; the ones listed in the f
 
 # Core Peripherals
 
-## Buttons
-
-| Peripheral                | Description                         |
-|---------------------------|-------------------------------------|
-| [PushButton](/API/CorePeripherals/Buttons/PushButton)      | Simple push-button. |
-
 ## LEDs
 
 | Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
-| [PwmLed](/API/CorePeripherals/LEDs/PwmLed)      | Pulse-Width-Modulation powered LED. |
-| [RgbPwmLed](/API/CorePeripherals/LEDs/RgbPwmLed)      | Pulse-Width-Modulation powered RGB LED. |
+| [PwmLed](/API/LEDs/PwmLed)      | Pulse-Width-Modulation powered LED. |
+| [RgbPwmLed](/API/LEDs/RgbPwmLed)      | Pulse-Width-Modulation powered RGB LED. |
 
 ## Relays
 
 | Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
-| [Relay](/API/CorePeripherals/Relays/Relay)      | Electrically isolated switch. |
+| [Relay](/API/Relays/Relay)      | Electrically isolated switch. |
 
 ## Sensors
 
@@ -35,14 +29,15 @@ Netduino.Foundation has two sets of peripheral drivers; the ones listed in the f
 
 | Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
-| [PushButton](/API/CorePeripherals/Sensors/Buttons/PushButton)      | Generic push button. |
+| [PushButton](/API/Sensors/Buttons/PushButton)      | Simple push-button. |
+
 
 ### Switches
 
 | Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
-| [SpstSwitch](/API/CorePeripherals/Sensors/Switches/SpstSwitch)      | A simple single-pole, single-throw (SPST), switch. |
-| [DipSwitch](/API/CorePeripherals/Sensors/Switches/DipSwitch)      | A multi-pole dip switch. |
+| [SpstSwitch](/API/Sensors/Switches/SpstSwitch)      | A simple single-pole, single-throw (SPST), switch. |
+| [DipSwitch](/API/Sensors/Switches/DipSwitch)      | A multi-pole dip switch. |
 
 # External Peripherals
 
