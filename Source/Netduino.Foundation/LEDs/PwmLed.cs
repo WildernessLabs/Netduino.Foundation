@@ -98,7 +98,7 @@ namespace Netduino.Foundation.LEDs
             this._animationThread.Start();
         }
 
-        public void StartPulse(int pulseDuration = 600, float highBrightness = 1, float lowBrightness = 0)
+        public void StartPulse(int pulseDuration = 600, float highBrightness = 1, float lowBrightness = 0.15F)
         {
             if (highBrightness > 1 || highBrightness <= 0) {
                 throw new ArgumentOutOfRangeException("highBrightness", "highBrightness must be > 0 and <= 1");
