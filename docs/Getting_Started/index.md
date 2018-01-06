@@ -8,7 +8,7 @@ subtitle: Getting up and running with Netduino.Foundation
 
 1. [Configure your Netduino development environment](http://developer.wildernesslabs.co/Netduino/Getting_Started/).
 2. Create a new .NET MicroFramework console application.
-3. Add a reference to the `Netduino.Foundation` Nuget package.
+3. Add a reference to the `Netduino.Foundation` Nuget package ([Windows instructions](/Getting_Started/Adding_a_Nuget_Package/Windows), [Mac Instructions](/Getting_Started/Adding_a_Nuget_Package/Mac)).
 4. Plug the longer leg (cathode) of a green LED into pin `11` and the other leg into `GND`:
 ![](Pulse_Large.svg)
 5. Add the following code to the `program.cs` file in your application:
