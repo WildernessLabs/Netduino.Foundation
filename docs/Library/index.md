@@ -6,7 +6,7 @@ subtitle: Reference documentation for Netduino.Foundation peripheral library.
 
 # Core Peripherals
 
-Netduino.Foundation has two sets of peripheral drivers; the ones listed below, that cover common, generic, components and are built into the Netduino.Foundation core library, and the [specialized set of third party components](/Library) which are added via their individual Nuget packages.
+Netduino.Foundation has two sets of peripheral drivers; the ones listed below, that cover common, generic, components and are built into the Netduino.Foundation core library, and the [specialized set of third party components](#External-Peripherals) which are added via their individual Nuget packages.
 
 ## Buttons
 
