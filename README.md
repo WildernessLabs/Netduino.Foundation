@@ -19,12 +19,12 @@ For a list of supported peripherals and their usage info, see the [peripheral li
 
 ## Contributing
 
-Netduino.Foundation, is open source and community powered, much like Netduino itself. We love pull requests, so if you've got a driver to add, send it on over! For each driver, please include:
+Netduino.Foundation, is open source and community powered, much like Netduino itself. We love pull requests, so if you've got a driver to add, send it on over! For each peripheral driver, please include:
 
- * Documentation, including a Fritzing breadboard schematic on wiring it up and API docs. Please see other drivers for examples. Documentation is hosted on the [Netduino.Foundation](http://Netduino.Foundation) GitHub pages site and should be placed in the appropriate place in the `/docs/` folder.
- * A nuget project file (use the Nuget script to make a new one).
- * Tests, if possible and/or applicable.
- * The datasheet for the peripheral and a link to purchase it, if applicable.
+ * **Documentation** - Including a Fritzing breadboard schematic on wiring it up, sourcing info, and API docs. Please see other drivers for examples. Documentation is hosted on the [Netduino.Foundation](http://Netduino.Foundation) GitHub pages site and should be placed in the appropriate place in the `/docs/` folder.
+ * **Datasheet** - For the peripheral, if applicable.
+ * **Sample** - Application illustrating usage of the peripheral.
+ * **Nuspec file** - For building the peripheral's Nuget package (if it's an external peripheral). See other peripherals for an example.
 
 ### List of Peripherals TODO
 
