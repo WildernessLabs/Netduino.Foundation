@@ -27,14 +27,12 @@ namespace Netduino.Foundation.Core.Samples
             var pwmLed = new LEDs.PwmLed(N.PWMChannels.PWM_PIN_D11, 
                 LEDs.TypicalForwardVoltage.Green);
 
-            // blink the LED 
-            while (true)
-            {
-                pwmLed.Brightness = 1;
-                Thread.Sleep(50);
-                pwmLed.Brightness = 0;
-                Thread.Sleep(500);
-            }
+            // pulse the LED
+            pwmLed.StartPulse();
+
+            // keep the app running
+            while (true) { Thread.Sleep(1000); }
+
         }
     }
 }
