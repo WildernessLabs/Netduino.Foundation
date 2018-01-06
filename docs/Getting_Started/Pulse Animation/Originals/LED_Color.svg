@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="33px" viewBox="0 0 22 33" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>LED_Color</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.65">
+        <g id="Originals-Copy" transform="translate(-127.000000, 0.000000)" fill="#2AFF00" fill-rule="nonzero">
+            <path d="M146.685,18.057 L146.685,9.845 C146.685,4.41 142.285,0 136.844,0 C131.41,0 127,4.402 127,9.845 L127,28.802 C129.047,31.095 132.69,32.625 136.844,32.625 C143.26,32.625 148.467,28.989 148.467,24.487 L148.467,22.371 C148.466,20.784 147.808,19.31 146.685,18.057 Z" id="LED_Color"></path>
+        </g>
+    </g>
+</svg>
