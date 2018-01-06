@@ -11,7 +11,7 @@ namespace Netduino.Foundation.LEDs
     {
         /// <summary>
         /// The brightness of the LED, controlled by a PWM signal, and limited by the 
-        /// calculated maximum voltage.
+        /// calculated maximum voltage. Valid values are from 0 to 1, inclusive.
         /// </summary>
         public float Brightness {
             get { return _brightness; }
