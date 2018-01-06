@@ -531,9 +531,9 @@ ul.social-block-buttons {
   padding: 0 0 0 .5em;
 }
 
-.interior-content aside ul li:nth-child(n+2) ul a {
+.interior-content aside ul li:nth-child(n+2) ul a,
+.interior-content aside ul ul ul li {
   font-size: 21px;
-  line-height: 24px;
   font-weight: 300;
 }
 
