@@ -9,6 +9,10 @@ namespace Netduino.Foundation.LEDs
     /// </summary>
     public class PwmLed
     {
+        /// <summary>
+        /// The brightness of the LED, controlled by a PWM signal, and limited by the 
+        /// calculated maximum voltage.
+        /// </summary>
         public float Brightness {
             get { return _brightness; }
             set {
@@ -42,6 +46,13 @@ namespace Netduino.Foundation.LEDs
 
         protected H.PWM _pwm = null;
 
+        /// <summary>
+        /// Creates a new PwmLed on the specified PWM pin and limited to the appropriate 
+        /// voltage based on the passed `forwardVoltage`. Typical LED forward voltages 
+        /// can be found in the `TypicalForwardVoltage` class.
+        /// </summary>
+        /// <param name="pin"></param>
+        /// <param name="forwardVoltage"></param>
         public PwmLed(H.Cpu.PWMChannel pin, float forwardVoltage)
         {
             // validate and persist forward voltage
