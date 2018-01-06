@@ -19,8 +19,8 @@ description: >- # this means to ignore newlines until "baseurl:"
   Netduino.Foundation greatly simplifies the task of building complex .NET Microframework (MF) powered connected things with Netduino, by providing drivers and abstractions for a variety of common peripherals such as sensors, displays, motors, and more. Additionally, it includes utility functions and helpers for common tasks when building connected things, such as a Netduino compatible web server, to functions for creating RGB LED colors from hues.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://netduino.foundation" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: jekyllrb
-github_username:  jekyll
+twitter_username: wildernesslabs
+github_username: wildernesslabs
 port: 4001
 
 # Build settings
