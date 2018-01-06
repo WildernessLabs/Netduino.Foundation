@@ -30,6 +30,9 @@
     <Reference Include="Microsoft.SPOT.Hardware" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\CommonFiles\RoslynHackFix.cs">
+      <Link>RoslynHackFix.cs</Link>
+    </Compile>
     <Compile Include="Weathershield.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

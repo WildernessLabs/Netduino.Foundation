@@ -34,6 +34,9 @@
     <Reference Include="Microsoft.SPOT.Hardware" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\CommonFiles\RoslynHackFix.cs">
+      <Link>RoslynHackFix.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FusionWare.SPOT\DisposableObject.cs" />
     <Compile Include="FusionWare.SPOT\I2CBus.cs" />
@@ -45,7 +48,6 @@
     <Compile Include="Lcd.cs" />
     <Compile Include="MCP23008Expander.cs" />
     <Compile Include="MCP23008LcdTransferProvider.cs" />
-    <Compile Include="RoslynHackFix.cs" />
     <Compile Include="Shifter74Hc595LcdTransferProvider.cs" />
     <Compile Include="ShifterPin.cs" />
   </ItemGroup>

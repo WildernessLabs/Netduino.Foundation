@@ -36,6 +36,9 @@
     <Reference Include="Microsoft.SPOT.Native" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\CommonFiles\RoslynHackFix.cs">
+      <Link>RoslynHackFix.cs</Link>
+    </Compile>
     <Compile Include="ADXL335.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -36,9 +36,11 @@
     <Reference Include="Microsoft.SPOT.TinyCore" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\CommonFiles\RoslynHackFix.cs">
+      <Link>RoslynHackFix.cs</Link>
+    </Compile>
     <Compile Include="HIH6130.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RoslynHackFix.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Netduino.Foundation\Netduino.Foundation.csproj">
