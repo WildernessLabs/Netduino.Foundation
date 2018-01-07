@@ -16,7 +16,7 @@ namespace Si7021Test
             Debug.Print("Current resolution: " + _si7021.Resolution);
             while (true)
             {
-                _si7021.Read();
+                _si7021.Update();
                 Debug.Print("Temperature: " + _si7021.Temperature.ToString("f2") + ", Humidity: " +
                             _si7021.Humidity.ToString("f2"));
                 Thread.Sleep(1000);

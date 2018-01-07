@@ -9,6 +9,15 @@ namespace Netduino.Foundation.Sensors.Atmospheric
     /// </summary>
     public class SI7021
     {
+        #region Constants
+
+        /// <summary>
+        ///     Minimum value that should be used for the polling frequency.
+        /// </summary>
+        public const ushort MINIMUM_POLLING_PERIOD = 100;
+
+        #endregion Constants
+
         #region Enums
 
         /// <summary>
@@ -57,25 +66,80 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         /// </summary>
         private readonly I2CBus _si7021;
 
+        /// <summary>
+        ///     Update interval in milliseconds
+        /// </summary>
+        private readonly ushort _updateInterval = 100;
+
         #endregion Member variables / fields
 
         #region Properties
 
         /// <summary>
-        ///     Relative humidity (percentage)
+        ///     Get the last humidity reading from the sensor.
         /// </summary>
         /// <remarks>
-        ///     This value is only valid after a call to Read.
+        ///     The Update method should be called before the data in this property
+        ///     contains valid data.
         /// </remarks>
-        public float Humidity { get; private set; }
+        public float Humidity
+        {
+            get { return _humidity; }
+            private set
+            {
+                _humidity = value;
+                //
+                //  Check to see if the change merits raising an event.
+                //
+                if ((_updateInterval > 0) && (Math.Abs(_lastNotifiedHumidity - value) >= HumidityChangeNotificationThreshold))
+                {
+                    HumidityChanged(this, new SensorFloatEventArgs(_lastNotifiedHumidity, value));
+                    _lastNotifiedHumidity = value;
+                }
+            }
+        }
+        private float _humidity;
+        private float _lastNotifiedHumidity = 0.0F;
 
         /// <summary>
-        ///     Temperature (degrees C)
+        ///     Get the last temperature reading.
         /// </summary>
         /// <remarks>
-        ///     This value is only valid after a call to Read.
+        ///     The Update method should be called before the data in this property
+        ///     contains valid data.
         /// </remarks>
-        public float Temperature { get; private set; }
+        public float Temperature
+        {
+            get { return _temperature; }
+            private set
+            {
+                _temperature = value;
+                //
+                //  Check to see if the change merits raising an event.
+                //
+                if ((_updateInterval > 0) && (Math.Abs(_lastNotifiedTemperature - value) >= TemperatureChangeNotificationThreshold))
+                {
+                    TemperatureChanged(this, new SensorFloatEventArgs(_lastNotifiedTemperature, value));
+                    _lastNotifiedTemperature = value;
+                }
+            }
+        }
+        private float _temperature;
+        private float _lastNotifiedTemperature = 0.0F;
+
+        /// <summary>
+        ///     Any changes in the temperature that are greater than the temperature
+        ///     threshold will cause an event to be raised when the instance is
+        ///     set to update automatically.
+        /// </summary>
+        public float TemperatureChangeNotificationThreshold { get; set; } = 0.001F;
+
+        /// <summary>
+        ///     Any changes in the humidity that are greater than the humidity
+        ///     threshold will cause an event to be raised when the instance is
+        ///     set to update automatically.
+        /// </summary>
+        public float HumidityChangeNotificationThreshold { get; set; } = 0.001F;
 
         /// <summary>
         ///     Serial number of the device.
@@ -120,6 +184,22 @@ namespace Netduino.Foundation.Sensors.Atmospheric
 
         #endregion Properties
 
+        #region Events and delegates
+
+        /// <summary>
+        ///     Event raised when the temperature change is greater than the 
+        ///     TemperatureChangeNotificationThreshold value.
+        /// </summary>
+        public event SensorFloatEventHandler TemperatureChanged = delegate { };
+
+        /// <summary>
+        ///     Event raised when the humidity change is greater than the
+        ///     HumidityChangeNotificationThreshold value.
+        /// </summary>
+        public event SensorFloatEventHandler HumidityChanged = delegate { };
+
+        #endregion Events and delegates
+
         #region Constructors
 
         /// <summary>
@@ -134,8 +214,29 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         /// </summary>
         /// <param name="address">Sensor address (default to 0x40).</param>
         /// <param name="speed">Speed of the I2C interface (default to 100 KHz).</param>
-        public SI7021(byte address = 0x40, ushort speed = 100)
+        /// <param name="updateInterval">Number of milliseconds between samples (0 indicates polling to be used)</param>
+        /// <param name="humidityChangeNotificationThreshold">Changes in humidity greater than this value will trigger an event when updatePeriod > 0.</param>
+        /// <param name="temperatureChangeNotificationThreshold">Changes in temperature greater than this value will trigger an event when updatePeriod > 0.</param>
+        public SI7021(byte address = 0x40, ushort speed = 100, ushort updateInterval = MINIMUM_POLLING_PERIOD,
+            float humidityChangeNotificationThreshold = 0.001F, float temperatureChangeNotificationThreshold = 0.001F)
         {
+            if (speed > 1000)
+            {
+                throw new ArgumentOutOfRangeException(nameof(speed), "Speed should be between 0 and 1000 KHz");
+            }
+            if (humidityChangeNotificationThreshold < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(humidityChangeNotificationThreshold), "Humidity threshold should be >= 0");
+            }
+            if (temperatureChangeNotificationThreshold < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(temperatureChangeNotificationThreshold), "Temperature threshold should be >= 0");
+            }
+            if ((updateInterval != 0) && (updateInterval < MINIMUM_POLLING_PERIOD))
+            {
+                throw new ArgumentOutOfRangeException(nameof(updateInterval), "Update period should be 0 or >= than " + MINIMUM_POLLING_PERIOD);
+            }
+
             _si7021 = new I2CBus(address, speed);
             //
             //  Get the device ID.
@@ -173,7 +274,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
                 SensorType = (DeviceType) part2[0];
             }
             //
-            //  Read the firmware revision.
+            //  Update the firmware revision.
             //
             var firmware = _si7021.WriteRead(new[]
             {
@@ -181,10 +282,14 @@ namespace Netduino.Foundation.Sensors.Atmospheric
                 Registers.ReadFirmwareRevisionPart2
             }, 1);
             FirmwareRevision = firmware[0];
-            //
-            //  Now make the first measurement.
-            //
-            Read();
+            if (updateInterval > 0)
+            {
+                StartUpdating();
+            }
+            else
+            {
+                Update();
+            }
         }
 
         #endregion Constructors
@@ -192,9 +297,24 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         #region Methods
 
         /// <summary>
+        ///     Start the update process.
+        /// </summary>
+        private void StartUpdating()
+        {
+            Thread t = new Thread(() => {
+                while (true)
+                {
+                    Update();
+                    Thread.Sleep(_updateInterval);
+                }
+            });
+            t.Start();
+        }
+
+        /// <summary>
         ///     Make a temperature and humidity reading.
         /// </summary>
-        public void Read()
+        public void Update()
         {
             _si7021.WriteByte(Registers.MeasureHumidityNoHold);
             //
@@ -227,7 +347,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         {
             _si7021.WriteByte(Registers.Reset);
             Thread.Sleep(50);
-            Read();
+            Update();
         }
 
         /// <summary>
