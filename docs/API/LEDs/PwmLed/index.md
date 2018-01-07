@@ -10,7 +10,7 @@ Represents an LED whose voltage is limited by the duty-cycle of a PWM signal.
 
 # Example
 
-The following example pulses an LED between 15% brightness to 100% brightness.
+The following example alternates between blinking and pulsing an LED:
 
 ## Code
 
@@ -20,41 +20,22 @@ using System.Threading;
 
 namespace Netduino.Foundation.Core.Samples
 {
-    public class Program
+    public class PwmLed_BlinkAndPulseProgram
     {
         public static void Main()
         {
             // create a new pwm controlled LED on pin 11
-            var pwmLed = new LEDs.PwmLed(N.PWMChannels.PWM_PIN_D11,
-             LEDs.TypicalForwardVoltage.Green);
+            var pwmLed = new LEDs.PwmLed(N.PWMChannels.PWM_PIN_D11, 
+                LEDs.TypicalForwardVoltage.Green);
 
-            // pulse the LED by taking the brightness from 15% too 100% and 
-            // back again.
-            float brightness = 0.15F;
-            bool ascending = true;
-            float change = 0;
+            // alternate between blinking and pulsing the LED 
             while (true)
             {
-                if (brightness <= 0.15)
-                {
-                    ascending = true;
-                }
-                else if (brightness == 1)
-                {
-                    ascending = false;
-                }
-                change = (ascending) ? 0.1F : -0.1F;
-                brightness += change;
+                pwmLed.StartBlink();
+                Thread.Sleep(5000); // 5 seconds
 
-                //float error clamp
-                if (brightness < 0) { brightness = 0; }
-                else if (brightness > 1) { brightness = 1; }
-
-                pwmLed.Brightness = brightness;
-
-                // for very fast, try 20
-                Thread.Sleep(50);
-
+                pwmLed.StartPulse(lowBrightness: 0.2F);
+                Thread.Sleep(10000); // 10 seconds
             }
         }
     }
