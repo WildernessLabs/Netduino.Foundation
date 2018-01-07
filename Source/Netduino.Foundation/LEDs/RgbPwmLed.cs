@@ -86,7 +86,7 @@ namespace Netduino.Foundation.LEDs
         /// <summary>
         /// Start the Blink animation which sets the brightness of the LED alternating between a low and high brightness setting, using the durations provided.
         /// </summary>
-        public void StartBlink( int onDuration = 200, int offDuration = 200, float highBrightness = 1, float lowBrightness = 0)
+        public void StartBlink(int onDuration = 200, int offDuration = 200, float highBrightness = 1, float lowBrightness = 0)
         {
             if (highBrightness > 1 || highBrightness <= 0)
             {
