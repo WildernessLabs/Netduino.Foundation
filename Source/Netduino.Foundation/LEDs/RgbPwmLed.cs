@@ -107,8 +107,9 @@ namespace Netduino.Foundation.LEDs
         //public void StartRunningColors(Color[] colors, int[] durations, bool loop)
         public void StartRunningColors(System.Collections.ArrayList colors, int[] durations, bool loop = true)
         {
-            if (colors.Count != durations.Length) {
-                throw new Exception("colors and durations arrays must be same length.");
+            if (durations.Length != 1 && colors.Count != durations.Length)
+            {
+                throw new Exception("durations must either have a count of 1, if they're all the same, or colors and durations arrays must be same length.");
             }
 
             // stop any existing animations
@@ -119,7 +120,8 @@ namespace Netduino.Foundation.LEDs
                     for (int i = 0; i < colors.Count; i++)
                     {
                         this.SetColor((Color)colors[i]);
-                        Thread.Sleep(durations[i]);
+                        // if all the same, use [0], otherwise individuals
+                        Thread.Sleep((durations.Length == 1) ? durations[0] : durations[i]);
                     }
                 }
             });
@@ -162,61 +164,47 @@ namespace Netduino.Foundation.LEDs
         /// <summary>
         /// Start the Pulse animation which gradually alternates the brightness of the LED between a low and high brightness setting, using the durations provided.
         /// </summary>
-        //public void StartPulse(int pulseDuration = 600, float highBrightness = 1, float lowBrightness = 0.15F)
-        //{
-        //    if (highBrightness > 1 || highBrightness <= 0)
-        //    {
-        //        throw new ArgumentOutOfRangeException("highBrightness", "highBrightness must be > 0 and <= 1");
-        //    }
-        //    if (lowBrightness >= 1 || lowBrightness < 0)
-        //    {
-        //        throw new ArgumentOutOfRangeException("lowBrightness", "lowBrightness must be >= 0 and < 1");
-        //    }
-        //    if (lowBrightness >= highBrightness)
-        //    {
-        //        throw new Exception("lowBrightness must be less than highbrightness");
-        //    }
+        public void StartPulse(Color color, int pulseDuration = 600, float highBrightness = 1, float lowBrightness = 0.15F)
+        {
+            if (highBrightness > 1 || highBrightness <= 0)
+            {
+                throw new ArgumentOutOfRangeException("highBrightness", "highBrightness must be > 0 and <= 1");
+            }
+            if (lowBrightness >= 1 || lowBrightness < 0)
+            {
+                throw new ArgumentOutOfRangeException("lowBrightness", "lowBrightness must be >= 0 and < 1");
+            }
+            if (lowBrightness >= highBrightness)
+            {
+                throw new Exception("lowBrightness must be less than highbrightness");
+            }
 
-        //    // precalculate the colors to keep the loop tight
-        //    float brightness = lowBrightness;
-        //    int intervalTime = 60; // 60 miliseconds is probably the fastest update we want to do, given that threads are given 20 miliseconds by default. 
-        //    int steps = pulseDuration / intervalTime;
-        //    float brightnessIncrement = (highBrightness - lowBrightness) / steps;
+            // precalculate the colors to keep the loop tight
+            float brightness = lowBrightness;
+            int intervalTime = 60; // 60 miliseconds is probably the fastest update we want to do, given that threads are given 20 miliseconds by default. 
+            int steps = pulseDuration / intervalTime;
+            float brightnessIncrement = (highBrightness - lowBrightness) / steps;
 
-        //    // array of colors we'll walk up and down
-        //    float brightnessStep;
-        //    Color[] colorsAscending = new Color[steps];
-        //    for (int i = 0; i < steps; i++)
-        //    {
-        //        brightnessStep = lowBrightness + (brightnessIncrement * i);
-        //        colorsAscending[i] = Color.FromHsba(this._color.Hue, this._color.Saturation, brightnessStep);
-        //    }
+            // array of colors we'll walk up and down
+            float brightnessStep;
+            System.Collections.ArrayList colors = new System.Collections.ArrayList();
+            Color[] colorsAscending = new Color[steps];
 
-        //    // stop any existing animations
-        //    this.Stop();
-        //    this._animationThread = new Thread(() => {
-        //        // pulse the LED by taking the brightness from low to high and back again.
+            // walk up
+            for (int i = 0; i < steps; i++)
+            {
+                brightnessStep = lowBrightness + (brightnessIncrement * i);
+                //colorsAscending[i] = Color.FromHsba(this._color.Hue, this._color.Saturation, brightnessStep);
+                colors.Add(Color.FromHsba(color.Hue, color.Saturation, brightnessStep));
+            } // walk down (start at penultimate to not repeat, and finish at 1
+            for (int i = (steps - 2); i > 0; i--)
+            {
+                brightnessStep = lowBrightness + (brightnessIncrement * i);
+                colors.Add(Color.FromHsba(color.Hue, color.Saturation, brightnessStep));
+            }
 
-        //        while (true)
-        //        {
-        //            // walk up
-        //            for (int i = 0; i < colorsAscending.Length; i++)
-        //            {
-        //                this.SetColor(colorsAscending[i]);
-        //                // go to sleep, my friend.
-        //                Thread.Sleep(intervalTime);
-        //            }
-        //            // walk down (start at penultimate to not repeat, and finish at 1
-        //            for (int i = (colorsAscending.Length - 2); i > 0; i--)
-        //            {
-        //                this.SetColor(colorsAscending[i]);
-        //                // go to sleep, my friend.
-        //                Thread.Sleep(intervalTime);
-        //            }
-        //        }
-        //    });
-        //    this._animationThread.Start();
-        //}
+            this.StartRunningColors(colors, new int[] { intervalTime });
+        }
 
         /// <summary>
         /// Stops any running animations.
