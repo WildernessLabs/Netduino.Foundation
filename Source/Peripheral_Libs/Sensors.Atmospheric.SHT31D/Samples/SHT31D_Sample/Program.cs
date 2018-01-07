@@ -13,7 +13,7 @@ namespace SHT31D_Sample
             Debug.Print("SHT31D Temperature / Humidity Test");
             while (true)
             {
-                sht31d.Read();
+                sht31d.Update();
                 Debug.Print("Temperature: " + sht31d.Temperature.ToString("f2") + ", Humidity: " + sht31d.Humidity.ToString("f2"));
                 Thread.Sleep(1000);
             }

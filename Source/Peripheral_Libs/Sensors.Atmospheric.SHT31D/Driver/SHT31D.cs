@@ -27,7 +27,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         ///     Get the last humidity reading from the sensor.
         /// </summary>
         /// <remarks>
-        ///     The Read method should be called before the data in this property
+        ///     The Update method should be called before the data in this property
         ///     contains valid data.
         /// </remarks>
         public float Humidity { get; private set; }
@@ -36,7 +36,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         ///     Get the last temperature reading.
         /// </summary>
         /// <remarks>
-        ///     The Read method should be called before the data in this property
+        ///     The Update method should be called before the data in this property
         ///     contains valid data.
         /// </remarks>
         public float Temperature { get; private set; }
@@ -77,7 +77,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         /// <summary>
         ///     Get a reading from the sensor and set the Temperature and Humidity properties.
         /// </summary>
-        public void Read()
+        public void Update()
         {
             var data = _sht31d.WriteRead(new byte[] { 0x2c, 0x06 }, 6);
             Humidity = (100 * (float) ((data[3] << 8) + data[4])) / 65535;
