@@ -1,38 +1,47 @@
-﻿using Netduino.Foundation.Devices;
+﻿using System;
+using Netduino.Foundation.Devices;
 using System.Threading;
 
 namespace Netduino.Foundation.Sensors.Atmospheric
 {
+    /// <summary>
+    ///     Grove TH02 temperature and humidity sensor.
+    /// </summary>
     public class GroveTH02
     {
         #region Constants
 
         /// <summary>
-        /// Start measurement bit in the configuration register.
+        ///     Start measurement bit in the configuration register.
         /// </summary>
         private const byte START_MEASUREMENT = 0x01;
 
         /// <summary>
-        /// Measure temperature bit in the configuration register.
+        ///     Measure temperature bit in the configuration register.
         /// </summary>
         private const byte MEASURE_TEMPERATURE = 0x10;
 
         /// <summary>
-        /// Heater control bit in the configuration register.
+        ///     Heater control bit in the configuration register.
         /// </summary>
         private const byte HEATER_ON = 0x02;
 
         /// <summary>
-        /// Mask used to turn the heater off.
+        ///     Mask used to turn the heater off.
         /// </summary>
         private const byte HEATER_MASK = 0xfd;
+
+        /// <summary>
+        ///     Minimum value that should be used for the polling frequency.
+        /// </summary>
+        public const ushort MINIMUM_POLLING_PERIOD = 200;
 
         #endregion
 
         #region Enums
 
         /// <summary>
-        /// Register addresses in the Grove TH02 sensor.
+        ///     Register addresses in the Grove TH02 sensor.
         /// </summary>
         private enum Registers { Status = 0x00, DataHigh = 0x01, DataLow = 0x02, Config = 0x04, ID = 0x11 }
 
@@ -41,26 +50,79 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         #region Member variables / fields
 
         /// <summary>
-        /// MAG3110 object.
+        ///     GroveTH02 object.
         /// </summary>
-        private ICommunicationBus _groveTH02 = null;
+        private readonly ICommunicationBus _groveTH02 = null;
+
+        /// <summary>
+        ///     Update interval in milliseconds
+        /// </summary>
+        private readonly ushort _updateInterval = 100;
 
         #endregion Member variables / fields
 
         #region Properties
 
         /// <summary>
-        /// Humidity reading from the last call to Read.
+        ///     Humidity reading from the last update.
         /// </summary>
-        public float Humidity { get; private set; }
+        public float Humidity
+        {
+            get { return _humidity; }
+            private set
+            {
+                _humidity = value;
+                //
+                //  Check to see if the change merits raising an event.
+                //
+                if ((_updateInterval > 0) && (Math.Abs(_lastNotifiedHumidity - value) >= HumidityChangeNotificationThreshold))
+                {
+                    HumidityChanged(this, new SensorFloatEventArgs(_lastNotifiedHumidity, value));
+                    _lastNotifiedHumidity = value;
+                }
+            }
+        }
+        private float _humidity;
+        private float _lastNotifiedHumidity = 0.0F;
 
         /// <summary>
-        /// Temperature reading from last call to Read.
+        ///     Temperature reading from last update.
         /// </summary>
-        public float Temperature { get; private set; }
+        public float Temperature
+        {
+            get { return _temperature; }
+            private set
+            {
+                _temperature = value;
+                //
+                //  Check to see if the change merits raising an event.
+                //
+                if ((_updateInterval > 0) && (Math.Abs(_lastNotifiedTemperature - value) >= TemperatureChangeNotificationThreshold))
+                {
+                    TemperatureChanged(this, new SensorFloatEventArgs(_lastNotifiedTemperature, value));
+                    _lastNotifiedTemperature = value;
+                }
+            }
+        }
+        private float _temperature;
+        private float _lastNotifiedTemperature = 0.0F;
 
         /// <summary>
-        /// Get / set the heater status.
+        ///     Any changes in the temperature that are greater than the temperature
+        ///     threshold will cause an event to be raised when the instance is
+        ///     set to update automatically.
+        /// </summary>
+        public float TemperatureChangeNotificationThreshold { get; set; } = 0.001F;
+
+        /// <summary>
+        ///     Any changes in the humidity that are greater than the humidity
+        ///     threshold will cause an event to be raised when the instance is
+        ///     set to update automatically.
+        /// </summary>
+        public float HumidityChangeNotificationThreshold { get; set; } = 0.001F;
+
+        /// <summary>
+        ///     Get / set the heater status.
         /// </summary>
         public bool HeaterOn
         {
@@ -85,25 +147,64 @@ namespace Netduino.Foundation.Sensors.Atmospheric
 
         #endregion
 
+        #region Events and delegates
+
+        /// <summary>
+        ///     Event raised when the temperature change is greater than the 
+        ///     TemperatureChangeNotificationThreshold value.
+        /// </summary>
+        public event SensorFloatEventHandler TemperatureChanged = delegate { };
+
+        /// <summary>
+        ///     Event raised when the humidity change is greater than the
+        ///     HumidityChangeNotificationThreshold value.
+        /// </summary>
+        public event SensorFloatEventHandler HumidityChanged = delegate { };
+
+        #endregion Events and delegates
+
         #region Constructors
 
         /// <summary>
-        /// Default constructor is private to prevent the developer from calling it.
+        ///     Default constructor is private to prevent the developer from calling it.
         /// </summary>
         private GroveTH02()
         {
         }
 
         /// <summary>
-        /// Create a new GroveTH02 object using the default parameters for the component.
+        ///     Create a new GroveTH02 object using the default parameters for the component.
         /// </summary>
         /// <param name="address">Address of the Grove TH02 (default = 0x4-).</param>
         /// <param name="speed">Speed of the I2C bus (default = 100 KHz).</param>
-        public GroveTH02(byte address = 0x40, ushort speed = 100)
+        /// <param name="updateInterval">Number of milliseconds between samples (0 indicates polling to be used)</param>
+        /// <param name="humidityChangeNotificationThreshold">Changes in humidity greater than this value will trigger an event when updatePeriod > 0.</param>
+        /// <param name="temperatureChangeNotificationThreshold">Changes in temperature greater than this value will trigger an event when updatePeriod > 0.</param>
+        public GroveTH02(byte address = 0x40, ushort speed = 100, ushort updateInterval = MINIMUM_POLLING_PERIOD,
+            float humidityChangeNotificationThreshold = 0.001F,
+            float temperatureChangeNotificationThreshold = 0.001F)
         {
             I2CBus device = new I2CBus(address, speed);
             _groveTH02 = (ICommunicationBus) device;
-            Read();
+            if (humidityChangeNotificationThreshold < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(humidityChangeNotificationThreshold), "Humidity threshold should be >= 0");
+            }
+            if (humidityChangeNotificationThreshold < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(temperatureChangeNotificationThreshold), "Temperature threshold should be >= 0");
+            }
+            TemperatureChangeNotificationThreshold = temperatureChangeNotificationThreshold;
+            HumidityChangeNotificationThreshold = humidityChangeNotificationThreshold;
+            _updateInterval = updateInterval;
+            if (updateInterval > 0)
+            {
+                StartUpdating();
+            }
+            else
+            {
+                Update();
+            }
         }
 
         #endregion Constructors
@@ -111,22 +212,37 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         #region Methods
 
         /// <summary>
-        /// Force the sensor to make a reading and update the relevant properties.
+        ///     Start the update process.
         /// </summary>
-        public void Read()
+        private void StartUpdating()
+        {
+            Thread t = new Thread(() => {
+                while (true)
+                {
+                    Update();
+                    Thread.Sleep(_updateInterval);
+                }
+            });
+            t.Start();
+        }
+
+        /// <summary>
+        ///     Force the sensor to make a reading and update the relevant properties.
+        /// </summary>
+        public void Update()
         {
             int temp = 0;
             //
             //  Get the humidity first.
             //
-            _groveTH02.WriteRegister((byte)Registers.Config, START_MEASUREMENT);
+            _groveTH02.WriteRegister((byte) Registers.Config, START_MEASUREMENT);
             //
             //  Maximum conversion time should be 40ms but loop just in case 
-            /// it takes longer.
+            //  it takes longer.
             //
             Thread.Sleep(40);
-            while ((_groveTH02.ReadRegister((byte)Registers.Status) & 0x01) > 0) ;
-            byte[] data = _groveTH02.ReadRegisters((byte)Registers.DataHigh, 2);
+            while ((_groveTH02.ReadRegister((byte) Registers.Status) & 0x01) > 0) ;
+            byte[] data = _groveTH02.ReadRegisters((byte) Registers.DataHigh, 2);
             temp = data[0] << 8;
             temp |= data[1];
             temp >>= 4;
@@ -134,10 +250,14 @@ namespace Netduino.Foundation.Sensors.Atmospheric
             //
             //  Now get the temperature.
             //
-            _groveTH02.WriteRegister((byte)Registers.Config, START_MEASUREMENT | MEASURE_TEMPERATURE);
+            _groveTH02.WriteRegister((byte) Registers.Config, START_MEASUREMENT | MEASURE_TEMPERATURE);
+            //
+            //  Maximum conversion time should be 40ms but loop just in case 
+            //  it takes longer.
+            //
             Thread.Sleep(40);
-            while ((_groveTH02.ReadRegister((byte)Registers.Status) & 0x01) > 0) ;
-            data = _groveTH02.ReadRegisters((byte)Registers.DataHigh, 2);
+            while ((_groveTH02.ReadRegister((byte) Registers.Status) & 0x01) > 0) ;
+            data = _groveTH02.ReadRegisters((byte) Registers.DataHigh, 2);
             temp = data[0] << 8;
             temp |= data[1];
             temp >>= 2;
