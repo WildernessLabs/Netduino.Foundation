@@ -18,34 +18,19 @@ namespace BME280InterruptSample
         /// </summary>
         public static void Main()
         {
-            _sensor.HumidityChanged += Sensor_HumidityChanged;
-            _sensor.PressureChanged += Sensor_PressureChanged;
-            _sensor.TemperatureChanged += Sensor_TemperatureChanged;
+            _sensor.HumidityChanged += (s, e) =>
+            {
+                Debug.Print("Current humidity: " + e.CurrentValue);
+            };
+            _sensor.PressureChanged += (s, e) =>
+            {
+                Debug.Print("Current pressure: " + e.CurrentValue);
+            };
+            _sensor.TemperatureChanged += (s, e) =>
+            {
+                Debug.Print("Current temperature: " + e.CurrentValue);
+            };
             Thread.Sleep(Timeout.Infinite);
-        }
-
-        /// <summary>
-        ///     Temperature change is greater than the defualt threshold.
-        /// </summary>
-        private static void Sensor_TemperatureChanged(object sender, SensorFloatEventArgs e)
-        {
-            Debug.Print("Current temperature: " + e.CurrentValue);
-        }
-
-        /// <summary>
-        ///     Pressure change is greater than the defualt threshold.
-        /// </summary>
-        private static void Sensor_PressureChanged(object sender, SensorFloatEventArgs e)
-        {
-            Debug.Print("Current pressure: " + e.CurrentValue);
-        }
-
-        /// <summary>
-        ///     Humidity change is greater than the defualt threshold.
-        /// </summary>
-        private static void Sensor_HumidityChanged(object sender, SensorFloatEventArgs e)
-        {
-            Debug.Print("Current humidity: " + e.CurrentValue);
         }
     }
 }
