@@ -72,7 +72,6 @@ namespace Netduino.Foundation.LEDs
             this._color = color;
 
             // set the color based on the RGB values
-            Debug.Print("SetColor: R:" + this._color.R + " G: " + this._color.G + " B: " + this._color.B);
             RedPwm.DutyCycle = (this._color.R * dutyCycleMax);
             GreenPwm.DutyCycle = (this._color.G * dutyCycleMax);
             BluePwm.DutyCycle = (this._color.B * dutyCycleMax);
@@ -83,10 +82,41 @@ namespace Netduino.Foundation.LEDs
             this.BluePwm.Start();
         }
 
+        // HACK/TODO: this is the signature i want, but it's broken until 4.4. (https://github.com/NETMF/netmf-interpreter/issues/87)
+        // using arraylist for now
+        //public void StartRunningColors(Color[] colors, int[] durations, bool loop)
+        public void StartRunningColors(System.Collections.ArrayList colors, int[] durations, bool loop = true)
+        {
+            if (colors.Count != durations.Length) {
+                throw new Exception("colors and durations arrays must be same length.");
+            }
+
+            // stop any existing animations
+            this.Stop();
+            this._animationThread = new Thread(() => {
+                while (loop)
+                {
+                    for (int i = 0; i < colors.Count; i++)
+                    {
+                        this.SetColor((Color)colors[i]);
+                        Thread.Sleep(durations[i]);
+                    }
+                }
+            });
+            this._animationThread.Start();
+        }
+
+        public void StartAlternatingColors(Color colorOne, Color colorTwo, int colorOneDuration, int colorTwoDuration)
+        {
+            System.Collections.ArrayList foo = new System.Collections.ArrayList{ colorOne, colorTwo };
+
+            this.StartRunningColors(new System.Collections.ArrayList { colorOne, colorTwo }, new int[] { colorOneDuration, colorTwoDuration });
+        }
+
         /// <summary>
         /// Start the Blink animation which sets the brightness of the LED alternating between a low and high brightness setting, using the durations provided.
         /// </summary>
-        public void StartBlink(int onDuration = 200, int offDuration = 200, float highBrightness = 1, float lowBrightness = 0)
+        public void StartBlink(Color color, int highDuration = 200, int lowDuration = 200, float highBrightness = 1, float lowBrightness = 0)
         {
             if (highBrightness > 1 || highBrightness <= 0)
             {
@@ -102,21 +132,11 @@ namespace Netduino.Foundation.LEDs
             }
 
             // pre-calculate colors
-            var highColor = Color.FromHsba(this._color.Hue, this._color.Saturation, highBrightness);
-            var lowColor = Color.FromHsba(this._color.Hue, this._color.Saturation, lowBrightness);
+            var highColor = Color.FromHsba(color.Hue, color.Saturation, highBrightness);
+            var lowColor = Color.FromHsba(color.Hue, color.Saturation, lowBrightness);
 
-            // stop any existing animations
-            this.Stop();
-            this._animationThread = new Thread(() => {
-                while (true)
-                {
-                    this.SetColor(highColor);
-                    Thread.Sleep(onDuration);
-                    this.SetColor(lowColor);
-                    Thread.Sleep(offDuration);
-                }
-            });
-            this._animationThread.Start();
+            this.StartRunningColors(new System.Collections.ArrayList { highColor, lowColor }, new int[] { highDuration, lowDuration });
+            //this.StartAlternate(highColor, lowColor, highDuration, lowDuration);
         }
 
         /// <summary>
