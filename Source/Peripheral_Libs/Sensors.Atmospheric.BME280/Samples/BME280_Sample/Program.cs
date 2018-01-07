@@ -8,7 +8,7 @@ namespace BME280_Sample
     {
         public static void Main()
         {
-            BME280 sensor = new BME280();
+            BME280 sensor = new BME280(updateInterval: 0);
 
             string message;
             while (true)

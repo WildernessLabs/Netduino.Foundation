@@ -159,7 +159,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Temperature.TMP102"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Servos.Servo.Core", "Servos.Servo.Core", "{FF35EA4A-5CF5-4B70-BF82-D68A11AC1FD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BME280_Sample", "Peripheral_Libs\Sensors.Atmospheric.BME280\Samples\BME280_Sample\BME280_Sample.csproj", "{3CCD2F7A-E97F-4BBE-82AF-C5F356E93F9B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BME280PollingSample", "Peripheral_Libs\Sensors.Atmospheric.BME280\Samples\BME280_Sample\BME280PollingSample.csproj", "{3CCD2F7A-E97F-4BBE-82AF-C5F356E93F9B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SHT31D_Sample", "Peripheral_Libs\Sensors.Atmospheric.SHT31D\Samples\SHT31D_Sample\SHT31D_Sample.csproj", "{020C3855-223E-4260-9146-F0C9DD5028A9}"
 EndProject
@@ -230,6 +230,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PwmLed_BlinkAndPulse", "Netduino.Foundation.Core.Samples\PwmLed_BlinkAndPulse\PwmLed_BlinkAndPulse.csproj", "{B71D3091-76AD-4B50-AD38-E81C517580FC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RgbPwmLed_BlinkAndPulse", "Netduino.Foundation.Core.Samples\RgbPwmLed_BlinkAndPulse\RgbPwmLed_BlinkAndPulse.csproj", "{9A158D77-D381-49A2-9F63-E0439CDA94EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BME280InterruptSample", "BME280InterruptSample\BME280InterruptSample.csproj", "{FE9E7666-BD41-4560-AA5D-1E4E27576478}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1245,6 +1247,24 @@ Global
 		{9A158D77-D381-49A2-9F63-E0439CDA94EB}.Release|x86.ActiveCfg = Release|Any CPU
 		{9A158D77-D381-49A2-9F63-E0439CDA94EB}.Release|x86.Build.0 = Release|Any CPU
 		{9A158D77-D381-49A2-9F63-E0439CDA94EB}.Release|x86.Deploy.0 = Release|Any CPU
+		{FE9E7666-BD41-4560-AA5D-1E4E27576478}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE9E7666-BD41-4560-AA5D-1E4E27576478}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE9E7666-BD41-4560-AA5D-1E4E27576478}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{FE9E7666-BD41-4560-AA5D-1E4E27576478}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{FE9E7666-BD41-4560-AA5D-1E4E27576478}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{FE9E7666-BD41-4560-AA5D-1E4E27576478}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
+		{FE9E7666-BD41-4560-AA5D-1E4E27576478}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FE9E7666-BD41-4560-AA5D-1E4E27576478}.Debug|x86.Build.0 = Debug|Any CPU
+		{FE9E7666-BD41-4560-AA5D-1E4E27576478}.Debug|x86.Deploy.0 = Debug|Any CPU
+		{FE9E7666-BD41-4560-AA5D-1E4E27576478}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE9E7666-BD41-4560-AA5D-1E4E27576478}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE9E7666-BD41-4560-AA5D-1E4E27576478}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{FE9E7666-BD41-4560-AA5D-1E4E27576478}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{FE9E7666-BD41-4560-AA5D-1E4E27576478}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{FE9E7666-BD41-4560-AA5D-1E4E27576478}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
+		{FE9E7666-BD41-4560-AA5D-1E4E27576478}.Release|x86.ActiveCfg = Release|Any CPU
+		{FE9E7666-BD41-4560-AA5D-1E4E27576478}.Release|x86.Build.0 = Release|Any CPU
+		{FE9E7666-BD41-4560-AA5D-1E4E27576478}.Release|x86.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1322,5 +1342,6 @@ Global
 		{2CED9621-85F0-427E-895C-121FE07982B7} = {B1CB9A4C-0FA0-4D20-AC92-18B3D23EBD45}
 		{B71D3091-76AD-4B50-AD38-E81C517580FC} = {B1CB9A4C-0FA0-4D20-AC92-18B3D23EBD45}
 		{9A158D77-D381-49A2-9F63-E0439CDA94EB} = {B1CB9A4C-0FA0-4D20-AC92-18B3D23EBD45}
+		{FE9E7666-BD41-4560-AA5D-1E4E27576478} = {C2E88F6F-808F-4152-ABF6-175E41003563}
 	EndGlobalSection
 EndGlobal
