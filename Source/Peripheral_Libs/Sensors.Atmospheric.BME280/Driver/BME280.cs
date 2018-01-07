@@ -194,7 +194,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         /// <value>Current pressure reading from the sensor in Pascals (divide by 100 for hPa).</value>
         public float Pressure
         {
-            get { return _humidity; }
+            get { return _pressure; }
             private set
             {
                 _pressure = value;
@@ -368,6 +368,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
             TemperatureChangeNotificationThreshold = temperatureChangeNotificationThreshold;
             HumidityChangeNotificationThreshold = humidityChangeNotificationThreshold;
             PressureChangeNotificationThreshold = pressureChangedNotificationThreshold;
+            _updateInterval = updateInterval;
             ReadCompensationData();
             //
             //  Update the configuration information and start sampling.
@@ -382,6 +383,10 @@ namespace Netduino.Foundation.Sensors.Atmospheric
             if (updateInterval > 0)
             {
                 StartUpdating();
+            }
+            else
+            {
+                Update();
             }
         }
 
