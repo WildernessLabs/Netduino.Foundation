@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using Microsoft.SPOT.Hardware;
 
 namespace Netduino.Foundation.Devices
@@ -79,6 +80,7 @@ namespace Netduino.Foundation.Devices
         ///     The number of bytes to be written will be determined by the length of the byte array.
         /// </remarks>
         /// <param name="values">Values to be written.</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void WriteBytes(byte[] values)
         {
             _device.Config = _configuration;
@@ -155,6 +157,7 @@ namespace Netduino.Foundation.Devices
         /// </remarks>
         /// <param name="write">Array of bytes to be written to the device.</param>
         /// <param name="length">Amount of data to read from the device.</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public byte[] WriteRead(byte[] write, ushort length)
         {
             _device.Config = _configuration;
@@ -211,6 +214,7 @@ namespace Netduino.Foundation.Devices
         /// </summary>
         /// <returns>The bytes.</returns>
         /// <param name="numberOfBytes">Number of bytes.</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public byte[] ReadBytes(ushort numberOfBytes)
         {
             _device.Config = _configuration;
