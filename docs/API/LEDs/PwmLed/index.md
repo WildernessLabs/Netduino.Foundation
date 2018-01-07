@@ -80,3 +80,17 @@ Creates a new PwmLed on the specified PWM pin and limited to the appropriate  vo
 The brightness of the LED, controlled by a PWM signal, and limited by the calculated maximum voltage. Valid values are from 0 to 1, inclusive.
 
 Therefore, specifying `0.5` would set the LED to 50% brightness.
+
+## Methods
+
+### `public void StartBlink(int onDuration = 200, int offDuration = 200, float highBrightness = 1, float lowBrightness = 0)`
+
+Start the Blink animation which sets the brightness of the LED alternating between a low and high brightness setting, using the durations provided.
+
+### `public void StartPulse(int pulseDuration = 600, float highBrightness = 1, float lowBrightness = 0.15F)`
+
+Start the Pulse animation which gradually alternates the brightness of the LED between a low and high brightness setting, using the durations provided.
+
+### `public void Stop()`
+
+Stops any running animations.
