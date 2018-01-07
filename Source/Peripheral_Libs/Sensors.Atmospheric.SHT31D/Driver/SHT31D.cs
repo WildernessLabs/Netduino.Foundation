@@ -1,5 +1,6 @@
 ﻿using System;
 using Netduino.Foundation.Devices;
+using System.Threading;
 
 namespace Netduino.Foundation.Sensors.Atmospheric
 {
@@ -12,12 +13,26 @@ namespace Netduino.Foundation.Sensors.Atmospheric
     /// </remarks>
     public class SHT31D
     {
+        #region Constants
+
+        /// <summary>
+        ///     Minimum value that should be used for the polling frequency.
+        /// </summary>
+        public const ushort MINIMUM_POLLING_PERIOD = 100;
+
+        #endregion Constants
+
         #region Member variables / fields
 
         /// <summary>
         ///     SH31D sensor communicates using I2C.
         /// </summary>
         private readonly I2CBus _sht31d;
+
+        /// <summary>
+        ///     Update interval in milliseconds
+        /// </summary>
+        private readonly ushort _updateInterval = 100;
 
         #endregion Member variables / fields
 
@@ -30,7 +45,24 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         ///     The Update method should be called before the data in this property
         ///     contains valid data.
         /// </remarks>
-        public float Humidity { get; private set; }
+        public float Humidity
+        {
+            get { return _humidity; }
+            private set
+            {
+                _humidity = value;
+                //
+                //  Check to see if the change merits raising an event.
+                //
+                if ((_updateInterval > 0) && (Math.Abs(_lastNotifiedHumidity - value) >= HumidityChangeNotificationThreshold))
+                {
+                    HumidityChanged(this, new SensorFloatEventArgs(_lastNotifiedHumidity, value));
+                    _lastNotifiedHumidity = value;
+                }
+            }
+        }
+        private float _humidity;
+        private float _lastNotifiedHumidity = 0.0F;
 
         /// <summary>
         ///     Get the last temperature reading.
@@ -39,9 +71,56 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         ///     The Update method should be called before the data in this property
         ///     contains valid data.
         /// </remarks>
-        public float Temperature { get; private set; }
+        public float Temperature
+        {
+            get { return _temperature; }
+            private set
+            {
+                _temperature = value;
+                //
+                //  Check to see if the change merits raising an event.
+                //
+                if ((_updateInterval > 0) && (Math.Abs(_lastNotifiedTemperature - value) >= TemperatureChangeNotificationThreshold))
+                {
+                    TemperatureChanged(this, new SensorFloatEventArgs(_lastNotifiedTemperature, value));
+                    _lastNotifiedTemperature = value;
+                }
+            }
+        }
+        private float _temperature;
+        private float _lastNotifiedTemperature = 0.0F;
+
+        /// <summary>
+        ///     Any changes in the temperature that are greater than the temperature
+        ///     threshold will cause an event to be raised when the instance is
+        ///     set to update automatically.
+        /// </summary>
+        public float TemperatureChangeNotificationThreshold { get; set; } = 0.001F;
+
+        /// <summary>
+        ///     Any changes in the humidity that are greater than the humidity
+        ///     threshold will cause an event to be raised when the instance is
+        ///     set to update automatically.
+        /// </summary>
+        public float HumidityChangeNotificationThreshold { get; set; } = 0.001F;
 
         #endregion Properties
+
+        #region Events and delegates
+
+        /// <summary>
+        ///     Event raised when the temperature change is greater than the 
+        ///     TemperatureChangeNotificationThreshold value.
+        /// </summary>
+        public event SensorFloatEventHandler TemperatureChanged = delegate { };
+
+        /// <summary>
+        ///     Event raised when the humidity change is greater than the
+        ///     HumidityChangeNotificationThreshold value.
+        /// </summary>
+        public event SensorFloatEventHandler HumidityChanged = delegate { };
+
+        #endregion Events and delegates
 
         #region Constructors
 
@@ -57,22 +136,62 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         /// </summary>
         /// <param name="address">Sensor address (should be 0x44 or 0x45).</param>
         /// <param name="speed">Bus speed (0-1000 KHz).</param>
-        public SHT31D(byte address = 0x44, ushort speed = 100)
+        /// <param name="updateInterval">Number of milliseconds between samples (0 indicates polling to be used)</param>
+        /// <param name="humidityChangeNotificationThreshold">Changes in humidity greater than this value will trigger an event when updatePeriod > 0.</param>
+        /// <param name="temperatureChangeNotificationThreshold">Changes in temperature greater than this value will trigger an event when updatePeriod > 0.</param>
+        public SHT31D(byte address = 0x44, ushort speed = 100, ushort updateInterval = MINIMUM_POLLING_PERIOD,
+            float humidityChangeNotificationThreshold = 0.001F, float temperatureChangeNotificationThreshold = 0.001F)
         {
             if ((address != 0x44) && (address != 0x45))
             {
-                throw new ArgumentOutOfRangeException("address", "Address should be 0x44 or 0x45");
+                throw new ArgumentOutOfRangeException(nameof(address), "Address should be 0x44 or 0x45");
             }
             if (speed > 1000)
             {
-                throw new ArgumentOutOfRangeException("speed", "Speed should be between 0 and 1000 KHz");
+                throw new ArgumentOutOfRangeException(nameof(speed), "Speed should be between 0 and 1000 KHz");
             }
+            if (humidityChangeNotificationThreshold < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(humidityChangeNotificationThreshold), "Humidity threshold should be >= 0");
+            }
+            if (temperatureChangeNotificationThreshold < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(temperatureChangeNotificationThreshold), "Temperature threshold should be >= 0");
+            }
+            if ((updateInterval != 0) && (updateInterval < MINIMUM_POLLING_PERIOD))
+            {
+                throw new ArgumentOutOfRangeException(nameof(updateInterval), "Update period should be 0 or >= than " + MINIMUM_POLLING_PERIOD);
+            }
+
             _sht31d = new I2CBus(address, speed);
+            if (updateInterval > 0)
+            {
+                StartUpdating();
+            }
+            else
+            {
+                Update();
+            }
         }
 
         #endregion Constructors
 
         #region Methods
+
+        /// <summary>
+        ///     Start the update process.
+        /// </summary>
+        private void StartUpdating()
+        {
+            Thread t = new Thread(() => {
+                while (true)
+                {
+                    Update();
+                    Thread.Sleep(_updateInterval);
+                }
+            });
+            t.Start();
+        }
 
         /// <summary>
         ///     Get a reading from the sensor and set the Temperature and Humidity properties.
