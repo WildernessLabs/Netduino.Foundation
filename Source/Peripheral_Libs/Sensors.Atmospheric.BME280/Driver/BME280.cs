@@ -351,7 +351,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
             {
                 throw new ArgumentOutOfRangeException(nameof(humidityChangeNotificationThreshold), "Humidity threshold should be >= 0");
             }
-            if (humidityChangeNotificationThreshold < 0)
+            if (temperatureChangeNotificationThreshold < 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(temperatureChangeNotificationThreshold), "Temperature threshold should be >= 0");
             }
