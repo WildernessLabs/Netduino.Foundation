@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Netduino.Foundation.Devices;
 using Spot = Microsoft.SPOT.Hardware;
 
@@ -32,6 +33,11 @@ namespace Netduino.Foundation.Sensors.Light
         /// </remarks>
         private readonly byte WORD_MODE_BIT = 0x20;
 
+        /// <summary>
+        ///     Minimum value that should be used for the polling frequency.
+        /// </summary>
+        public const ushort MINIMUM_POLLING_PERIOD = 100;
+        
         #endregion Constants
 
         #region Enums
@@ -119,6 +125,11 @@ namespace Netduino.Foundation.Sensors.Light
         /// </summary>
         private Spot.InterruptPort _interruptPin;
 
+        /// <summary>
+        ///     Update interval in milliseconds
+        /// </summary>
+        private readonly ushort _updateInterval = 100;
+
         #endregion Member variables / fields.
 
         #region IDisposable
@@ -171,76 +182,21 @@ namespace Netduino.Foundation.Sensors.Light
         /// <summary>
         ///     Lux reading from the TSL2561 sensor.
         /// </summary>
-        public double Lux
+        public float Lux
         {
-            get
+            get { return _lux; }
+            set
             {
-                var adcData = SensorReading;
-                var data0 = adcData[0];
-                var data1 = adcData[1];
-                if ((data0 == 0xffff) | (data1 == 0xffff))
+                _lux = value;
+                if ((_updateInterval > 0) && (Math.Abs(_lastNotifiedLux - value) >= LightLevelChangedNotificationThreshold))
                 {
-                    return 0.0;
+                    LightLevelChanged(this, new SensorFloatEventArgs(_lastNotifiedLux, value));
+                    _lastNotifiedLux = value;
                 }
-                double d0 = data0;
-                double d1 = data1;
-                var ratio = d1 / d0;
-
-                var milliseconds = 0;
-                switch (Timing)
-                {
-                    case IntegrationTiming.Ms13:
-                        milliseconds = 14;
-                        break;
-                    case IntegrationTiming.Ms101:
-                        milliseconds = 101;
-                        break;
-                    case IntegrationTiming.Ms402:
-                        milliseconds = 402;
-                        break;
-                    case IntegrationTiming.Manual:
-                        milliseconds = 0;
-                        break;
-                }
-                var result = 0.0;
-                if (milliseconds != 0)
-                {
-                    d0 *= 402.0 / milliseconds;
-                    d1 *= 402.0 / milliseconds;
-                    if (SensorGain == Gain.Low)
-                    {
-                        d0 *= 16;
-                        d1 *= 16;
-                    }
-                    if (ratio < 0.5)
-                    {
-                        result = (0.0304 * d0) - (0.062 * d0 * Math.Pow(ratio, 1.4));
-                    }
-                    else
-                    {
-                        if (ratio < 0.61)
-                        {
-                            result = (0.0224 * d0) - (0.031 * d1);
-                        }
-                        else
-                        {
-                            if (ratio < 0.80)
-                            {
-                                result = (0.0128 * d0) - (0.0153 * d1);
-                            }
-                            else
-                            {
-                                if (ratio < 1.30)
-                                {
-                                    result = (0.00146 * d0) - (0.00112 * d1);
-                                }
-                            }
-                        }
-                    }
-                }
-                return result;
             }
         }
+        private float _lux;
+        private float _lastNotifiedLux = 0.001F;
 
         /// <summary>
         ///     ID of the sensor.
@@ -349,6 +305,12 @@ namespace Netduino.Foundation.Sensors.Light
         }
 
         /// <summary>
+        ///     Changes in light level greater than this value will generate an interrupt
+        ///     in auto-update mode.
+        /// </summary>
+        public float LightLevelChangedNotificationThreshold { get; set; } = 0.001F;
+
+        /// <summary>
         ///     ICommunicationBus object used to communicate with the sensor.
         /// </summary>
         /// <remarks>
@@ -379,6 +341,12 @@ namespace Netduino.Foundation.Sensors.Light
         /// </remarks>
         public event ThresholdInterrupt ReadingOutsideThresholdWindow;
 
+        /// <summary>
+        ///     Event raised when the temperature change is greater than the 
+        ///     TemperatureChangeNotificationThreshold value.
+        /// </summary>
+        public event SensorFloatEventHandler LightLevelChanged = delegate { };
+
         #endregion Event definitions
 
         #region Constructor(s)
@@ -398,21 +366,131 @@ namespace Netduino.Foundation.Sensors.Light
         /// </summary>
         /// <remarks>
         ///     By default the sensor will be set to low gain.
-        ///     <remarks>
-        public TSL2561(byte address = (byte) Addresses.Default, ushort speed = 100)
+        /// <remarks>
+        /// <param name="address">I2C address of the TSL2561</param>
+        /// <param name="speed">Speed of the I2C bus (default = 100 KHz).</param>
+        /// <param name="updateInterval">Update interval for the sensor (in milliseconds).</param>
+        /// <param name="lightLevelChangeNotificationThreshold">Changes in light level greater than this value will generate an interrupt in auto-update mode.</param>
+        public TSL2561(byte address = (byte) Addresses.Default, ushort speed = 100, ushort updateInterval = MINIMUM_POLLING_PERIOD,
+            float lightLevelChangeNotificationThreshold = 0.001F)
         {
             if ((address != (byte) Addresses.Address0) && (address != (byte) Addresses.Default) &&
                 (address != (byte) Addresses.Address1))
             {
-                throw new ArgumentOutOfRangeException("Address", "Address should be 0x29, 0x39 or 0x49.");
+                throw new ArgumentOutOfRangeException(nameof(address), "Address should be 0x29, 0x39 or 0x49.");
             }
+            if (speed > 1000)
+            {
+                throw new ArgumentOutOfRangeException(nameof(speed), "Speed should be between 0 and 1000 KHz");
+            }
+            if (lightLevelChangeNotificationThreshold < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(lightLevelChangeNotificationThreshold), "Light level threshold change values should be >= 0");
+            }
+            LightLevelChangedNotificationThreshold = lightLevelChangeNotificationThreshold;
+            _updateInterval = updateInterval;
+
             var device = new I2CBus(address, speed);
             _tsl2561 = device;
+            if (updateInterval > 0)
+            {
+                StartUpdating();
+            }
+            else
+            {
+                Update();
+            }
         }
 
         #endregion Constructor(s)
 
         #region Methods
+
+        /// <summary>
+        ///     Start the update process.
+        /// </summary>
+        private void StartUpdating()
+        {
+            Thread t = new Thread(() => {
+                while (true)
+                {
+                    Update();
+                    Thread.Sleep(_updateInterval);
+                }
+            });
+            t.Start();
+        }
+
+        /// <summary>
+        ///     Update the Lux reading.
+        /// </summary>
+        public void Update()
+        {
+                var adcData = SensorReading;
+                var data0 = adcData[0];
+                var data1 = adcData[1];
+                if ((data0 == 0xffff) | (data1 == 0xffff))
+                {
+                    Lux = 0.0F;
+                }
+                double d0 = data0;
+                double d1 = data1;
+                var ratio = d1 / d0;
+
+                var milliseconds = 0;
+                switch (Timing)
+                {
+                    case IntegrationTiming.Ms13:
+                        milliseconds = 14;
+                        break;
+                    case IntegrationTiming.Ms101:
+                        milliseconds = 101;
+                        break;
+                    case IntegrationTiming.Ms402:
+                        milliseconds = 402;
+                        break;
+                    case IntegrationTiming.Manual:
+                        milliseconds = 0;
+                        break;
+                }
+                var result = 0.0;
+                if (milliseconds != 0)
+                {
+                    d0 *= 402.0 / milliseconds;
+                    d1 *= 402.0 / milliseconds;
+                    if (SensorGain == Gain.Low)
+                    {
+                        d0 *= 16;
+                        d1 *= 16;
+                    }
+                    if (ratio < 0.5)
+                    {
+                        result = (0.0304 * d0) - (0.062 * d0 * Math.Pow(ratio, 1.4));
+                    }
+                    else
+                    {
+                        if (ratio < 0.61)
+                        {
+                            result = (0.0224 * d0) - (0.031 * d1);
+                        }
+                        else
+                        {
+                            if (ratio < 0.80)
+                            {
+                                result = (0.0128 * d0) - (0.0153 * d1);
+                            }
+                            else
+                            {
+                                if (ratio < 1.30)
+                                {
+                                    result = (0.00146 * d0) - (0.00112 * d1);
+                                }
+                            }
+                        }
+                    }
+                }
+                Lux = (float) result;
+        }
 
         /// <summary>
         ///     Turn the TSL2561 off.
