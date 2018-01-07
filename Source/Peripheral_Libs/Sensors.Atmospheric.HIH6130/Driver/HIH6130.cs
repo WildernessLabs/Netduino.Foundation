@@ -143,7 +143,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
 
             if ((updateInterval != 0) && (updateInterval < MINIMUM_POLLING_PERIOD))
             {
-                throw new ArgumentOutOfRangeException(nameof(updateInterval), "Update period should be 0 or greater than " + MINIMUM_POLLING_PERIOD);
+                throw new ArgumentOutOfRangeException(nameof(updateInterval), "Update period should be 0 or >= than " + MINIMUM_POLLING_PERIOD);
             }
             _updateInterval = updateInterval;
             HumidityChangeNotificationThreshold = humidityChangeNotificationThreshold;
@@ -170,7 +170,8 @@ namespace Netduino.Foundation.Sensors.Atmospheric
                     Update();
                     Thread.Sleep(_updateInterval);
                 }
-            }); t.Start();
+            });
+            t.Start();
         }
 
         /// <summary>
