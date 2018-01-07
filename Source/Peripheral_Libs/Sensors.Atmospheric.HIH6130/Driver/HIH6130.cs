@@ -47,7 +47,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
                 //
                 //  Check to see if the change merits raising an event.
                 //
-                if (System.Math.Abs(_lastNotifiedHumidity - value) >= HumidityChangeNotificationThreshold)
+                if ((_updateInterval > 0) && (Math.Abs(_lastNotifiedHumidity - value) >= HumidityChangeNotificationThreshold))
                 {
                     HumidityChanged(this, new SensorFloatEventArgs(_lastNotifiedHumidity, value));
                     _lastNotifiedHumidity = value;
@@ -69,7 +69,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
                 //
                 //  Check to see if the change merits raising an event.
                 //
-                if (System.Math.Abs(_lastNotifiedTemperature - value) >= TemperatureChangeNotificationThreshold)
+                if ((_updateInterval > 0) && (Math.Abs(_lastNotifiedTemperature - value) >= TemperatureChangeNotificationThreshold))
                 {
                     TemperatureChanged(this, new SensorFloatEventArgs(_lastNotifiedTemperature, value));
                     _lastNotifiedTemperature = value;
@@ -125,6 +125,9 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         /// </summary>
         /// <param name="address">Address of the HIH6130 (default = 0x27).</param>
         /// <param name="speed">Speed of the I2C bus (default = 100 KHz).</param>
+        /// <param name="updateInterval">Number of milliseconds between samples (0 indicates polling to be used)</param>
+        /// <param name="humidityChangeNotificationThreshold">Changes in humidity greater than this value will trigger an event when updatePeriod > 0.</param>
+        /// <param name="temperatureChangeNotificationThreshold">Changes in temperature greater than this value will trigger an event when updatePeriod > 0.</param>
         public HIH6130(byte address = 0x27, ushort speed = 100, ushort updateInterval = MINIMUM_POLLING_PERIOD,
                        float humidityChangeNotificationThreshold = 0.001F, 
                        float temperatureChangeNotificationThreshold = 0.001F)
