@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Netduino.Foundation.Devices;
 
 namespace Netduino.Foundation.Sensors.Atmospheric
@@ -12,6 +13,15 @@ namespace Netduino.Foundation.Sensors.Atmospheric
     /// </remarks>
     public class BME280
     {
+        #region Constants
+
+        /// <summary>
+        ///     Minimum value that should be used for the polling frequency.
+        /// </summary>
+        public const ushort MINIMUM_POLLING_PERIOD = 100;
+
+        #endregion Constants
+
         #region Enums
 
         /// <summary>
@@ -147,27 +157,81 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         /// </summary>
         private CompensationData _compensationData;
 
+        /// <summary>
+        ///     Update interval in milliseconds
+        /// </summary>
+        private readonly ushort _updateInterval = 100;
+
         #endregion Member Variables
 
         #region Properties
 
         /// <summary>
-        ///     Temperature reading from the sensor.
+        ///     Temperature reading from last update.
         /// </summary>
-        /// <value>Current temperature reading from the sensor in degrees C.</value>
-        public float Temperature { get; private set; }
+        public float Temperature
+        {
+            get { return _temperature; }
+            private set
+            {
+                _temperature = value;
+                //
+                //  Check to see if the change merits raising an event.
+                //
+                if ((_updateInterval > 0) && (Math.Abs(_lastNotifiedTemperature - value) >= TemperatureChangeNotificationThreshold))
+                {
+                    TemperatureChanged(this, new SensorFloatEventArgs(_lastNotifiedTemperature, value));
+                    _lastNotifiedTemperature = value;
+                }
+            }
+        }
+        private float _temperature;
+        private float _lastNotifiedTemperature = 0.0F;
 
         /// <summary>
         ///     Pressure reading from the sensor.
         /// </summary>
         /// <value>Current pressure reading from the sensor in Pascals (divide by 100 for hPa).</value>
-        public float Pressure { get; private set; }
+        public float Pressure
+        {
+            get { return _humidity; }
+            private set
+            {
+                _pressure = value;
+                //
+                //  Check to see if the change merits raising an event.
+                //
+                if ((_updateInterval > 0) && (Math.Abs(_lastNotifiedPressure - value) >= PressureChangeNotificationThreshold))
+                {
+                    PressureChanged(this, new SensorFloatEventArgs(_lastNotifiedPressure, value));
+                    _lastNotifiedPressure = value;
+                }
+            }
+        }
+        private float _pressure;
+        private float _lastNotifiedPressure = 0.0F;
 
         /// <summary>
-        ///     Humidity reading from the sensor.
+        ///     Humidity reading from the last update.
         /// </summary>
-        /// <value>Current humidity reading from the sensor as a percentage.</value>
-        public float Humidity { get; private set; }
+        public float Humidity
+        {
+            get { return _humidity; }
+            private set
+            {
+                _humidity = value;
+                //
+                //  Check to see if the change merits raising an event.
+                //
+                if ((_updateInterval > 0) && (Math.Abs(_lastNotifiedHumidity - value) >= HumidityChangeNotificationThreshold))
+                {
+                    HumidityChanged(this, new SensorFloatEventArgs(_lastNotifiedHumidity, value));
+                    _lastNotifiedHumidity = value;
+                }
+            }
+        }
+        private float _humidity;
+        private float _lastNotifiedHumidity = 0.0F;
 
         /// <summary>
         ///     Temperature over sampling configuration.
@@ -203,7 +267,50 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         /// </remarks>
         public FilterCoefficient Filter { get; set; }
 
+        /// <summary>
+        ///     Any changes in the temperature that are greater than the temperature
+        ///     threshold will cause an event to be raised when the instance is
+        ///     set to update automatically.
+        /// </summary>
+        public float TemperatureChangeNotificationThreshold { get; set; } = 0.001F;
+
+        /// <summary>
+        ///     Any changes in the humidity that are greater than the humidity
+        ///     threshold will cause an event to be raised when the instance is
+        ///     set to update automatically.
+        /// </summary>
+        public float HumidityChangeNotificationThreshold { get; set; } = 0.001F;
+
+        /// <summary>
+        ///     Any changes in the pressure that are greater than the pressure
+        ///     threshold will cause an event to be raised when the instance is
+        ///     set to update automatically.
+        /// </summary>
+        public float PressureChangeNotificationThreshold { get; set; } = 0.001F;
+
         #endregion Properties
+
+        #region Events and delegates
+
+        /// <summary>
+        ///     Event raised when the temperature change is greater than the 
+        ///     TemperatureChangeNotificationThreshold value.
+        /// </summary>
+        public event SensorFloatEventHandler TemperatureChanged = delegate { };
+
+        /// <summary>
+        ///     Event raised when the humidity change is greater than the
+        ///     HumidityChangeNotificationThreshold value.
+        /// </summary>
+        public event SensorFloatEventHandler HumidityChanged = delegate { };
+
+        /// <summary>
+        ///     Event raised when the change in pressure is greater than the
+        ///     PresshureChangeNotificationThreshold value.
+        /// </summary>
+        public event SensorFloatEventHandler PressureChanged = delegate { };
+
+        #endregion Events and delegates
 
         #region Constructors
 
@@ -223,18 +330,44 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         /// </summary>
         /// <param name="address">I2C address of the sensor (default = 0x77).</param>
         /// <param name="speed">Speed of the I2C bus (default = 100KHz).</param>
-        public BME280(byte address = 0x77, ushort speed = 100)
+        /// <param name="updateInterval">Number of milliseconds between samples (0 indicates polling to be used)</param>
+        /// <param name="humidityChangeNotificationThreshold">Changes in humidity greater than this value will trigger an event when updatePeriod > 0.</param>
+        /// <param name="temperatureChangeNotificationThreshold">Changes in temperature greater than this value will trigger an event when updatePeriod > 0.</param>
+        /// <param name="pressureChangedNotificationThreshold">Changes in pressure greater than this value will trigger an event when updatePeriod > 0.</param>
+        public BME280(byte address = 0x77, ushort speed = 100, ushort updateInterval = MINIMUM_POLLING_PERIOD,
+                      float humidityChangeNotificationThreshold = 0.001F,
+                      float temperatureChangeNotificationThreshold = 0.001F,
+                      float pressureChangedNotificationThreshold = 10.0F)
         {
             if ((address != 0x76) && (address != 0x77))
             {
-                throw new ArgumentOutOfRangeException("address", "Address should be 0x76 or 0x77");
+                throw new ArgumentOutOfRangeException(nameof(address), "Address should be 0x76 or 0x77");
             }
             if ((speed < 10) || (speed > 3400))
             {
-                throw new ArgumentOutOfRangeException("speed", "Speed should be 10 KHz to 3,400 KHz.");
+                throw new ArgumentOutOfRangeException(nameof(speed), "Speed should be 10 KHz to 3,400 KHz.");
+            }
+            if (humidityChangeNotificationThreshold < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(humidityChangeNotificationThreshold), "Humidity threshold should be >= 0");
+            }
+            if (humidityChangeNotificationThreshold < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(temperatureChangeNotificationThreshold), "Temperature threshold should be >= 0");
+            }
+            if (pressureChangedNotificationThreshold < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(pressureChangedNotificationThreshold), "Pressure threshold should be >= 0");
+            }
+            if ((updateInterval != 0) && (updateInterval < MINIMUM_POLLING_PERIOD))
+            {
+                throw new ArgumentOutOfRangeException(nameof(updateInterval), "Update period should be 0 or >= than " + MINIMUM_POLLING_PERIOD);
             }
 
             _bme280 = new I2CBus(address, speed);
+            TemperatureChangeNotificationThreshold = temperatureChangeNotificationThreshold;
+            HumidityChangeNotificationThreshold = humidityChangeNotificationThreshold;
+            PressureChangeNotificationThreshold = pressureChangedNotificationThreshold;
             ReadCompensationData();
             //
             //  Update the configuration information and start sampling.
@@ -246,11 +379,30 @@ namespace Netduino.Foundation.Sensors.Atmospheric
             Filter = FilterCoefficient.Off;
             Standby = StandbyDuration.MsHalf;
             UpdateConfiguration();
+            if (updateInterval > 0)
+            {
+                StartUpdating();
+            }
         }
 
         #endregion Constructors
 
         #region Methods
+
+        /// <summary>
+        ///     Start the update process.
+        /// </summary>
+        private void StartUpdating()
+        {
+            Thread t = new Thread(() => {
+                while (true)
+                {
+                    Update();
+                    Thread.Sleep(_updateInterval);
+                }
+            });
+            t.Start();
+        }
 
         /// <summary>
         ///     Update the configuration for the BME280.
@@ -335,7 +487,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         }
 
         /// <summary>
-        ///     Read the sensor information from the BME280.
+        ///     Update the sensor information from the BME280.
         /// </summary>
         /// <remarks>
         ///     Reads the raw temperature, pressure and humidity data from the BME280 and applies
@@ -347,7 +499,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         ///     Formulas - section 4.2.3 Compensation Formulas
         ///     The integer formulas have been used to try and keep the calcuations performant.
         /// </remarks>
-        public void Read()
+        public void Update()
         {
             var readings = _bme280.ReadRegisters(0xf7, 8);
             //

@@ -13,7 +13,7 @@ namespace BME280_Sample
             string message;
             while (true)
             {
-                sensor.Read();
+                sensor.Update();
                 message = "Temperature: " + sensor.Temperature.ToString("F1") + " C\n";
                 message += "Humidity: " + sensor.Humidity.ToString("F1") + " %\n";
                 message += "Pressure: " + (sensor.Pressure / 100).ToString("F0") + " hPa\n\n";
