@@ -12,7 +12,7 @@ namespace MPL3115A2Test
             var mpl3115a2 = new MPL3115A2();
             while (true)
             {
-                mpl3115a2.Read();
+                mpl3115a2.Update();
                 Debug.Print("Temperature: " + mpl3115a2.Temperature.ToString("f2") + ", Pressure: " +
                             mpl3115a2.Pressure.ToString("f2"));
                 Thread.Sleep(1000);

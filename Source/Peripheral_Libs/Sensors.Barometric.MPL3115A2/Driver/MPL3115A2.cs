@@ -4,8 +4,20 @@ using Netduino.Foundation.Devices;
 
 namespace Netduino.Foundation.Sensors.Barometric
 {
+    /// <summary>
+    ///     Driver for the MPL3115A2 pressure and humidity sensor.
+    /// </summary>
     public class MPL3115A2
     {
+        #region Constants
+
+        /// <summary>
+        ///     Minimum value that should be used for the polling frequency.
+        /// </summary>
+        public const ushort MINIMUM_POLLING_PERIOD = 150;
+
+        #endregion Constants
+
         #region Enums
 
         /// <summary>
@@ -184,15 +196,36 @@ namespace Netduino.Foundation.Sensors.Barometric
         /// </summary>
         private readonly ICommunicationBus _mpl3115a2;
 
+        /// <summary>
+        ///     Update interval in milliseconds
+        /// </summary>
+        private readonly ushort _updateInterval = 100;
+
         #endregion Member variables / fields
 
         #region Properties
 
         /// <summary>
-        ///     Last temperature reading in degrees C (note that Read should be called before
-        ///     this value is accessed.)
+        ///     Temperature reading from last update.
         /// </summary>
-        public double Temperature { get; private set; }
+        public float Temperature
+        {
+            get { return _temperature; }
+            private set
+            {
+                _temperature = value;
+                //
+                //  Check to see if the change merits raising an event.
+                //
+                if ((_updateInterval > 0) && (Math.Abs(_lastNotifiedTemperature - value) >= TemperatureChangeNotificationThreshold))
+                {
+                    TemperatureChanged(this, new SensorFloatEventArgs(_lastNotifiedTemperature, value));
+                    _lastNotifiedTemperature = value;
+                }
+            }
+        }
+        private float _temperature;
+        private float _lastNotifiedTemperature = 0.0F;
 
         /// <summary>
         ///     Minimum temperature since the sensor was last reset.
@@ -227,10 +260,27 @@ namespace Netduino.Foundation.Sensors.Barometric
         }
 
         /// <summary>
-        ///     Last pressure reading in Pascals (note that Read should be called before
-        ///     this value is accessed.)
+        ///     Pressure reading from the sensor.
         /// </summary>
-        public double Pressure { get; private set; }
+        /// <value>Current pressure reading from the sensor in Pascals (divide by 100 for hPa).</value>
+        public float Pressure
+        {
+            get { return _pressure; }
+            private set
+            {
+                _pressure = value;
+                //
+                //  Check to see if the change merits raising an event.
+                //
+                if ((_updateInterval > 0) && (Math.Abs(_lastNotifiedPressure - value) >= PressureChangeNotificationThreshold))
+                {
+                    PressureChanged(this, new SensorFloatEventArgs(_lastNotifiedPressure, value));
+                    _lastNotifiedPressure = value;
+                }
+            }
+        }
+        private float _pressure;
+        private float _lastNotifiedPressure = 0.0F;
 
         /// <summary>
         ///     Maximum pressure reading since the last reset.
@@ -305,7 +355,37 @@ namespace Netduino.Foundation.Sensors.Barometric
             get { return _mpl3115a2.ReadRegister(Registers.Status); }
         }
 
+        /// <summary>
+        ///     Any changes in the temperature that are greater than the temperature
+        ///     threshold will cause an event to be raised when the instance is
+        ///     set to update automatically.
+        /// </summary>
+        public float TemperatureChangeNotificationThreshold { get; set; } = 0.001F;
+
+        /// <summary>
+        ///     Any changes in the pressure that are greater than the pressure
+        ///     threshold will cause an event to be raised when the instance is
+        ///     set to update automatically.
+        /// </summary>
+        public float PressureChangeNotificationThreshold { get; set; } = 0.001F;
+
         #endregion Properties
+
+        #region Events and delegates
+
+        /// <summary>
+        ///     Event raised when the temperature change is greater than the 
+        ///     TemperatureChangeNotificationThreshold value.
+        /// </summary>
+        public event SensorFloatEventHandler TemperatureChanged = delegate { };
+
+        /// <summary>
+        ///     Event raised when the change in pressure is greater than the
+        ///     PresshureChangeNotificationThreshold value.
+        /// </summary>
+        public event SensorFloatEventHandler PressureChanged = delegate { };
+
+        #endregion Events and delegates
 
         #region Constructors
 
@@ -321,8 +401,33 @@ namespace Netduino.Foundation.Sensors.Barometric
         /// </summary>
         /// <param name="address">Address of the sensor (default = 0x60).</param>
         /// <param name="speed">Bus speed to use when communicating with the sensor (Maximum is 400 kHz).</param>
-        public MPL3115A2(byte address = 0x60, ushort speed = 400)
+        /// <param name="updateInterval">Number of milliseconds between samples (0 indicates polling to be used)</param>
+        /// <param name="temperatureChangeNotificationThreshold">Changes in temperature greater than this value will trigger an event when updatePeriod > 0.</param>
+        /// <param name="pressureChangedNotificationThreshold">Changes in pressure greater than this value will trigger an event when updatePeriod > 0.</param>
+        public MPL3115A2(byte address = 0x60, ushort speed = 400, ushort updateInterval = MINIMUM_POLLING_PERIOD,
+            float temperatureChangeNotificationThreshold = 0.001F, float pressureChangedNotificationThreshold = 10.0F)
         {
+            if ((speed < 10) || (speed > 1000))
+            {
+                throw new ArgumentOutOfRangeException(nameof(speed), "Speed should be 10 KHz to 3,400 KHz.");
+            }
+            if (temperatureChangeNotificationThreshold < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(temperatureChangeNotificationThreshold), "Temperature threshold should be >= 0");
+            }
+            if (pressureChangedNotificationThreshold < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(pressureChangedNotificationThreshold), "Pressure threshold should be >= 0");
+            }
+            if ((updateInterval != 0) && (updateInterval < MINIMUM_POLLING_PERIOD))
+            {
+                throw new ArgumentOutOfRangeException(nameof(updateInterval), "Update period should be 0 or >= than " + MINIMUM_POLLING_PERIOD);
+            }
+
+            TemperatureChangeNotificationThreshold = temperatureChangeNotificationThreshold;
+            PressureChangeNotificationThreshold = pressureChangedNotificationThreshold;
+            _updateInterval = updateInterval;
+
             var device = new I2CBus(address, speed);
             _mpl3115a2 = device;
             if (_mpl3115a2.ReadRegister(Registers.WhoAmI) != 0xc4)
@@ -335,12 +440,34 @@ namespace Netduino.Foundation.Sensors.Barometric
                                      (byte) (ConfigurationRegisterBits.DataReadyEvent |
                                              ConfigurationRegisterBits.EnablePressureEvent |
                                              ConfigurationRegisterBits.EnableTemperatureEvent));
-            Read();
+            if (updateInterval > 0)
+            {
+                StartUpdating();
+            }
+            else
+            {
+                Update();
+            }
         }
 
         #endregion
 
         #region Methods
+
+        /// <summary>
+        ///     Start the update process.
+        /// </summary>
+        private void StartUpdating()
+        {
+            Thread t = new Thread(() => {
+                while (true)
+                {
+                    Update();
+                    Thread.Sleep(_updateInterval);
+                }
+            });
+            t.Start();
+        }
 
         /// <summary>
         ///     Decode the three data bytes representing the pressure into a doubleing
@@ -350,14 +477,14 @@ namespace Netduino.Foundation.Sensors.Barometric
         /// <param name="csb">CSB for the pressure sensor reading.</param>
         /// <param name="lsb">LSB of the pressure sensor reading.</param>
         /// <returns>Pressure in Pascals.</returns>
-        private double DecodePresssure(byte msb, byte csb, byte lsb)
+        private float DecodePresssure(byte msb, byte csb, byte lsb)
         {
             uint pressure = msb;
             pressure <<= 8;
             pressure |= csb;
             pressure <<= 8;
             pressure |= lsb;
-            return pressure / 64.0;
+            return (float) (pressure / 64.0);
         }
 
         /// <summary>
@@ -385,12 +512,12 @@ namespace Netduino.Foundation.Sensors.Barometric
         /// <param name="msb">MSB of the temperature sensor reading.</param>
         /// <param name="lsb">LSB of the temperature sensor reading.</param>
         /// <returns>Temperature in degrees C.</returns>
-        private double DecodeTemperature(byte msb, byte lsb)
+        private float DecodeTemperature(byte msb, byte lsb)
         {
             ushort temperature = msb;
             temperature <<= 8;
             temperature |= lsb;
-            return temperature / 256.0;
+            return (float) (temperature / 256.0);
         }
 
         /// <summary>
@@ -414,7 +541,7 @@ namespace Netduino.Foundation.Sensors.Barometric
         ///     Force a read of the current sensor values and update the Temperature
         ///     and Pressure properties.
         /// </summary>
-        public void Read()
+        public void Update()
         {
             //
             //  Force the sensor to make a reading by setting the OST bit in Control
