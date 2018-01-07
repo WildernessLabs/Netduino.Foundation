@@ -69,6 +69,9 @@ namespace Netduino.Foundation.LEDs
         }
 
 
+        /// <summary>
+        /// Start the Blink animation which sets the brightness of the LED alternating between a low and high brightness setting, using the durations provided.
+        /// </summary>
         public void StartBlink(int onDuration = 200, int offDuration = 200, float highBrightness = 1, float lowBrightness = 0)
         {
             if (highBrightness > 1 || highBrightness <= 0)
@@ -98,6 +101,9 @@ namespace Netduino.Foundation.LEDs
             this._animationThread.Start();
         }
 
+        /// <summary>
+        /// Start the Pulse animation which gradually alternates the brightness of the LED between a low and high brightness setting, using the durations provided.
+        /// </summary>
         public void StartPulse(int pulseDuration = 600, float highBrightness = 1, float lowBrightness = 0.15F)
         {
             if (highBrightness > 1 || highBrightness <= 0) {
@@ -145,6 +151,9 @@ namespace Netduino.Foundation.LEDs
             this._animationThread.Start();
         }
 
+        /// <summary>
+        /// Stops any running animations.
+        /// </summary>
         public void Stop()
         {
             if(this._animationThread != null)

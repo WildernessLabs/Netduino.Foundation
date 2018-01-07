@@ -20,8 +20,11 @@ namespace Netduino.Foundation.Core.Samples
                 // loop through the entire hue spectrum (360 degrees)
                 for (int i = 0; i < 360; i++)
                 {
+                    var hue = ((double)i / 360F);
+                    Debug.Print(hue.ToString());
+
                     // set the color of the RGB
-                    rgbPwmLed.SetHsvColor(i, 1, 1);
+                    rgbPwmLed.SetColor(Color.FromHsba(((double)i/360F), 1, 1));
 
                     // for a fun, fast rotation through the hue spectrum:
                     //Thread.Sleep (1);

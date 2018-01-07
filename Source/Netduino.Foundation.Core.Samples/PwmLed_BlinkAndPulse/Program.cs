@@ -13,9 +13,7 @@ namespace Netduino.Foundation.Core.Samples
             // create a new pwm controlled LED on pin 11
             var pwmLed = new LEDs.PwmLed(N.PWMChannels.PWM_PIN_D11, LEDs.TypicalForwardVoltage.Green);
 
-            
-
-            // blink the LED 
+            // alternate between blinking and pulsing the LED 
             while (true)
             {
                 pwmLed.StartBlink();

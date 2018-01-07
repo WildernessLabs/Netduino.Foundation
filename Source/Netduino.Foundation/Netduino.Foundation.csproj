@@ -32,6 +32,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ArrayEventArgs.cs" />
+    <Compile Include="Color.cs" />
+    <Compile Include="Helpers\NumericExtensions.cs" />
     <Compile Include="LEDs\PwmLed.cs" />
     <Compile Include="LEDs\RgbPwmLed.cs" />
     <Compile Include="LEDs\TypicalForwardVoltage.cs" />
