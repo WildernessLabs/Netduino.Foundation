@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using Netduino.Foundation.Devices;
-using Microsoft.SPOT;
 
 namespace Netduino.Foundation.Sensors.Atmospheric
 {
@@ -11,68 +10,106 @@ namespace Netduino.Foundation.Sensors.Atmospheric
     /// </summary>
     public class HIH6130 : ITemperatureSensor, IHumiditySensor
     {
+        #region Constants
+
+        /// <summary>
+        ///     Minimum value that should be used for the polling frequency.
+        /// </summary>
+        public const ushort MINIMUM_POLLING_PERIOD = 100;
+
+        #endregion Constants
+
         #region Member variables / fields
 
-        public event SensorFloatEventHandler TemperatureChanged = delegate {};
-        public event SensorFloatEventHandler HumidityChanged = delegate { };
-
         /// <summary>
-        ///     MAG3110 object.
+        ///     HIH6130 sensor object.
         /// </summary>
         private readonly ICommunicationBus _hih6130;
+        
         /// <summary>
-        /// Update interval in miliseconds
+        ///     Update interval in milliseconds
         /// </summary>
-        protected int _updateInterval = 100;
+        private readonly ushort _updateInterval = 100;
 
         #endregion Member variables / fields
 
         #region Properties
 
         /// <summary>
-        ///     Humidity reading from the last call to Read.
+        ///     Humidity reading from the last update.
         /// </summary>
-        public float Humidity {
+        public float Humidity 
+        {
             get { return _humidity; }
-            protected set
+            private set
             {
                 _humidity = value;
-
-                // if it's changed enough to trigger an event
-                if (value != _lastNotifiedHumidity && System.Math.Abs(_lastNotifiedHumidity - value) >= HumidityChangeNotificationThreshold)
+                //
+                //  Check to see if the change merits raising an event.
+                //
+                if (System.Math.Abs(_lastNotifiedHumidity - value) >= HumidityChangeNotificationThreshold)
                 {
-                    this.HumidityChanged(this, new SensorFloatEventArgs(_lastNotifiedHumidity, value));
+                    HumidityChanged(this, new SensorFloatEventArgs(_lastNotifiedHumidity, value));
                     _lastNotifiedHumidity = value;
                 }
             }
         }
-        protected float _humidity;
-        protected float _lastNotifiedHumidity = 0.0F;
+        private float _humidity;
+        private float _lastNotifiedHumidity = 0.0F;
 
         /// <summary>
-        ///     Temperature reading from last call to Read.
+        ///     Temperature reading from last update.
         /// </summary>
-        public float Temperature {
+        public float Temperature
+        {
             get { return _temperature; }
-            protected set {
+            private set 
+            {
                 _temperature = value;
-
-                // if it's changed enough to trigger an event
-                if (value != _lastNotifiedTemperature && System.Math.Abs(_lastNotifiedTemperature - value) >= TemperatureChangeNotificationThreshold)
+                //
+                //  Check to see if the change merits raising an event.
+                //
+                if (System.Math.Abs(_lastNotifiedTemperature - value) >= TemperatureChangeNotificationThreshold)
                 {
-                    this.TemperatureChanged(this, new SensorFloatEventArgs(_lastNotifiedTemperature, value));
+                    TemperatureChanged(this, new SensorFloatEventArgs(_lastNotifiedTemperature, value));
                     _lastNotifiedTemperature = value;
                 }
             }
         }
-        protected float _temperature;
-        protected float _lastNotifiedTemperature = 0.0F;
+        private float _temperature;
+        private float _lastNotifiedTemperature = 0.0F;
 
+        /// <summary>
+        ///     Any changes in the temperature that are greater than the temperature
+        ///     threshold will cause an event to be raised when the instance is
+        ///     set to update automatically.
+        /// </summary>
         public float TemperatureChangeNotificationThreshold { get; set; } = 0.001F;
 
+        /// <summary>
+        ///     Any changes in the humidity that are greater than the humidity
+        ///     threshold will cause an event to be raised when the instance is
+        ///     set to update automatically.
+        /// </summary>
         public float HumidityChangeNotificationThreshold { get; set; } = 0.001F;
 
-        #endregion
+        #endregion Properties
+
+        #region Events and delegates
+
+        /// <summary>
+        ///     Event raised when the temperature change is greater than the 
+        ///     TemperatureChangeNotificationThreshold value.
+        /// </summary>
+        public event SensorFloatEventHandler TemperatureChanged = delegate { };
+
+        /// <summary>
+        ///     Event raised when the humidity change is greater than the
+        ///     HumidityChangeNotificationThreshold value.
+        /// </summary>
+        public event SensorFloatEventHandler HumidityChanged = delegate { };
+
+        #endregion Events and delegates
 
         #region Constructors
 
@@ -88,29 +125,47 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         /// </summary>
         /// <param name="address">Address of the HIH6130 (default = 0x27).</param>
         /// <param name="speed">Speed of the I2C bus (default = 100 KHz).</param>
-        public HIH6130(byte address = 0x27, ushort speed = 100, int updateInterval = 100
-            , float humidityChangeNotificationThreshold = 0.001F, float temperatureChangeNotificationThreshold = 0.001F)
+        public HIH6130(byte address = 0x27, ushort speed = 100, ushort updateInterval = MINIMUM_POLLING_PERIOD,
+                       float humidityChangeNotificationThreshold = 0.001F, 
+                       float temperatureChangeNotificationThreshold = 0.001F)
         {
-            this._updateInterval = updateInterval;
-            this.HumidityChangeNotificationThreshold = humidityChangeNotificationThreshold;
-            this.TemperatureChangeNotificationThreshold = temperatureChangeNotificationThreshold;
+            if (humidityChangeNotificationThreshold < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(humidityChangeNotificationThreshold), "Humidity threshold should be >= 0");
+            }
+            if (humidityChangeNotificationThreshold < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(temperatureChangeNotificationThreshold), "Temperature threshold should be >= 0");
+            }
 
+            if ((updateInterval != 0) && (updateInterval < MINIMUM_POLLING_PERIOD))
+            {
+                throw new ArgumentOutOfRangeException(nameof(updateInterval), "Update period should be 0 or greater than " + MINIMUM_POLLING_PERIOD);
+            }
+            _updateInterval = updateInterval;
+            HumidityChangeNotificationThreshold = humidityChangeNotificationThreshold;
+            TemperatureChangeNotificationThreshold = temperatureChangeNotificationThreshold;
             _hih6130 = new I2CBus(address, speed);
-            //Read();
-            StartUpdating();
+            if (updateInterval > 0)
+            {
+                StartUpdating();
+            }
         }
 
         #endregion Constructors
 
         #region Methods
 
+        /// <summary>
+        ///     Start the update process.
+        /// </summary>
         private void StartUpdating()
         {
             Thread t = new Thread(() => {
                 while (true)
                 {
                     Update();
-                    Thread.Sleep(this._updateInterval);
+                    Thread.Sleep(_updateInterval);
                 }
             }); t.Start();
         }
@@ -124,7 +179,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
             //
             //  Sensor takes 35ms to make a valid reading.
             //
-            Thread.Sleep(50);
+            Thread.Sleep(40);
             var data = _hih6130.ReadBytes(4);
             //
             //  Data format:
