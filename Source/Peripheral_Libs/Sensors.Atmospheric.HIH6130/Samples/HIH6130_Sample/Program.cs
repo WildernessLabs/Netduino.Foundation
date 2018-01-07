@@ -2,25 +2,28 @@ using Microsoft.SPOT;
 using Netduino.Foundation.Sensors.Atmospheric;
 using System.Threading;
 
-namespace HIH6130_Sample
+namespace HIH6130InterruptSample
 {
     public class Program
     {
         public static void Main()
         {
-            // create a new HIH6130 and set the temp change threshold to half a degree
+            //
+            //  Create a new HIH6130 and set the temperature change threshold to half a degree.
+            //
             HIH6130 hih6130 = new HIH6130(temperatureChangeNotificationThreshold: 0.5F);
-
-            hih6130.TemperatureChanged += (s, e) => {
-                Debug.Print("temp changed: " + e.CurrentValue.ToString());
-            };
-            
-            while (true)
+            //
+            //  Hook up the interrupt handler.
+            //
+            hih6130.TemperatureChanged += (s, e) =>
             {
-                //hih6130.Read();
-                Debug.Print("Temperature: " + hih6130.Temperature.ToString("f2") + ", Humidity: " + hih6130.Humidity.ToString("f2"));
-                Thread.Sleep(1000);
-            }
+                Debug.Print("Temperature changed: " + e.CurrentValue.ToString());
+            };
+            //
+            //  Now put te main application to sleep.  The temperature changes will be dealt
+            //  with by the event handler above.
+            //
+            Thread.Sleep(Timeout.Infinite);
         }
     }
 }

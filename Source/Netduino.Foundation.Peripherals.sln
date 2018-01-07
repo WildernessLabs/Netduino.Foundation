@@ -163,7 +163,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BME280PollingSample", "Peri
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SHT31D_Sample", "Peripheral_Libs\Sensors.Atmospheric.SHT31D\Samples\SHT31D_Sample\SHT31D_Sample.csproj", "{020C3855-223E-4260-9146-F0C9DD5028A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HIH6130_Sample", "Peripheral_Libs\Sensors.Atmospheric.HIH6130\Samples\HIH6130_Sample\HIH6130_Sample.csproj", "{1A7056DC-FF2D-4CBB-87DC-CB41AF30E550}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HIH6130InterruptSample", "Peripheral_Libs\Sensors.Atmospheric.HIH6130\Samples\HIH6130_Sample\HIH6130InterruptSample.csproj", "{1A7056DC-FF2D-4CBB-87DC-CB41AF30E550}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADXL345Sample", "Peripheral_Libs\Sensors.Motion.ADXL345\Samples\ADXL345Sample\ADXL345Sample.csproj", "{54CE0B18-46F8-4586-A40A-A77F8FA7FB2D}"
 EndProject
