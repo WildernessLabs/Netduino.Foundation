@@ -27,6 +27,13 @@ namespace Netduino.Foundation.LEDs
         // TODO: this should be based on voltage drop so it can be used with or without resistors.
         protected double dutyCycleMax = .3; // RGB Led doesn't seem to get much brighter than at 30%
 
+        protected float _maximumRedPwmDuty = 1;
+        protected float _maximumGreenPwmDuty = 1;
+        protected float _maximumBluePwmDuty = 1;
+        public float RedForwardVoltage { get; protected set; }
+        public float GreenForwardVoltage { get; protected set; }
+        public float BlueForwardVoltage { get; protected set; }
+
         protected Thread _animationThread = null;
 
         public Color Color
@@ -34,10 +41,41 @@ namespace Netduino.Foundation.LEDs
             get { return this._color; }
         } protected Color _color = new Color(0, 0, 0);
         
-
-        public RgbPwmLed(H.Cpu.PWMChannel redPin, H.Cpu.PWMChannel greenPin, H.Cpu.PWMChannel bluePin, bool isCommonCathode = true)
-        //public RgbLed(H.PWM redPin, H.PWM greenPin, H.PWM bluePin, bool isCommonCathode = true)
+        
+        /// <summary>
+        /// TODO: in the case of isCommonCathode = false, invert the stuff.
+        /// 
+        /// Implementation notes: Architecturally, it would be much cleaner to construct this class
+        /// as three PwmLeds. Then each one's implementation would be self-contained. However, that
+        /// would require three additional threads during ON; one contained by each PwmLed. For this
+        /// reason, I'm basically duplicating the functionality for all three in here. 
+        /// </summary>
+        /// <param name="redPin"></param>
+        /// <param name="greenPin"></param>
+        /// <param name="bluePin"></param>
+        /// <param name="isCommonCathode"></param>
+        public RgbPwmLed(
+            H.Cpu.PWMChannel redPin, H.Cpu.PWMChannel greenPin, H.Cpu.PWMChannel bluePin,
+            float redLedForwardVoltage = TypicalForwardVoltage.ResistorLimited, 
+            float greenLedForwardVoltage = TypicalForwardVoltage.ResistorLimited, 
+            float blueLedForwardVoltage = TypicalForwardVoltage.ResistorLimited,
+            bool isCommonCathode = true)
         {
+            // validate and persist forward voltages
+            if (redLedForwardVoltage < 0 || redLedForwardVoltage > 3.3F) {
+                throw new ArgumentOutOfRangeException("redLedForwardVoltage", "error, forward voltage must be between 0, and 3.3");
+            } this.RedForwardVoltage = redLedForwardVoltage;
+            if (greenLedForwardVoltage < 0 || greenLedForwardVoltage > 3.3F) {
+                throw new ArgumentOutOfRangeException("greenLedForwardVoltage", "error, forward voltage must be between 0, and 3.3");
+            } this.GreenForwardVoltage = greenLedForwardVoltage;
+            if (blueLedForwardVoltage < 0 || blueLedForwardVoltage > 3.3F) {
+                throw new ArgumentOutOfRangeException("blueLedForwardVoltage", "error, forward voltage must be between 0, and 3.3");
+            } this.BlueForwardVoltage = blueLedForwardVoltage;
+            // calculate and set maximum PWM duty cycles
+            this._maximumRedPwmDuty = Helpers.CalculateMaximumDutyCycle(RedForwardVoltage);
+            this._maximumGreenPwmDuty = Helpers.CalculateMaximumDutyCycle(GreenForwardVoltage);
+            this._maximumBluePwmDuty = Helpers.CalculateMaximumDutyCycle(BlueForwardVoltage);
+
             this.IsCommonCathode = isCommonCathode;
             this.RedPin = redPin;
             this.GreenPin = greenPin;
@@ -48,33 +86,15 @@ namespace Netduino.Foundation.LEDs
             this.BluePwm = new Microsoft.SPOT.Hardware.PWM(this.BluePin, 100, 0, false);
         }
 
-        //public void SetHsvColor(double hue, double saturation, double brightness)
-        //{
-        //    double red;
-        //    double green;
-        //    double blue;
-
-        //    // convert to RGB
-        //    Converters.HsvToRgb(hue, saturation, brightness, out red, out green, out blue);
-
-        //    SetRgbColor(red, green, blue);
-        //}
-
-        //public void SetRgbColor(double red, double green, double blue)
-        //{
-        //    RedPwm.DutyCycle = (red * dutyCycleMax);
-        //    GreenPwm.DutyCycle = (green * dutyCycleMax);
-        //    BluePwm.DutyCycle = (blue * dutyCycleMax);
-        //}
 
         public void SetColor(Color color)
         {
             this._color = color;
 
             // set the color based on the RGB values
-            RedPwm.DutyCycle = (this._color.R * dutyCycleMax);
-            GreenPwm.DutyCycle = (this._color.G * dutyCycleMax);
-            BluePwm.DutyCycle = (this._color.B * dutyCycleMax);
+            RedPwm.DutyCycle = (this._color.R * _maximumRedPwmDuty);
+            GreenPwm.DutyCycle = (this._color.G * _maximumGreenPwmDuty);
+            BluePwm.DutyCycle = (this._color.B * _maximumBluePwmDuty);
 
             // start our PWMs.
             this.RedPwm.Start();

@@ -34,6 +34,7 @@
     <Compile Include="ArrayEventArgs.cs" />
     <Compile Include="Color.cs" />
     <Compile Include="Helpers\NumericExtensions.cs" />
+    <Compile Include="LEDs\Helpers.cs" />
     <Compile Include="LEDs\PwmLed.cs" />
     <Compile Include="LEDs\RgbPwmLed.cs" />
     <Compile Include="LEDs\TypicalForwardVoltage.cs" />
