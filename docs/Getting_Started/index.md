@@ -31,8 +31,7 @@ namespace Netduino.Foundation.Core.Samples
             pwmLed.StartPulse();
 
             // keep the app running
-            while (true) { Thread.Sleep(1000); }
-
+            Thread.Sleep(Timeout.Infinite);
         }
     }
 }
