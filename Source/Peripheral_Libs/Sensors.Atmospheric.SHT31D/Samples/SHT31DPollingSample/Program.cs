@@ -8,7 +8,7 @@ namespace SHT31D_Sample
     {
         public static void Main()
         {
-            SHT31D sht31d = new SHT31D();
+            SHT31D sht31d = new SHT31D(updateInterval: 0);
 
             Debug.Print("SHT31D Temperature / Humidity Test");
             while (true)
