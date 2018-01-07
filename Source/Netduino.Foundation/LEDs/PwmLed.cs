@@ -69,17 +69,17 @@ namespace Netduino.Foundation.LEDs
         }
 
 
-        public void StartBlink(int onDuration = 200, int offDuration = 200, float onBrightness = 1, float offBrightness = 0)
+        public void StartBlink(int onDuration = 200, int offDuration = 200, float highBrightness = 1, float lowBrightness = 0)
         {
-            if (onBrightness > 1 || onBrightness <= 0)
+            if (highBrightness > 1 || highBrightness <= 0)
             {
                 throw new ArgumentOutOfRangeException("onBrightness", "onBrightness must be > 0 and <= 1");
             }
-            if (offBrightness >= 1 || offBrightness < 0)
+            if (lowBrightness >= 1 || lowBrightness < 0)
             {
                 throw new ArgumentOutOfRangeException("offBrightness", "lowBrightness must be >= 0 and < 1");
             }
-            if (offBrightness >= onBrightness)
+            if (lowBrightness >= highBrightness)
             {
                 throw new Exception("offBrightness must be less than onBrightness");
             }
@@ -89,9 +89,9 @@ namespace Netduino.Foundation.LEDs
             this._animationThread = new Thread(() => {
                 while (true)
                 {
-                    this.Brightness = onBrightness;
+                    this.Brightness = highBrightness;
                     Thread.Sleep(onDuration);
-                    this.Brightness = offBrightness;
+                    this.Brightness = lowBrightness;
                     Thread.Sleep(offDuration);
                 }
             });
