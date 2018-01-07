@@ -228,7 +228,7 @@ namespace Netduino.Foundation.Devices
             {
                 if (retryCount > 3)
                 {
-                    throw new Exception("WriteBytes: Retry count exceeded.");
+                    throw new Exception("ReadBytes: Retry count exceeded.");
                 }
                 retryCount++;
             }
