@@ -21,10 +21,7 @@ namespace SpstSwitch_Sample
                 Debug.Print("Switch on: " + spstSwitch.IsOn.ToString());
             };
 
-            while (true)
-            {
-                Thread.Sleep(1000);
-            }
-         }
+            Thread.Sleep(Timeout.Infinite);
+        }
     }
 }
