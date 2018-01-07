@@ -237,6 +237,9 @@ namespace Netduino.Foundation.Sensors.Atmospheric
                 throw new ArgumentOutOfRangeException(nameof(updateInterval), "Update period should be 0 or >= than " + MINIMUM_POLLING_PERIOD);
             }
 
+            TemperatureChangeNotificationThreshold = temperatureChangeNotificationThreshold;
+            HumidityChangeNotificationThreshold = humidityChangeNotificationThreshold;
+            _updateInterval = updateInterval;
             _si7021 = new I2CBus(address, speed);
             //
             //  Get the device ID.
