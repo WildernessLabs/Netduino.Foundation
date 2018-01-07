@@ -230,9 +230,6 @@ namespace Netduino.Foundation.Sensors.Barometric
             //  plus 9 leading zeroes.
             //
             _coefficients.C12 = (double) c12 / 4194304;
-            //
-            //  Now make the first measurement.
-            //
             if (updateInterval > 0)
             {
                 StartUpdating();
