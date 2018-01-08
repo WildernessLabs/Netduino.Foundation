@@ -16,9 +16,9 @@ namespace Netduino.Foundation.LEDs
         /// </summary>
         public float Brightness
         {
-            get;
-            private set;
-        } = 0;
+            get { return _brightness; }
+        } protected float _brightness = 0;
+
         protected bool _isOn = false;
 
         public float ForwardVoltage { get; protected set; }
@@ -56,7 +56,7 @@ namespace Netduino.Foundation.LEDs
                 throw new ArgumentOutOfRangeException("value", "err: brightness must be between 0 and 1, inclusive.");
             }
 
-            this.Brightness = brightness;
+            this._brightness = brightness;
 
             // if 0, shut down the PWM (is this a good idea?)
             if (Brightness == 0)
