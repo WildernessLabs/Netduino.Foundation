@@ -4,9 +4,9 @@ title: Relay
 subtitle: Electrical switch (usually mechanical) that switches on an isolated circuit.
 ---
 
-# Info
-
 # Sample
+
+The following code illustrates explicitly turning a relay on or off, as well as toggling it's on state.
 
 ## Code
 
@@ -53,19 +53,22 @@ namespace Relay
 }
 ```
 
-
-## Circuit
-
 # API
 
-## Constructor
+## Constructors
 
-* `public Relay(H.Cpu.Pin pin, RelayType type = RelayType.NormallyOpen)`
+#### `public Relay(H.Cpu.Pin pin, RelayType type = RelayType.NormallyOpen)`
+
+Creates a new Relay class on the specified pin, of the specified type.
 
 ## Properties
 
-* `public bool IsOn { get; set; }`
+#### `public bool IsOn { get; set; }`
+
+Whether or not the relay is on. Setting this property will turn it on or off.
 
 ## Methods
 
-* `Toggle()`
+#### `Toggle()`
+
+Toggles the relay off or on.
