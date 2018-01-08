@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
 using Microsoft.SPOT;
-using Netduino.Foundation.Sensors.Atmospheric;;
+using Netduino.Foundation.Sensors.Atmospheric;
 
 namespace SHT31DInterruptSample
 {
