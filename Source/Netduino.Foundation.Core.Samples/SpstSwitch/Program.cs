@@ -11,7 +11,7 @@ namespace SpstSwitch_Sample
     {
         public static void Main()
         {
-            var spstSwitch = new SpstSwitch(N.Pins.GPIO_PIN_D0, SwitchCircuitTerminationType.High);
+            var spstSwitch = new SpstSwitch(N.Pins.GPIO_PIN_D0, CircuitTerminationType.High);
 
             Debug.Print("Initial switch state, isOn: " + spstSwitch.IsOn.ToString());
 

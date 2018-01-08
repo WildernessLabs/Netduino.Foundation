@@ -1,5 +1,6 @@
 using System;
 using Microsoft.SPOT;
+using H = Microsoft.SPOT.Hardware;
 
 namespace Netduino.Foundation.Sensors.Buttons
 {
@@ -15,26 +16,28 @@ namespace Netduino.Foundation.Sensors.Buttons
 		/// </summary>
 		public TimeSpan DebounceDuration { get; set; }
 
-		public Microsoft.SPOT.Hardware.InputPort DigitalInput { get; private set; }
+        public H.InterruptPort DigitalIn { get; private set; }
 
 		public event EventHandler Clicked = delegate { };
 
 		DateTime clickTime;
 
-		public PushButton(Microsoft.SPOT.Hardware.InputPort input) 
+		public PushButton(H.Cpu.Pin inputPin, CircuitTerminationType type) 
 		{
-            DigitalInput = input;
-			DebounceDuration = TimeSpan.FromTicks (500 * 10000);
+            // if we terminate in ground, we need to pull the port high to test for circuit completion, otherwise down.
+            var resistorMode = (type == CircuitTerminationType.CommonGround) ? H.Port.ResistorMode.PullUp : H.Port.ResistorMode.PullDown;
 
-			clickTime = DateTime.UtcNow;
+            // create the interrupt port from the pin and resistor type
+            this.DigitalIn = new H.InterruptPort(inputPin, true, resistorMode, H.Port.InterruptMode.InterruptEdgeLow);
 
-            DigitalInput.OnInterrupt += DigitalInput_OnInterrupt;
+            // wire up the interrupt handler
+            this.DigitalIn.OnInterrupt += DigitalIn_OnInterrupt;
+
 		}
 
-        //TODO: Wire this up
-        private void DigitalInput_OnInterrupt(uint data1, uint data2, DateTime time)
+        private void DigitalIn_OnInterrupt(uint port, uint state, DateTime time)
         {
-            throw new NotImplementedException();
+            Debug.Print("Pin=" + port + " State=" + state + " Time=" + time);
         }
 
         void HandleValueChanged (object sender, EventArgs e)

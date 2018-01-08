@@ -23,10 +23,10 @@ namespace Netduino.Foundation.Sensors.Switches
             //protected set;
         } public ISwitch[] _switches = null;
 
-        public DipSwitch(H.Cpu.Pin[] switchPins, SwitchCircuitTerminationType type)
+        public DipSwitch(H.Cpu.Pin[] switchPins, CircuitTerminationType type)
         {
             // if we terminate in ground, we need to pull the port high to test for circuit completion, otherwise down.
-            var resistorMode = (type == SwitchCircuitTerminationType.CommonGround) ? H.Port.ResistorMode.PullUp : H.Port.ResistorMode.PullDown;
+            var resistorMode = (type == CircuitTerminationType.CommonGround) ? H.Port.ResistorMode.PullUp : H.Port.ResistorMode.PullDown;
 
             //this.DigitalIns = new H.InterruptPort[switchPins.Length];            
             //this.IsOn = new bool[switchPins.Length];
