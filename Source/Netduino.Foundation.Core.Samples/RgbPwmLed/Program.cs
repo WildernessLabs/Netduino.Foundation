@@ -1,6 +1,4 @@
-using System;
 using Microsoft.SPOT;
-using H = Microsoft.SPOT.Hardware;
 using N = SecretLabs.NETMF.Hardware.Netduino;
 using System.Threading;
 
