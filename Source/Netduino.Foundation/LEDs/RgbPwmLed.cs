@@ -89,7 +89,9 @@ namespace Netduino.Foundation.LEDs
             this.BluePwm = new Microsoft.SPOT.Hardware.PWM(this.BluePin, 100, 0, false);
         }
 
-
+        /// <summary>
+        /// Sets the current color of the LED.
+        /// </summary>
         public void SetColor(Color color)
         {
             this._color = color;
@@ -108,6 +110,13 @@ namespace Netduino.Foundation.LEDs
         // HACK/TODO: this is the signature i want, but it's broken until 4.4. (https://github.com/NETMF/netmf-interpreter/issues/87)
         // using arraylist for now
         //public void StartRunningColors(Color[] colors, int[] durations, bool loop)
+        /// <summary>
+        /// Animates through the listed colors for the specified durations. To use the same duration for all colors, 
+        /// pass in an array with a length of 1 for `durations`.
+        /// </summary>
+        /// <param name="colors"></param>
+        /// <param name="durations"></param>
+        /// <param name="loop"></param>
         public void StartRunningColors(System.Collections.ArrayList colors, int[] durations, bool loop = true)
         {
             if (durations.Length != 1 && colors.Count != durations.Length)
@@ -131,6 +140,7 @@ namespace Netduino.Foundation.LEDs
             this._animationThread.Start();
         }
 
+        // consider removing
         public void StartAlternatingColors(Color colorOne, Color colorTwo, int colorOneDuration, int colorTwoDuration)
         {
             System.Collections.ArrayList foo = new System.Collections.ArrayList{ colorOne, colorTwo };
