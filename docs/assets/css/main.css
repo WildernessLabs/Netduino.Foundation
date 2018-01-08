@@ -590,6 +590,11 @@ ul.social-block-buttons {
   font-size: 1.5em;
 }
 
+.interior-content .main ul p, 
+.interior-content .main ol p {
+  font-size: 1em;
+}
+
 .interior-content pre {
   margin-bottom: 2em;
 }
