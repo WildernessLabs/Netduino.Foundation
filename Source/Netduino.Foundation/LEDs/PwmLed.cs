@@ -14,30 +14,11 @@ namespace Netduino.Foundation.LEDs
         /// The brightness of the LED, controlled by a PWM signal, and limited by the 
         /// calculated maximum voltage. Valid values are from 0 to 1, inclusive.
         /// </summary>
-        public float Brightness {
-            get { return _brightness; }
-            set {
-                if (value < 0 || value > 1) {
-                    throw new ArgumentOutOfRangeException("value", "err: brightness must be between 0 and 1, inclusive.");
-                }
-
-                this._brightness = value;
-
-                // if 0, shut down the PWM (is this a good idea?)
-                if (value == 0) {
-                    this._pwm.Stop();
-                    this._isOn = false;
-                    this._pwm.DutyCycle = 0;
-                } else {
-                    this._pwm.DutyCycle = this._maximumPwmDuty * Brightness;
-                    if (!_isOn) {
-                        this._pwm.Start();
-                        this._isOn = true;
-                    }
-                }
-            }
-        }
-        protected float _brightness = 0;
+        public float Brightness
+        {
+            get;
+            private set;
+        } = 0;
         protected bool _isOn = false;
 
         public float ForwardVoltage { get; protected set; }
@@ -68,6 +49,32 @@ namespace Netduino.Foundation.LEDs
             this._pwm = new H.PWM(pin, 100, this._maximumPwmDuty, false);
         }
 
+        public void SetBrightness(float brightness)
+        {
+            if (brightness < 0 || brightness > 1)
+            {
+                throw new ArgumentOutOfRangeException("value", "err: brightness must be between 0 and 1, inclusive.");
+            }
+
+            this.Brightness = brightness;
+
+            // if 0, shut down the PWM (is this a good idea?)
+            if (Brightness == 0)
+            {
+                this._pwm.Stop();
+                this._isOn = false;
+                this._pwm.DutyCycle = 0;
+            }
+            else
+            {
+                this._pwm.DutyCycle = this._maximumPwmDuty * Brightness;
+                if (!_isOn)
+                {
+                    this._pwm.Start();
+                    this._isOn = true;
+                }
+            }
+        }
 
         /// <summary>
         /// Start the Blink animation which sets the brightness of the LED alternating between a low and high brightness setting, using the durations provided.
@@ -92,9 +99,9 @@ namespace Netduino.Foundation.LEDs
             this._animationThread = new Thread(() => {
                 while (true)
                 {
-                    this.Brightness = highBrightness;
+                    this.SetBrightness(highBrightness);
                     Thread.Sleep(onDuration);
-                    this.Brightness = lowBrightness;
+                    this.SetBrightness(lowBrightness);
                     Thread.Sleep(offDuration);
                 }
             });
@@ -130,6 +137,7 @@ namespace Netduino.Foundation.LEDs
                 float changeUp = changeAmount;
                 float changeDown = -1 * changeAmount;
 
+                // TODO: Consider pre calculating these and making a RunBrightnessAnimation like with RgbPwmLed
                 while (true)
                 {
                     // are we brightening or dimming?
@@ -142,7 +150,7 @@ namespace Netduino.Foundation.LEDs
                     else if (brightness > 1) { brightness = 1; }
 
                     // set our actual brightness
-                    this.Brightness = brightness;
+                    this.SetBrightness(brightness);
 
                     // go to sleep, my friend.
                     Thread.Sleep(intervalTime);
@@ -159,7 +167,7 @@ namespace Netduino.Foundation.LEDs
             if(this._animationThread != null)
             {
                 this._animationThread.Abort();
-                this.SetColor(new Color(0));
+                SetBrightness(0);
             }
         }
 
