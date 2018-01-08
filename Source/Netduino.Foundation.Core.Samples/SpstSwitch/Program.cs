@@ -1,9 +1,8 @@
-using System;
-using System.Threading;
 using Microsoft.SPOT;
-using H = Microsoft.SPOT.Hardware;
-using N = SecretLabs.NETMF.Hardware.Netduino;
+using Netduino.Foundation;
 using Netduino.Foundation.Sensors.Switches;
+using System.Threading;
+using N = SecretLabs.NETMF.Hardware.Netduino;
 
 namespace SpstSwitch_Sample
 {
