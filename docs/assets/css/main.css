@@ -462,6 +462,12 @@ ul.social-block-buttons {
 .header-interior p {
   font-size: 1.65em;
   margin: 0;
+  line-height: 1.2;
+}
+
+.header-interior .container {
+  position: relative;
+  z-index: 1000;
 }
 
 .header-interior__background {
@@ -482,7 +488,8 @@ ul.social-block-buttons {
   border-right: 2px solid #555555;
 }
 
-.interior-content aside ul.top-level > li:first-child > a {
+.interior-content aside ul.top-level > li:first-child > a,
+.interior-content aside ul.top-level > li:first-child > span {
   background: #eeeeee;
   position: relative;
   display: block;
@@ -494,7 +501,8 @@ ul.social-block-buttons {
   margin-bottom: .2em;
 }
 
-.interior-content aside ul.top-level > li:first-child > a:before {
+.interior-content aside ul.top-level > li:first-child > a:before,
+.interior-content aside ul.top-level > li:first-child > span:before {
   content: '';
   height: auto;
   top: 0;
