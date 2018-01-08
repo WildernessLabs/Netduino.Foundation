@@ -11,6 +11,7 @@ subtitle: Getting up and running with Netduino.Foundation
 3. `Install-Package Netduino.Foundation` (Detailed Nuget instructions: [Mac](https://docs.microsoft.com/en-us/visualstudio/mac/nuget-walkthrough), [Windows](https://docs.microsoft.com/en-us/nuget/tools/package-manager-ui)).
 4. Plug the longer leg (cathode) of a green LED into pin `11` and the other leg into `GND`:
 ![](Pulse_Large.svg)
+
 5. Add the following code to the `program.cs` file in your application, then deploy and run:
  
 ```csharp
