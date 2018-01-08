@@ -36,6 +36,9 @@ namespace Netduino.Foundation.LEDs
 
         protected Thread _animationThread = null;
 
+        /// <summary>
+        /// The Color the LED has been set to.
+        /// </summary>
         public Color Color
         {
             get { return this._color; }
@@ -214,8 +217,8 @@ namespace Netduino.Foundation.LEDs
             if (this._animationThread != null)
             {
                 this._animationThread.Abort();
+                this.SetColor(new Color(0));
             }
         }
-
     }
 }

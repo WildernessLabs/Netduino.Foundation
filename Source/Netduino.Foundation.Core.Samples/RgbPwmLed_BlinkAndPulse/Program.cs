@@ -32,8 +32,6 @@ namespace Netduino.Foundation.Core.Samples
                 // run through various colors for 10 seconds
                 rgbPwmLed.StartRunningColors(new System.Collections.ArrayList { Color.White, Color.YellowGreen, Color.Tomato, Color.SteelBlue } , new int []{ 250, 150, 100, 200 });
                 Thread.Sleep(10000);
-
-
             }
 
         }

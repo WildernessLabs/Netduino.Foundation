@@ -159,6 +159,7 @@ namespace Netduino.Foundation.LEDs
             if(this._animationThread != null)
             {
                 this._animationThread.Abort();
+                this.SetColor(new Color(0));
             }
         }
 
