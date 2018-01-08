@@ -19,6 +19,7 @@ Netduino.Foundation is the root namespace for the Netduino.Foundation core libra
 
 ## Classes
 
+ * [Color](/API/Color)
  * DisplayBase
  * Units
 

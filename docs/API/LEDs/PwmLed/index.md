@@ -1,12 +1,18 @@
 ---
 layout: API
 title: PwmLed
-subtitle: Simple LED that's current-limited via Pulse-Width-Modulation (PWM).
+subtitle: Single color LED whose voltage is controlled via Pulse-Width-Modulation (PWM).
 ---
 
 # Info
 
-Represents an LED whose voltage is limited by the duty-cycle of a PWM signal.
+Represents an LED whose voltage (and brightness) is controlled by the duty-cycle of a PWM signal. Can be used both with LEDs that have been current limited with in-series resistors, or LEDs without resistors. 
+
+Controlling an LED via a PWM signal is more power efficient than using a current-limiting resistor, and it provides more control; allowing multiple grades of brightness. However, it uses a PWM channel.
+
+To use without resistors, pass in the forward voltage (voltage drop) of the LED to the `forwardVoltage` constructor parameter, and the class will limit its output to the maximum forward voltage rating of the LED.
+
+To use with an LED that has a resistor in series, pass `0.0` or `TypicalForwardVoltage.ResistorLimited` for the `forwardVoltage` parameter.
 
 # Example
 
@@ -52,17 +58,26 @@ namespace Netduino.Foundation.Core.Samples
 
 #### `public PwmLed(H.Cpu.PWMChannel pin, float forwardVoltage)`
 
-Creates a new PwmLed on the specified PWM pin and limited to the appropriate  voltage based on the passed `forwardVoltage`. Typical LED forward voltages can be found in the [`TypicalForwardVoltage`](../TypicalForwardVoltage/) class.
+Creates a new PwmLed on the specified PWM pin and limited to the appropriate voltage based on the passed `forwardVoltage`. Typical LED forward voltages can be found in the [`TypicalForwardVoltage`](../TypicalForwardVoltage/) class.
+
+#### `public float ForwardVoltage { get; protected set; }`
+
+Returns the voltage drop, as specified during the constructor.
 
 ## Properties
 
-#### `public float Brightness { get; set; }`
+#### `public float Brightness { get; } = 0;`
 
-The brightness of the LED, controlled by a PWM signal, and limited by the calculated maximum voltage. Valid values are from 0 to 1, inclusive.
+Returns the value set by the `SetBrightness` method.
+
+## Methods
+
+#### `public void SetBrightness(float brightness)`
+
+Set's the brightness of the LED, controlled by a PWM signal, and limited by the calculated maximum voltage. Valid values are from 0 to 1, inclusive.
 
 Therefore, specifying `0.5` would set the LED to 50% brightness.
 
-## Methods
 
 #### `public void StartBlink(int onDuration = 200, int offDuration = 200, float highBrightness = 1, float lowBrightness = 0)`
 
