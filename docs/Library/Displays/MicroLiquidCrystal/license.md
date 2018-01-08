@@ -1,4 +1,7 @@
-# Micro Liquid Crystal Display
+---
+layout: Library
+title: Micro Liquid Crystal Library License
+---
 
 This library has been ported from the original Codeplex repository and has been moved here prior to Codeplex closing down in 2017.
 

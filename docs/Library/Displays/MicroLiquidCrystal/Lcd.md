@@ -1,6 +1,9 @@
-# LCD Class
+---
+layout: Library
+title: LCD Class
+---
 
-## API
+# API
 
 ### Properties
 

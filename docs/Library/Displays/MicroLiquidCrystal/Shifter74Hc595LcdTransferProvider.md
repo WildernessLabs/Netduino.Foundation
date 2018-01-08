@@ -1,6 +1,9 @@
-# Shifter74Hc595LcdTransferProvider
+---
+layout: Library
+title: Shifter74Hc595LcdTransferProvider
+---
 
-## API
+# API
 
 This class is derived from `BaseShifterLcdTransferProvider` class.
 

@@ -1,4 +1,7 @@
-# BaseShifterLcdTransferProvider
+---
+layout: Library
+title: BaseShifterLcdTransferProvider
+---
 
 This is the base class for the shift register transfer provider.  It implements the `ILcdTransferProvider` interface.
 

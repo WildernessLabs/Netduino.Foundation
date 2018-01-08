@@ -1,4 +1,7 @@
-# GpioLcdTransferProvider
+---
+layout: Library
+title: GpioLcdTransferProvider
+---
 
 Use upto 11 GPIO pins on a microcontroller to control a LCD display.  This class implements the `ILcdTransferProvider` interface.
 
