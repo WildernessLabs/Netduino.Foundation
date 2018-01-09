@@ -1,7 +1,7 @@
 ---
 layout: API
 title: SoftwareSPIBus
-subtitle: Software implementation of the SPI communication protcol.
+subtitle: Software implementation of the SPI communication protocol.
 ---
 
 # Info
