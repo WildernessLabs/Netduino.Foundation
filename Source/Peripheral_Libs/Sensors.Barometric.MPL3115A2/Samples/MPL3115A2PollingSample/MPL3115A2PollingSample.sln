@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPL3115A2Sample", "MPL3115A2Sample.csproj", "{052C67A3-8C89-4D2D-8167-92E2D30974D0}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation", "..\..\..\..\Netduino.Foundation\Netduino.Foundation.csproj", "{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Barometric.MPL3115A2", "..\..\Driver\Sensors.Barometric.MPL3115A2.csproj", "{CEC7105C-617B-4C4F-8654-A65718AE7217}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPL3115A2PollingSample", "MPL3115A2PollingSample.csproj", "{052C67A3-8C89-4D2D-8167-92E2D30974D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,20 +19,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
-		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
-		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Release|x86.ActiveCfg = Release|Any CPU
 		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -53,6 +39,24 @@ Global
 		{CEC7105C-617B-4C4F-8654-A65718AE7217}.Release|Mixed Platforms.Build.0 = Release|x86
 		{CEC7105C-617B-4C4F-8654-A65718AE7217}.Release|x86.ActiveCfg = Release|x86
 		{CEC7105C-617B-4C4F-8654-A65718AE7217}.Release|x86.Build.0 = Release|x86
+		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
+		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Debug|x86.Build.0 = Debug|Any CPU
+		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Debug|x86.Deploy.0 = Debug|Any CPU
+		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
+		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Release|x86.ActiveCfg = Release|Any CPU
+		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Release|x86.Build.0 = Release|Any CPU
+		{052C67A3-8C89-4D2D-8167-92E2D30974D0}.Release|x86.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

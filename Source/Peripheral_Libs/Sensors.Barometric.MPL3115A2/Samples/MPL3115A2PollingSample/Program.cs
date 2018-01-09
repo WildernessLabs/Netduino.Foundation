@@ -9,7 +9,7 @@ namespace MPL3115A2Test
         public static void Main()
         {
             Debug.Print("MPL3115A2 Test");
-            var mpl3115a2 = new MPL3115A2();
+            var mpl3115a2 = new MPL3115A2(updateInterval: 0);
             while (true)
             {
                 mpl3115a2.Update();
