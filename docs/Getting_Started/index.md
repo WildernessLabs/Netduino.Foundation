@@ -42,4 +42,4 @@ That's it, and you're up and running using Netduino.Foundation!
 
 Next up, check out how to work with sensors; which comprise a huge portion of the Netduino.Foundation [peripheral library](/Library).
 
-## [Next - Working with Sensors](Working_With_Sensors)
+## [Next - Working with Sensors](Working_with_Sensors)
