@@ -1,8 +1,10 @@
 ---
 layout: GettingStarted
-title: Working with Sensors
-subtitle: Getting started with the sensor API.
+title: Getting Started
+subtitle: Working with the sensor API.
 ---
+
+# Working with Sensors
 
 Netduino.Foundation has a huge list of supported peripherals, all exposed via a modern and efficient API. The sensor API, for instance, exposes sensor readings via both a traditional low-level polling API, in which readings are manually triggered via an `Update()` method, and a high-level event/notification architecture, in which the polling is automatic, and readings are surfaced via events.
 
@@ -12,9 +14,7 @@ The eventing API allows sensors to raise events when a particular reading change
 
 Consider the following example, which listens for temperature changes from an HIH6130 combined temperature and humidity sensor:
 
-
 ```csharp
-
 using Microsoft.SPOT;
 using Netduino.Foundation.Sensors.Atmospheric;
 using System.Threading;

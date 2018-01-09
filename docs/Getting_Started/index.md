@@ -38,8 +38,8 @@ namespace Netduino.Foundation.Core.Samples
 }
 ```
 
+That's it, and you're up and running using Netduino.Foundation!
 
-
-Netduino.Foundation has a huge list of supported peripherals, all exposed via a modern and efficient API.
+Next up, check out how to work with sensors; which comprise a huge portion of the Netduino.Foundation [peripheral library](/Library).
 
 ## [Next - Working with Sensors](Working_With_Sensors)
