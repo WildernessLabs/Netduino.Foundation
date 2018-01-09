@@ -30,5 +30,5 @@ Returns the `ISwitch` at the specified index.
 
 #### `public DipSwitch(H.Cpu.Pin[] switchPins, CircuitTerminationType type)`
 
-Creates a new `DipSwitch` connected to the specified `switchPins`, with the [`CircuitTerminationType`](/API/CircuitTerminationType]) specified by the `type` parameters.
+Creates a new `DipSwitch` connected to the specified `switchPins`, with the [`CircuitTerminationType`](/API/CircuitTerminationType) specified by the `type` parameters.
 
