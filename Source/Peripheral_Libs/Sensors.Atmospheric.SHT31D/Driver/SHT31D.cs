@@ -11,7 +11,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
     /// <remarks>
     ///     Readings from the sensor are made in Single-shot mode.
     /// </remarks>
-    public class SHT31D
+    public class SHT31D : ITemperatureSensor, IHumiditySensor
     {
         #region Constants
 

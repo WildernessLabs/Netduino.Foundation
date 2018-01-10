@@ -7,7 +7,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
     /// <summary>
     ///     Provide access to the SI7021 temperature and humidity sensor.
     /// </summary>
-    public class SI7021
+    public class SI7021 : ITemperatureSensor, IHumiditySensor
     {
         #region Constants
 

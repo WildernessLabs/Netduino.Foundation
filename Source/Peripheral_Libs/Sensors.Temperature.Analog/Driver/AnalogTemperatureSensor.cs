@@ -27,7 +27,7 @@ namespace Netduino.Foundation.Sensors.Temperature.Analog
     ///     TMP36, LM50             750                     10
     ///     TMP37                   500                     20
     /// </remarks>
-    public class AnalogTemperatureSensor : IDisposable
+    public class AnalogTemperatureSensor : IDisposable, ITemperatureSensor
     {
         #region Constants
 

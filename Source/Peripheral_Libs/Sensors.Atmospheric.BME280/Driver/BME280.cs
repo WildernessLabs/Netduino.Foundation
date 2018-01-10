@@ -11,7 +11,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
     ///     This class implements the functionality necessary to read the temperature, pressure and humidity
     ///     from the Bosch BME280 sensor.
     /// </remarks>
-    public class BME280
+    public class BME280 : ITemperatureSensor, IHumiditySensor, IPressureSensor
     {
         #region Constants
 

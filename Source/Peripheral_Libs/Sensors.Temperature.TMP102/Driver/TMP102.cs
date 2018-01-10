@@ -8,7 +8,7 @@ namespace Netduino.Foundation.Sensors.Temperature
     /// <summary>
     ///     TMP102 Temperature sensor object.
     /// </summary>    
-    public class TMP102
+    public class TMP102 : ITemperatureSensor
     {
         #region Constants
 

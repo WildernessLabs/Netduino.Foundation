@@ -4,7 +4,7 @@ using Netduino.Foundation.Devices;
 
 namespace Netduino.Foundation.Sensors.Barometric
 {
-    public class MPL115A2
+    public class MPL115A2 : ITemperatureSensor, IPressureSensor
     {
         #region Constants
 

@@ -7,7 +7,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
     /// <summary>
     ///     Grove TH02 temperature and humidity sensor.
     /// </summary>
-    public class GroveTH02
+    public class GroveTH02 : ITemperatureSensor, IHumiditySensor
     {
         #region Constants
 

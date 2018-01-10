@@ -7,7 +7,7 @@ namespace Netduino.Foundation.Sensors.Barometric
     /// <summary>
     ///     Driver for the MPL3115A2 pressure and humidity sensor.
     /// </summary>
-    public class MPL3115A2
+    public class MPL3115A2 : ITemperatureSensor, IPressureSensor
     {
         #region Constants
 
