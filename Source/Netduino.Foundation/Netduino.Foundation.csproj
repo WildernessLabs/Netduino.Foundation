@@ -47,6 +47,7 @@
     <Compile Include="Sensors\Buttons\IButton.cs" />
     <Compile Include="Sensors\Buttons\PushButton.cs" />
     <Compile Include="Sensors\IHumiditySensor.cs" />
+    <Compile Include="Sensors\ILightSensor.cs" />
     <Compile Include="Sensors\IPressureSensor.cs" />
     <Compile Include="Sensors\ISensor.cs" />
     <Compile Include="Sensors\ITemperatureSensor.cs" />
