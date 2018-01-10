@@ -8,7 +8,7 @@ namespace Netduino.Foundation.Sensors.Light
     /// <summary>
     ///     Driver for the TSL2561 light-to-digital converter.
     /// </summary>
-    public class TSL2561 : IDisposable
+    public class TSL2561 : IDisposable, ILightSensor
     {
         #region Constants
 
@@ -180,22 +180,22 @@ namespace Netduino.Foundation.Sensors.Light
         }
 
         /// <summary>
-        ///     Lux reading from the TSL2561 sensor.
+        ///     LightLevel reading from the TSL2561 sensor.
         /// </summary>
-        public float Lux
+        public float LightLevel
         {
-            get { return _lux; }
+            get { return _lightLevel; }
             set
             {
-                _lux = value;
-                if ((_updateInterval > 0) && (Math.Abs(_lastNotifiedLux - value) >= LightLevelChangedNotificationThreshold))
+                _lightLevel = value;
+                if ((_updateInterval > 0) && (Math.Abs(_lastNotifiedLux - value) >= LightLevelChangeNotificationThreshold))
                 {
                     LightLevelChanged(this, new SensorFloatEventArgs(_lastNotifiedLux, value));
                     _lastNotifiedLux = value;
                 }
             }
         }
-        private float _lux;
+        private float _lightLevel;
         private float _lastNotifiedLux = 0.001F;
 
         /// <summary>
@@ -308,7 +308,7 @@ namespace Netduino.Foundation.Sensors.Light
         ///     Changes in light level greater than this value will generate an interrupt
         ///     in auto-update mode.
         /// </summary>
-        public float LightLevelChangedNotificationThreshold { get; set; } = 0.001F;
+        public float LightLevelChangeNotificationThreshold { get; set; } = 0.001F;
 
         /// <summary>
         ///     ICommunicationBus object used to communicate with the sensor.
@@ -372,7 +372,7 @@ namespace Netduino.Foundation.Sensors.Light
         /// <param name="updateInterval">Update interval for the sensor (in milliseconds).</param>
         /// <param name="lightLevelChangeNotificationThreshold">Changes in light level greater than this value will generate an interrupt in auto-update mode.</param>
         public TSL2561(byte address = (byte) Addresses.Default, ushort speed = 100, ushort updateInterval = MINIMUM_POLLING_PERIOD,
-            float lightLevelChangeNotificationThreshold = 0.001F)
+            float lightLevelChangeNotificationThreshold = 10.0F)
         {
             if ((address != (byte) Addresses.Address0) && (address != (byte) Addresses.Default) &&
                 (address != (byte) Addresses.Address1))
@@ -387,11 +387,15 @@ namespace Netduino.Foundation.Sensors.Light
             {
                 throw new ArgumentOutOfRangeException(nameof(lightLevelChangeNotificationThreshold), "Light level threshold change values should be >= 0");
             }
-            LightLevelChangedNotificationThreshold = lightLevelChangeNotificationThreshold;
+            LightLevelChangeNotificationThreshold = lightLevelChangeNotificationThreshold;
             _updateInterval = updateInterval;
 
             var device = new I2CBus(address, speed);
             _tsl2561 = device;
+            //
+            //  Wait for the sensor to prepare the first reading (402ms after power on).
+            //
+            Thread.Sleep(410);
             if (updateInterval > 0)
             {
                 StartUpdating();
@@ -422,16 +426,18 @@ namespace Netduino.Foundation.Sensors.Light
         }
 
         /// <summary>
-        ///     Update the Lux reading.
+        ///     Update the LightLevel reading.
         /// </summary>
         public void Update()
         {
-                var adcData = SensorReading;
+            var adcData = SensorReading;
+            if (adcData[0] != 0)
+            {
                 var data0 = adcData[0];
                 var data1 = adcData[1];
                 if ((data0 == 0xffff) | (data1 == 0xffff))
                 {
-                    Lux = 0.0F;
+                    LightLevel = 0.0F;
                 }
                 double d0 = data0;
                 double d1 = data1;
@@ -489,7 +495,8 @@ namespace Netduino.Foundation.Sensors.Light
                         }
                     }
                 }
-                Lux = (float) result;
+                LightLevel = (float)result;
+            }
         }
 
         /// <summary>
