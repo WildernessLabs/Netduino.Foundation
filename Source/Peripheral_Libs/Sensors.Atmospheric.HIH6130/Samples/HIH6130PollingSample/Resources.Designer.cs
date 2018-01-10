@@ -25,14 +25,5 @@ namespace HIH6130PollingSample
                 return Resources.manager;
             }
         }
-        internal static string GetString(Resources.StringResources id)
-        {
-            return ((string)(Microsoft.SPOT.ResourceUtility.GetObject(ResourceManager, id)));
-        }
-        [System.SerializableAttribute()]
-        internal enum StringResources : short
-        {
-            String1 = 1228,
-        }
     }
 }

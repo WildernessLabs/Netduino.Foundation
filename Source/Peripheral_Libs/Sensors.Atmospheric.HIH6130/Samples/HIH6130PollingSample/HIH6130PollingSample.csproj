@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>HIH6130PollingSample.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
@@ -52,6 +55,16 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Netduino.Foundation\Netduino.Foundation.csproj">
+      <Project>{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}</Project>
+      <Name>Netduino.Foundation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Driver\Sensors.Atmospheric.HIH6130.csproj">
+      <Project>{F6428AF2-EC4B-4FB7-AB15-71CCD0B67985}</Project>
+      <Name>Sensors.Atmospheric.HIH6130</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Condition="EXISTS('$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets')" Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <Import Condition="!EXISTS('$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets')" Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
