@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSL2651Sample", "TSL2651Sample.csproj", "{E7F67E6C-21EB-4398-9700-46339E77E4A0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSL2651InterruptSample", "TSL2651InterruptSample.csproj", "{E7F67E6C-21EB-4398-9700-46339E77E4A0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Light.TSL2561", "..\..\Driver\Sensors.Light.TSL2561.csproj", "{AC24642E-E6DA-47D7-B4F5-9F12F35BE78A}"
 EndProject
