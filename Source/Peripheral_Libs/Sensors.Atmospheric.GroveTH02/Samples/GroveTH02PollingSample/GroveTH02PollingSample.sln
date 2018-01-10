@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroveTH02PollingSample", "GroveTH02PollingSample.csproj", "{3F5A23A4-6AB7-4537-86E4-A597F235F7F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Atmospheric.GroveTH02", "..\..\Driver\Sensors.Atmospheric.GroveTH02.csproj", "{F54C544C-716D-477C-A7D0-6AAE6F04902D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation", "..\..\..\..\Netduino.Foundation\Netduino.Foundation.csproj", "{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3F5A23A4-6AB7-4537-86E4-A597F235F7F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F5A23A4-6AB7-4537-86E4-A597F235F7F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F5A23A4-6AB7-4537-86E4-A597F235F7F0}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{3F5A23A4-6AB7-4537-86E4-A597F235F7F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F5A23A4-6AB7-4537-86E4-A597F235F7F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F5A23A4-6AB7-4537-86E4-A597F235F7F0}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{F54C544C-716D-477C-A7D0-6AAE6F04902D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F54C544C-716D-477C-A7D0-6AAE6F04902D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F54C544C-716D-477C-A7D0-6AAE6F04902D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F54C544C-716D-477C-A7D0-6AAE6F04902D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
