@@ -2,7 +2,7 @@ using Microsoft.SPOT;
 using Netduino.Foundation.Sensors.Atmospheric;
 using System.Threading;
 
-namespace SHT31D_Sample
+namespace SHT31DPollingSample
 {
     public class Program
     {
