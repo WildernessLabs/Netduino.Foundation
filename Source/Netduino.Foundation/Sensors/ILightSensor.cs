@@ -15,7 +15,7 @@
         /// <summary>
         ///     Last value read from the Light sensor.
         /// </summary>
-        float LightLevel { get; }
+        float Luminosity { get; }
 
         /// <summary>
         ///     Threshold value for the changed notification event.

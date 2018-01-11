@@ -26,7 +26,7 @@ namespace TSL2651PollingSample
             {
                 var adcData = tsl2561.SensorReading;
                 Debug.Print("Data0: " + adcData[0] + ", Data1: " + adcData[1]);
-                Debug.Print("Light intensity: " + tsl2561.LightLevel);
+                Debug.Print("Light intensity: " + tsl2561.Luminosity.ToString("f2"));
                 Thread.Sleep(2000);
             }
         }

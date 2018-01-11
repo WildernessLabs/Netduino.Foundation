@@ -180,9 +180,9 @@ namespace Netduino.Foundation.Sensors.Light
         }
 
         /// <summary>
-        ///     LightLevel reading from the TSL2561 sensor.
+        ///     Luminosity reading from the TSL2561 sensor.
         /// </summary>
-        public float LightLevel
+        public float Luminosity
         {
             get { return _lightLevel; }
             set
@@ -426,7 +426,7 @@ namespace Netduino.Foundation.Sensors.Light
         }
 
         /// <summary>
-        ///     Update the LightLevel reading.
+        ///     Update the Luminosity reading.
         /// </summary>
         public void Update()
         {
@@ -437,7 +437,7 @@ namespace Netduino.Foundation.Sensors.Light
                 var data1 = adcData[1];
                 if ((data0 == 0xffff) | (data1 == 0xffff))
                 {
-                    LightLevel = 0.0F;
+                    Luminosity = 0.0F;
                 }
                 double d0 = data0;
                 double d1 = data1;
@@ -495,7 +495,7 @@ namespace Netduino.Foundation.Sensors.Light
                         }
                     }
                 }
-                LightLevel = (float)result;
+                Luminosity = (float)result;
             }
         }
 
