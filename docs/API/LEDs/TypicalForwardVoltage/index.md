@@ -29,3 +29,7 @@ Common yellow LEDs usually have around 3.5V forward voltage.
 #### public const float White = 2.15F
 
 Common white LEDs usually have around 2.15V forward voltage.
+
+#### public const float ResistorLimited = 0.0F
+
+Use this if your LED is already voltage limited via a resistor. This will tell Netduino.Foundation not to reduce the PWM duty cycle.
