@@ -98,13 +98,15 @@ namespace Netduino.Foundation.Sensors.Temperature.Analog
                 //
                 //  Check to see if the change merits raising an event.
                 //
-                if ((_updateInterval > 0) && (Math.Abs(_lastNotifiedTemperature - value) >= TemperatureChangeNotificationThreshold))
+                if ((_updateInterval > 0) &&
+                    (Math.Abs(_lastNotifiedTemperature - value) >= TemperatureChangeNotificationThreshold))
                 {
                     TemperatureChanged(this, new SensorFloatEventArgs(_lastNotifiedTemperature, value));
                     _lastNotifiedTemperature = value;
                 }
             }
         }
+
         private float _temperature;
         private float _lastNotifiedTemperature = 0.0F;
 
@@ -124,18 +126,6 @@ namespace Netduino.Foundation.Sensors.Temperature.Analog
         ///     TemperatureChangeNotificationThreshold value.
         /// </summary>
         public event SensorFloatEventHandler TemperatureChanged = delegate { };
-
-        /// <summary>
-        ///     Event raised when the humidity change is greater than the
-        ///     HumidityChangeNotificationThreshold value.
-        /// </summary>
-        public event SensorFloatEventHandler HumidityChanged = delegate { };
-
-        /// <summary>
-        ///     Event raised when the change in pressure is greater than the
-        ///     PresshureChangeNotificationThreshold value.
-        /// </summary>
-        public event SensorFloatEventHandler PressureChanged = delegate { };
 
         #endregion Events and delegates
 
@@ -160,16 +150,19 @@ namespace Netduino.Foundation.Sensors.Temperature.Analog
         /// <param name="humidityChangeNotificationThreshold">Changes in humidity greater than this value will trigger an event when updatePeriod > 0.</param>
         /// <param name="temperatureChangeNotificationThreshold">Changes in temperature greater than this value will trigger an event when updatePeriod > 0.</param>
         public AnalogTemperatureSensor(Cpu.AnalogChannel analogPin, SensorType sensor, int sampleReading = 25,
-            int millivoltsAtSampleReading = 250, int millivoltsPerDegreeCentigrade = 10, 
+            int millivoltsAtSampleReading = 250, int millivoltsPerDegreeCentigrade = 10,
             ushort updateInterval = MINIMUM_POLLING_PERIOD, float temperatureChangeNotificationThreshold = 0.001F)
         {
             if (temperatureChangeNotificationThreshold < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(temperatureChangeNotificationThreshold), "Temperature threshold should be >= 0");
+                throw new ArgumentOutOfRangeException(nameof(temperatureChangeNotificationThreshold),
+                    "Temperature threshold should be >= 0");
             }
+
             if ((updateInterval != 0) && (updateInterval < MINIMUM_POLLING_PERIOD))
             {
-                throw new ArgumentOutOfRangeException(nameof(updateInterval), "Update period should be 0 or >= than " + MINIMUM_POLLING_PERIOD);
+                throw new ArgumentOutOfRangeException(nameof(updateInterval),
+                    "Update period should be 0 or >= than " + MINIMUM_POLLING_PERIOD);
             }
 
             TemperatureChangeNotificationThreshold = temperatureChangeNotificationThreshold;
@@ -203,6 +196,7 @@ namespace Netduino.Foundation.Sensors.Temperature.Analog
                     break;
 #pragma warning restore 0162
             }
+
             if (updateInterval > 0)
             {
                 StartUpdating();
@@ -235,7 +229,8 @@ namespace Netduino.Foundation.Sensors.Temperature.Analog
         /// </summary>
         private void StartUpdating()
         {
-            Thread t = new Thread(() => {
+            Thread t = new Thread(() =>
+            {
                 while (true)
                 {
                     Update();
@@ -250,13 +245,12 @@ namespace Netduino.Foundation.Sensors.Temperature.Analog
         /// </summary>
         public void Update()
         {
-            var reading = (float)(AnalogPort.Read() * 3300);
+            var reading = (float) (AnalogPort.Read() * 3300);
             reading -= _yIntercept;
             reading /= _millivoltsPerDegreeCentigrade;
             Temperature = reading;
         }
 
-
-    #endregion Methods
-}
+        #endregion Methods
+    }
 }
