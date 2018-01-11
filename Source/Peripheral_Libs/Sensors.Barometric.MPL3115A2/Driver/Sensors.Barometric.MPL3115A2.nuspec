@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>WildernessLabs.Netduino.Foundation.Sensors.Barometric.MPL3115A2</id>
-    <title>Netduino.Netduino.Foundation.Sensors.Barometric.MPL3115A2</title>
+    <title>Netduino.Foundation.Sensors.Barometric.MPL3115A2</title>
     <version>$version$</version>
     <authors>Mark Stevens</authors>
     <owners>Wilderness Labs</owners>
