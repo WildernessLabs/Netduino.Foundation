@@ -27,7 +27,8 @@ These classes provide common base functionality for communication protocols and 
 | Interface                              | Description                                       |
 |----------------------------------------|---------------------------------------------------|
 | [ICommunicationBus](/API/Devices/Netduino/ICommunicationBus/) | Interface for communicating with attached peripherals. |
-| [IHumiditySensor](API/Sensors/IHumiditySensor/) | Interface describing humidity sensors. |
+| [IHumiditySensor](/API/Sensors/IHumiditySensor/) | Interface describing humidity sensors. |
+| [ILightSensor](/API/Sensors/ILightSensor/) | Interface describing light sensors. |
 | [IPressureSensor](/API/Sensors/IPressureSensor/) | Interface describing pressure (barometric) sensors. |
 | [ITemperatureSensor](/API/Sensors/ITemperatureSensor/) | Interface describing temperature sensors |
 
