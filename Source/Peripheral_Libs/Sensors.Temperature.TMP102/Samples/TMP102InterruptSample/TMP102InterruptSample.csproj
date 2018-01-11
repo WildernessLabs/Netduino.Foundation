@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <AssemblyName>TMP102Sample</AssemblyName>
+    <AssemblyName>TMP102InterruptSample</AssemblyName>
     <OutputType>Exe</OutputType>
-    <RootNamespace>TMP102Sample</RootNamespace>
+    <RootNamespace>TMP102InterruptSample</RootNamespace>
     <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{41E656E8-841F-410E-8186-96C107351B0B}</ProjectGuid>
+    <ProjectGuid>{7D7F9161-7FDF-4800-91FA-D85ACBA49173}</ProjectGuid>
     <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>
     <DeployDevice>Netduino</DeployDevice>
     <DeployTransport>USB</DeployTransport>
@@ -30,7 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>TMP102Sample.Program</StartupObject>
+    <StartupObject>TMP102InterruptSample.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
