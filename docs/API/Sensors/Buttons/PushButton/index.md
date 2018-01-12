@@ -41,15 +41,15 @@ Returns the interrupt port that the pushbutton is configured on.
 
 #### `public event EventHandler PressStarted`
 
-Raised when a press starts (the button is pushed down).
+Raised when a press starts (the button is pushed down; circuit is closed).
 
 #### `public event EventHandler PressEnded`
 
-Raised when a press ends (the button is released).
+Raised when a press ends (the button is released; circuit is opened).
 
 #### `public event EventHandler Clicked`
 
-Raised on a click (the button is pressed and released).
+Raised when the button circuit is re-opened after it has been closed (at the end of a "press".
 
 ## Constructors
 
