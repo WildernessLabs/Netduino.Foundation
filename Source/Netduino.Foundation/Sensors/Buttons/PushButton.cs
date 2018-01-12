@@ -9,6 +9,8 @@ namespace Netduino.Foundation.Sensors.Buttons
 	/// </summary>
 	public class PushButton : IButton
 	{
+        DateTime _lastClicked = DateTime.MinValue;
+
 		/// <summary>
 		/// This duration controls the debounce filter. It also has the effect
 		/// of rate limiting clicks. Decrease this time to allow users to click
@@ -18,43 +20,67 @@ namespace Netduino.Foundation.Sensors.Buttons
 
         public H.InterruptPort DigitalIn { get; private set; }
 
+        public event EventHandler PressStarted = delegate { };
+        public event EventHandler PressEnded = delegate { };
 		public event EventHandler Clicked = delegate { };
 
-		DateTime clickTime;
-
-		public PushButton(H.Cpu.Pin inputPin, CircuitTerminationType type) 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="inputPin"></param>
+        /// <param name="type"></param>
+        /// <param name="debounceDuration">in milliseconds</param>
+		public PushButton(H.Cpu.Pin inputPin, CircuitTerminationType type, int debounceDuration = 20) 
 		{
+            this.DebounceDuration = new TimeSpan(0, 0, 0, 0, debounceDuration);
+
             // if we terminate in ground, we need to pull the port high to test for circuit completion, otherwise down.
             var resistorMode = (type == CircuitTerminationType.CommonGround) ? H.Port.ResistorMode.PullUp : H.Port.ResistorMode.PullDown;
 
             // create the interrupt port from the pin and resistor type
-            this.DigitalIn = new H.InterruptPort(inputPin, true, resistorMode, H.Port.InterruptMode.InterruptEdgeLow);
+            this.DigitalIn = new H.InterruptPort(inputPin, true, resistorMode, H.Port.InterruptMode.InterruptEdgeBoth);
 
             // wire up the interrupt handler
             this.DigitalIn.OnInterrupt += DigitalIn_OnInterrupt;
-
 		}
 
         private void DigitalIn_OnInterrupt(uint port, uint state, DateTime time)
         {
-            Debug.Print("Pin=" + port + " State=" + state + " Time=" + time);
+            // check how much time has elapsed since the last click
+            var timeSinceLast = time - _lastClicked;
+            if (timeSinceLast <= DebounceDuration)
+            {
+                //
+                return;
+            }
+            this._lastClicked = time;
+
+
+            // 0 is press, 1 is release
+            switch (state) {
+                case 0:
+                    this.OnPressStarted();
+                    break;
+                case 1:
+                    this.OnPressEnded();
+                    this.OnClicked();
+                    break;
+            }
         }
-
-        void HandleValueChanged (object sender, EventArgs e)
-		{
-			var time = DateTime.UtcNow;
-
-			var sinceClick = (time - clickTime);
-
-			if (sinceClick >= DebounceDuration) {
-				clickTime = time;
-				OnClicked ();
-			}
-		}
 
 		protected virtual void OnClicked ()
 		{
 			this.Clicked (this, EventArgs.Empty);
 		}
+
+        protected virtual void OnPressStarted()
+        {
+            this.PressStarted(this, new EventArgs());
+        }
+
+        protected virtual void OnPressEnded()
+        {
+            this.PressEnded(this, new EventArgs());
+        }
 	}
 }
