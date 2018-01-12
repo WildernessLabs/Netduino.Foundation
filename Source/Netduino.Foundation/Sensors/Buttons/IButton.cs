@@ -8,7 +8,9 @@ namespace Netduino.Foundation.Sensors.Buttons
 {
 	public interface IButton
 	{
-		event EventHandler Clicked;
+        event EventHandler PressStarted;
+        event EventHandler PressEnded;
+        event EventHandler Clicked;
 
-	}
+    }
 }
