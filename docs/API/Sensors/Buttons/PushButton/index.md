@@ -8,6 +8,20 @@ subtitle: Simple push button sensor.
 
 The PushButton class represents a simple push button, such as a tactile momentary button. To get notified when it's clicked, subscribe to the `Clicked` event. If you need to know when the button is held down, subscribe to the `PressStarted` and `PressEnded` events.
 
+# Sourcing
+
+One of the most common push buttons are momentary tactile buttons and come in an array of sizes. Most commonly they have 4 leads, two of which are redundant and provide stability and mounting strength when soldered to a PCB, but some have only two leads.
+
+* [Tactile Buttons on Amazon](https://www.amazon.com/s/ref=nb_sb_noss_1?url=search-alias%3Delectronics&field-keywords=tactile+button)
+* [Tactile Buttons on Adafruit](https://www.adafruit.com/product/367)
+* [Colored Tactile Buttons on SparkFun](https://www.sparkfun.com/products/10302)
+
+# Sample Circuit
+
+The following circuit illustrates a push button wired in `CircuitTerminationType.CommonGround` configuration on digital pin `0`:
+
+![](PushButton_bb.svg)
+
 # API
 
 ## Properties
