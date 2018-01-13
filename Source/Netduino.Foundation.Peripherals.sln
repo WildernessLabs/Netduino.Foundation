@@ -255,6 +255,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMP102PollingSample", "Peri
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMP102InterruptSample", "Peripheral_Libs\Sensors.Temperature.TMP102\Samples\TMP102InterruptSample\TMP102InterruptSample.csproj", "{7D7F9161-7FDF-4800-91FA-D85ACBA49173}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HBridgeMotor", "Netduino.Foundation.Core.Samples\HBridgeMotor\HBridgeMotor.csproj", "{BAD35E19-5F15-4E74-9AB8-6063A8F4E3E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1523,6 +1525,24 @@ Global
 		{7D7F9161-7FDF-4800-91FA-D85ACBA49173}.Release|x86.ActiveCfg = Release|Any CPU
 		{7D7F9161-7FDF-4800-91FA-D85ACBA49173}.Release|x86.Build.0 = Release|Any CPU
 		{7D7F9161-7FDF-4800-91FA-D85ACBA49173}.Release|x86.Deploy.0 = Release|Any CPU
+		{BAD35E19-5F15-4E74-9AB8-6063A8F4E3E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAD35E19-5F15-4E74-9AB8-6063A8F4E3E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAD35E19-5F15-4E74-9AB8-6063A8F4E3E7}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{BAD35E19-5F15-4E74-9AB8-6063A8F4E3E7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{BAD35E19-5F15-4E74-9AB8-6063A8F4E3E7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{BAD35E19-5F15-4E74-9AB8-6063A8F4E3E7}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
+		{BAD35E19-5F15-4E74-9AB8-6063A8F4E3E7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BAD35E19-5F15-4E74-9AB8-6063A8F4E3E7}.Debug|x86.Build.0 = Debug|Any CPU
+		{BAD35E19-5F15-4E74-9AB8-6063A8F4E3E7}.Debug|x86.Deploy.0 = Debug|Any CPU
+		{BAD35E19-5F15-4E74-9AB8-6063A8F4E3E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAD35E19-5F15-4E74-9AB8-6063A8F4E3E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAD35E19-5F15-4E74-9AB8-6063A8F4E3E7}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{BAD35E19-5F15-4E74-9AB8-6063A8F4E3E7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{BAD35E19-5F15-4E74-9AB8-6063A8F4E3E7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{BAD35E19-5F15-4E74-9AB8-6063A8F4E3E7}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
+		{BAD35E19-5F15-4E74-9AB8-6063A8F4E3E7}.Release|x86.ActiveCfg = Release|Any CPU
+		{BAD35E19-5F15-4E74-9AB8-6063A8F4E3E7}.Release|x86.Build.0 = Release|Any CPU
+		{BAD35E19-5F15-4E74-9AB8-6063A8F4E3E7}.Release|x86.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1612,5 +1632,6 @@ Global
 		{BF3073B4-EBB6-489B-897C-113FC416B8F3} = {8613421C-B64B-409C-905B-A0AAD03EAEB8}
 		{41E656E8-841F-410E-8186-96C107351B0B} = {C9267962-0CE4-4904-A4AC-08F4736C8E8D}
 		{7D7F9161-7FDF-4800-91FA-D85ACBA49173} = {C9267962-0CE4-4904-A4AC-08F4736C8E8D}
+		{BAD35E19-5F15-4E74-9AB8-6063A8F4E3E7} = {B1CB9A4C-0FA0-4D20-AC92-18B3D23EBD45}
 	EndGlobalSection
 EndGlobal
