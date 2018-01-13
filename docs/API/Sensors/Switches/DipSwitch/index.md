@@ -9,7 +9,8 @@ subtitle: Represents an array of SPST switches.
 Represents a DIP-switch wired in a bus configuration, in which all switches are terminated to the same ground/common or high pin.
 
  * **Note: This component is untested.**
- * **TODO: Need image**
+
+![](DIP_Switches.jpg)
 
 # API
 

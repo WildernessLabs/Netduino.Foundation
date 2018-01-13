@@ -16,6 +16,8 @@ One of the most common push buttons are momentary tactile buttons and come in an
 * [Tactile Buttons on Adafruit](https://www.adafruit.com/product/367)
 * [Colored Tactile Buttons on SparkFun](https://www.sparkfun.com/products/10302)
 
+![](Tactile_Switches.jpg)
+
 # Sample Circuit
 
 The following circuit illustrates a push button wired in `CircuitTerminationType.CommonGround` configuration on digital pin `0`:
