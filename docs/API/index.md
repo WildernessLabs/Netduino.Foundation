@@ -27,6 +27,7 @@ These classes provide common base functionality for communication protocols and 
 | Interface                              | Description                                       |
 |----------------------------------------|---------------------------------------------------|
 | [ICommunicationBus](/API/Devices/Netduino/ICommunicationBus/) | Interface for communicating with attached peripherals. |
+| [IDCMotor](/API/Motors/IDCMotor/) | Interface for DC motors. |
 | [IHumiditySensor](/API/Sensors/IHumiditySensor/) | Interface describing humidity sensors. |
 | [ILightSensor](/API/Sensors/ILightSensor/) | Interface describing light sensors. |
 | [IPressureSensor](/API/Sensors/IPressureSensor/) | Interface describing pressure (barometric) sensors. |
@@ -42,6 +43,12 @@ See full peripheral list on the [Library](/Library) page.
 |---------------------------|-------------------------------------|
 | [PwmLed](/API/LEDs/PwmLed)            | Pulse-Width-Modulation powered LED. |
 | [RgbPwmLed](/API/LEDs/RgbPwmLed)      | Pulse-Width-Modulation powered RGB LED. |
+
+## Motors
+
+| Peripheral                | Description                         |
+|---------------------------|-------------------------------------|
+| [HBridgeMotor](/API/Motors/HBridgeMotor) | Generic H-Bridge motor controller IC driver. |
 
 ## Relays
 
