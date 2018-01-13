@@ -8,7 +8,7 @@ namespace Netduino.Foundation.Motors
         /// <summary>
         /// The speed of the motor from -1 to 1.
         /// </summary>
-        float Speed { get; }
+        float Speed { get; set; }
 
         /// <summary>
         /// When true, the wheels spin "freely"
