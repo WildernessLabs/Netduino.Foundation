@@ -10,7 +10,7 @@ An [h-bridge](https://www.wikiwand.com/en/H_bridge) motor controller enables a c
 
 ## Sourcing
 
-This generic driver works with standard h-bridges ICs such as the Texas Instruments [L2N93E](https://octopart.com/search?q=L293NE) or [SN754410](https://octopart.com/search?q=SN754410) chips. However, it should also work with any [standard h-bridge controller](https://www.amazon.com/s/ref=nb_sb_noss_1?url=search-alias%3Daps&field-keywords=h+bridge).
+This generic driver works with standard h-bridges ICs such as the Texas Instruments [L2N93E](https://octopart.com/search?q=L293NE) or [SN754410](https://octopart.com/search?q=SN754410) chips.
 
 # Example
 
