@@ -16,7 +16,7 @@
         public double Y { get; set; }
 
         /// <summary>
-        ///     Z componet of the vector.
+        ///     Z component of the vector.
         /// </summary>
         public double Z { get; set; }
 
