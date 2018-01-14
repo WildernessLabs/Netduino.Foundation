@@ -2,6 +2,7 @@
 using Netduino.Foundation.Devices;
 using Netduino.Foundation.Helpers;
 using System.Threading;
+using Netduino.Foundation.Spatial;
 
 namespace Netduino.Foundation.Sensors.Motion
 {

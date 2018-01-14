@@ -39,9 +39,6 @@
     </Compile>
     <Compile Include="BNO055.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="EulerAngles.cs" />
-    <Compile Include="Quaternion.cs" />
-    <Compile Include="Vector.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Netduino.Foundation\Netduino.Foundation.csproj">

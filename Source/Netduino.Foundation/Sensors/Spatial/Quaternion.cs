@@ -1,9 +1,7 @@
-﻿using Microsoft.SPOT.Hardware;
-
-namespace Netduino.Foundation.Sensors.Motion
+﻿namespace Netduino.Foundation.Spatial
 {
     /// <summary>
-    ///     Quaternion cordinates object.
+    ///     Quaternion coordinates object.
     /// </summary>
     public class Quaternion
     {

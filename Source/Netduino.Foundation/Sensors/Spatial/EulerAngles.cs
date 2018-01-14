@@ -1,4 +1,4 @@
-﻿namespace Netduino.Foundation.Sensors.Motion
+﻿namespace Netduino.Foundation.Spatial
 {
     /// <summary>
     ///     Euler angles to define the orientation.

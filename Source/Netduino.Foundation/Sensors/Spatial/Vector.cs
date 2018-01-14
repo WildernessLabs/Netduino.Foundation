@@ -1,4 +1,4 @@
-﻿namespace Netduino.Foundation.Sensors.Motion
+﻿namespace Netduino.Foundation.Spatial
 {
     /// <summary>
     ///     Vector in three dimensional space.
@@ -16,7 +16,7 @@
         public double Y { get; set; }
 
         /// <summary>
-        ///     Z componet of the vector.
+        ///     Z component of the vector.
         /// </summary>
         public double Z { get; set; }
 
