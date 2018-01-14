@@ -37,15 +37,19 @@ namespace Netduino.Foundation.Sensors.Switches
                 //this.DigitalIns[i] = new H.InterruptPort(switchPins[i], true, resistorMode, Microsoft.SPOT.Hardware.Port.InterruptMode.InterruptEdgeBoth);
                 this._switches[i] = new SpstSwitch(switchPins[i], type);
 
+                // capture the variable. oh, C#...
+                int iCopy = i;
+
                 this._switches[i].Changed += (s,e) =>
                 {
-                    this.HandleSwitchChange(i);
+                    this.HandleSwitchChange(iCopy);
                 };
             }
         }
 
         protected void HandleSwitchChange(int switchNumber)
         {
+            Debug.Print("HandleSwitchChange: " + switchNumber.ToString() + ", total switches: " + (_switches.Length).ToString());
             this.Changed(this, new ArrayEventArgs(switchNumber, this._switches[switchNumber]));
         }
     }
