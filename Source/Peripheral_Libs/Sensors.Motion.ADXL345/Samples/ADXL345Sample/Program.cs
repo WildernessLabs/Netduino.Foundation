@@ -16,7 +16,7 @@ namespace ADXL345Sample
             adxl345.SetPowerState(false, false, true, false, ADXL345.Frequency.EightHz);
             while (true)
             {
-                adxl345.Read();
+                adxl345.Update();
                 Debug.Print("X: " + adxl345.X + ", Y: " + adxl345.Y + ", Z: " + adxl345.Z);
                 Thread.Sleep(500);
             }

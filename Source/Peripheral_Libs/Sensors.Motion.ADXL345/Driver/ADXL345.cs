@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Threading;
 using Netduino.Foundation.Devices;
 using Netduino.Foundation.Helpers;
+using Netduino.Foundation.Spatial;
 
 namespace Netduino.Foundation.Sensors.Motion
 {
@@ -10,12 +12,42 @@ namespace Netduino.Foundation.Sensors.Motion
     /// </summary>
     public class ADXL345
     {
+        #region Constants
+
+        /// <summary>
+        ///     Minimum value that can be used for the update interval when the
+        ///     sensor is being configured to generate interrupts.
+        /// </summary>
+        public const ushort MINIMUM_UPDATE_PERIOD = 100;
+        
+        #endregion Constants
+        
         #region Member variables / fields
 
         /// <summary>
         ///     Communication bus used to communicate with the sensor.
         /// </summary>
         private readonly ICommunicationBus _adxl345;
+
+        /// <summary>
+        ///     How often should this sensor be read?
+        /// </summary>
+        private readonly ushort _updateInterval;
+
+        /// <summary>
+        ///     Last X acceleration reading from the sensor.
+        /// </summary>
+        private double _lastX = 0;
+
+        /// <summary>
+        ///     Last Y reading from the sensor.
+        /// </summary>
+        private double _lastY = 0;
+        
+        /// <summary>
+        ///     Last Z reading from the sensor.
+        /// </summary>
+        private double _lastZ = 0;
 
         #endregion Member variables / fields
 
@@ -176,7 +208,24 @@ namespace Netduino.Foundation.Sensors.Motion
             set { _adxl345.WriteRegister(Registers.OffsetZ, (byte) value); }
         }
 
+        /// <summary>
+        ///     Any changes in the acceleration that are greater than the acceleration
+        ///     threshold will cause an event to be raised when the instance is
+        ///     set to update automatically.
+        /// </summary>
+        public double AccelerationChangeNotificationThreshold { get; set; } = 0.1F;
+
         #endregion Properties
+        
+        #region Events and delegates
+
+        /// <summary>
+        ///     Event to be raised when the acceleration is greater than
+        ///     +/- AccelerationChangeNotificationThreshold.
+        /// </summary>
+        public event SensorVectorEventHandler AccelerationChanged = delegate { };
+        
+        #endregion Events and delegates
 
         #region Constructors
 
@@ -192,28 +241,63 @@ namespace Netduino.Foundation.Sensors.Motion
         /// </summary>
         /// <param name="address">Address of the I2C sensor</param>
         /// <param name="speed">Speed of the I2C bus in KHz</param>
-        public ADXL345(byte address = 0x53, ushort speed = 100)
+        /// <param name="updateInterval">How frequently this sensor should be updated.</param>
+        /// <param name="accelerationChangeNotificationThreshold">Notification threshold, changes greater than +/- this value will generate and interrupt.</param>
+        public ADXL345(byte address = 0x53, ushort speed = 100, ushort updateInterval = 100, 
+                       double accelerationChangeNotificationThreshold = 0.1F)
         {
             if ((address != 0x1d) && (address != 0x53))
             {
-                throw new ArgumentOutOfRangeException("address", "ADXL345 address can only be 0x1d or 0x53.");
+                throw new ArgumentOutOfRangeException(nameof(address), "ADXL345 address can only be 0x1d or 0x53.");
             }
             if ((speed < 10) || (speed > 400))
             {
-                throw new ArgumentOutOfRangeException(
-                    "speed", "ADXL345 speed should be between 10 kHz and 400 kHz inclusive.");
+                throw new ArgumentOutOfRangeException(nameof(speed), 
+                    "ADXL345 speed should be between 10 kHz and 400 kHz inclusive.");
             }
+            if ((updateInterval != 0) && (updateInterval < MINIMUM_UPDATE_PERIOD))
+            {
+                throw new ArgumentOutOfRangeException(nameof(updateInterval),
+                    "Update interval should be 0 or greater than " + MINIMUM_UPDATE_PERIOD);    
+            }
+            
+            _updateInterval = updateInterval;
+            AccelerationChangeNotificationThreshold = accelerationChangeNotificationThreshold;
+            
             var device = new I2CBus(address, speed);
             _adxl345 = device;
             if (DeviceID != 0xe5)
             {
                 throw new Exception("Invalid device ID.");
             }
+            if (updateInterval > 0)
+            {
+                StartUpdating();
+            }
+            else
+            {
+                Update();
+            }
         }
 
         #endregion Constructors
 
         #region Methods
+
+        /// <summary>
+        ///     Start the update process.
+        /// </summary>
+        private void StartUpdating()
+        {
+            Thread t = new Thread(() => {
+                while (true)
+                {
+                    Update();
+                    Thread.Sleep(_updateInterval);
+                }
+            });
+            t.Start();
+        }
 
         /// <summary>
         ///     Set the PowerControl register (see pages 25 and 26 of the data sheet)
@@ -310,18 +394,30 @@ namespace Netduino.Foundation.Sensors.Motion
         }
 
         /// <summary>
-        ///     Read the six sensor bytes and set the values for the X, y and Z acceleration.
+        ///     Read the six sensor bytes and set the values for the X, Y and Z acceleration.
         /// </summary>
         /// <remarks>
         ///     All six acceleration registers should be read at the same time to ensure consistency
         ///     of the measurements.
         /// </remarks>
-        public void Read()
+        public void Update()
         {
             var data = _adxl345.ReadRegisters(Registers.X0, 6);
             X = (short) (data[0] + (data[1] << 8));
             Y = (short) (data[2] + (data[3] << 8));
             Z = (short) (data[4] + (data[5] << 8));
+            if ((_updateInterval != 0) && 
+                ((Math.Abs(X - _lastX) > AccelerationChangeNotificationThreshold) ||
+                 (Math.Abs(Y - _lastY) > AccelerationChangeNotificationThreshold) ||
+                 (Math.Abs(Z - _lastZ) > AccelerationChangeNotificationThreshold)))
+            {
+                Vector lastNotifiedReading = new Vector(_lastX, _lastY, _lastZ);
+                Vector currentReading = new Vector(X, Y, Z);
+                _lastX = X;
+                _lastY = Y;
+                _lastZ = Z;
+                AccelerationChanged(this, new SensorVectorEventArgs(lastNotifiedReading, currentReading));
+            }
         }
 
         /// <summary>

@@ -57,6 +57,7 @@
     <Compile Include="Sensors\Motion\IAccelerometer.cs" />
     <Compile Include="Sensors\Proximity\IRangeFinder.cs" />
     <Compile Include="Sensors\SensorFloatEventArgs.cs" />
+    <Compile Include="Sensors\SensorVectorEventArgs.cs" />
     <Compile Include="Sensors\Spatial\EulerAngles.cs" />
     <Compile Include="Sensors\Spatial\Quaternion.cs" />
     <Compile Include="Sensors\Spatial\Vector.cs" />
