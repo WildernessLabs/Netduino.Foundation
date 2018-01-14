@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>WildernessLabs.Netduino.Foundation.Shields.SparkfunWeatherShield</id>
+    <id>WLabs.Netduino.SparkfunWeatherShield</id>
     <title>Netduino.Foundation.Shields.SparkfunWeatherShield</title>
     <version>$version$</version>
     <authors>Frank Krueger</authors>
@@ -12,7 +12,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Adafruit Motor Shield driver for Netduino.Foundation</description>
 <!--    <releaseNotes>First release on Nuget.</releaseNotes> -->
-    <copyright>Copyright 2017 Wilderness Labs</copyright>
+    <copyright>Copyright 2018 Wilderness Labs</copyright>
     <tags>NETMF Netduino</tags>
     <dependencies>
         <dependency id="WildernessLabs.Netduino.Foundation" version="0.5" />

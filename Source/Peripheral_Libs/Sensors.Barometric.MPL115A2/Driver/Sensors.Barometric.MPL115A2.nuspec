@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>WildernessLabs.Netduino.Foundation.Sensors.Barometric.MPL115A2</id>
+    <id>WLabs.Netduino.MPL115A2</id>
     <title>Netduino.Netduino.Foundation.Sensors.Barometric.MPL115A2</title>
     <version>$version$</version>
     <authors>Mark Stevens</authors>
@@ -12,7 +12,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>MPL115A2 Accurate Barometric Pressure Sensor</description>
 <!--    <releaseNotes>First release on Nuget.</releaseNotes> -->
-    <copyright>Copyright 2017 Wilderness Labs</copyright>
+    <copyright>Copyright 2018 Wilderness Labs</copyright>
     <tags>NETMF Netduino</tags>
     <dependencies>
         <dependency id="WildernessLabs.Netduino.Foundation" version="0.5" />

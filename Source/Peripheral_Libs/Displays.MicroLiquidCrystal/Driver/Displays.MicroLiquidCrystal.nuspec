@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>WildernessLabs.Netduino.Foundation.Displays.MicroLiquidCrystal</id>
+    <id>WLabs.Netduino.MicroLiquidCrystal</id>
     <title>Netduino.Foundation.Displays.MicroLiquidCrystal</title>
     <version>$version$</version>
     <authors>Mark Stevens</authors>
@@ -12,7 +12,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>MicroLiquidCrystal LCD display driver for Netduino.Foundation</description>
 <!--    <releaseNotes>First release on Nuget.</releaseNotes> -->
-    <copyright>Copyright 2017 Wilderness Labs</copyright>
+    <copyright>Copyright 2018 Wilderness Labs</copyright>
     <tags>NETMF Netduino</tags>
     <dependencies>
         <dependency id="WildernessLabs.Netduino.Foundation" version="0.5" />

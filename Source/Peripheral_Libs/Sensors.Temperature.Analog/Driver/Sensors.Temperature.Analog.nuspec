@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>WildernessLabs.Netduino.Foundation.Sensors.Temperature.Analog</id>
+    <id>WLabs.Netduino.Analog</id>
     <title>Netduino.Netduino.Foundation.Sensors.Temperature.Analog</title>
     <version>$version$</version>
     <authors>Mark Stevens</authors>
@@ -12,7 +12,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Analog Temperature Sensor (TMP35 TMP36 TMP37 LM35)</description>
 <!--    <releaseNotes>First release on Nuget.</releaseNotes> -->
-    <copyright>Copyright 2017 Wilderness Labs</copyright>
+    <copyright>Copyright 2018 Wilderness Labs</copyright>
     <tags>NETMF Netduino</tags>
     <dependencies>
         <dependency id="WildernessLabs.Netduino.Foundation" version="0.5" />

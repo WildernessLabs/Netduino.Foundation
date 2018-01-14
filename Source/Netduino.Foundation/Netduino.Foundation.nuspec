@@ -12,7 +12,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Netduino.Foundation greatly simplifies the task of building complex .NET Microframework (MF) powered connected things with Netduino.</description>
 <!--    <releaseNotes>First release on Nuget.</releaseNotes> -->
-    <copyright>Copyright 2017 Wilderness Labs</copyright>
+    <copyright>Copyright 2018 Wilderness Labs</copyright>
     <tags>NETMF Netduino WildernessLabs</tags>
     <!-- NET MF assemblies needed for core to build -->
     <frameworkAssemblies>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>WildernessLabs.Netduino.Foundation.RTCs.DS323x</id>
+    <id>WLabs.Netduino.DS323x</id>
     <title>Netduino.Netduino.Foundation.RTCs.DS323x</title>
     <version>$version$</version>
     <authors>Mark Stevens</authors>
@@ -12,7 +12,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>DS323x Real Time Clock Driver for the Netduino.</description>
 <!--    <releaseNotes>First release on Nuget.</releaseNotes> -->
-    <copyright>Copyright 2017 Wilderness Labs</copyright>
+    <copyright>Copyright 2018 Wilderness Labs</copyright>
     <tags>NETMF Netduino</tags>
     <dependencies>
         <dependency id="WildernessLabs.Netduino.Foundation" version="0.5" />
