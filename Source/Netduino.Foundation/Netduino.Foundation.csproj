@@ -51,7 +51,8 @@
     <Compile Include="Sensors\ILightSensor.cs" />
     <Compile Include="Sensors\IPressureSensor.cs" />
     <Compile Include="Sensors\ISensor.cs" />
-    <Compile Include="Sensors\ITemperatureSensor.cs" />
+    <Compile Include="Sensors\Temperature\AnalogTemperatureSensor.cs" />
+    <Compile Include="Sensors\Temperature\ITemperatureSensor.cs" />
     <Compile Include="Sensors\Light\GenericAmbientLightSensor.cs" />
     <Compile Include="Sensors\Light\IAmbientLightSensor.cs" />
     <Compile Include="Sensors\Motion\IAccelerometer.cs" />
@@ -90,9 +91,7 @@
     <Reference Include="Microsoft.SPOT.IO" />
     <Reference Include="System.IO" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Sensors\Temperature\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup />
   <ItemGroup />
   <ItemGroup>

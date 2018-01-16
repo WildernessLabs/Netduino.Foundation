@@ -48,13 +48,9 @@
     <Reference Include="GoBus" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Netduino.Foundation\Netduino.Foundation.csproj">
+    <ProjectReference Include="..\..\..\Netduino.Foundation\Netduino.Foundation.csproj">
       <Project>{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}</Project>
       <Name>Netduino.Foundation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Driver\Sensors.Temperature.Analog.csproj">
-      <Project>{79372BE0-C1EC-4AC7-8481-6AB20013FC35}</Project>
-      <Name>Sensors.Temperature.Analog</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\$(TargetFrameworkVersion)\CSharp.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\$(TargetFrameworkVersion)\CSharp.targets')" />

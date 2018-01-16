@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using Microsoft.SPOT;
-using Netduino.Foundation.Sensors.Temperature.Analog;
+using Netduino.Foundation.Sensors.Temperature;
 using SecretLabs.NETMF.Hardware.NetduinoPlus;
 
 namespace AnalogTemperatureInterruptSample
@@ -17,8 +17,8 @@ namespace AnalogTemperatureInterruptSample
             //  Create a new TMP35 object to check the temperature every 1s and
             //  to report any changes over 0.1C.
             //
-            var tmp35 = new AnalogTemperatureSensor(AnalogChannels.ANALOG_PIN_A0,
-                AnalogTemperatureSensor.SensorType.TMP35, updateInterval: 1000, 
+            var tmp35 = new AnalogTemperature(AnalogChannels.ANALOG_PIN_A0,
+                AnalogTemperature.SensorType.TMP35, updateInterval: 1000, 
                 temperatureChangeNotificationThreshold: 0.1F);
             //
             //  Connect an interrupt handler.
