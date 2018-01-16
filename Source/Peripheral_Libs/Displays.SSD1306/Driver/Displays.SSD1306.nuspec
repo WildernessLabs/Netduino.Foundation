@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>WLabs.Netduino.SSD1306</id>
-    <title>Netduino.Foundation.Displays.SSD1306</title>
+    <id>Netduino.Foundation.SSD1306</id>
+    <title>WildernessLabs.Netduino.Foundation.Displays.SSD1306</title>
     <version>$version$</version>
     <authors>Mark Stevens</authors>
     <owners>Wilderness Labs</owners>
@@ -15,7 +15,7 @@
     <copyright>Copyright 2018 Wilderness Labs</copyright>
     <tags>NETMF Netduino</tags>
     <dependencies>
-        <dependency id="WildernessLabs.Netduino.Foundation" version="0.5" />
+        <dependency id="Netduino.Foundation" version="0.7" />
     </dependencies>
   </metadata>
   <files>
