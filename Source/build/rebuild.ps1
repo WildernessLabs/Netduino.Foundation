@@ -39,7 +39,6 @@ nuget pack Peripheral_Libs/Sensors.Motion.BNO055/Driver/Sensors.Motion.BNO055.cs
 nuget pack Peripheral_Libs/Sensors.Motion.MAG3110/Driver/Sensors.Motion.MAG3110.csproj -NoDefaultExcludes -Prop Configuration=Release
 # nuget pack Peripheral_Libs/Sensors.Motion.Memsic2125/Driver/Sensors.Motion.Memsic2125.csproj -NoDefaultExcludes -Prop Configuration=Release
 # nuget pack Peripheral_Libs/Sensors.Motion.MPU6050/Driver/Sensors.Motion.MPU6050.csproj -NoDefaultExcludes -Prop Configuration=Release
-nuget pack Peripheral_Libs/Sensors.Temperature.Analog/Driver/Sensors.Temperature.Analog.csproj -NoDefaultExcludes -Prop Configuration=Release
 # nuget pack Peripheral_Libs/Sensors.Temperature.DS18B20/Driver/Sensors.Temperature.DS18B20.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Peripheral_Libs/Sensors.Temperature.TMP102/Driver/Sensors.Temperature.TMP102.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Peripheral_Libs/Servos.Servo/Driver/Servos.Servo.Core.csproj -NoDefaultExcludes -Prop Configuration=Release
