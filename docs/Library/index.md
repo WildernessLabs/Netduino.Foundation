@@ -45,7 +45,6 @@ Netduino.Foundation has two sets of peripheral drivers; the ones listed in the f
 |---------------------------|-------------------------------------|
 | [AnalogTemperature](/API/Sensors/Temperature/Analog)      | Analog temperature sensor (TMP35 / TMP36 / TMP37 / LM35) |
 
-
 # External Peripherals
 
 ## Integrated Circuits (ICs)

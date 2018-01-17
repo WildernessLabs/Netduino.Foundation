@@ -58,7 +58,6 @@ See full peripheral list on the [Library](/Library) page.
 
 ## Sensors
 
-
 ### Buttons
 
 | Peripheral                | Description                         |
@@ -72,3 +71,9 @@ See full peripheral list on the [Library](/Library) page.
 |---------------------------|-------------------------------------|
 | [SpstSwitch](/API/Sensors/Switches/SpstSwitch)      | A simple single-pole, single-throw (SPST), switch. |
 | [DipSwitch](/API/Sensors/Switches/DipSwitch)        | A multi-pole dip switch. |
+
+### Temperature
+
+| Peripheral                | Description                         |
+|---------------------------|-------------------------------------|
+| [AnalogTemperature](/API/Sensors/Temperature/Analog)      | Analog temperature sensor (TMP35 / TMP36 / TMP37 / LM35) |
