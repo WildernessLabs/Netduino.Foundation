@@ -126,13 +126,13 @@ namespace AnalogTemperatureInterruptSample
 
 #### `const ushort MINIMUM_POLLING_PERIOD = 100;`
 
-This constant define the minimum interrupt polling period for the sensor.
+This constant defines the minimum interrupt polling period for the sensor.
 
 ### Enums
 
 #### `SensorType`
 
-A number of temperature sensors are predefined and support natively by the `AnalogTemperatureSensor` class.  The natively supported sensors can be found in the `SensorType` enum:
+A number of temperature sensors are predefined and support natively by the `AnalogTemperature` class.  The natively supported sensors can be found in the `SensorType` enum:
 
 ```csharp
 enum SensorType { Custom, TMP35, TMP36, TMP37, LM35, LM45, LM50 };
@@ -140,9 +140,9 @@ enum SensorType { Custom, TMP35, TMP36, TMP37, LM35, LM45, LM50 };
 
 ### Constructor
 
-#### `AnalogTemperatureSensor(Cpu.AnalogChannel analogPin, SensorType sensor, int sampleReading = 25, int millivoltsAtSampleReading = 250, int millivoltsPerDegreeCentigrade = 10, ushort updateInterval = MINIMUM_POLLING_PERIOD, float temperatureChangeNotificationThreshold = 0.001F))`
+#### `AnalogTemperature(Cpu.AnalogChannel analogPin, SensorType sensor, int sampleReading = 25, int millivoltsAtSampleReading = 250, int millivoltsPerDegreeCentigrade = 10, ushort updateInterval = MINIMUM_POLLING_PERIOD, float temperatureChangeNotificationThreshold = 0.001F))`
 
-The `AnalogTemperatureSensor` can be constructed in a number of ways:
+An `AnalogTemperature` object can be constructed in a number of ways:
 
 * Using one of the built in sensor types (TMP35, TMP36 etc.)
 * User defined analog sensor
@@ -152,7 +152,7 @@ The `AnalogTemperatureSensor` can be constructed in a number of ways:
 A new instance of a supported sensor can be constructed  by supplying the sensor type and the analog pin that the sensor is connected to:
 
 ```csharp
-var tmp36 = new AnalogTemperatureSensor(AnalogChannels.ANALOG_PIN_A0, AnalogTemperatureSensor.SensorType.TMP36);
+var tmp36 = new AnalogTemperature(AnalogChannels.ANALOG_PIN_A0, AnalogTemperature.SensorType.TMP36);
 ```
 
 #### User Defined Temperature Sensor
@@ -171,7 +171,7 @@ For a new sensor, the above could be:
 The constructor for this sensor when connected to pin `A0` would be:
 
 ```csharp
-var newSensor = new AnalogTemperatureSensor(AnalogChannels.ANALOG_PIN_A0, 25, 250, 10);
+var newSensor = new AnalogTemperature(AnalogChannels.ANALOG_PIN_A0, 25, 250, 10);
 ```
 
 #### `updateInterval` and `temperatureChangeNotificationThreshold`
@@ -187,7 +187,7 @@ The `Temperature` property takes a reading from the sensor and returns the resul
 Example:
 
 ```csharp
-currentTemperature = analogTemperatureSensor.Temperature;
+currentTemperature = AnalogTemperature.Temperature;
 ```
 
 ### Methods
