@@ -39,6 +39,13 @@ Netduino.Foundation has two sets of peripheral drivers; the ones listed in the f
 | [SpstSwitch](/API/Sensors/Switches/SpstSwitch)      | A simple single-pole, single-throw (SPST), switch. |
 | [DipSwitch](/API/Sensors/Switches/DipSwitch)        | A multi-pole dip switch. |
 
+### Temperature
+
+| Peripheral                | Description                         |
+|---------------------------|-------------------------------------|
+| [AnalogTemperature](/API/Sensors/Temperature/Analog)      | Analog temperature sensor (TMP35 / TMP36 / TMP37 / LM35) |
+
+
 # External Peripherals
 
 ## Integrated Circuits (ICs)
@@ -64,7 +71,6 @@ Netduino.Foundation has two sets of peripheral drivers; the ones listed in the f
 
 | Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
-| [Analog Temperature Sensor](/Library/Sensors/Temperature/Analog) | Generic analog temperature sensor drivers for TMP35/36/37 and LM35.|
 | [BME280](/Library/Sensors/Atmospheric/BME280)      | Combined I2C/SPI temperature, humidity, and pressure sensor. |
 | BMP085                    | In development |
 | DS18B20                   | In development |
