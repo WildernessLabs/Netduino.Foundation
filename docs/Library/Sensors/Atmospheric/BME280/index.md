@@ -28,7 +28,7 @@ It should be noted that the Sparkfun board is supplied with pull-up resistors en
 
 ## Software
 
-The BME280 can operating in polling and interrupt mode.
+The BME280 can operating in polling and interrupt mode.  By default, this sensor operates in interrupt mode.
 
 ### Polling Mode
 
