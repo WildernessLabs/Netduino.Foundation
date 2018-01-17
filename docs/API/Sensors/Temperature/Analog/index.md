@@ -176,7 +176,7 @@ var newSensor = new AnalogTemperature(AnalogChannels.ANALOG_PIN_A0, 25, 250, 10)
 
 #### `updateInterval` and `temperatureChangeNotificationThreshold`
 
-When operating in interrupt mode, this value defines the frequency that the sensor is checked.  Any differences between the last reported value and the current value that exceed the `temperatureChangeNotificationThreshold` value will cause an interrupt to be generated.
+When operating in interrupt mode, the `updateInterval` value defines the frequency that the sensor is checked.  Any differences between the last reported value and the current value that exceed the `temperatureChangeNotificationThreshold` value will cause an interrupt to be generated.
 
 ### Properties
 
