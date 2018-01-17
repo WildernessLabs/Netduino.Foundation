@@ -1,21 +1,21 @@
 ---
-layout: Library
+layout: API
 title: Analog Temperature Sensor
 subtitle: All purpose driver for analog temp sensors such as the TMP3* and LM35 series.
 ---
 
-The analog temperature sensor driver can be used with any sensor that has a linear response.  This includes the following sensors:
+The analog temperature sensor driver can be used with any sensor that has a linear voltage response. It has been tested with the following series of temperature sensors:
 
 * TMP35
 * TMP36
 * TMP37
 * LM35
 
-These sensors are exhibit a linear change in the analog voltage for each degree centigrade.  This is often presented in the datasheet as follows:
+These sensors exhibit a linear change in the analog voltage for each degree centigrade.  This is often presented in the datasheet as follows:
 
 ![](AnalogSensorLinearResponse.png)
 
-This driver can work with any sensor of this type.
+This driver should work with any sensor of this type.
 
 ## Purchasing
 
@@ -30,57 +30,22 @@ Consider the TMP36, this sensor requires only three connections; power, ground a
 
 ![](TMP36.png)
 
-## Software
+## Using
 
 The `AnalogTemperature` sensor driver has two modes of operation:
 
+* Interrupt/Event Notifications (default)
 * Polled
-* Interrupt (default)
 
-### Polled Mode
+### Interrupt/Event Notification Mode
 
-In polled mode, the application is responsible for requesting that the `Temperature` property is updated with the current reading.
+By default, the `AnalogTemperature` sensor driver operates in a high level notification mode, in which the driver automatically polls the sensor at a specified interval and will raise a `TemperatureChanged` event when the sensor's input changes by a specified amount. 
 
-The sensor is placed into polling mode by setting the `updateInterval` parameter in the constructor to `0`.
+The `TemperatureChanged` event contains a [`SensorFloatEventArgs`](/API/Sensors/SensorFloatEventArgs/) which exposes both a `CurrentValue` property, and a `LastNotifiedValue` property.
 
-The following application polls the sensor five seconds and prints the temperature reading on the debug console:
+#### Sample Code
 
-```csharp
-using System.Threading;
-using Microsoft.SPOT;
-using Netduino.Foundation.Sensors.Temperature;
-using SecretLabs.NETMF.Hardware.NetduinoPlus;
-
-namespace AnalogTemperaturePollingSample
-{
-    /// <summary>
-    ///     Illustrate how to read the TMP36 temperature sensor (polling mode).
-    /// </summary>
-    public class Program
-    {
-        public static void Main()
-        {
-            Debug.Print("Read TMP36");
-            var tmp36 = new AnalogTemperature(AnalogChannels.ANALOG_PIN_A0,
-                                              AnalogTemperature.SensorType.TMP36,
-                                              updateInterval: 0);
-            //
-            //  Now read the sensor every 5 seconds.
-            //
-            while (true)
-            {
-                tmp36.Update();
-                Debug.Print("Reading: " + tmp35.Temperature.ToString("f2"));
-                Thread.Sleep(5000);
-            }
-        }
-    }
-}
-```
-
-### Interrupt Mode
-
-When the driver is operating in interrupt mode, the driver will periodically check the sensor reading.  An interrupt will be generated if the difference between the last reported reading and the current reading is greater than a threshold value.  The following application demonstrates how to use the TMP36 in interrupt mode.  The sensor will be read every second and changes in values greater than +/- 0.1C will generate and interrupt:
+The following application demonstrates how to use the TMP36 in interrupt mode.  The sensor will be read every second and changes in values greater than +/- 0.1C will generate and interrupt:
 
 ```csharp
 using System.Threading;
@@ -122,6 +87,50 @@ namespace AnalogTemperatureInterruptSample
 }
 ```
 
+### Polled Mode
+
+In polled mode, the application is responsible for requesting that the `Temperature` property is updated with the current reading.
+
+The sensor is placed into polling mode by setting the `updateInterval` parameter in the constructor to `0`.
+
+#### Sample Application
+
+The following application polls the sensor five seconds and prints the temperature reading to the debug console:
+
+```csharp
+using System.Threading;
+using Microsoft.SPOT;
+using Netduino.Foundation.Sensors.Temperature;
+using SecretLabs.NETMF.Hardware.NetduinoPlus;
+
+namespace AnalogTemperaturePollingSample
+{
+    /// <summary>
+    ///     Illustrate how to read the TMP36 temperature sensor (polling mode).
+    /// </summary>
+    public class Program
+    {
+        public static void Main()
+        {
+            Debug.Print("Read TMP36");
+            var tmp36 = new AnalogTemperature(AnalogChannels.ANALOG_PIN_A0,
+                                              AnalogTemperature.SensorType.TMP36,
+                                              updateInterval: 0);
+            //
+            //  Now read the sensor every 5 seconds.
+            //
+            while (true)
+            {
+                tmp36.Update();
+                Debug.Print("Reading: " + tmp35.Temperature.ToString("f2"));
+                Thread.Sleep(5000);
+            }
+        }
+    }
+}
+```
+
+
 ## API
 
 ### Constants
@@ -159,26 +168,29 @@ var tmp36 = new AnalogTemperature(AnalogChannels.ANALOG_PIN_A0, AnalogTemperatur
 
 #### User Defined Temperature Sensor
 
-A new sensor can be supported using the `SensorType.Custom` sensor type.  When this type of sensor is used, three additional pieces of information are required:
+A new sensor can be supported using the `SensorType.Custom` sensor type.  When this type of sensor is used, three additional pieces of calibration information are required to be specified in the constructor:
 
-* Millivolts change per degree centigrade
-* Temperature of a known sensor output
-* Reading for the specified temperature above
+| Constructor Parameter    | Description                              |
+|--------------------------|------------------------------------------|
+| `sampleReading`          | Temperature of a known sensor output.    |
+| `millivoltsAtSampleReading` | Reading for the specified temperature above. |
+| `millivoltsPerDegreeCentigrade` | Millivolts change per degree centigrade. |
 
-For a new sensor, the above could be:
+For example, when creating a new custom sensor, valid values to describe that sensor might be:
 
-* 10 Millivolts per degree centigrade
-* 250 millivolts output at 25C
+* `10` millivolts (mV) per degree centigrade
+* `250` millivolts (mV) output at `25`ºC
 
-The constructor for this sensor when connected to pin `A0` would be:
+The constructor for this sensor when connected to pin `A0` would then be:
 
 ```csharp
-var newSensor = new AnalogTemperature(AnalogChannels.ANALOG_PIN_A0, 25, 250, 10);
+var newSensor = new AnalogTemperature(
+	AnalogChannels.ANALOG_PIN_A0, 25, 250, 10);
 ```
 
 #### `updateInterval` and `temperatureChangeNotificationThreshold`
 
-When operating in interrupt mode, the `updateInterval` value defines the frequency that the sensor is checked.  Any differences between the last reported value and the current value that exceed the `temperatureChangeNotificationThreshold` value will cause an interrupt to be generated.
+When operating in interrupt mode, the `updateInterval` value defines the frequency in which the sensor is updated.  Any differences between the last reported value and the current value that exceed the `temperatureChangeNotificationThreshold` value will raise an event notification.
 
 ### Properties
 
