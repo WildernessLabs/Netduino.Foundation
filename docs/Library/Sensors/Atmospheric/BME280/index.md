@@ -1,7 +1,7 @@
 ---
 layout: Library
 title: BME280 Temperature, Pressure, and Humidity Sensor
-subtitle: Hardware driver for the SparkFun and Adfruit BME280 atmospheric sensor.
+subtitle: Hardware driver for the SparkFun and Adafruit BME280 atmospheric sensor.
 ---
 
 The BME280 is a combined temperature, pressure and humidity sensor.
