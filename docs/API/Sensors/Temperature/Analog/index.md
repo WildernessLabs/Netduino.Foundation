@@ -35,11 +35,13 @@ Consider the TMP36, this sensor requires only three connections; power, ground a
 The `AnalogTemperature` sensor driver has two modes of operation:
 
 * Polled
-* Interrupt
+* Interrupt (default)
 
 ### Polled Mode
 
 In polled mode, the application is responsible for requesting that the `Temperature` property is updated with the current reading.
+
+The sensor is placed into polling mode by setting the `updateInterval` parameter in the constructor to `0`.
 
 The following application polls the sensor five seconds and prints the temperature reading on the debug console:
 
