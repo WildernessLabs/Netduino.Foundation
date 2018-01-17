@@ -194,7 +194,7 @@ When operating in interrupt mode, the `updateInterval` value defines the frequen
 
 ### Properties
 
-#### Temperature Property
+#### `Temperature { get; private set; }`
 
 The `Temperature` property takes a reading from the sensor and returns the result in degrees centigrade.
 
