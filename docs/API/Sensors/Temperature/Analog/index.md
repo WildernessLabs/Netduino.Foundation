@@ -28,7 +28,7 @@ TMP36 sensors can be purchased from a number of suppliers including:
 
 Consider the TMP36, this sensor requires only three connections; power, ground and the analog output:
 
-![TMP36 Connected to Netduino](TMP36.png)
+![](TMP36.png)
 
 ## Software
 
