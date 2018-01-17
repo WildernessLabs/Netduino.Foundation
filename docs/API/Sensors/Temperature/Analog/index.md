@@ -13,7 +13,7 @@ The analog temperature sensor driver can be used with any sensor that has a line
 
 These sensors are characterised by a linear change in the analog voltage for each degree centigrade.  This is often presented in the datasheet as follows:
 
-![Linear Analog Sensor](/API/Sensors/Temperature/Analog/AnalogSensorLinearResponse.png)
+![](AnalogSensorLinearResponse.png)
 
 This driver can work with any sensor of this type.
 
