@@ -306,7 +306,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
 
         /// <summary>
         ///     Event raised when the change in pressure is greater than the
-        ///     PresshureChangeNotificationThreshold value.
+        ///     PressureChangeNotificationThreshold value.
         /// </summary>
         public event SensorFloatEventHandler PressureChanged = delegate { };
 
@@ -499,10 +499,10 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         ///     the compensation data to get the actual readings.  These are made available through the
         ///     Temperature, Pressure and Humidity properties.
         ///     All three readings are taken at once to ensure that the three readings are consistent.
-        ///     Reegister locations and formulas taken from the Bosch BME280 datasheet revision 1.1, May 2015.
+        ///     Register locations and formulas taken from the Bosch BME280 datasheet revision 1.1, May 2015.
         ///     Register locations - section 5.3 Memory Map
         ///     Formulas - section 4.2.3 Compensation Formulas
-        ///     The integer formulas have been used to try and keep the calcuations performant.
+        ///     The integer formulas have been used to try and keep the calculations performant.
         /// </remarks>
         public void Update()
         {
