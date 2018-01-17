@@ -8,7 +8,7 @@ namespace BME280InterruptSample
 {
     /// <summary>
     ///     This sample illustrates how to use the interrupt (events) to obtain
-    ///     temperature, humidity and pressures readsing when the values change
+    ///     temperature, humidity and pressures reading when the values change
     ///     outside of the specified thresholds.
     /// </summary>
     public class Program
