@@ -1,3 +1,4 @@
+using Netduino.Foundation.Displays;
 using System;
 using System.IO.Ports;
 using System.Text;
@@ -10,6 +11,14 @@ namespace Netduino.Foundation.Displays
     /// </summary>
     public class SerialLCD : IDisposable
     {
+        #region Properties
+
+        public TextDisplayConfig DisplayConfig {
+            get { return this._config; }
+        } protected TextDisplayConfig _config;
+
+        #endregion
+
         #region Enums
 
         /// <summary>
@@ -93,16 +102,6 @@ namespace Netduino.Foundation.Displays
         /// </summary>
         private bool _disposed;
 
-        /// <summary>
-        ///     width of the display in columns (normally 16 or 20).
-        /// </summary>
-        private readonly byte _width;
-
-        /// <summary>
-        ///     Height of the display in lines (2 or 4).
-        /// </summary>
-        private readonly byte _height;
-
         #endregion Member variable / fields
 
         #region Constructors
@@ -115,6 +114,64 @@ namespace Netduino.Foundation.Displays
         }
 
         /// <summary>
+        /// Default constructor.
+        /// </summary>
+        /// <param name="width">Number of characters on a line.</param>
+        /// <param name="height">Number of lines on the display.</param>
+        /// <param name="port">Com port the display is connected to.</param>
+        /// <param name="baudRate">Baud rate to use (default = 9600).</param>
+        /// <param name="parity">Parity to use (deafult is None).</param>
+        /// <param name="dataBits">Number of data bits (default is 8 data bits).</param>
+        /// <param name="stopBits">Number of stop bits (default is one stop bit).</param>
+        public SerialLCD(TextDisplayConfig config = null,  string port = "COM1", int baudRate = 9600,
+            Parity parity = Parity.None, int dataBits = 8, StopBits stopBits = StopBits.One)
+        {
+            // assume a 16x2 LCD.
+            if(config == null) {
+                this._config = new TextDisplayConfig() { Height = 2, Width = 16 };
+            } else {
+                this._config = config;
+            }
+
+            // close the com if open
+            if ((_comPort != null) && _comPort.IsOpen)
+            {
+                _comPort.Close();
+            }
+            // reopen
+            _comPort = new SerialPort(port, baudRate, parity, dataBits, stopBits);
+            _comPort.Open();
+
+            // configure the LCD controller for the appropriate screen size
+            byte lines = 0;
+            byte characters = 0;
+            switch (_config.Width)
+            {
+                case 16:
+                    characters = (byte)LCDDimensions.Characters16Wide;
+                    break;
+                case 20:
+                    characters = (byte)LCDDimensions.Characters20Wide;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("width", "Display width should be 16 or 20.");
+            }
+            switch (_config.Height)
+            {
+                case 2:
+                    lines = (byte)LCDDimensions.Lines2;
+                    break;
+                case 4:
+                    lines = (byte)LCDDimensions.Lines4;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("height", "Display height should be 2 or 4 lines.");
+            }
+            Send(new[] { CONFIGURATION_COMMAND_CHARACTER, characters, CONFIGURATION_COMMAND_CHARACTER, lines });
+            Thread.Sleep(10);
+        }
+
+        /// <summary>
         ///     Default constructor.
         /// </summary>
         /// <param name="width">Number of characters on a line.</param>
@@ -124,47 +181,12 @@ namespace Netduino.Foundation.Displays
         /// <param name="parity">Parity to use (deafult is None).</param>
         /// <param name="dataBits">Number of data bits (default is 8 data bits).</param>
         /// <param name="stopBits">Number of stop bits (default is one stop bit).</param>
-        public SerialLCD(byte width = 16, byte height = 2, string port = "COM1", int baudRate = 9600,
-            Parity parity = Parity.None, int dataBits = 8, StopBits stopBits = StopBits.One)
-        {
-            if ((_comPort != null) && _comPort.IsOpen)
-            {
-                _comPort.Close();
-            }
-            _comPort = new SerialPort(port, baudRate, parity, dataBits, stopBits);
-            _comPort.Open();
-            //
-            //  Assume a 16 x 2 LCD.
-            //
-            byte lines = 0;
-            byte characters = 0;
-            switch (width)
-            {
-                case 16:
-                    characters = (byte) LCDDimensions.Characters16Wide;
-                    break;
-                case 20:
-                    characters = (byte) LCDDimensions.Characters20Wide;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException("width", "Display width should be 16 or 20.");
-            }
-            switch (height)
-            {
-                case 2:
-                    lines = (byte) LCDDimensions.Lines2;
-                    break;
-                case 4:
-                    lines = (byte) LCDDimensions.Lines4;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException("height", "Display height should be 2 or 4 lines.");
-            }
-            _width = width;
-            _height = height;
-            Write(new[] { CONFIGURATION_COMMAND_CHARACTER, characters, CONFIGURATION_COMMAND_CHARACTER, lines });
-            Thread.Sleep(10);
-        }
+        //[Obsolete("Use constructor with DisplayConfig.")]
+        //public SerialLCD(byte width = 16, byte height = 2, string port = "COM1", int baudRate = 9600,
+        //    Parity parity = Parity.None, int dataBits = 8, StopBits stopBits = StopBits.One) : 
+        //        this(null, port, baudRate, parity, dataBits, stopBits)
+        //{
+        //}
 
         #endregion Constructors
 
@@ -210,7 +232,7 @@ namespace Netduino.Foundation.Displays
         ///     Write the buffer of data to the COM port (i.e. the display).
         /// </summary>
         /// <param name="buffer">Bytes of data to be sent to the display.</param>
-        private void Write(byte[] buffer)
+        private void Send(byte[] buffer)
         {
             _comPort.Write(buffer, 0, buffer.Length);
         }
@@ -220,7 +242,7 @@ namespace Netduino.Foundation.Displays
         /// </summary>
         public void ToggleSplashScreen()
         {
-            Write(new byte[] { CONFIGURATION_COMMAND_CHARACTER, 9 });
+            Send(new byte[] { CONFIGURATION_COMMAND_CHARACTER, 9 });
         }
 
         /// <summary>
@@ -228,11 +250,9 @@ namespace Netduino.Foundation.Displays
         /// </summary>
         public void SetSplashScreen(string line1, string line2)
         {
-            SetCursorPosition(0, 1);
-            DisplayText(line1);
-            SetCursorPosition(0, 2);
-            DisplayText(line2);
-            Write(new byte[] { CONFIGURATION_COMMAND_CHARACTER, 10 });
+            WriteLine(line1, 0);
+            WriteLine(line2, 1);
+            Send(new byte[] { CONFIGURATION_COMMAND_CHARACTER, 10 });
         }
 
         /// <summary>
@@ -240,7 +260,7 @@ namespace Netduino.Foundation.Displays
         /// </summary>
         public void SetBaudRate(LCDBaudRate baudRate)
         {
-            Write(new[] { CONFIGURATION_COMMAND_CHARACTER, (byte) baudRate });
+            Send(new[] { CONFIGURATION_COMMAND_CHARACTER, (byte) baudRate });
         }
 
         /// <summary>
@@ -249,7 +269,7 @@ namespace Netduino.Foundation.Displays
         public void Clear()
         {
             byte[] buffer = { EXTENDED_LCD_COMMAND_CHARACTER, 0x01 };
-            Write(buffer);
+            Send(buffer);
         }
 
         /// <summary>
@@ -259,11 +279,11 @@ namespace Netduino.Foundation.Displays
         /// <param name="line">Line on the display to move the cursor to (0-3).</param>
         public void SetCursorPosition(byte column, byte line)
         {
-            if (column >= _width)
+            if (column >= _config.Width)
             {
                 throw new ArgumentOutOfRangeException("Column exceeds with width of the display.");
             }
-            if (line >= _height)
+            if (line >= _config.Height)
             {
                 throw new ArgumentOutOfRangeException("Line exceeds the height of the display.");
             }
@@ -280,13 +300,13 @@ namespace Netduino.Foundation.Displays
                     absoluteCharacterPosition += 64;
                     break;
                 case 2:
-                    absoluteCharacterPosition += _height;
+                    absoluteCharacterPosition += (byte)_config.Height;
                     break;
                 case 3:
-                    absoluteCharacterPosition += _width == 16 ? (byte) 80 : (byte) 84;
+                    absoluteCharacterPosition += _config.Width == 16 ? (byte) 80 : (byte) 84;
                     break;
             }
-            Write(new[] { EXTENDED_LCD_COMMAND_CHARACTER, (byte) (0x80 + (absoluteCharacterPosition & 0xff)) });
+            Send(new[] { EXTENDED_LCD_COMMAND_CHARACTER, (byte) (0x80 + (absoluteCharacterPosition & 0xff)) });
         }
 
         /// <summary>
@@ -297,11 +317,11 @@ namespace Netduino.Foundation.Displays
         {
             if (direction == Direction.Left)
             {
-                Write(new byte[] { EXTENDED_LCD_COMMAND_CHARACTER, 0x10 });
+                Send(new byte[] { EXTENDED_LCD_COMMAND_CHARACTER, 0x10 });
             }
             else
             {
-                Write(new byte[] { EXTENDED_LCD_COMMAND_CHARACTER, 0x14 });
+                Send(new byte[] { EXTENDED_LCD_COMMAND_CHARACTER, 0x14 });
             }
         }
 
@@ -313,11 +333,11 @@ namespace Netduino.Foundation.Displays
         {
             if (direction == Direction.Left)
             {
-                Write(new byte[] { EXTENDED_LCD_COMMAND_CHARACTER, 0x18 });
+                Send(new byte[] { EXTENDED_LCD_COMMAND_CHARACTER, 0x18 });
             }
             else
             {
-                Write(new byte[] { EXTENDED_LCD_COMMAND_CHARACTER, 0x1c });
+                Send(new byte[] { EXTENDED_LCD_COMMAND_CHARACTER, 0x1c });
             }
         }
 
@@ -327,26 +347,72 @@ namespace Netduino.Foundation.Displays
         /// <param name="style">New cursor style (Block/Underline, Blinking/Solid).</param>
         public void SetCursorStyle(CursorStyle style)
         {
-            Write(new[] { EXTENDED_LCD_COMMAND_CHARACTER, (byte) style });
+            Send(new[] { EXTENDED_LCD_COMMAND_CHARACTER, (byte) style });
         }
 
         /// <summary>
         ///     Display the text at the current cursor position.
         /// </summary>
         /// <param name="text">Text to display.</param>
+        [Obsolete("Use .Write methods instead.")]
         public void DisplayText(string text)
         {
-            Write(Encoding.UTF8.GetBytes(text));
+            Write(text);
+        }
+
+        public void Write(string text)
+        {
+            Send(Encoding.UTF8.GetBytes(text));
         }
 
         /// <summary>
-        ///     Turn the display on or off.
+        /// Writes the specified text to the specified line.
+        /// </summary>
+        /// <param name="lineNumber"></param>
+        /// <param name="text"></param>
+        public void WriteLine(string text, byte lineNumber)
+        {
+            if (text.Length > _config.Width) {
+                throw new Exception("number characters must be <= columns");
+            }
+
+            // clear the line
+            ClearLine(lineNumber);
+
+            // write the line
+            this.SetCursorPosition(0, lineNumber);
+            this.Write(text);
+        }
+
+        /// <summary>
+        /// Clears the specified line by writing a string of empty characters
+        /// to it.
+        /// </summary>
+        /// <param name="lineNumber"></param>
+        public void ClearLine(byte lineNumber)
+        {
+            // clear the line
+            this.SetCursorPosition(0, lineNumber);
+            char[] clearChars = new char[_config.Width];
+            for (int i = 0; i < _config.Width; i++)
+            {
+                clearChars[i] = ' ';
+            }
+            string clearString = new string(clearChars);
+            this.Write(clearString);
+        }
+
+
+        /// <summary>
+        /// Turn the display on or off.
         /// </summary>
         /// <param name="state">New power state for the display.</param>
         public void SetDisplayVisualState(DisplayPowerState state)
         {
-            Write(new[] { EXTENDED_LCD_COMMAND_CHARACTER, (byte) state });
+            Send(new[] { EXTENDED_LCD_COMMAND_CHARACTER, (byte) state });
         }
+
+
 
         #endregion Methods
     }

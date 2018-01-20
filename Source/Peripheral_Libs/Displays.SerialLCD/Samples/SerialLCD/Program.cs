@@ -18,7 +18,7 @@ namespace SerialLCDTest
             //  Display some text on the bottom row of a 16x2 LCD.
             //
             display.SetCursorPosition(1, 1);
-            display.DisplayText("Hello, world");
+            display.Write("Hello, world");
             Thread.Sleep(1000);
         }
     }
