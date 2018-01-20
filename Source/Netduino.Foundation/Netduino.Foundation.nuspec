@@ -3,7 +3,7 @@
   <metadata>
     <id>Netduino.Foundation</id>
     <title>WildernessLabs.Netduino.Foundation.Core</title>
-    <version>0.8.0.0</version>
+    <version>$version$</version>
     <authors>Bryan Costanich, Frank Krueger, Craig Dunn, Mark Stevens</authors>
     <owners>Wilderness Labs</owners>
     <licenseUrl>https://github.com/WildernessLabs/Netduino.Foundation/blob/master/LICENSE</licenseUrl>
