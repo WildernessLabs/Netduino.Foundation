@@ -43,17 +43,6 @@ namespace SerialLCDCharacters_Sample
 
             }
 
-            public void DisplayTemperature(float value)
-            {
-                char degree = System.Convert.ToChar(223);
-                string temp = value.ToString("N2");
-                string text = ("Temp: " + temp + degree + "C");
-                _lcd.WriteLine(text, 0);
-            }
-
-            public void DisplayHumidity(float value)
-            { }
-
             protected void StartTestCharDisplay()
             {
                 System.Threading.Thread t = new Thread(() =>
