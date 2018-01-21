@@ -18,7 +18,7 @@ namespace AnalogTemperatureInterruptSample
             //  to report any changes over 0.1C.
             //
             var tmp35 = new AnalogTemperature(AnalogChannels.ANALOG_PIN_A0,
-                AnalogTemperature.SensorType.TMP35, updateInterval: 1000, 
+                AnalogTemperature.KnownSensorType.TMP35, updateInterval: 1000, 
                 temperatureChangeNotificationThreshold: 0.1F);
             //
             //  Connect an interrupt handler.

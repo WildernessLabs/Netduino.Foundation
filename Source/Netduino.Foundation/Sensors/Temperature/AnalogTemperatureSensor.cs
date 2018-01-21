@@ -10,7 +10,7 @@ namespace Netduino.Foundation.Sensors.Temperature
     ///     - LM35 / 45
     /// </summary>
     /// <remarks>
-    ///     <i>AnalogTemperatureSensor</i> provides a method of reading the temperature from
+    ///     <i>AnalogTemperature</i> provides a method of reading the temperature from
     ///     linear analog temperature sensors.  There are a number of these sensors available
     ///     including the commonly available TMP and LM series.
     ///     Sensors of this type obey the following equation:
@@ -27,8 +27,58 @@ namespace Netduino.Foundation.Sensors.Temperature
     ///     TMP36, LM50             750                     10
     ///     TMP37                   500                     20
     /// </remarks>
-    public class AnalogTemperature : IDisposable, ITemperatureSensor
+    public class AnalogTemperature : ITemperatureSensor
     {
+        #region Local classes
+        
+        /// <summary>
+        ///     Calibration class for new sensor types.  This allows new sensors
+        ///     to be used with this class.
+        /// </summary>
+        /// <remarks>
+        ///     The default settings for this object are correct for the TMP35.
+        /// </remarks>
+        public class Calibration
+        {
+            /// <summary>
+            ///     
+            /// </summary>
+            public int SampleReading { get; set; } = 25;
+
+            /// <summary>
+            ///     
+            /// </summary>
+            public int MillivoltsAtSampleReading { get; set; } = 250;
+
+            /// <summary>
+            ///     
+            /// </summary>
+            public int MillivoltsPerDegreeCentigrade { get; set; } = 10;
+
+            /// <summary>
+            ///     Default constructor.  Create a new Calibration object with default values
+            /// for the properties.
+            /// </summary>
+            public Calibration()
+            {
+            }
+
+            /// <summary>
+            ///     Create a new Calibration object using the specified values.
+            /// </summary>
+            /// <param name="sampleReading">Sample reading from the data sheet.</param>
+            /// <param name="millivoltsAtSampleReading">Millivolts output at the sample reading (from the data sheet).</param>
+            /// <param name="millivoltsPerDegreeCentigrade">Millivolt change per degree centigrade (from the data sheet).</param>
+            public Calibration(int sampleReading, int millivoltsAtSampleReading, int millivoltsPerDegreeCentigrade)
+            {
+                SampleReading = sampleReading;
+                MillivoltsAtSampleReading = millivoltsAtSampleReading;
+                MillivoltsPerDegreeCentigrade = millivoltsPerDegreeCentigrade;
+            }
+        }
+        
+        #endregion Local classes
+        
         #region Constants
 
         /// <summary>
@@ -37,6 +87,24 @@ namespace Netduino.Foundation.Sensors.Temperature
         public const ushort MINIMUM_POLLING_PERIOD = 100;
 
         #endregion Constants
+        
+        #region Enums
+        
+        /// <summary>
+        ///     Type of temperature sensor.
+        /// </summary>
+        public enum KnownSensorType
+        {
+            Custom,
+            TMP35,
+            TMP36,
+            TMP37,
+            LM35,
+            LM45,
+            LM50
+        }
+
+        #endregion Enums
 
         #region Member variables /fields
 
@@ -44,7 +112,7 @@ namespace Netduino.Foundation.Sensors.Temperature
         ///     Millivolts per degree centigrade for the sensor attached to the analog port.
         /// </summary>
         /// <remarks>
-        ///     This will be the gradient of the
+        ///     This will be the gradient of the line y = mx + c.
         /// </remarks>
         private readonly int _millivoltsPerDegreeCentigrade;
 
@@ -58,23 +126,14 @@ namespace Netduino.Foundation.Sensors.Temperature
         /// </summary>
         private readonly ushort _updateInterval = 100;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly Calibration _calibration;
+
         #endregion Member variables / fields
 
         #region Properties
-
-        /// <summary>
-        ///     Type of temperature sensor.
-        /// </summary>
-        public enum SensorType
-        {
-            Custom,
-            TMP35,
-            TMP36,
-            TMP37,
-            LM35,
-            LM45,
-            LM50
-        }
 
         /// <summary>
         ///     Analog port that the temperature sensor is attached to.
@@ -142,15 +201,11 @@ namespace Netduino.Foundation.Sensors.Temperature
         ///     New instance of the AnalogTemperatureSensor class.
         /// </summary>
         /// <param name="analogPin">Analog pin the temperature sensor is connected to.</param>
-        /// <param name="sensor">Type of sensor attached to the analog port.</param>
-        /// <param name="sampleReading">Sample sensor reading in degrees centigrade (Optional)</param>
-        /// <param name="millivoltsAtSampleReading">Number of millivolts representing the sample reading (Optional)</param>
-        /// <param name="millivoltsPerDegreeCentigrade">Number of millivolts pre degree centigrade (Optional)</param>
+        /// <param name="sensorType">Type of sensor attached to the analog port.</param>
+        /// <param name="calibration">Calibration for the analog temperature sensor.</param>
         /// <param name="updateInterval">Number of milliseconds between samples (0 indicates polling to be used)</param>
-        /// <param name="humidityChangeNotificationThreshold">Changes in humidity greater than this value will trigger an event when updatePeriod > 0.</param>
         /// <param name="temperatureChangeNotificationThreshold">Changes in temperature greater than this value will trigger an event when updatePeriod > 0.</param>
-        public AnalogTemperature(Cpu.AnalogChannel analogPin, SensorType sensor, int sampleReading = 25,
-            int millivoltsAtSampleReading = 250, int millivoltsPerDegreeCentigrade = 10,
+        public AnalogTemperature(Cpu.AnalogChannel analogPin, KnownSensorType sensorType, Calibration calibration = null, 
             ushort updateInterval = MINIMUM_POLLING_PERIOD, float temperatureChangeNotificationThreshold = 0.001F)
         {
             if (temperatureChangeNotificationThreshold < 0)
@@ -164,34 +219,41 @@ namespace Netduino.Foundation.Sensors.Temperature
                 throw new ArgumentOutOfRangeException(nameof(updateInterval),
                     "Update period should be 0 or >= than " + MINIMUM_POLLING_PERIOD);
             }
+            //
+            //  If the calibration object is null use the defaults for TMP35.
+            //
+            if (calibration == null)
+            {
+                calibration = new Calibration();
+            }
 
             TemperatureChangeNotificationThreshold = temperatureChangeNotificationThreshold;
             _updateInterval = updateInterval;
 
             AnalogPort = new AnalogInput(analogPin);
-            switch (sensor)
+            switch (sensorType)
             {
-                case SensorType.TMP35:
-                case SensorType.LM35:
-                case SensorType.LM45:
+                case KnownSensorType.TMP35:
+                case KnownSensorType.LM35:
+                case KnownSensorType.LM45:
                     _yIntercept = 0;
                     _millivoltsPerDegreeCentigrade = 10;
                     break;
-                case SensorType.LM50:
-                case SensorType.TMP36:
+                case KnownSensorType.LM50:
+                case KnownSensorType.TMP36:
                     _yIntercept = 500;
                     _millivoltsPerDegreeCentigrade = 10;
                     break;
-                case SensorType.TMP37:
+                case KnownSensorType.TMP37:
                     _yIntercept = 0;
                     _millivoltsPerDegreeCentigrade = 20;
                     break;
-                case SensorType.Custom:
-                    _yIntercept = millivoltsAtSampleReading - (sampleReading * millivoltsAtSampleReading);
-                    _millivoltsPerDegreeCentigrade = millivoltsPerDegreeCentigrade;
+                case KnownSensorType.Custom:
+                    _yIntercept = calibration.MillivoltsAtSampleReading - (calibration.SampleReading * calibration.MillivoltsAtSampleReading);
+                    _millivoltsPerDegreeCentigrade = calibration.MillivoltsPerDegreeCentigrade;
                     break;
                 default:
-                    throw new ArgumentException("Unknown sensor type", nameof(sensor));
+                    throw new ArgumentException("Unknown sensor type", nameof(sensorType));
 #pragma warning disable 0162
                     break;
 #pragma warning restore 0162
@@ -208,19 +270,6 @@ namespace Netduino.Foundation.Sensors.Temperature
         }
 
         #endregion Constructors
-
-        #region IDisposable
-
-        /// <summary>
-        ///     Implement IDisposable interface.
-        /// </summary>
-        public void Dispose()
-        {
-            AnalogPort.Dispose();
-            AnalogPort = null;
-        }
-
-        #endregion IDisposable
 
         #region Methods
 

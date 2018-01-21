@@ -14,7 +14,7 @@ namespace AnalogTemperaturePollingSample
         {
             Debug.Print("Read TMP35");
             var tmp35 = new AnalogTemperature(AnalogChannels.ANALOG_PIN_A0,
-                                              AnalogTemperature.SensorType.TMP35, 
+                                              AnalogTemperature.KnownSensorType.TMP35, 
                                               updateInterval: 0);
             //
             //  Now read the sensor every 5 seconds.
