@@ -82,12 +82,12 @@ namespace Netduino.Foundation.Displays
         /// <summary>
         ///     Byte used to prefix the extended PCD display commands.
         /// </summary>
-        private const byte EXTENDED_LCD_COMMAND_CHARACTER = 0xfe;
+        private const byte EextendedCommandCharacter = 0xfe;
 
         /// <summary>
         ///     Byte used to prefix the interface commands.
         /// </summary>
-        private const byte CONFIGURATION_COMMAND_CHARACTER = 0x7c;
+        private const byte ConfigurationCommandCharacter = 0x7c;
 
         #endregion Constants
 
@@ -164,7 +164,7 @@ namespace Netduino.Foundation.Displays
                 default:
                     throw new ArgumentOutOfRangeException(nameof(config.Height), "Display height should be 2 or 4 lines.");
             }
-            Send(new[] { CONFIGURATION_COMMAND_CHARACTER, characters, CONFIGURATION_COMMAND_CHARACTER, lines });
+            Send(new[] { ConfigurationCommandCharacter, characters, ConfigurationCommandCharacter, lines });
             Thread.Sleep(10);
         }
 
@@ -222,7 +222,7 @@ namespace Netduino.Foundation.Displays
         /// </summary>
         public void ToggleSplashScreen()
         {
-            Send(new byte[] { CONFIGURATION_COMMAND_CHARACTER, 9 });
+            Send(new byte[] { ConfigurationCommandCharacter, 9 });
         }
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace Netduino.Foundation.Displays
         {
             WriteLine(line1, 0);
             WriteLine(line2, 1);
-            Send(new byte[] { CONFIGURATION_COMMAND_CHARACTER, 10 });
+            Send(new byte[] { ConfigurationCommandCharacter, 10 });
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace Netduino.Foundation.Displays
         /// </summary>
         public void SetBaudRate(LCDBaudRate baudRate)
         {
-            Send(new[] { CONFIGURATION_COMMAND_CHARACTER, (byte) baudRate });
+            Send(new[] { ConfigurationCommandCharacter, (byte) baudRate });
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Netduino.Foundation.Displays
         /// </summary>
         public void Clear()
         {
-            byte[] buffer = { EXTENDED_LCD_COMMAND_CHARACTER, 0x01 };
+            byte[] buffer = { EextendedCommandCharacter, 0x01 };
             Send(buffer);
         }
 
@@ -286,7 +286,7 @@ namespace Netduino.Foundation.Displays
                     absoluteCharacterPosition += DisplayConfig.Width == 16 ? (byte) 80 : (byte) 84;
                     break;
             }
-            Send(new[] { EXTENDED_LCD_COMMAND_CHARACTER, (byte) (0x80 + (absoluteCharacterPosition & 0xff)) });
+            Send(new[] { EextendedCommandCharacter, (byte) (0x80 + (absoluteCharacterPosition & 0xff)) });
         }
 
         /// <summary>
@@ -297,11 +297,11 @@ namespace Netduino.Foundation.Displays
         {
             if (direction == Direction.Left)
             {
-                Send(new byte[] { EXTENDED_LCD_COMMAND_CHARACTER, 0x10 });
+                Send(new byte[] { EextendedCommandCharacter, 0x10 });
             }
             else
             {
-                Send(new byte[] { EXTENDED_LCD_COMMAND_CHARACTER, 0x14 });
+                Send(new byte[] { EextendedCommandCharacter, 0x14 });
             }
         }
 
@@ -313,11 +313,11 @@ namespace Netduino.Foundation.Displays
         {
             if (direction == Direction.Left)
             {
-                Send(new byte[] { EXTENDED_LCD_COMMAND_CHARACTER, 0x18 });
+                Send(new byte[] { EextendedCommandCharacter, 0x18 });
             }
             else
             {
-                Send(new byte[] { EXTENDED_LCD_COMMAND_CHARACTER, 0x1c });
+                Send(new byte[] { EextendedCommandCharacter, 0x1c });
             }
         }
 
@@ -327,7 +327,7 @@ namespace Netduino.Foundation.Displays
         /// <param name="style">New cursor style (Block/Underline, Blinking/Solid).</param>
         public void SetCursorStyle(CursorStyle style)
         {
-            Send(new[] { EXTENDED_LCD_COMMAND_CHARACTER, (byte) style });
+            Send(new[] { EextendedCommandCharacter, (byte) style });
         }
 
         /// <summary>
@@ -393,7 +393,7 @@ namespace Netduino.Foundation.Displays
         /// <param name="state">New power state for the display.</param>
         public void SetDisplayVisualState(DisplayPowerState state)
         {
-            Send(new[] {EXTENDED_LCD_COMMAND_CHARACTER, (byte) state});
+            Send(new[] {EextendedCommandCharacter, (byte) state});
         }
 
         #endregion Methods
