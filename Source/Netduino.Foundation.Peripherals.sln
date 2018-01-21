@@ -259,6 +259,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialLCDCharacters_Sample"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RotaryEncoder", "Netduino.Foundation.Core.Samples\RotaryEncoder\RotaryEncoder.csproj", "{E9893608-F563-46B9-B16E-58BBCE5C2C76}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RotaryEncoderWithButton", "Netduino.Foundation.Core.Samples\RotaryEncoderWithButton\RotaryEncoderWithButton.csproj", "{06B2EF27-8A60-4114-8DB1-629A27F8154E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1586,6 +1588,24 @@ Global
 		{E9893608-F563-46B9-B16E-58BBCE5C2C76}.Release|x86.ActiveCfg = Release|Any CPU
 		{E9893608-F563-46B9-B16E-58BBCE5C2C76}.Release|x86.Build.0 = Release|Any CPU
 		{E9893608-F563-46B9-B16E-58BBCE5C2C76}.Release|x86.Deploy.0 = Release|Any CPU
+		{06B2EF27-8A60-4114-8DB1-629A27F8154E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06B2EF27-8A60-4114-8DB1-629A27F8154E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06B2EF27-8A60-4114-8DB1-629A27F8154E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{06B2EF27-8A60-4114-8DB1-629A27F8154E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{06B2EF27-8A60-4114-8DB1-629A27F8154E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{06B2EF27-8A60-4114-8DB1-629A27F8154E}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
+		{06B2EF27-8A60-4114-8DB1-629A27F8154E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{06B2EF27-8A60-4114-8DB1-629A27F8154E}.Debug|x86.Build.0 = Debug|Any CPU
+		{06B2EF27-8A60-4114-8DB1-629A27F8154E}.Debug|x86.Deploy.0 = Debug|Any CPU
+		{06B2EF27-8A60-4114-8DB1-629A27F8154E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06B2EF27-8A60-4114-8DB1-629A27F8154E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06B2EF27-8A60-4114-8DB1-629A27F8154E}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{06B2EF27-8A60-4114-8DB1-629A27F8154E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{06B2EF27-8A60-4114-8DB1-629A27F8154E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{06B2EF27-8A60-4114-8DB1-629A27F8154E}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
+		{06B2EF27-8A60-4114-8DB1-629A27F8154E}.Release|x86.ActiveCfg = Release|Any CPU
+		{06B2EF27-8A60-4114-8DB1-629A27F8154E}.Release|x86.Build.0 = Release|Any CPU
+		{06B2EF27-8A60-4114-8DB1-629A27F8154E}.Release|x86.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1678,5 +1698,6 @@ Global
 		{BF3073B4-EBB6-489B-897C-113FC416B8F3} = {B1CB9A4C-0FA0-4D20-AC92-18B3D23EBD45}
 		{96E4FE2F-5C96-4F6D-93AE-233BFAD9D8A2} = {9E11B915-F2F4-4575-B498-366E71919991}
 		{E9893608-F563-46B9-B16E-58BBCE5C2C76} = {B1CB9A4C-0FA0-4D20-AC92-18B3D23EBD45}
+		{06B2EF27-8A60-4114-8DB1-629A27F8154E} = {B1CB9A4C-0FA0-4D20-AC92-18B3D23EBD45}
 	EndGlobalSection
 EndGlobal
