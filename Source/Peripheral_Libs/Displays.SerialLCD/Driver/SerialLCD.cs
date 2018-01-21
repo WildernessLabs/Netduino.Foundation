@@ -136,12 +136,6 @@ namespace Netduino.Foundation.Displays
                 DisplayConfig = config;
             }
 
-            // close the com if open
-            if ((_comPort != null) && _comPort.IsOpen)
-            {
-                _comPort.Close();
-            }
-            // reopen
             _comPort = new SerialPort(port, baudRate, parity, dataBits, stopBits);
             _comPort.Open();
 
