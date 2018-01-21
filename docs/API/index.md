@@ -30,6 +30,7 @@ These classes provide common base functionality for communication protocols and 
 | [IDCMotor](/API/Motors/IDCMotor/) | Interface for DC motors. |
 | [IHumiditySensor](/API/Sensors/IHumiditySensor/) | Interface describing humidity sensors. |
 | [ILightSensor](/API/Sensors/ILightSensor/) | Interface describing light sensors. |
+| [ITextDisplay](/API/Displays/ITextDisplay) | Interface describing text-only displays. |
 | [IPressureSensor](/API/Sensors/IPressureSensor/) | Interface describing pressure (barometric) sensors. |
 | [ITemperatureSensor](/API/Sensors/ITemperatureSensor/) | Interface describing temperature sensors |
 
