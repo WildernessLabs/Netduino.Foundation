@@ -73,6 +73,13 @@ See full peripheral list on the [Library](/Library) page.
 | [SpstSwitch](/API/Sensors/Switches/SpstSwitch)      | A simple single-pole, single-throw (SPST), switch. |
 | [DipSwitch](/API/Sensors/Switches/DipSwitch)        | A multi-pole dip switch. |
 
+### Rotary Encoders
+
+| Peripheral                | Description                         |
+|---------------------------|-------------------------------------|
+| [RotaryEncoder](/API/Sensors/Rotary/RotaryEncoder)  | A simple rotary encoder. |
+| [RotaryEncoderWithButton](/API/Sensors/Rotary/RotaryEncoderWithButton)  | A rotary encoder that includes a push button. |
+
 ### Temperature
 
 | Peripheral                | Description                         |
