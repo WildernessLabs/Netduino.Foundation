@@ -1,4 +1,3 @@
-using Netduino.Foundation.Displays;
 using System;
 using System.IO.Ports;
 using System.Text;
