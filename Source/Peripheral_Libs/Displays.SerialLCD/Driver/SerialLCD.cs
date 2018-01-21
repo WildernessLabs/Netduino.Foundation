@@ -365,8 +365,8 @@ namespace Netduino.Foundation.Displays
             ClearLine(lineNumber);
 
             // write the line
-            this.SetCursorPosition(0, lineNumber);
-            this.Write(text);
+            SetCursorPosition(0, lineNumber);
+            Write(text);
         }
 
         /// <summary>
@@ -377,14 +377,14 @@ namespace Netduino.Foundation.Displays
         public void ClearLine(byte lineNumber)
         {
             // clear the line
-            this.SetCursorPosition(0, lineNumber);
-            char[] clearChars = new char[DisplayConfig.Width];
-            for (int i = 0; i < DisplayConfig.Width; i++)
+            SetCursorPosition(0, lineNumber);
+            var clearChars = new char[DisplayConfig.Width];
+            for (var i = 0; i < DisplayConfig.Width; i++)
             {
                 clearChars[i] = ' ';
             }
-            string clearString = new string(clearChars);
-            this.Write(clearString);
+            var clearString = new string(clearChars);
+            Write(clearString);
         }
 
         /// <summary>
