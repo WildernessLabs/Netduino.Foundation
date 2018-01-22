@@ -345,7 +345,13 @@ namespace Netduino.Foundation.Displays
         /// <param name="text">Text to display.</param>
         public void Write(string text)
         {
-            Send(Encoding.UTF8.GetBytes(text));
+            int length = text.Length;
+            byte[] bytes = new byte[length];
+            for (int index = 0; index < length; index++)
+            {
+                bytes[index] = (byte) text[index];
+            }
+            Send(bytes);
         }
 
         /// <summary>
@@ -357,7 +363,7 @@ namespace Netduino.Foundation.Displays
         {
             if (text.Length > DisplayConfig.Width)
             {
-                throw new Exception("number characters must be <= columns");
+                throw new Exception("Number characters must be <= columns");
             }
 
             // clear the line
