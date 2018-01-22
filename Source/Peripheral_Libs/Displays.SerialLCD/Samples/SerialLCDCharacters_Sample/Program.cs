@@ -83,7 +83,7 @@ namespace SerialLCDCharacters_Sample
                         }
 
                         _lcd.Clear();
-                        _lcd.WriteLine("chars " + start.ToString() + "-" + calculatedEnd.ToString(), 0);
+                        _lcd.WriteLine("chars " + current.ToString() + "-" + calculatedEnd.ToString(), 0);
                         DisplayChars(current, calculatedEnd);
 
                         current += count;
