@@ -31,6 +31,12 @@ Netduino.Foundation has two sets of peripheral drivers; the ones listed in the f
 |---------------------------|-------------------------------------|
 | [PushButton](/API/Sensors/Buttons/PushButton)       | Simple push-button. |
 
+### Rotary Encoders
+
+| Peripheral                | Description                         |
+|---------------------------|-------------------------------------|
+| [RotaryEncoder](/API/Sensors/Rotary/RotaryEncoder)  | A simple rotary encoder. |
+| [RotaryEncoderWithButton](/API/Sensors/Rotary/RotaryEncoderWithButton)  | A rotary encoder that includes a push button. |
 
 ### Switches
 

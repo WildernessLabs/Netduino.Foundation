@@ -73,7 +73,7 @@ Define the possible directions for scrolling the display and also text direction
 
 ### Constructor
 
-#### `SerialLCD(byte width = 16, byte height = 2, string port = "COM1", int baudRate = 9600, Parity parity = Parity.None, int dataBits = 8, StopBits stopBits = StopBits.One)`
+#### `SerialLCD(TextDisplayConfig config = null, string port = "COM1", int baudRate = 9600, Parity parity = Parity.None, int dataBits = 8, StopBits stopBits = StopBits.One)`
 
 This can be used with the display as supplied by creating a new object with the defaults:
 
@@ -144,9 +144,17 @@ Writing to the display when the scrolled fully left or right will change the con
 
 Two cursors are available, box or underline.
 
-#### `void DisplayText(string text)`
+#### `void Write(string text)`
 
 Write the text to the current cursor position in the display memory.
+
+#### `void WriteLine(string text, byte lineNumber)`
+
+Write the text to the specified line on the display.
+
+#### `void ClearLine(byte lineNumber)`
+
+Clears the specified line by writing a string of empty characters to it.
 
 #### `void SetDisplayVisualState(DisplayPowerState state)`
 

@@ -5,6 +5,12 @@ using System.Threading;
 
 namespace Netduino.Foundation.Displays
 {
+    // TODO:
+    // * SelectLine (uchar lineNumber)
+    // * SetBacklightBrightness (float brightness) //brightness should be 0-1 but we'll need to translate that to 128-157
+    // * WriteMarquee (string text) // or similar
+
+
     /// <summary>
     ///     Encapsulate the functionality required to control the Sparkfun serial LCD display.
     /// </summary>
