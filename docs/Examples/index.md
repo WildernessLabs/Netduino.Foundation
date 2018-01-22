@@ -14,7 +14,7 @@ These samples showcase more complex applications that integrate multiple periphe
 | [LED Dimmer](/Examples/LED_Dimmer) | Utilizes a [rotary encoder with push button](/API/Sensors/Rotary/RotaryEncoderWithButton) to control the brightness and on/off state of an LED. |
 | [HIH6130 Temp & Humidity](/Examples/HIH6130_Temp_Humidity_Display) | Displays the temperature and humidity from an [HIH6130](/Library/Sensors/Atmospheric/HIH6130) sensor on a [serial LCD](/Library/Displays/SerialLCD) display. | 
 
-# Netduino.Core Samples
+# Netduino Core Samples
 
 Each core peripheral includes a sample illustrating its use.
 
