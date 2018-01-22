@@ -23,7 +23,7 @@ The HIH6130 requires four connections between the Netduino and the breakout boar
 
 As shown in the following photo:
 
-![HIH6130 on Breadboard](/library/Sensors/Atmospheric/HIH6130/HIH6130OnBreadboard.png)
+![HIH6130 on Breadboard](/Library/Sensors/Atmospheric/HIH6130/HIH6130OnBreadboard.png)
 
 ### Serial LCD
 
