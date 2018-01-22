@@ -345,6 +345,12 @@ namespace Netduino.Foundation.Displays
         /// <param name="text">Text to display.</param>
         public void Write(string text)
         {
+            //
+            //  The conversion below is explicit as UTF8 encoding for characters with
+            //  an ASCII value > 127 the characters are broken out into two bytes when
+            //  only one is required.  This means that some characters cannot be
+            //  displayed correctly when UTF8 is used.
+            //
             int length = text.Length;
             byte[] bytes = new byte[length];
             for (int index = 0; index < length; index++)
