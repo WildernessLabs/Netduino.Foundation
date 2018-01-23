@@ -52,7 +52,7 @@ namespace BME280PollingSample
         {
             //
             //  Create a new BME280 object and put the sensor into polling
-            //  mode (update intervale set to 0ms).
+            //  mode (update interval set to 0ms).
             //
             BME280 sensor = new BME280(updateInterval: 0);
 
@@ -146,7 +146,7 @@ namespace BME280InterruptSample
 
 ### Constants
 
-#### `const ushort MINIMUM_POLLING_PERIOD = 100`
+#### `const ushort MinimumPollingPeriod = 100`
 
 Minimum value for the `updateInterval` property in the constructor.  This represents the minimum number of milliseconds between sensor samples when operating in interrupt mode.
 
@@ -170,7 +170,7 @@ Possible values for the filter coefficient.
 
 ### Constructor
 
-#### `BME280(byte address = 0x77, ushort speed = 100, ushort updateInterval = MINIMUM_POLLING_PERIOD, float humidityChangeNotificationThreshold = 0.001F, float temperatureChangeNotificationThreshold = 0.001F, float pressureChangedNotificationThreshold = 10.0F)`
+#### `BME280(byte address = 0x77, ushort speed = 100, ushort updateInterval = MinimumPollingPeriod, float humidityChangeNotificationThreshold = 0.001F, float temperatureChangeNotificationThreshold = 0.001F, float pressureChangedNotificationThreshold = 10.0F)`
 
 The simplest constructor creates a new `BME280` object configured to use I2C with the default address of `0x77` and a default speed of `100` KHz.
 
