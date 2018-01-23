@@ -383,7 +383,7 @@ namespace Netduino.Foundation.Sensors.Motion
         {
             if (dataRate > 0xff)
             {
-                throw new ArgumentOutOfRangeException("dataRate", "Data rate should be in the range 0-15 inclusive");
+                throw new ArgumentOutOfRangeException(nameof(dataRate), "Data rate should be in the range 0-15 inclusive");
             }
             var data = dataRate;
             if (lowPower)
