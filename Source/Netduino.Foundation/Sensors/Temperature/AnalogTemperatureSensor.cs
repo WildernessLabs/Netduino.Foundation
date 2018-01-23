@@ -129,11 +129,6 @@ namespace Netduino.Foundation.Sensors.Temperature
         /// </summary>
         private readonly ushort _updateInterval = 100;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        private readonly Calibration _calibration;
-
         #endregion Member variables / fields
 
         #region Properties
