@@ -34,7 +34,7 @@ These values map onto the above equation as follows:
 | Sensor output at the sample reading |           y            |
 | Sensor output change per 1 &deg;C   |           m            |
 
-c remains the only value that is unknown.  Rearranging the equation gives the following:
+`c` remains the only value that is unknown.  Rearranging the equation gives the following:
 
 ```
 c = y - (m * x)
