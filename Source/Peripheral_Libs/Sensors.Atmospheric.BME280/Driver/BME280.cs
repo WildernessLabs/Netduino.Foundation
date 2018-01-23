@@ -18,7 +18,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         /// <summary>
         ///     Minimum value that should be used for the polling frequency.
         /// </summary>
-        public const ushort MINIMUM_POLLING_PERIOD = 100;
+        public const ushort MinimumPollingPeriod = 100;
 
         #endregion Constants
 
@@ -132,11 +132,11 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         /// </summary>
         private static class Registers
         {
-            public static readonly byte Humidity = 0xf2;
-            public static readonly byte Status = 0xf3;
-            public static readonly byte Measurement = 0xf4;
-            public static readonly byte Configuration = 0xf5;
-            public static readonly byte Reset = 0xe0;
+            public const byte Humidity = 0xf2;
+            public const byte Status = 0xf3;
+            public const byte Measurement = 0xf4;
+            public const byte Configuration = 0xf5;
+            public const byte Reset = 0xe0;
         }
 
         #endregion Internal Structures
@@ -241,7 +241,6 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         /// <summary>
         ///     Pressure over sampling configuration.
         /// </summary>
-        /// <remarks>
         public Oversample PressureOversampling { get; set; }
 
         /// <summary>
@@ -334,7 +333,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         /// <param name="humidityChangeNotificationThreshold">Changes in humidity greater than this value will trigger an event when updatePeriod > 0.</param>
         /// <param name="temperatureChangeNotificationThreshold">Changes in temperature greater than this value will trigger an event when updatePeriod > 0.</param>
         /// <param name="pressureChangedNotificationThreshold">Changes in pressure greater than this value will trigger an event when updatePeriod > 0.</param>
-        public BME280(byte address = 0x77, ushort speed = 100, ushort updateInterval = MINIMUM_POLLING_PERIOD,
+        public BME280(byte address = 0x77, ushort speed = 100, ushort updateInterval = MinimumPollingPeriod,
                       float humidityChangeNotificationThreshold = 0.001F,
                       float temperatureChangeNotificationThreshold = 0.001F,
                       float pressureChangedNotificationThreshold = 10.0F)
@@ -359,9 +358,9 @@ namespace Netduino.Foundation.Sensors.Atmospheric
             {
                 throw new ArgumentOutOfRangeException(nameof(pressureChangedNotificationThreshold), "Pressure threshold should be >= 0");
             }
-            if ((updateInterval != 0) && (updateInterval < MINIMUM_POLLING_PERIOD))
+            if ((updateInterval != 0) && (updateInterval < MinimumPollingPeriod))
             {
-                throw new ArgumentOutOfRangeException(nameof(updateInterval), "Update period should be 0 or >= than " + MINIMUM_POLLING_PERIOD);
+                throw new ArgumentOutOfRangeException(nameof(updateInterval), "Update period should be 0 or >= than " + MinimumPollingPeriod);
             }
 
             _bme280 = new I2CBus(address, speed);
