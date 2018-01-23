@@ -134,7 +134,7 @@ namespace AnalogTemperaturePollingSample
 
 ### Local Classes
 
-#### Calibration
+#### [`Calibration`](Calibration/)
 
 The local `Calibration` class allows the `AnalogTemperature` sensor to be configured for any sensor that exhibits linear changes in the output voltage as temperature changes.
 
@@ -142,15 +142,15 @@ See the [`Calibration` documentation](Calibration/) for more information.
 
 ### Constants
 
-#### `const ushort MINIMUM_POLLING_PERIOD = 100;`
+#### `const ushort MinimumPollingPeriod = 100`
 
-This constant defines the minimum interrupt polling period for the sensor.
+This constant defines the minimum interrupt polling period (in interrupt mode) for the sensor.
 
 ### Enums
 
-#### `SensorType`
+#### `KnownSensorType`
 
-A number of temperature sensors are predefined and support natively by the `AnalogTemperature` class.  The natively supported sensors can be found in the `SensorType` enum:
+A number of temperature sensors are predefined and support natively by the `AnalogTemperature` class.  The natively supported sensors can be found in the `KnownSensorType` enum:
 
 ```csharp
 enum SensorType { Custom, TMP35, TMP36, TMP37, LM35, LM45, LM50 };
@@ -158,7 +158,7 @@ enum SensorType { Custom, TMP35, TMP36, TMP37, LM35, LM45, LM50 };
 
 ### Constructor
 
-#### `AnalogTemperature(Cpu.AnalogChannel analogPin, SensorType sensor, int sampleReading = 25, int millivoltsAtSampleReading = 250, int millivoltsPerDegreeCentigrade = 10, ushort updateInterval = MINIMUM_POLLING_PERIOD, float temperatureChangeNotificationThreshold = 0.001F))`
+#### `AnalogTemperature(Cpu.AnalogChannel analogPin, KnownSensorType sensorType, Calibration calibration = null, ushort updateInterval = MINIMUM_POLLING_PERIOD, float temperatureChangeNotificationThreshold = 0.001F)`
 
 An `AnalogTemperature` object can be constructed in a number of ways:
 
@@ -170,29 +170,23 @@ An `AnalogTemperature` object can be constructed in a number of ways:
 A new instance of a supported sensor can be constructed  by supplying the sensor type and the analog pin that the sensor is connected to:
 
 ```csharp
-var tmp36 = new AnalogTemperature(AnalogChannels.ANALOG_PIN_A0, AnalogTemperature.SensorType.TMP36);
+var tmp36 = new AnalogTemperature(AnalogChannels.ANALOG_PIN_A0, AnalogTemperature.KnownSensorType.TMP36);
 ```
 
 #### User Defined Temperature Sensor
 
-A new sensor can be supported using the `SensorType.Custom` sensor type.  When this type of sensor is used, three additional pieces of calibration information are required to be specified in the constructor:
-
-| Constructor Parameter    | Description                              |
-|--------------------------|------------------------------------------|
-| `sampleReading`          | Temperature of a known sensor output.    |
-| `millivoltsAtSampleReading` | Reading for the specified temperature above. |
-| `millivoltsPerDegreeCentigrade` | Millivolts change per degree centigrade. |
+A new sensor can be supported using the `KnownSensorType.Custom` sensor type.  The application provides a `Calibration` object to correctly configure the `AnalogTemperature` object.
 
 For example, when creating a new custom sensor, valid values to describe that sensor might be:
 
 * `10` millivolts (mV) per degree centigrade
 * `250` millivolts (mV) output at `25`ºC
 
-The constructor for this sensor when connected to pin `A0` would then be:
+The code for creating an `AnalogTemperature` object for this sensor when connected to pin `A0` would then be:
 
 ```csharp
-var newSensor = new AnalogTemperature(
-	AnalogChannels.ANALOG_PIN_A0, 25, 250, 10);
+var calibration = new AnalogTemperature.Calibration(25, 250, 20);
+var newSensor = new AnalogTemperature(AnalogChannels.ANALOG_PIN_A0, KnownSensorType.Custom, calibration);
 ```
 
 #### `updateInterval` and `temperatureChangeNotificationThreshold`

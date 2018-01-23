@@ -87,7 +87,7 @@ namespace Netduino.Foundation.Sensors.Temperature
         /// <summary>
         ///     Minimum value that should be used for the polling frequency.
         /// </summary>
-        public const ushort MINIMUM_POLLING_PERIOD = 100;
+        public const ushort MinimumPollingPeriod = 100;
 
         #endregion Constants
         
@@ -209,7 +209,7 @@ namespace Netduino.Foundation.Sensors.Temperature
         /// <param name="updateInterval">Number of milliseconds between samples (0 indicates polling to be used)</param>
         /// <param name="temperatureChangeNotificationThreshold">Changes in temperature greater than this value will trigger an event when updatePeriod > 0.</param>
         public AnalogTemperature(Cpu.AnalogChannel analogPin, KnownSensorType sensorType, Calibration calibration = null, 
-            ushort updateInterval = MINIMUM_POLLING_PERIOD, float temperatureChangeNotificationThreshold = 0.001F)
+            ushort updateInterval = MinimumPollingPeriod, float temperatureChangeNotificationThreshold = 0.001F)
         {
             if (temperatureChangeNotificationThreshold < 0)
             {
@@ -217,10 +217,10 @@ namespace Netduino.Foundation.Sensors.Temperature
                     "Temperature threshold should be >= 0");
             }
 
-            if ((updateInterval != 0) && (updateInterval < MINIMUM_POLLING_PERIOD))
+            if ((updateInterval != 0) && (updateInterval < MinimumPollingPeriod))
             {
                 throw new ArgumentOutOfRangeException(nameof(updateInterval),
-                    "Update period should be 0 or >= than " + MINIMUM_POLLING_PERIOD);
+                    "Update period should be 0 or >= than " + MinimumPollingPeriod);
             }
             //
             //  If the calibration object is null use the defaults for TMP35.
