@@ -130,8 +130,15 @@ namespace AnalogTemperaturePollingSample
 }
 ```
 
-
 ## API
+
+### Local Classes
+
+#### Calibration
+
+The local `Calibration` class allows the `AnalogTemperature` sensor to be configured for any sensor that exhibits linear changes in the output voltage as temperature changes.
+
+See the [`Calibration` documentation](Calibration/) for more information.
 
 ### Constants
 

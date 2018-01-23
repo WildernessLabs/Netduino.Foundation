@@ -41,23 +41,26 @@ namespace Netduino.Foundation.Sensors.Temperature
         public class Calibration
         {
             /// <summary>
-            ///     
+            ///     Sample reading as specified in the product data sheet.
             /// </summary>
-            public int SampleReading { get; set; } = 25;
+            public int SampleReading { get; private set; } = 25;
 
             /// <summary>
-            ///     
+            ///     Millivolt reading the sensor will generate when the sensor
+            ///     is at the Samplereading temperature.  This value can be
+            ///     obtained from the data sheet. 
             /// </summary>
-            public int MillivoltsAtSampleReading { get; set; } = 250;
+            public int MillivoltsAtSampleReading { get; private set; } = 250;
 
             /// <summary>
-            ///     
+            ///     Linear change in the sensor output (in millivolts) per 1 degree C
+            ///     change in temperature.
             /// </summary>
-            public int MillivoltsPerDegreeCentigrade { get; set; } = 10;
+            public int MillivoltsPerDegreeCentigrade { get; private set; } = 10;
 
             /// <summary>
             ///     Default constructor.  Create a new Calibration object with default values
-            /// for the properties.
+            ///     for the properties.
             /// </summary>
             public Calibration()
             {
