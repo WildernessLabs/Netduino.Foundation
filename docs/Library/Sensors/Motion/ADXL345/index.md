@@ -4,7 +4,9 @@ title: ADXL345
 subtitle: Triple axis accelerometer
 ---
 
-The ADXL345 is a small low power sensor capable of measuring up to +/-16g with a resolution of 13-bits.
+# Info
+
+The ADXL345 is a small, low power, triple axis acceleration sensor capable of measuring up to +/-16g with a resolution of 13-bits.
 
 ## Hardware
 
