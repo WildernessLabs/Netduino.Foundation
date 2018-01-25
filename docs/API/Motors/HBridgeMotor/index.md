@@ -6,7 +6,7 @@ subtitle: Generic h-bridge motor controller driver.
 
 # Info
 
-An [h-bridge](https://www.wikiwand.com/en/H_bridge) motor controller enables a control signal to drive a much larger load in either polarity, allowing the Netduino to drive DC motors in forward or reverse from an external power supply. Using [pulse-width-modulation (PWM)](http://developer.wildernesslabs.co/Netduino/Input_Output/Digital/PWM/) as the control signal extends this control by allowing not just forward or reverse, but variable speeds in either direction.
+An [h-bridge](https://www.wikiwand.com/en/H_bridge) motor controller enables a control signal to drive a much larger load in either polarity, allowing the Netduino to drive DC motors in forward or reverse from an external power supply. Using [pulse-width-modulation (PWM)](http://developer.wildernesslabs.co/Netduino/Input_Output/Digital/PWM/) as the control signal, provides not just forward or reverse control, but variable speeds in either direction.
 
 ![](HBridges.jpg)
 
