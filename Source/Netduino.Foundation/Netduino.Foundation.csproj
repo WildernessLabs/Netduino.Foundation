@@ -49,6 +49,7 @@
     <Compile Include="RoslynFixHack.cs" />
     <Compile Include="Sensors\Buttons\IButton.cs" />
     <Compile Include="Sensors\Buttons\PushButton.cs" />
+    <Compile Include="Sensors\HallEffect\DigitalTachometer.cs" />
     <Compile Include="Sensors\IHumiditySensor.cs" />
     <Compile Include="Sensors\ILightSensor.cs" />
     <Compile Include="Sensors\IPressureSensor.cs" />
