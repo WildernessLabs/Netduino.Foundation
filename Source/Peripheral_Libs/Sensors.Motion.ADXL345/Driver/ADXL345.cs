@@ -244,7 +244,7 @@ namespace Netduino.Foundation.Sensors.Motion
         /// <param name="updateInterval">How frequently this sensor should be updated.</param>
         /// <param name="accelerationChangeNotificationThreshold">Notification threshold, changes greater than +/- this value will generate and interrupt.</param>
         public ADXL345(byte address = 0x53, ushort speed = 100, ushort updateInterval = 100, 
-                       double accelerationChangeNotificationThreshold = 0.1F)
+                       double accelerationChangeNotificationThreshold = 5.0F)
         {
             if ((address != 0x1d) && (address != 0x53))
             {
