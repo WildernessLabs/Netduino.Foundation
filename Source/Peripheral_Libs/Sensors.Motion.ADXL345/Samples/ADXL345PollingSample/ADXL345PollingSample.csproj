@@ -7,7 +7,7 @@
     <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{54CE0B18-46F8-4586-A40A-A77F8FA7FB2D}</ProjectGuid>
+    <ProjectGuid>{57769D03-6D27-4C1D-846B-02B4316A9818}</ProjectGuid>
     <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>
     <DeployDevice>Netduino</DeployDevice>
     <DeployTransport>USB</DeployTransport>
