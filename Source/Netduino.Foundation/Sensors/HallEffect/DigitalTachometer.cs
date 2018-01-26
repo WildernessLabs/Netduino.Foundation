@@ -64,8 +64,9 @@ namespace Netduino.Foundation.Sensors.HallEffect
             // if it's the very first read, set the time and bail out
             if (_numberOfReads == 0 && _revolutionTimeStart == DateTime.MinValue)
             {
-                S.Debug.Print("First reading.");
+                //S.Debug.Print("First reading.");
                 _revolutionTimeStart = time;
+                _numberOfReads++;
                 return;
             }
 
@@ -75,12 +76,26 @@ namespace Netduino.Foundation.Sensors.HallEffect
             // if we've made a full revolution
             if (_numberOfReads == _numberOfMagnets)
             {
-                S.Debug.Print("Viva La Revolucion!");
+                //S.Debug.Print("Viva La Revolucion!");
                 // calculate how much time has elapsed since the start of the revolution 
                 var revolutionTime = time - _revolutionTimeStart;
 
+                if (revolutionTime.Milliseconds > 5)
+                {
+                    S.Debug.Print("RevTime Milliseconds: " + revolutionTime.Milliseconds.ToString());
+                }
+
                 // calculate our rpms
-                _RPMs = revolutionTime.Milliseconds * 60;
+                // RPSecond = revTime.millis / 1000
+                // PPMinute = RPSecond * 60
+                _RPMs = (revolutionTime.Milliseconds / 1000) * 60;
+
+                //if (revolutionTime.Milliseconds < 5) {
+                //    S.Debug.Print("revolution time was < 5. garbage results.");
+                //} else {
+                //    S.Debug.Print("RPMs: " + _RPMs);
+                //}
+               
 
                 // reset our number of reads and store our revolution time start
                 _numberOfReads = 0;
