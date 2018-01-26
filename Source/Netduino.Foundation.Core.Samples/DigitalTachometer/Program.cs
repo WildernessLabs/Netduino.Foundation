@@ -28,7 +28,7 @@ namespace Netduino.Foundation.Core.Samples
         {
             this._motor = new HBridgeMotor(N.PWMChannels.PWM_PIN_D3, 
                 N.PWMChannels.PWM_PIN_D5, N.Pins.GPIO_PIN_D4);
-            this._tach = new LinearHallEffectTachometer(N.Pins.GPIO_PIN_D1);
+            this._tach = new LinearHallEffectTachometer(N.Pins.GPIO_PIN_D0);
             this._tach.RPMsChanged += RPMsChanged;
         }
 
@@ -43,18 +43,21 @@ namespace Netduino.Foundation.Core.Samples
             {
 
                 // 75% speed
+                Debug.Print("75% Speed");
                 this._motor.Speed = 0.75F;
 
                 // 3 seconds
                 Thread.Sleep(3000);
 
                 // full speed
+                Debug.Print("100% Speed");
                 this._motor.Speed = 1.0F;
 
                 // 3 seconds
                 Thread.Sleep(3000);
 
                 // off
+                Debug.Print("0% Speed");
                 this._motor.Speed = 0.0F;
 
                 // 3 seconds
