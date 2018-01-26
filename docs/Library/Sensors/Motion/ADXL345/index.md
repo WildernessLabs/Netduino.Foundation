@@ -24,7 +24,54 @@ The ADXL345 is available on a small breakout board:
 
 ## Software
 
-This application will create a new ADXL345 object, display the device ID and then present the sensor readings once per second:
+The ADXL345 can operating in interrupt and polling mode.  Polling applications are responsible for determining when a sensor is read.  Interrupt applications will be notified when the sensor reading changes by + / - a threshold value.
+
+### Interrupt Example
+
+The application below demonstrates how to connect an interrupt handler to the ADXL345 sensor and display changes only when the acceleration changes in the x, y or z axis by more than the acceleration threshold (default is 5 units):
+
+```csharp
+using System.Threading;
+using Microsoft.SPOT;
+using Netduino.Foundation.Sensors.Motion;
+
+namespace ADXL345InterruptSample
+{
+    public class Program
+    {
+        public static void Main()
+        {
+            Debug.Print("\n\n");
+            Debug.Print("ADXL345 Interrupt Example.");
+            Debug.Print("--------------------------");
+            var adxl345 = new ADXL345();
+            Debug.Print("Device ID: " + adxl345.DeviceID);
+            //
+            //  Attach an interrupt handler.
+            //
+            adxl345.AccelerationChanged += (s, e) =>
+            {
+                Debug.Print("X: " + e.CurrentValue.X.ToString() +
+                            ", Y: " + e.CurrentValue.Y.ToString() +
+                            ", Z: " + e.CurrentValue.Z.ToString());
+            };
+            //
+            //  Interrupts are attached so power on the sensor.
+            //
+            adxl345.SetPowerState(false, false, true, false, ADXL345.Frequency.EightHz);
+            //
+            //  Put the Netduino to sleep as the interrupt handler will deal 
+            //  with changes in acceleration.
+            //
+            Thread.Sleep(Timeout.Infinite);
+        }
+    }
+}
+```
+
+### Polling Example
+
+The sensor is put into polling mode by setting the `updateInterval` in the constructor to 0 milliseconds.  The following application will read the sensor and output to the debug console every 500 milliseconds:
 
 ```csharp
 using Microsoft.SPOT;
@@ -38,14 +85,14 @@ namespace ADXL345RegisterTests
         public static void Main()
         {
             Debug.Print("\n\n");
-            Debug.Print("ADXL345 Register Test Application.");
-            Debug.Print("----------------------------------");
-            ADXL345 adxl345 = new ADXL345();
+            Debug.Print("ADXL345 Polling Example.");
+            Debug.Print("------------------------");
+            ADXL345 adxl345 = new ADXL345(updateInterval: 0);
             Debug.Print("Device ID: " + adxl345.DeviceID);
             adxl345.SetPowerState(false, false, true, false, ADXL345.Frequency.EightHz);
             while (true)
             {
-                adxl345.Read();
+                adxl345.Update();
                 Debug.Print("X: " + adxl345.X.ToString() + ", Y: " + adxl345.Y.ToString() + ", Z: " + adxl345.Z.ToString());
                 Thread.Sleep(500);
             }
@@ -70,15 +117,19 @@ Used to control the frequency of sensor readings.
 
 ### Constructors
 
-#### `ADXL345(byte address = 0x53, ushort speed = 100)`
+#### `ADXL345(byte address = 0x53, ushort speed = 100, ushort updateInterval = 100, double accelerationChangeNotificationThreshold = 5.0F)`
 
-Create a new ADXL345 object on the default address.
+Create a new ADXL345 object on the default address.  The sensor will operate in interrupt mode with a refresh period of 100ms and a acceleration change threshold of 5.0.
 
 ### Properties
 
+#### `double AccelerationChangeNotificationThreshold`
+
+When operating in interrupt mode, this property defines the acceleration change threshold.  This is the size of the change in acceleration that must occur before an interrupt is generated.
+
 #### `byte DeviceID`
 
-Built in device ID, this should return `oxe5` for the ADXL345.
+Built in device ID, this should return `0xe5` for the ADXL345.
 
 #### `X`, `Y` and `Z`
 
@@ -90,7 +141,7 @@ The offset registers are used to compensate the values read by the sensor.  Thes
 
 ### Methods
 
-#### `void Read()`
+#### `void Update()`
 
 Read the current sensor values and store the values in the `X`, `Y` and `Z` properties.
 
@@ -147,3 +198,9 @@ Sets the data rate and low power mode for the sensor.  The data rate should be i
 
 
 `lowPower` puts the sensor in to low power mode when `true`.  In this mode the sensor is more sensitive to noise.
+
+### Events
+
+#### `event SensorVectorEventHandler AccelerationChanged`
+
+This event (interrupt) is generated when the acceleration in any of the x, y or z directions exceeds the `AccelerationChangeNotificationThreshold` value.  The event will send a [`SensorVectorEventArgs`](/API/Sensors/SensorVectorEventArgs/) object containing the current and last acceleration values in [`Vector`](../../Spatial/Vector.md) objects.
