@@ -10,14 +10,14 @@ subtitle: 3D Position or Motion Vector
 
 # API
 
-## Properties
-
-### `X`, `Y` and `Z`
-
-`X`, `Y` and `Z` positional coordinates or components of the motion vector.
-
 ## Constructor
 
 ### Vector(double x, double y, double z)
 
 `x`, `y` and `z` positional coordinates or components of the motion vector.
+
+## Properties
+
+### `X`, `Y` and `Z`
+
+`X`, `Y` and `Z` positional coordinates or components of the motion vector.
