@@ -47,6 +47,10 @@
       <Project>{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}</Project>
       <Name>Netduino.Foundation</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Peripheral_Libs\Displays.SerialLCD\Driver\Displays.SerialLCD.csproj">
+      <Project>{D32F7103-5F7B-4880-8C80-B17570F4380D}</Project>
+      <Name>Displays.SerialLCD</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Condition="EXISTS('$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets')" Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <Import Condition="!EXISTS('$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets')" Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

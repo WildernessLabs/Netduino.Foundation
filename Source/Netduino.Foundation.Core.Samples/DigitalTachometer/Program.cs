@@ -3,10 +3,16 @@ using H = Microsoft.SPOT.Hardware;
 using N = SecretLabs.NETMF.Hardware.Netduino;
 using Netduino.Foundation.Sensors.HallEffect;
 using Netduino.Foundation.Motors;
+using Netduino.Foundation.Displays;
 using Microsoft.SPOT;
 
 namespace Netduino.Foundation.Core.Samples
 {
+    // http://bildr.org/2011/04/various-hall-effect-sensors/
+    // 472 = 4700pf = 4.7nf capcitor
+    // 104 = 100,000pf = 100nf = 0.1µf
+    // 103 = 10,000 = 10nf = 0.01uf
+
     public class Program
     {
         public static void Main()
@@ -23,22 +29,28 @@ namespace Netduino.Foundation.Core.Samples
     {
         protected HBridgeMotor _motor;
         protected LinearHallEffectTachometer _tach;
+        protected SerialLCD _lcd;
 
         public TachometerApp()
         {
             this._motor = new HBridgeMotor(N.PWMChannels.PWM_PIN_D3, 
-                N.PWMChannels.PWM_PIN_D5, N.Pins.GPIO_PIN_D4);
-            this._tach = new LinearHallEffectTachometer(N.Pins.GPIO_PIN_D0);
+                N.PWMChannels.PWM_PIN_D5, N.Pins.GPIO_PIN_D4, 50);
+            this._tach = new LinearHallEffectTachometer(N.Pins.GPIO_PIN_D2);
+            this._lcd = new SerialLCD(new TextDisplayConfig() { Width = 16, Height = 2 });
+
             this._tach.RPMsChanged += RPMsChanged;
         }
 
         private void RPMsChanged(object sender, Sensors.SensorFloatEventArgs e)
         {
             Debug.Print("RPMs: " + e.CurrentValue);
+            _lcd.WriteLine("Speed: " + e.CurrentValue.ToString("N0") + "RPMs", 0);
         }
 
         public void Run()
         {
+            this._lcd.Clear();
+
             while (true)
             {
 
