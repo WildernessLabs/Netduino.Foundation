@@ -59,7 +59,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Light.SI1145", "Per
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Barometric.MPL115A2", "Peripheral_Libs\Sensors.Barometric.MPL115A2\Driver\Sensors.Barometric.MPL115A2.csproj", "{ABF79BD5-8EA2-4F42-9C1A-41AFC3A6EAEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Servos.Servo.Core", "Peripheral_Libs\Servos.Servo\Driver\Servos.Servo.Core.csproj", "{8EFE2319-3D0D-4E57-B25F-02E6401FC45F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Servos.Servo.Core", "Peripheral_Libs\Servos.Servo.Core\Driver\Servos.Servo.Core.csproj", "{8EFE2319-3D0D-4E57-B25F-02E6401FC45F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RTCs.DS323x", "Peripheral_Libs\RTCs.DS323x\Driver\RTCs.DS323x.csproj", "{94AA6C5B-5A98-492D-B79E-23C1437EDA8B}"
 EndProject
