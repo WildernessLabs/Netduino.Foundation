@@ -9,6 +9,7 @@ namespace Netduino.Foundation.Displays
     // * SelectLine (uchar lineNumber)
     // * SetBacklightBrightness (float brightness) //brightness should be 0-1 but we'll need to translate that to 128-157
     // * WriteMarquee (string text) // or similar
+    // * SaveCustomCharacter (character)
 
 
     /// <summary>
@@ -107,6 +108,11 @@ namespace Netduino.Foundation.Displays
         ///     Track if Dispose has been called.
         /// </summary>
         private bool _disposed;
+
+        /// <summary>
+        ///     object for using lock() to do thread synch
+        /// </summary>
+        protected object _lock = new object();
 
         #endregion Member variable / fields
 
@@ -219,7 +225,11 @@ namespace Netduino.Foundation.Displays
         /// <param name="buffer">Bytes of data to be sent to the display.</param>
         private void Send(byte[] buffer)
         {
-            _comPort.Write(buffer, 0, buffer.Length);
+            // critical section so we don't have mixed messages
+            lock (_lock)
+            {
+                _comPort.Write(buffer, 0, buffer.Length);
+            }
         }
 
         /// <summary>
