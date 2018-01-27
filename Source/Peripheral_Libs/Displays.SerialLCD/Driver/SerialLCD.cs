@@ -375,7 +375,9 @@ namespace Netduino.Foundation.Displays
         {
             if (text.Length > DisplayConfig.Width)
             {
-                throw new Exception("Number characters must be <= columns");
+                Microsoft.SPOT.Debug.Print("Text length exceeds number of columns.");
+                Microsoft.SPOT.Debug.Print("Text length: " + text.Length.ToString() + ", Columns: " + DisplayConfig.Width.ToString());
+                //throw new Exception("Number characters must be <= columns");
             }
 
             // clear the line
