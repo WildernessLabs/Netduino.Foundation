@@ -18,7 +18,7 @@ namespace Netduino.Foundation.Sensors.Motion
         ///     Minimum value that can be used for the update interval when the
         ///     sensor is being configured to generate interrupts.
         /// </summary>
-        public const ushort MINIMUM_UPDATE_PERIOD = 100;
+        public const ushort MinimumUpdatePeriod = 100;
         
         #endregion Constants
         
@@ -255,10 +255,10 @@ namespace Netduino.Foundation.Sensors.Motion
                 throw new ArgumentOutOfRangeException(nameof(speed), 
                     "ADXL345 speed should be between 10 kHz and 400 kHz inclusive.");
             }
-            if ((updateInterval != 0) && (updateInterval < MINIMUM_UPDATE_PERIOD))
+            if ((updateInterval != 0) && (updateInterval < MinimumUpdatePeriod))
             {
                 throw new ArgumentOutOfRangeException(nameof(updateInterval),
-                    "Update interval should be 0 or greater than " + MINIMUM_UPDATE_PERIOD);    
+                    "Update interval should be 0 or greater than " + MinimumUpdatePeriod);    
             }
             
             _updateInterval = updateInterval;

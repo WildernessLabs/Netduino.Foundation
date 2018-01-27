@@ -1,4 +1,7 @@
-﻿using Microsoft.SPOT.Hardware;
+﻿using System;
+using System.Threading;
+using Microsoft.SPOT.Hardware;
+using Netduino.Foundation.Spatial;
 
 namespace Netduino.Foundation.Sensors.Motion
 {
@@ -7,24 +10,16 @@ namespace Netduino.Foundation.Sensors.Motion
     /// </summary>
     public class ADXL335
     {
-        #region Structures
+        #region Constants
 
         /// <summary>
-        ///     Structure to hold the X, Y & Z readings.
+        ///     Minimum value that can be used for the update interval when the
+        ///     sensor is being configured to generate interrupts.
         /// </summary>
-        /// <remarks>
-        ///     This can be used to hold either the raw sensor data or the G forces
-        ///     depending upon which method is called.
-        /// </remarks>
-        public struct Readings
-        {
-            public double X;
-            public double Y;
-            public double Z;
-        }
-
-        #endregion Structures
-
+        public const ushort MinimumUpdatePeriod = 100;
+        
+        #endregion Constants
+        
         #region Member variables / fields
 
         /// <summary>
@@ -47,9 +42,56 @@ namespace Netduino.Foundation.Sensors.Motion
         /// </summary>
         private double _zeroGVoltage;
 
+        /// <summary>
+        ///     How often should this sensor be read?
+        /// </summary>
+        private readonly ushort _updateInterval;
+
+        /// <summary>
+        ///     Last X acceleration reading from the sensor.
+        /// </summary>
+        private double _lastX = 0;
+
+        /// <summary>
+        ///     Last Y reading from the sensor.
+        /// </summary>
+        private double _lastY = 0;
+        
+        /// <summary>
+        ///     Last Z reading from the sensor.
+        /// </summary>
+        private double _lastZ = 0;
+
         #endregion Member variables / fields
 
         #region Properties
+
+        /// <summary>
+        ///     Acceleration along the X-axis.
+        /// </summary>
+        /// <remarks>
+        ///     This property will only contain valid data after a call to Read or after
+        ///     an interrupt has been generated.
+        /// </remarks>
+        public double X { get; private set; }
+
+        /// <summary>
+        ///     Acceleration along the Y-axis.
+        /// </summary>
+        /// <remarks>
+        ///     This property will only contain valid data after a call to Read or after
+        ///     an interrupt has been generated.
+        /// </remarks>
+        public double Y { get; private set; }
+
+        /// <summary>
+        ///     Acceleration along the Z-axis.
+        /// </summary>
+        /// <remarks>
+        ///     This property will only contain valid data after a call to Read or after
+        ///     an interrupt has been generated.
+        /// </remarks>
+        public double Z { get; private set; }
 
         /// <summary>
         ///     Volts per G for the X axis.
@@ -81,8 +123,31 @@ namespace Netduino.Foundation.Sensors.Motion
                 _zeroGVoltage = value / 2;
             }
         }
+        
+        /// <summary>
+        ///     Acceleration as read from the 
+        /// </summary>
+        private Vector Acceleration { get; set; }
+
+        /// <summary>
+        ///     Any changes in the acceleration that are greater than the acceleration
+        ///     threshold will cause an event to be raised when the instance is
+        ///     set to update automatically.
+        /// </summary>
+        public double AccelerationChangeNotificationThreshold { get; set; } = 0.1F;
 
         #endregion Properties
+        
+        #region Events and delegates
+
+        /// <summary>
+        ///     Event to be raised when the acceleration is greater than
+        ///     +/- AccelerationChangeNotificationThreshold.
+        /// </summary>
+        public event SensorVectorEventHandler AccelerationChanged = delegate { };
+        
+        #endregion Events and delegates
+
 
         #region Constructors
 
@@ -94,13 +159,22 @@ namespace Netduino.Foundation.Sensors.Motion
         }
 
         /// <summary>
-        ///     Create anew ADXL335 sensor object.
+        ///     Create a new ADXL335 sensor object.
         /// </summary>
         /// <param name="x">Analog pin connected to the X axis output from the ADXL335 sensor.</param>
         /// <param name="y">Analog pin connected to the Y axis output from the ADXL335 sensor.</param>
         /// <param name="z">Analog pin connected to the Z axis output from the ADXL335 sensor.</param>
-        public ADXL335(Cpu.AnalogChannel x, Cpu.AnalogChannel y, Cpu.AnalogChannel z)
+        /// <param name="updateInterval">Update interval for the sensor, set to 0 to put the sensor in polling mode.</param>
+        /// <<param name="accelerationChangeNotificationThreshold">Acceleration change threshold.</param>
+        public ADXL335(Cpu.AnalogChannel x, Cpu.AnalogChannel y, Cpu.AnalogChannel z, ushort updateInterval = 100,
+                       double accelerationChangeNotificationThreshold = 0.1F)
         {
+            if ((updateInterval != 0) && (updateInterval < MinimumUpdatePeriod))
+            {
+                throw new ArgumentOutOfRangeException(nameof(updateInterval),
+                    "Update interval should be 0 or greater than " + MinimumUpdatePeriod);    
+            }
+
             _x = new AnalogInput(x);
             _y = new AnalogInput(y);
             _z = new AnalogInput(z);
@@ -111,6 +185,15 @@ namespace Netduino.Foundation.Sensors.Motion
             YVoltsPerG = 0.325;
             ZVoltsPerG = 0.550;
             SupplyVoltage = 3.3;
+
+            if (updateInterval > 0)
+            {
+                StartUpdating();
+            }
+            else
+            {
+                Update();
+            }
         }
 
         #endregion Constructors
@@ -118,26 +201,49 @@ namespace Netduino.Foundation.Sensors.Motion
         #region Methods
 
         /// <summary>
+        ///     Start the update process.
+        /// </summary>
+        private void StartUpdating()
+        {
+            Thread t = new Thread(() => {
+                while (true)
+                {
+                    Update();
+                    Thread.Sleep(_updateInterval);
+                }
+            });
+            t.Start();
+        }
+
+        /// <summary>
         ///     Read the sensor output and convert the sensor readings into acceleration values.
         /// </summary>
-        /// <returns><see cref="Readings" /> structure containing the acceleration in g.</returns>
-        public Readings GetAcceleration()
+        public void Update()
         {
-            var data = new Readings();
-
-            data.X = ((_x.Read() * SupplyVoltage) - _zeroGVoltage) / XVoltsPerG;
-            data.Y = ((_y.Read() * SupplyVoltage) - _zeroGVoltage) / YVoltsPerG;
-            data.Z = ((_z.Read() * SupplyVoltage) - _zeroGVoltage) / ZVoltsPerG;
-            return data;
+            X = ((_x.Read() * SupplyVoltage) - _zeroGVoltage) / XVoltsPerG;
+            Y = ((_y.Read() * SupplyVoltage) - _zeroGVoltage) / YVoltsPerG;
+            Z = ((_z.Read() * SupplyVoltage) - _zeroGVoltage) / ZVoltsPerG;
+            if ((_updateInterval != 0) && 
+                ((Math.Abs(X - _lastX) > AccelerationChangeNotificationThreshold) ||
+                 (Math.Abs(Y - _lastY) > AccelerationChangeNotificationThreshold) ||
+                 (Math.Abs(Z - _lastZ) > AccelerationChangeNotificationThreshold)))
+            {
+                Vector lastNotifiedReading = new Vector(_lastX, _lastY, _lastZ);
+                Vector currentReading = new Vector(X, Y, Z);
+                _lastX = X;
+                _lastY = Y;
+                _lastZ = Z;
+                AccelerationChanged(this, new SensorVectorEventArgs(lastNotifiedReading, currentReading));
+            }
         }
 
         /// <summary>
         ///     Get the raw analog input values from the sensor.
         /// </summary>
-        /// <returns><see cref="Readings" /> structure containing the raw sensor data from the analog pins.</returns>
-        public Readings GetRawSensorData()
+        /// <returns>Vector object containing the raw sensor data from the analog pins.</returns>
+        public Vector GetRawSensorData()
         {
-            return new Readings { X = _x.Read(), Y = _y.Read(), Z = _z.Read() };
+            return new Vector(_x.Read(), _y.Read(), _z.Read());
         }
 
         #endregion Methods
