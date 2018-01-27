@@ -3,7 +3,7 @@ using Microsoft.SPOT;
 using Netduino.Foundation.Sensors.Motion;
 using SecretLabs.NETMF.Hardware.NetduinoPlus;
 
-namespace ADXL335Test
+namespace ADXL335PollingSample
 {
     public class Program
     {
