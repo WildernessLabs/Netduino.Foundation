@@ -64,7 +64,7 @@ namespace Netduino.Foundation.Core.Samples
 
                 // full speed
                 Debug.Print("100% Speed");
-                this._lcd.WriteLine("Input speed: 100%", 0);
+                this._lcd.WriteLine("Input speed:100%", 0);
                 this._motor.Speed = 1.0F;
 
                 // 3 seconds
