@@ -373,11 +373,13 @@ namespace Netduino.Foundation.Displays
         /// <param name="text">Text to display.</param>
         public void WriteLine(string text, byte lineNumber)
         {
+            string lineText = text;
             if (text.Length > DisplayConfig.Width)
             {
-                Microsoft.SPOT.Debug.Print("Text length exceeds number of columns.");
+                Microsoft.SPOT.Debug.Print("Text length exceeds number of columns, truncating.");
                 Microsoft.SPOT.Debug.Print("Text length: " + text.Length.ToString() + ", Columns: " + DisplayConfig.Width.ToString());
                 //throw new Exception("Number characters must be <= columns");
+                lineText = text.Substring(0, DisplayConfig.Width);
             }
 
             // clear the line
@@ -385,7 +387,7 @@ namespace Netduino.Foundation.Displays
 
             // write the line
             SetCursorPosition(0, lineNumber);
-            Write(text);
+            Write(lineText);
         }
 
         /// <summary>
