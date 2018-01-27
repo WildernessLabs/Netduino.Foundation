@@ -64,7 +64,7 @@ namespace Netduino.Foundation.Sensors.HallEffect
             // if it's the very first read, set the time and bail out
             if (_numberOfReads == 0 && _revolutionTimeStart == DateTime.MinValue)
             {
-                S.Debug.Print("First reading.");
+                //S.Debug.Print("First reading.");
                 _revolutionTimeStart = time;
                 _numberOfReads++;
                 return;
@@ -80,10 +80,10 @@ namespace Netduino.Foundation.Sensors.HallEffect
                 // calculate how much time has elapsed since the start of the revolution 
                 var revolutionTime = time - _revolutionTimeStart;
 
-                S.Debug.Print("RevTime Milliseconds: " + revolutionTime.Milliseconds.ToString());
+                //S.Debug.Print("RevTime Milliseconds: " + revolutionTime.Milliseconds.ToString());
 
                 if (revolutionTime.Milliseconds < 3) {
-                    S.Debug.Print("rev time < 3. Garbage, bailing.");
+                    //S.Debug.Print("rev time < 3. Garbage, bailing.");
                     _numberOfReads = 0;
                     _revolutionTimeStart = time;
                     return;
