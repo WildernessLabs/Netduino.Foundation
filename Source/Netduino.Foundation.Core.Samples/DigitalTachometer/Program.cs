@@ -44,7 +44,7 @@ namespace Netduino.Foundation.Core.Samples
         private void RPMsChanged(object sender, Sensors.SensorFloatEventArgs e)
         {
             Debug.Print("RPMs: " + e.CurrentValue);
-            _lcd.WriteLine("Speed: " + e.CurrentValue.ToString("N0") + "RPMs", 0);
+            _lcd.WriteLine("Speed: " + e.CurrentValue.ToString("N0") + "RPMs", 1);
         }
 
         public void Run()
@@ -56,6 +56,7 @@ namespace Netduino.Foundation.Core.Samples
 
                 // 75% speed
                 Debug.Print("75% Speed");
+                this._lcd.WriteLine("Input speed: 75%", 0);
                 this._motor.Speed = 0.75F;
 
                 // 3 seconds
@@ -63,12 +64,14 @@ namespace Netduino.Foundation.Core.Samples
 
                 // full speed
                 Debug.Print("100% Speed");
+                this._lcd.WriteLine("Input speed: 100%", 0);
                 this._motor.Speed = 1.0F;
 
                 // 3 seconds
                 Thread.Sleep(3000);
 
                 // off
+                this._lcd.WriteLine("Fan off.", 0);
                 Debug.Print("0% Speed");
                 this._motor.Speed = 0.0F;
 
