@@ -54,17 +54,26 @@ namespace Netduino.Foundation.Motors
             }
         } protected bool _isNeutral = true;
 
+        /// <summary>
+        /// The frequency of the PWM used to drive the motors. 
+        /// Default value is 1600.
+        /// </summary>
+        public float PwmFrequency
+        {
+            get { return _pwmFrequency; }
+        } protected readonly float _pwmFrequency;
+
         protected H.PWM _motorLeftPwm = null; // H-Bridge 1A pin
         protected H.PWM _motorRighPwm = null; // H-Bridge 2A pin
         protected H.OutputPort _enablePort = null; // if enabled, then IsNeutral = false
 
-        const double DefaultFrequency = 1600;
-
-        public HBridgeMotor(H.Cpu.PWMChannel a1Pin, H.Cpu.PWMChannel a2Pin, H.Cpu.Pin enablePin)
+ 
+        public HBridgeMotor(H.Cpu.PWMChannel a1Pin, H.Cpu.PWMChannel a2Pin, H.Cpu.Pin enablePin, float pwmFrequency = 1600)
         {
+            this._pwmFrequency = pwmFrequency;
             // create our PWM outputs
-            this._motorLeftPwm = new H.PWM(a1Pin, DefaultFrequency, 0, false);
-            this._motorRighPwm = new H.PWM(a2Pin, DefaultFrequency, 0, false);
+            this._motorLeftPwm = new H.PWM(a1Pin, _pwmFrequency, 0, false);
+            this._motorRighPwm = new H.PWM(a2Pin, _pwmFrequency, 0, false);
             this._enablePort = new H.OutputPort(enablePin, false);
         }
     }
