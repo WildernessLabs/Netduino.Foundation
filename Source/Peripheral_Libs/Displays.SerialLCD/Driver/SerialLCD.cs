@@ -380,6 +380,7 @@ namespace Netduino.Foundation.Displays
                 Microsoft.SPOT.Debug.Print("Text length: " + text.Length.ToString() + ", Columns: " + DisplayConfig.Width.ToString());
                 //throw new Exception("Number characters must be <= columns");
                 lineText = text.Substring(0, DisplayConfig.Width);
+                Microsoft.SPOT.Debug.Print("Truncating text to: " + lineText);
             }
 
             // clear the line
