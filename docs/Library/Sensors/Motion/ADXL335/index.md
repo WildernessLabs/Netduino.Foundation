@@ -23,6 +23,52 @@ The datasheet notes that bypass capacitors should be installed for the X, Y and 
 
 ## Software
 
+The ADXL335 can operate in interrupt and polling mode.
+
+### Interrupt Mode
+
+The example below uses the default setting to check the sensor every 100 milliseconds.  The sensor will generate and interrupt if the acceleration changes by more than 0.1g:
+
+```csharp
+using System.Threading;
+using Microsoft.SPOT;
+using Netduino.Foundation.Sensors.Motion;
+using SecretLabs.NETMF.Hardware.NetduinoPlus;
+
+namespace ADXL335InterruptSample
+{
+    public class Program
+    {
+        public static void Main()
+        {
+            var adxl335 = new ADXL335(AnalogChannels.ANALOG_PIN_A0, AnalogChannels.ANALOG_PIN_A1, AnalogChannels.ANALOG_PIN_A2);
+            adxl335.SupplyVoltage = 3.3;
+            adxl335.XVoltsPerG = 0.343;
+            adxl335.YVoltsPerG = 0.287;
+            adxl335.ZVoltsPerG = 0.541;
+            //
+            //  Attach an interrupt handler.
+            //
+            adxl335.AccelerationChanged += (s, e) =>
+            {
+                var rawData = adxl335.GetRawSensorData();
+                Debug.Print("\n");
+                Debug.Print("X: " + adxl335.X.ToString("F2") + ", " + rawData.X.ToString("F2"));
+                Debug.Print("Y: " + adxl335.Y.ToString("F2") + ", " + rawData.Y.ToString("F2"));
+                Debug.Print("Z: " + adxl335.Z.ToString("F2") + ", " + rawData.Z.ToString("F2"));
+            };
+            //
+            //  Netduino can now go to sleep as the data will be processed
+            //  by the interrupt handler.
+            //
+            Thread.Sleep(Timeout.Infinite);
+        }
+    }
+}
+```
+
+### Polling Mode
+
 The following code will set up the sensor and display the G force and raw sensor data every 250 milliseconds:
 
 ```csharp
@@ -58,21 +104,17 @@ namespace ADXL335Test
 }
 ```
 
-Note that the voltage per axes have been set for the sensor installed in this setup.
-
 ## API
-
-### Structures
-
-### `Readings`
-
-The `Readings` structure can be used to hold the `X`, `Y` and `Z` acceleration data either in G or as raw sensor readings.  The exact contents will be determined by the method called (see `GetRawSensorData` and `GetAcceleration`).
 
 ### Constructor
 
-#### `ADXL335(Cpu.AnalogChannel x, Cpu.AnalogChannel y, Cpu.AnalogChannel z)`
+#### `ADXL335(Cpu.AnalogChannel x, Cpu.AnalogChannel y, Cpu.AnalogChannel z, ushort updateInterval = 100, double accelerationChangeNotificationThreshold = 0.1F)`
 
 The constructor takes three `Cpu.AnalogChannel` inputs, one for each axis.  The specified channels will be attached to the respective X, Y, and Z readings.
+
+`updateInterval` determines if the sensor is to operate in interrupt or polling mode.  A value of 0 will put the sensor into interrupt mode.  A value other than 0 will set the update period (in milliseconds).
+
+In interrupt mode, any changes in acceleration greater than + / - `accelerationChangeNotificationThreshold` will generate and interrupt.
 
 ### Properties
 
@@ -86,12 +128,22 @@ These three properties hold the voltage change that will be expected for each 1g
 
 These are set to the default values from the data sheet (X: 0.325, Y: 0.325, Z: 0.550).  These values should be set in the application following calibration.
 
+#### `AccelerationChangeNotificationThreshold`
+
+In interrupt mode, this sensor checks the sensor reading periodically.  `AccelerationChangeNotificationThreshold` is used to determine if the checking method should generate an interrupt (see `AccelerationChanged`).
+
 ### Methods
 
-#### `void GetAcceleration()`
+#### `Vector GetAcceleration()`
 
-Get a `Readings` structure holding the acceleration for the X, Y and Z axes.  This method uses the `SupplyVoltage`, `XVoltsPerG`, `YVoltsPerG` and `ZVoltsPerG` properties to determine the current acceleration being experienced.
+Get a `Vector` structure holding the acceleration for the X, Y and Z axes.  This method uses the `SupplyVoltage`, `XVoltsPerG`, `YVoltsPerG` and `ZVoltsPerG` properties to determine the current acceleration being experienced.
 
 #### `void GetRawSensorData()`
 
-This method returns a `Readings` structure that holds the data from the analog inputs for each of the X, Y and Z axes.  These values are in the range 0-1.
+This method returns a `Vector` structure that holds the data from the analog inputs for each of the X, Y and Z axes.  These values are in the range 0-1.
+
+### Events
+
+#### `AccelerationChanged`
+
+This event is generated if the difference between the last reported acceleration and the current acceleration reading on any of the x, y or z axes is greater then + / - `AccelerationChangeNotificationThreshold`.
