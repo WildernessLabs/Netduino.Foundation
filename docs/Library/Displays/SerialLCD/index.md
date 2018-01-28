@@ -15,6 +15,8 @@ The Serial LCD requires only three connections; power, ground and serial data.  
 
 ![Netduino Connected to SerialLCD](SerialLCD.png)
 
+**Note:** This display uses a COM port on the Netduino.  This means that both the T<sub>x</sub> and the R<sub>x</sub> pins are  allocated to the COM port even though the R<sub>x</sub> pin is not used for communication.
+
 ## Software
 
 The application below outputs <i>Hello, world</i> on the LCD:
