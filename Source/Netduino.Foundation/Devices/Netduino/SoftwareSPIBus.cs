@@ -161,9 +161,20 @@ namespace Netduino.Foundation.Devices
         /// <param name="address">Address to write the first byte to.</param>
         /// <param name="value">Value to be written (16-bits).</param>
         /// <param name="order">Indicate if the data should be written as big or little endian.</param>
-        public void WriteUShort(byte address, ushort value, ByteOrder order)
+        public void WriteUShort(byte address, ushort value, ByteOrder order = ByteOrder.LittleEndian)
         {
-            throw new NotImplementedException();
+            var data = new byte[2];
+            if (order == ByteOrder.LittleEndian)
+            {
+                data[0] = (byte) (value & 0xff);
+                data[1] = (byte) ((value >> 8) & 0xff);
+            }
+            else
+            {
+                data[0] = (byte) ((value >> 8) & 0xff);
+                data[1] = (byte) (value & 0xff);
+            }
+            WriteRegisters(address, data);
         }
 
         /// <summary>
@@ -175,9 +186,23 @@ namespace Netduino.Foundation.Devices
         /// <param name="address">Address to write the first byte to.</param>
         /// <param name="values">Values to be written.</param>
         /// <param name="order">Indicate if the data should be written as big or little endian.</param>
-        public void WriteUShorts(byte address, ushort[] values, ByteOrder order)
+        public void WriteUShorts(byte address, ushort[] values, ByteOrder order = ByteOrder.LittleEndian)
         {
-            throw new NotImplementedException();
+            var data = new byte[2 * values.Length];
+            for (var index = 0; index < values.Length; index++)
+            {
+                if (order == ByteOrder.LittleEndian)
+                {
+                    data[2 * index] = (byte) (values[index] & 0xff);
+                    data[(2 * index) + 1] = (byte) ((values[index] >> 8) & 0xff);
+                }
+                else
+                {
+                    data[2 * index] = (byte) ((values[index] >> 8) & 0xff);
+                    data[(2 * index) + 1] = (byte) (values[index] & 0xff);
+                }
+            }
+            WriteRegisters(address, data);
         }
 
         /// <summary>
@@ -286,8 +311,8 @@ namespace Netduino.Foundation.Devices
         /// <param name="length">Number of bytes to read from the device.</param>
         public byte[] ReadRegisters(byte address, ushort length)
         {
-
-            throw new NotImplementedException();
+            byte[] registerAddress = { address };
+            return WriteRead(registerAddress, length);
         }
 
         /// <summary>
@@ -298,7 +323,17 @@ namespace Netduino.Foundation.Devices
         /// <returns>Value read from the register.</returns>
         public ushort ReadUShort(byte address, ByteOrder order = ByteOrder.LittleEndian)
         {
-            throw new NotImplementedException();
+            var data = ReadRegisters(address, 3);
+            ushort result = 0;
+            if (order == ByteOrder.LittleEndian)
+            {
+                result = (ushort) ((data[2] << 8) + data[1]);
+            }
+            else
+            {
+                result = (ushort) ((data[1] << 8) + data[2]);
+            }
+            return result;
         }
 
         /// <summary>
@@ -311,7 +346,20 @@ namespace Netduino.Foundation.Devices
         /// <returns>Array of unsigned shorts.</returns>
         public ushort[] ReadUShorts(byte address, ushort number, ByteOrder order = ByteOrder.LittleEndian)
         {
-            throw new NotImplementedException();
+            var data = ReadRegisters(address, (ushort) ((2 * number) & 0xffff));
+            var result = new ushort[number];
+            for (var index = 0; index < number; index++)
+            {
+                if (order == ByteOrder.LittleEndian)
+                {
+                    result[index] = (ushort) ((data[(2 * index) + 2] << 8) + data[(2 * index) + 1]);
+                }
+                else
+                {
+                    result[index] = (ushort) ((data[(2 * index) + 1] << 8) + data[(2 * index) + 2]);
+                }
+            }
+            return result;
         }
 
         #endregion Methods
