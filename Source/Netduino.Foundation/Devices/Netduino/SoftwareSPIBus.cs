@@ -1,5 +1,6 @@
 ﻿using System;
-using MSH = Microsoft.SPOT.Hardware;
+using Microsoft.SPOT.Hardware;
+using System.Runtime.CompilerServices;
 
 namespace Netduino.Foundation.Devices
 {
@@ -13,22 +14,22 @@ namespace Netduino.Foundation.Devices
         /// <summary>
         ///     MOSI output port.
         /// </summary>
-        private MSH.OutputPort _mosi;
+        private OutputPort _mosi;
 
         /// <summary>
         ///     MISO Input port.
         /// </summary>
-        private MSH.InputPort _miso;
+        private InputPort _miso;
 
         /// <summary>
         ///     Clock output port.
         /// </summary>
-        private MSH.OutputPort _clock;
+        private OutputPort _clock;
 
         /// <summary>
         ///     Chip select port.
         /// </summary>
-        private MSH.OutputPort _chipSelect;
+        private OutputPort _chipSelect;
 
         /// <summary>
         ///     Boolean representation of the clock polarity.
@@ -60,14 +61,23 @@ namespace Netduino.Foundation.Devices
         /// <param name="chipSelect">Chip select pin.</param>
         /// <param name="cpha">Clock phase (0 or 1, default is 0).</param>
         /// <param name="cpol">Clock polarity (0 or 1, default is 0).</param>
-        public SoftwareSPIBus(MSH.Cpu.Pin mosi, MSH.Cpu.Pin miso, MSH.Cpu.Pin clock, MSH.Cpu.Pin chipSelect, byte cpha = 0, byte cpol = 0)
+        public SoftwareSPIBus(Cpu.Pin mosi, Cpu.Pin miso, Cpu.Pin clock, Cpu.Pin chipSelect, byte cpha = 0, byte cpol = 0)
         {
+            if (mosi == Cpu.Pin.GPIO_NONE)
+            {
+                throw new ArgumentException("MOSI line cannot be set to None.");
+            }
+            if (clock == Cpu.Pin.GPIO_NONE)
+            {
+                throw new ArgumentException("Clock line cannot be set to None");
+            }
+
             _phase = (cpha == 1);
             _polarity = (cpol == 1);
-            _mosi = new MSH.OutputPort(mosi, false);
-            _miso = new MSH.InputPort(miso, false, MSH.Port.ResistorMode.Disabled);
-            _clock = new MSH.OutputPort(clock, _polarity);
-            _chipSelect = new MSH.OutputPort(chipSelect, true);
+            _mosi = new OutputPort(mosi, false);
+            _miso = miso == Cpu.Pin.GPIO_NONE ? null : new InputPort(miso, false, Port.ResistorMode.Disabled);
+            _clock = new OutputPort(clock, _polarity);
+            _chipSelect = chipSelect == Cpu.Pin.GPIO_NONE ? null : new OutputPort(chipSelect, true);
         }
 
         #endregion Constructors
@@ -75,12 +85,33 @@ namespace Netduino.Foundation.Devices
         #region Methods
 
         /// <summary>
+        ///     Write a single byte to the SPI bus.
+        /// </summary>
+        /// <param name="value">Byte value to write to the SPI bus.</param>
+        private void Write(byte value)
+        {
+            byte mask = 0x80;
+            var clock = _phase;
+
+            for (var index = 0; index < 8; index++)
+            {
+                _mosi.Write((value & mask) > 0);
+                _clock.Write(!clock);
+                _clock.Write(clock);
+                mask >>= 1;
+            }
+        }
+
+        /// <summary>
         ///     Write a single byte to the device.
         /// </summary>
         /// <param name="value">Value to be written (8-bits).</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void WriteByte(byte value)
         {
-            throw new NotImplementedException();
+            _chipSelect?.Write(false);
+            Write(value);
+            _chipSelect?.Write(true);
         }
 
         /// <summary>
@@ -90,9 +121,15 @@ namespace Netduino.Foundation.Devices
         ///     The number of bytes to be written will be determined by the length of the byte array.
         /// </remarks>
         /// <param name="values">Values to be written.</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void WriteBytes(byte[] values)
         {
-            throw new NotImplementedException();
+            _chipSelect?.Write(false);
+            for (int index = 0; index < values.Length; index++)
+            {
+                Write(values[index]);
+            }
+            _chipSelect?.Write(true);
         }
 
         /// <summary>
@@ -102,7 +139,8 @@ namespace Netduino.Foundation.Devices
         /// <param name="value">Data to write into the register.</param>
         public void WriteRegister(byte register, byte value)
         {
-            throw new NotImplementedException();
+            byte[] values = new byte[] { register, value};
+            WriteBytes(values);
         }
 
         /// <summary>
@@ -112,7 +150,9 @@ namespace Netduino.Foundation.Devices
         /// <param name="data">Data to write into the registers.</param>
         public void WriteRegisters(byte address, byte[] data)
         {
-            throw new NotImplementedException();
+            byte[] values = new byte[data.Length + 1];
+            values[0] = address;
+            Array.Copy(data, 0, values, 1, data.Length);
         }
 
         /// <summary>
@@ -143,9 +183,13 @@ namespace Netduino.Foundation.Devices
         /// <summary>
         ///     Write and read a single byte.
         /// </summary>
+        /// <remarks>
+        ///     This internal method assumes that CS has been asserted correctly
+        ///     before it is called.
+        /// </remarks>
         /// <param name="value">Value to write.</param>
         /// <returns>Byte read from the SPI interface.</returns>
-        public byte WriteRead(byte value)
+        private byte WriteRead(byte value)
         {
             byte result = 0;
             byte mask = 0x80;
@@ -184,14 +228,18 @@ namespace Netduino.Foundation.Devices
         /// </remarks>
         /// <param name="write">Array of bytes to be written to the device.</param>
         /// <param name="length">Amount of data to read from the device.</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public byte[] WriteRead(byte[] write, ushort length)
         {
             if (length < write.Length)
             {
-                throw new ArgumentException("length");
+                throw new ArgumentException(nameof(length));
             }
-            bool chipSelect = _chipSelect.Read();
-            _chipSelect.Write(!chipSelect);
+            if (_miso == null)
+            {
+                throw new InvalidOperationException("Cannot read from SPI bus when the MISO pin is set to None");
+            }
+            _chipSelect?.Write(false);
             byte[] result = new byte[length];
             for (var index = 0; index < length; index++)
             {
@@ -202,7 +250,7 @@ namespace Netduino.Foundation.Devices
                 }
                 result[index] = WriteRead(value);
             }
-            _chipSelect.Write(chipSelect);
+            _chipSelect?.Write(true);
             _mosi.Write(false);
             return(result);
         }
@@ -214,7 +262,12 @@ namespace Netduino.Foundation.Devices
         /// <returns>The bytes read from the device.</returns>
         public byte[] ReadBytes(ushort numberOfBytes)
         {
-            throw new NotImplementedException();
+            byte[] values = new byte[numberOfBytes];
+            for (int index = 0; index < numberOfBytes; index++)
+            {
+                values[index] = 0;
+            }
+            return(WriteRead(values, numberOfBytes));
         }
 
         /// <summary>
@@ -223,7 +276,7 @@ namespace Netduino.Foundation.Devices
         /// <param name="address">Address of the register to read.</param>
         public byte ReadRegister(byte address)
         {
-            throw new NotImplementedException();
+            return(WriteRead(address));
         }
 
         /// <summary>
@@ -233,6 +286,7 @@ namespace Netduino.Foundation.Devices
         /// <param name="length">Number of bytes to read from the device.</param>
         public byte[] ReadRegisters(byte address, ushort length)
         {
+
             throw new NotImplementedException();
         }
 
