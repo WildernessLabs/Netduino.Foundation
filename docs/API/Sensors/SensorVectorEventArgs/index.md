@@ -1,7 +1,7 @@
 ---
 layout: API
-title: SensorFloatArgs
-subtitle: Event arguments for sensors using `float` values.
+title: SensorVectorArgs
+subtitle: Event arguments for sensors using `Vector` values.
 ---
 
 # Info
