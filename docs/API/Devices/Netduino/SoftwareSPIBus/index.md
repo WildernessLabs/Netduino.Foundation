@@ -43,13 +43,13 @@ Write data to a register in the device.
 
 Write data to one or more registers.
 
-#### `public void WriteUShort(byte address, ushort value, ByteOrder order)`
+#### `public void WriteUShort(byte address, ushort value, ByteOrder order = ByteOrder.LittleEndian)`
 
 **Not yet implemented**
 
 Write an unsigned short to the device.
 
-#### `public void WriteUShorts(byte address, ushort[] values, ByteOrder order)`
+#### `public void WriteUShorts(byte address, ushort[] values, ByteOrder order = ByteOrder.LittleEndian)`
 
 **Not yet implemented**
 

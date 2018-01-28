@@ -29,7 +29,7 @@
         /// <param name="address">Address to write the first byte to.</param>
         /// <param name="value">Value to be written (16-bits).</param>
         /// <param name="order">Indicate if the data should be written as big or little endian.</param>
-        void WriteUShort(byte address, ushort value, ByteOrder order);
+        void WriteUShort(byte address, ushort value, ByteOrder order = ByteOrder.LittleEndian);
 
         /// <summary>
         ///     Write a number of unsigned shorts to the device.
@@ -40,7 +40,7 @@
         /// <param name="address">Address to write the first byte to.</param>
         /// <param name="values">Values to be written.</param>
         /// <param name="order">Indicate if the data should be written as big or little endian.</param>
-        void WriteUShorts(byte address, ushort[] values, ByteOrder order);
+        void WriteUShorts(byte address, ushort[] values, ByteOrder order = ByteOrder.LittleEndian);
 
         /// <summary>
         ///     Write data a register in the device.

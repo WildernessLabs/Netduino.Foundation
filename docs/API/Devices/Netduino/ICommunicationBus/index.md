@@ -25,11 +25,11 @@ Write a number of bytes to the device.
 
 Write an unsigned short to the device.
 
-#### `void WriteUShort(byte address, ushort value, ByteOrder order)`
+#### `void WriteUShort(byte address, ushort value, ByteOrder order = ByteOrder.LittleEndian)`
 
 Write an unsigned short to the device.
 
-#### `void WriteUShorts(byte address, ushort[] values, ByteOrder order)`
+#### `void WriteUShorts(byte address, ushort[] values, ByteOrder order = ByteOrder.LittleEndian)`
 
 Write a number of unsigned shorts to the device.
 

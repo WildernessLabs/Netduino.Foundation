@@ -105,7 +105,7 @@ namespace Netduino.Foundation.Devices
         /// <param name="address">Address to write the first byte to.</param>
         /// <param name="value">Value to be written (16-bits).</param>
         /// <param name="order">Indicate if the data should be written as big or little endian.</param>
-        public void WriteUShort(byte address, ushort value, ByteOrder order)
+        public void WriteUShort(byte address, ushort value, ByteOrder order = ByteOrder.LittleEndian)
         {
             var data = new byte[2];
             if (order == ByteOrder.LittleEndian)
@@ -130,7 +130,7 @@ namespace Netduino.Foundation.Devices
         /// <param name="address">Address to write the first byte to.</param>
         /// <param name="values">Values to be written.</param>
         /// <param name="order">Indicate if the data should be written as big or little endian.</param>
-        public void WriteUShorts(byte address, ushort[] values, ByteOrder order)
+        public void WriteUShorts(byte address, ushort[] values, ByteOrder order = ByteOrder.LittleEndian)
         {
             var data = new byte[2 * values.Length];
             for (var index = 0; index < values.Length; index++)

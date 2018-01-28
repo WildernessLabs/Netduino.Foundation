@@ -26,11 +26,11 @@ Writes a single byte to the device.
 
 Writes a number of bytes to the device.
 
-#### `public void WriteUShort(byte address, ushort value, ByteOrder order)`
+#### `public void WriteUShort(byte address, ushort value, ByteOrder order = ByteOrder.LittleEndian)`
 
 Writes an unsigned short to the device.
 
-#### `public void WriteUShorts(byte address, ushort[] values, ByteOrder order)`
+#### `public void WriteUShorts(byte address, ushort[] values, ByteOrder order = ByteOrder.LittleEndian)`
 
 Writes a number of unsigned shorts to the device.
 
