@@ -46,7 +46,6 @@ namespace Netduino.Foundation.LEDs
         
         
         /// <summary>
-        /// TODO: in the case of isCommonCathode = false, invert the stuff.
         /// 
         /// Implementation notes: Architecturally, it would be much cleaner to construct this class
         /// as three PwmLeds. Then each one's implementation would be self-contained. However, that
