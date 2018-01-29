@@ -101,6 +101,13 @@ namespace Netduino.Foundation.LEDs
             GreenPwm.DutyCycle = (this._color.G * _maximumGreenPwmDuty);
             BluePwm.DutyCycle = (this._color.B * _maximumBluePwmDuty);
 
+            if(IsCommonCathode == false)
+            {
+                RedPwm.DutyCycle = 1 - RedPwm.DutyCycle;
+                GreenPwm.DutyCycle = 1 - GreenPwm.DutyCycle;
+                BluePwm.DutyCycle = 1 - BluePwm.DutyCycle;
+            }
+
             // start our PWMs.
             this.RedPwm.Start();
             this.GreenPwm.Start();
