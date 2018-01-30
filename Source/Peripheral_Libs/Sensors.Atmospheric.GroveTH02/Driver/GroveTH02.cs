@@ -14,27 +14,27 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         /// <summary>
         ///     Start measurement bit in the configuration register.
         /// </summary>
-        private const byte START_MEASUREMENT = 0x01;
+        private const byte StartMeasurement = 0x01;
 
         /// <summary>
         ///     Measure temperature bit in the configuration register.
         /// </summary>
-        private const byte MEASURE_TEMPERATURE = 0x10;
+        private const byte MeasureTemperature = 0x10;
 
         /// <summary>
         ///     Heater control bit in the configuration register.
         /// </summary>
-        private const byte HEATER_ON = 0x02;
+        private const byte HeaterOnBit = 0x02;
 
         /// <summary>
         ///     Mask used to turn the heater off.
         /// </summary>
-        private const byte HEATER_MASK = 0xfd;
+        private const byte HeaterMask = 0xfd;
 
         /// <summary>
         ///     Minimum value that should be used for the polling frequency.
         /// </summary>
-        public const ushort MINIMUM_POLLING_PERIOD = 200;
+        public const ushort MinimumPollingPeriod = 200;
 
         #endregion
 
@@ -154,18 +154,18 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         {
             get
             {
-                return ((_groveTH02.ReadRegister(Registers.Config) & HEATER_ON) > 0);
+                return ((_groveTH02.ReadRegister(Registers.Config) & HeaterOnBit) > 0);
             }
             set
             {
                 byte config = _groveTH02.ReadRegister(Registers.Config);
                 if (value)
                 {
-                    config |= HEATER_ON;                    
+                    config |= HeaterOnBit;                    
                 }
                 else
                 {
-                    config &= HEATER_MASK;
+                    config &= HeaterMask;
                 }
                 _groveTH02.WriteRegister(Registers.Config, config);
             }
@@ -206,7 +206,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         /// <param name="updateInterval">Number of milliseconds between samples (0 indicates polling to be used)</param>
         /// <param name="humidityChangeNotificationThreshold">Changes in humidity greater than this value will trigger an event when updatePeriod > 0.</param>
         /// <param name="temperatureChangeNotificationThreshold">Changes in temperature greater than this value will trigger an event when updatePeriod > 0.</param>
-        public GroveTH02(byte address = 0x40, ushort speed = 100, ushort updateInterval = MINIMUM_POLLING_PERIOD,
+        public GroveTH02(byte address = 0x40, ushort speed = 100, ushort updateInterval = MinimumPollingPeriod,
             float humidityChangeNotificationThreshold = 0.001F,
             float temperatureChangeNotificationThreshold = 0.001F)
         {
@@ -261,7 +261,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
             //
             //  Get the humidity first.
             //
-            _groveTH02.WriteRegister(Registers.Config, START_MEASUREMENT);
+            _groveTH02.WriteRegister(Registers.Config, StartMeasurement);
             //
             //  Maximum conversion time should be 40ms but loop just in case 
             //  it takes longer.
@@ -276,7 +276,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
             //
             //  Now get the temperature.
             //
-            _groveTH02.WriteRegister(Registers.Config, START_MEASUREMENT | MEASURE_TEMPERATURE);
+            _groveTH02.WriteRegister(Registers.Config, StartMeasurement | MeasureTemperature);
             //
             //  Maximum conversion time should be 40ms but loop just in case 
             //  it takes longer.
