@@ -38,14 +38,40 @@ namespace Netduino.Foundation.Sensors.Atmospheric
 
         #endregion
 
-        #region Enums
+        #region Class
 
         /// <summary>
         ///     Register addresses in the Grove TH02 sensor.
         /// </summary>
-        private enum Registers { Status = 0x00, DataHigh = 0x01, DataLow = 0x02, Config = 0x04, ID = 0x11 }
+        private class Registers
+        {
+            /// <summary>
+            ///     Status register.
+            /// </summary>
+            public const byte Status = 0x00;
+            
+            /// <summary>
+            ///     High byte of the data register.
+            /// </summary>
+            public const byte DataHigh = 0x01;
+            
+            /// <summary>
+            ///     Low byte of the data register.
+            /// </summary>
+            public const byte DataLow = 0x02;
+            
+            /// <summary>
+            ///     Addess of the configuration register.
+            /// </summary>
+            public const byte Config = 0x04;
+            
+            /// <summary>
+            ///     Address of the ID register.
+            /// </summary>
+            public const byte ID = 0x11;
+        }
 
-        #endregion Enums
+        #endregion Class
 
         #region Member variables / fields
 
@@ -128,11 +154,11 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         {
             get
             {
-                return ((_groveTH02.ReadRegister((byte) Registers.Config) & HEATER_ON) > 0);
+                return ((_groveTH02.ReadRegister(Registers.Config) & HEATER_ON) > 0);
             }
             set
             {
-                byte config = _groveTH02.ReadRegister((byte)Registers.Config);
+                byte config = _groveTH02.ReadRegister(Registers.Config);
                 if (value)
                 {
                     config |= HEATER_ON;                    
@@ -141,7 +167,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
                 {
                     config &= HEATER_MASK;
                 }
-                _groveTH02.WriteRegister((byte)Registers.Config, config);
+                _groveTH02.WriteRegister(Registers.Config, config);
             }
         }
 
@@ -235,14 +261,14 @@ namespace Netduino.Foundation.Sensors.Atmospheric
             //
             //  Get the humidity first.
             //
-            _groveTH02.WriteRegister((byte) Registers.Config, START_MEASUREMENT);
+            _groveTH02.WriteRegister(Registers.Config, START_MEASUREMENT);
             //
             //  Maximum conversion time should be 40ms but loop just in case 
             //  it takes longer.
             //
             Thread.Sleep(40);
-            while ((_groveTH02.ReadRegister((byte) Registers.Status) & 0x01) > 0) ;
-            byte[] data = _groveTH02.ReadRegisters((byte) Registers.DataHigh, 2);
+            while ((_groveTH02.ReadRegister(Registers.Status) & 0x01) > 0) ;
+            byte[] data = _groveTH02.ReadRegisters(Registers.DataHigh, 2);
             temp = data[0] << 8;
             temp |= data[1];
             temp >>= 4;
@@ -250,14 +276,14 @@ namespace Netduino.Foundation.Sensors.Atmospheric
             //
             //  Now get the temperature.
             //
-            _groveTH02.WriteRegister((byte) Registers.Config, START_MEASUREMENT | MEASURE_TEMPERATURE);
+            _groveTH02.WriteRegister(Registers.Config, START_MEASUREMENT | MEASURE_TEMPERATURE);
             //
             //  Maximum conversion time should be 40ms but loop just in case 
             //  it takes longer.
             //
             Thread.Sleep(40);
-            while ((_groveTH02.ReadRegister((byte) Registers.Status) & 0x01) > 0) ;
-            data = _groveTH02.ReadRegisters((byte) Registers.DataHigh, 2);
+            while ((_groveTH02.ReadRegister(Registers.Status) & 0x01) > 0) ;
+            data = _groveTH02.ReadRegisters(Registers.DataHigh, 2);
             temp = data[0] << 8;
             temp |= data[1];
             temp >>= 2;
