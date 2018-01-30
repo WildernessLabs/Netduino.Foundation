@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.IO.Ports;
-using Netduino.Foundation.Devices;
+using Netduino.Foundation.Communications;
 using Netduino.Foundation.Helpers;
 
 namespace Netduino.Foundation.Sensors.GPS

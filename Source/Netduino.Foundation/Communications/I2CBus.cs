@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using Microsoft.SPOT.Hardware;
 
-namespace Netduino.Foundation.Devices
+namespace Netduino.Foundation.Communications
 {
     /// <summary>
     ///     I2CBus object used to communicate with an I2C device using the ICommunicationBus

@@ -1,6 +1,6 @@
 using System;
 using Microsoft.SPOT.Hardware;
-using Netduino.Foundation.Devices;
+using Netduino.Foundation.Communications;
 using Netduino.Foundation.Helpers;
 
 namespace Netduino.Foundation.RTCs

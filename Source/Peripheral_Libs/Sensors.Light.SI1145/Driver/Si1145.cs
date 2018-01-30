@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.SPOT;
-using Netduino.Foundation.Devices;
+using Netduino.Foundation.Communications;
 
 namespace Netduino.Foundation.Sensors.Light
 {

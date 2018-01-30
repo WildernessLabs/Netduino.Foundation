@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading;
-using Netduino.Foundation.Devices;
+using Netduino.Foundation.Communications;
 using Spot = Microsoft.SPOT.Hardware;
 
 namespace Netduino.Foundation.Sensors.Light

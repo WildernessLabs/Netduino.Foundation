@@ -1,5 +1,5 @@
 ﻿using System;
-using Netduino.Foundation.Devices;
+using Netduino.Foundation.Communications;
 using System.Threading;
 
 namespace Netduino.Foundation.Sensors.Atmospheric

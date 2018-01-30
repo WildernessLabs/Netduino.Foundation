@@ -1,7 +1,7 @@
 using System;
 using Microsoft.SPOT;
 
-namespace Netduino.Foundation.Devices
+namespace Netduino.Foundation
 {
     /// <summary>
     /// Indicate the byte ordering for muli-byte words.

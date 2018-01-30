@@ -1,4 +1,4 @@
-﻿namespace Netduino.Foundation.Devices
+﻿namespace Netduino.Foundation.Communications
 {
     /// <summary>
     ///     Define a standard interface for communicating with an attached

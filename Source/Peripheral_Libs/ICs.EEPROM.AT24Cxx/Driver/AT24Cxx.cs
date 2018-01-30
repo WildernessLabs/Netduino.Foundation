@@ -1,6 +1,6 @@
 using System;
 using System.Threading;
-using Netduino.Foundation.Devices;
+using Netduino.Foundation.Communications;
 
 namespace Netduino.Foundation.ICs.EEPROM
 {

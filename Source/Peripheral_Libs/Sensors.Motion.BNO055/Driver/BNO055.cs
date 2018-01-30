@@ -1,5 +1,5 @@
 ﻿using System;
-using Netduino.Foundation.Devices;
+using Netduino.Foundation.Communications;
 using Netduino.Foundation.Helpers;
 using System.Threading;
 using Netduino.Foundation.Spatial;

@@ -33,7 +33,13 @@
   <ItemGroup>
     <Compile Include="ArrayEventArgs.cs" />
     <Compile Include="Color.cs" />
+    <Compile Include="Communications\I2CBus.cs" />
+    <Compile Include="Communications\ICommunicationBus.cs" />
+    <Compile Include="Communications\SerialTextFile.cs" />
+    <Compile Include="Communications\SoftwareSPIBus.cs" />
+    <Compile Include="Communications\SPIBus.cs" />
     <Compile Include="Displays\TextDisplayConfig.cs" />
+    <Compile Include="Enums\Enums.cs" />
     <Compile Include="Helpers\NumericExtensions.cs" />
     <Compile Include="Displays\ITextDisplay.cs" />
     <Compile Include="LEDs\Helpers.cs" />
@@ -76,12 +82,6 @@
     <Compile Include="Sensors\Switches\SpstSwitch.cs" />
     <Compile Include="CircuitTerminationType.cs" />
     <Compile Include="Units.cs" />
-    <Compile Include="Devices\Netduino\Enums.cs" />
-    <Compile Include="Devices\Netduino\I2CBus.cs" />
-    <Compile Include="Devices\Netduino\ICommunicationBus.cs" />
-    <Compile Include="Devices\Netduino\SerialTextFile.cs" />
-    <Compile Include="Devices\Netduino\SoftwareSPIBus.cs" />
-    <Compile Include="Devices\Netduino\SPIBus.cs" />
     <Compile Include="Helpers\Checksum.cs" />
     <Compile Include="Helpers\DebugInformation.cs" />
     <Compile Include="Helpers\Converters.cs" />
@@ -100,8 +100,9 @@
     <Reference Include="Microsoft.SPOT.IO" />
     <Reference Include="System.IO" />
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Devices\Netduino" />
+  </ItemGroup>
   <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />

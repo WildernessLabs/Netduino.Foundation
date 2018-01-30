@@ -2,7 +2,7 @@
 using Microsoft.SPOT.Hardware;
 using System.Runtime.CompilerServices;
 
-namespace Netduino.Foundation.Devices
+namespace Netduino.Foundation.Communications
 {
     /// <summary>
     ///     Implement a software version of the SPI communication protocol.

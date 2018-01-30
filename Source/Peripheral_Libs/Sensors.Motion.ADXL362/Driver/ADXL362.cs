@@ -1,5 +1,5 @@
 ﻿using Microsoft.SPOT.Hardware;
-using Netduino.Foundation.Devices;
+using Netduino.Foundation.Communications;
 
 namespace Netduino.Foundation.Sensors.Motion
 {

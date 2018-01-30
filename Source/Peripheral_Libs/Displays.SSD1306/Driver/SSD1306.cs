@@ -1,5 +1,5 @@
 ﻿using System;
-using Netduino.Foundation.Devices;
+using Netduino.Foundation.Communications;
 
 namespace Netduino.Foundation.Displays
 {
