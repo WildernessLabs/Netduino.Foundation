@@ -46,7 +46,6 @@ namespace Netduino.Foundation.LEDs
         
         
         /// <summary>
-        /// TODO: in the case of isCommonCathode = false, invert the stuff.
         /// 
         /// Implementation notes: Architecturally, it would be much cleaner to construct this class
         /// as three PwmLeds. Then each one's implementation would be self-contained. However, that
@@ -100,6 +99,13 @@ namespace Netduino.Foundation.LEDs
             RedPwm.DutyCycle = (this._color.R * _maximumRedPwmDuty);
             GreenPwm.DutyCycle = (this._color.G * _maximumGreenPwmDuty);
             BluePwm.DutyCycle = (this._color.B * _maximumBluePwmDuty);
+
+            if(IsCommonCathode == false)
+            {
+                RedPwm.DutyCycle = 1 - RedPwm.DutyCycle;
+                GreenPwm.DutyCycle = 1 - GreenPwm.DutyCycle;
+                BluePwm.DutyCycle = 1 - BluePwm.DutyCycle;
+            }
 
             // start our PWMs.
             this.RedPwm.Start();
