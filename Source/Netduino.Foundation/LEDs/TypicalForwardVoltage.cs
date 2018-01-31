@@ -11,6 +11,6 @@ namespace Netduino.Foundation.LEDs
         public const float Yellow = 3.5F;
         public const float White = 2.15F;
 
-        public const float ResistorLimited = 0.0F;
+        public const float ResistorLimited = 3.3F;
     }
 }
