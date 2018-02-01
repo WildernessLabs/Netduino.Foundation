@@ -267,6 +267,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADXL335PollingSample", "Per
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServoSample", "Peripheral_Libs\Servos.Servo.Core\Samples\ServoSample\ServoSample.csproj", "{2BBF1397-50C5-4E99-9649-FF9E7054AB36}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnboardPushButton", "Netduino.Foundation.Core.Samples\OnboardPushButton\OnboardPushButton.csproj", "{2F4AACC1-8234-47F7-B528-6A42A8EE0D8C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1669,6 +1671,24 @@ Global
 		{2BBF1397-50C5-4E99-9649-FF9E7054AB36}.Release|x86.ActiveCfg = Release|Any CPU
 		{2BBF1397-50C5-4E99-9649-FF9E7054AB36}.Release|x86.Build.0 = Release|Any CPU
 		{2BBF1397-50C5-4E99-9649-FF9E7054AB36}.Release|x86.Deploy.0 = Release|Any CPU
+		{2F4AACC1-8234-47F7-B528-6A42A8EE0D8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F4AACC1-8234-47F7-B528-6A42A8EE0D8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F4AACC1-8234-47F7-B528-6A42A8EE0D8C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{2F4AACC1-8234-47F7-B528-6A42A8EE0D8C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{2F4AACC1-8234-47F7-B528-6A42A8EE0D8C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{2F4AACC1-8234-47F7-B528-6A42A8EE0D8C}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
+		{2F4AACC1-8234-47F7-B528-6A42A8EE0D8C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2F4AACC1-8234-47F7-B528-6A42A8EE0D8C}.Debug|x86.Build.0 = Debug|Any CPU
+		{2F4AACC1-8234-47F7-B528-6A42A8EE0D8C}.Debug|x86.Deploy.0 = Debug|Any CPU
+		{2F4AACC1-8234-47F7-B528-6A42A8EE0D8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F4AACC1-8234-47F7-B528-6A42A8EE0D8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F4AACC1-8234-47F7-B528-6A42A8EE0D8C}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{2F4AACC1-8234-47F7-B528-6A42A8EE0D8C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2F4AACC1-8234-47F7-B528-6A42A8EE0D8C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{2F4AACC1-8234-47F7-B528-6A42A8EE0D8C}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
+		{2F4AACC1-8234-47F7-B528-6A42A8EE0D8C}.Release|x86.ActiveCfg = Release|Any CPU
+		{2F4AACC1-8234-47F7-B528-6A42A8EE0D8C}.Release|x86.Build.0 = Release|Any CPU
+		{2F4AACC1-8234-47F7-B528-6A42A8EE0D8C}.Release|x86.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1765,5 +1785,6 @@ Global
 		{4B8A886F-BC5C-4494-8DE3-7283C443BE68} = {EDDEAD23-FA0A-4FA9-9C2B-31EB80073BC4}
 		{8D114E64-09B4-4C4E-A45D-63A1FD595596} = {EDDEAD23-FA0A-4FA9-9C2B-31EB80073BC4}
 		{2BBF1397-50C5-4E99-9649-FF9E7054AB36} = {FF35EA4A-5CF5-4B70-BF82-D68A11AC1FD8}
+		{2F4AACC1-8234-47F7-B528-6A42A8EE0D8C} = {B1CB9A4C-0FA0-4D20-AC92-18B3D23EBD45}
 	EndGlobalSection
 EndGlobal

@@ -35,7 +35,19 @@ namespace Netduino.Foundation.Sensors.Buttons
             this.DebounceDuration = new TimeSpan(0, 0, 0, 0, debounceDuration);
 
             // if we terminate in ground, we need to pull the port high to test for circuit completion, otherwise down.
-            var resistorMode = (type == CircuitTerminationType.CommonGround) ? H.Port.ResistorMode.PullUp : H.Port.ResistorMode.PullDown;
+            H.Port.ResistorMode resistorMode = H.Port.ResistorMode.Disabled;
+            switch (type)
+            {
+                case CircuitTerminationType.CommonGround:
+                    resistorMode = H.Port.ResistorMode.PullUp;
+                    break;
+                case CircuitTerminationType.High:
+                    resistorMode = H.Port.ResistorMode.PullDown;
+                    break;
+                case CircuitTerminationType.Floating:
+                    resistorMode = H.Port.ResistorMode.Disabled;
+                    break;
+            }
 
             // create the interrupt port from the pin and resistor type
             this.DigitalIn = new H.InterruptPort(inputPin, true, resistorMode, H.Port.InterruptMode.InterruptEdgeBoth);

@@ -25,9 +25,6 @@ namespace Netduino.Foundation.Sensors.Switches
 
         public DipSwitch(H.Cpu.Pin[] switchPins, CircuitTerminationType type)
         {
-            // if we terminate in ground, we need to pull the port high to test for circuit completion, otherwise down.
-            var resistorMode = (type == CircuitTerminationType.CommonGround) ? H.Port.ResistorMode.PullUp : H.Port.ResistorMode.PullDown;
-
             //this.DigitalIns = new H.InterruptPort[switchPins.Length];            
             //this.IsOn = new bool[switchPins.Length];
             this._switches = new ISwitch[switchPins.Length];

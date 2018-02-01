@@ -32,7 +32,19 @@ namespace Netduino.Foundation.Sensors.Switches
         public SpstSwitch(H.Cpu.Pin pin, CircuitTerminationType type)
         {
             // if we terminate in ground, we need to pull the port high to test for circuit completion, otherwise down.
-            var resistorMode = (type == CircuitTerminationType.CommonGround) ? H.Port.ResistorMode.PullUp : H.Port.ResistorMode.PullDown;
+            H.Port.ResistorMode resistorMode = H.Port.ResistorMode.Disabled;
+            switch (type)
+            {
+                case CircuitTerminationType.CommonGround:
+                    resistorMode = H.Port.ResistorMode.PullUp;
+                    break;
+                case CircuitTerminationType.High:
+                    resistorMode = H.Port.ResistorMode.PullDown;
+                    break;
+                case CircuitTerminationType.Floating:
+                    resistorMode = H.Port.ResistorMode.Disabled;
+                    break;
+            }
 
             this.DigitalIn = new H.InterruptPort(pin, true, resistorMode, Microsoft.SPOT.Hardware.Port.InterruptMode.InterruptEdgeBoth);
 

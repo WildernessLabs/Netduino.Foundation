@@ -9,7 +9,8 @@ namespace Netduino.Foundation.Core.Samples
         public static void Main()
         {
             // create a new pwm controlled RGB LED on pins Red = 9, Green = 10, and Blue = 11.
-            var rgbPwmLed = new Netduino.Foundation.LEDs.RgbPwmLed(N.PWMChannels.PWM_PIN_D9, N.PWMChannels.PWM_PIN_D10, N.PWMChannels.PWM_PIN_D11);
+            var rgbPwmLed = new Netduino.Foundation.LEDs.RgbPwmLed(N.PWMChannels.PWM_PIN_D9, N.PWMChannels.PWM_PIN_D10, N.PWMChannels.PWM_PIN_D11,
+                2.0f, 2.5f, 2.7f);
 
             // run forever
             while (true)
