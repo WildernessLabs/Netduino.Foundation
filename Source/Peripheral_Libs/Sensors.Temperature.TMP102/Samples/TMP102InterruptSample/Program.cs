@@ -13,7 +13,7 @@ namespace TMP102InterruptSample
         {
             Debug.Print("TMP102 Interrupt Sample");
             //
-            //  Create a new TMP102 object, check the termperature every
+            //  Create a new TMP102 object, check the temperature every
             //  1s and report any changes grater than +/- 0.1C.
             //
             var tmp102 = new TMP102(updateInterval: 1000, temperatureChangeNotificationThreshold: 0.1F);
