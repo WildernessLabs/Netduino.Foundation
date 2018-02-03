@@ -15,7 +15,7 @@ namespace Netduino.Foundation.Sensors.Temperature
         /// <summary>
         ///     Minimum value that should be used for the polling frequency.
         /// </summary>
-        public const ushort MINIMUM_POLLING_PERIOD = 100;
+        public const ushort MinimumPollingPeriod = 100;
 
         #endregion Constants
 
@@ -137,7 +137,7 @@ namespace Netduino.Foundation.Sensors.Temperature
         /// </summary>
         /// <param name="address">I2C address of the sensor.</param>
         /// <param name="speed">Speed of the communication with the sensor.</param>
-        public TMP102(byte address = 0x48, ushort speed = 100, ushort updateInterval = MINIMUM_POLLING_PERIOD,
+        public TMP102(byte address = 0x48, ushort speed = 100, ushort updateInterval = MinimumPollingPeriod,
             float temperatureChangeNotificationThreshold = 0.001F)
         {
             if ((speed < 10) || (speed > 1000))
@@ -148,9 +148,9 @@ namespace Netduino.Foundation.Sensors.Temperature
             {
                 throw new ArgumentOutOfRangeException(nameof(temperatureChangeNotificationThreshold), "Temperature threshold should be >= 0");
             }
-            if ((updateInterval != 0) && (updateInterval < MINIMUM_POLLING_PERIOD))
+            if ((updateInterval != 0) && (updateInterval < MinimumPollingPeriod))
             {
-                throw new ArgumentOutOfRangeException(nameof(updateInterval), "Update period should be 0 or >= than " + MINIMUM_POLLING_PERIOD);
+                throw new ArgumentOutOfRangeException(nameof(updateInterval), "Update period should be 0 or >= than " + MinimumPollingPeriod);
             }
 
             TemperatureChangeNotificationThreshold = temperatureChangeNotificationThreshold;

@@ -18,7 +18,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         /// <summary>
         ///     Minimum value that should be used for the polling frequency.
         /// </summary>
-        public const ushort MINIMUM_POLLING_PERIOD = 100;
+        public const ushort MinimumPollingPeriod = 100;
 
         #endregion Constants
 
@@ -139,7 +139,7 @@ namespace Netduino.Foundation.Sensors.Atmospheric
         /// <param name="updateInterval">Number of milliseconds between samples (0 indicates polling to be used)</param>
         /// <param name="humidityChangeNotificationThreshold">Changes in humidity greater than this value will trigger an event when updatePeriod > 0.</param>
         /// <param name="temperatureChangeNotificationThreshold">Changes in temperature greater than this value will trigger an event when updatePeriod > 0.</param>
-        public SHT31D(byte address = 0x44, ushort speed = 100, ushort updateInterval = MINIMUM_POLLING_PERIOD,
+        public SHT31D(byte address = 0x44, ushort speed = 100, ushort updateInterval = MinimumPollingPeriod,
             float humidityChangeNotificationThreshold = 0.001F, float temperatureChangeNotificationThreshold = 0.001F)
         {
             if ((address != 0x44) && (address != 0x45))
@@ -158,9 +158,9 @@ namespace Netduino.Foundation.Sensors.Atmospheric
             {
                 throw new ArgumentOutOfRangeException(nameof(temperatureChangeNotificationThreshold), "Temperature threshold should be >= 0");
             }
-            if ((updateInterval != 0) && (updateInterval < MINIMUM_POLLING_PERIOD))
+            if ((updateInterval != 0) && (updateInterval < MinimumPollingPeriod))
             {
-                throw new ArgumentOutOfRangeException(nameof(updateInterval), "Update period should be 0 or >= than " + MINIMUM_POLLING_PERIOD);
+                throw new ArgumentOutOfRangeException(nameof(updateInterval), "Update period should be 0 or >= than " + MinimumPollingPeriod);
             }
 
             TemperatureChangeNotificationThreshold = temperatureChangeNotificationThreshold;

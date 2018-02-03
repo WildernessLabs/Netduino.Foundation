@@ -16,7 +16,7 @@ namespace Netduino.Foundation.Sensors.Motion
         ///     Minimum value that can be used for the update interval when the
         ///     sensor is being configured to generate interrupts.
         /// </summary>
-        public const ushort MinimumUpdatePeriod = 100;
+        public const ushort MinimumPollingPeriod = 100;
         
         #endregion Constants
         
@@ -169,10 +169,10 @@ namespace Netduino.Foundation.Sensors.Motion
         public ADXL335(Cpu.AnalogChannel x, Cpu.AnalogChannel y, Cpu.AnalogChannel z, ushort updateInterval = 100,
                        double accelerationChangeNotificationThreshold = 0.1F)
         {
-            if ((updateInterval != 0) && (updateInterval < MinimumUpdatePeriod))
+            if ((updateInterval != 0) && (updateInterval < MinimumPollingPeriod))
             {
                 throw new ArgumentOutOfRangeException(nameof(updateInterval),
-                    "Update interval should be 0 or greater than " + MinimumUpdatePeriod);    
+                    "Update interval should be 0 or greater than " + MinimumPollingPeriod);    
             }
 
             _x = new AnalogInput(x);

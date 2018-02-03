@@ -16,13 +16,13 @@ namespace Netduino.Foundation.Sensors.Light
         ///     The command bit in the Command Register.
         ///     See page 13 of the datasheet.
         /// </summary>
-        private byte COMMAND_BIT = 0x80;
+        private byte CommandBit = 0x80;
 
         /// <summary>
         ///     The interrupt clear bit in the Command Register.
         ///     See page 13 of the datasheet.
         /// </summary>
-        private readonly byte CLEAR_INTERRUPT_BIT = 0xC0;
+        private readonly byte ClearInterruptBit = 0xC0;
 
         /// <summary>
         ///     This bit control the write operations for the TSL2561.  Setting
@@ -31,12 +31,12 @@ namespace Netduino.Foundation.Sensors.Light
         /// <remarks>
         ///     See page 13 of the data sheet.
         /// </remarks>
-        private readonly byte WORD_MODE_BIT = 0x20;
+        private readonly byte WordModeBit = 0x20;
 
         /// <summary>
         ///     Minimum value that should be used for the polling frequency.
         /// </summary>
-        public const ushort MINIMUM_POLLING_PERIOD = 100;
+        public const ushort MinimumPollingPeriod = 100;
         
         #endregion Constants
 
@@ -283,7 +283,7 @@ namespace Netduino.Foundation.Sensors.Light
             get { return _tsl2561.ReadUShort(Registers.ThresholdLow, ByteOrder.LittleEndian); }
             set
             {
-                _tsl2561.WriteUShort((byte) (Registers.ThresholdLow + WORD_MODE_BIT), value, ByteOrder.LittleEndian);
+                _tsl2561.WriteUShort((byte) (Registers.ThresholdLow + WordModeBit), value, ByteOrder.LittleEndian);
             }
         }
 
@@ -300,7 +300,7 @@ namespace Netduino.Foundation.Sensors.Light
             get { return _tsl2561.ReadUShort(Registers.ThresholdHigh, ByteOrder.LittleEndian); }
             set
             {
-                _tsl2561.WriteUShort((byte) (Registers.ThresholdHigh + WORD_MODE_BIT), value, ByteOrder.LittleEndian);
+                _tsl2561.WriteUShort((byte) (Registers.ThresholdHigh + WordModeBit), value, ByteOrder.LittleEndian);
             }
         }
 
@@ -371,7 +371,7 @@ namespace Netduino.Foundation.Sensors.Light
         /// <param name="speed">Speed of the I2C bus (default = 100 KHz).</param>
         /// <param name="updateInterval">Update interval for the sensor (in milliseconds).</param>
         /// <param name="lightLevelChangeNotificationThreshold">Changes in light level greater than this value will generate an interrupt in auto-update mode.</param>
-        public TSL2561(byte address = (byte) Addresses.Default, ushort speed = 100, ushort updateInterval = MINIMUM_POLLING_PERIOD,
+        public TSL2561(byte address = (byte) Addresses.Default, ushort speed = 100, ushort updateInterval = MinimumPollingPeriod,
             float lightLevelChangeNotificationThreshold = 10.0F)
         {
             if ((address != (byte) Addresses.Address0) && (address != (byte) Addresses.Default) &&
@@ -531,7 +531,7 @@ namespace Netduino.Foundation.Sensors.Light
         /// </remarks>
         public void ClearInterrupt()
         {
-            _tsl2561.WriteByte(CLEAR_INTERRUPT_BIT);
+            _tsl2561.WriteByte(ClearInterruptBit);
             if (_interruptPin != null)
             {
                 _interruptPin.ClearInterrupt();
