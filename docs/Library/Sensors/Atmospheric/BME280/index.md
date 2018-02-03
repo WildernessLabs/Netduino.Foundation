@@ -30,56 +30,6 @@ It should be noted that the Sparkfun board is supplied with pull-up resistors en
 
 The BME280 can operating in polling and interrupt mode.  By default, this sensor operates in interrupt mode.
 
-### Polling Mode
-
-In polling mode, it is the responsibility of the main application to check the sensor readings ona periodic basis.  The following application creates an instance of the `BME280` class using the I2C interface.  The temperature, pressure and humidity are read every second and the readings displayed using the debugger.
-
-The sensor is put into polling mode by setting the `updateInterval` to `0` in the constructor.
-
-```csharp
-using Microsoft.SPOT;
-using Netduino.Foundation.Sensors.Atmospheric;
-using System.Threading;
-
-namespace BME280PollingSample
-{
-    /// <summary>
-    ///     Illustrate how to use the BME280 in polling mode.
-    /// </summary>
-    public class Program
-    {
-        public static void Main()
-        {
-            //
-            //  Create a new BME280 object and put the sensor into polling
-            //  mode (update interval set to 0ms).
-            //
-            BME280 sensor = new BME280(updateInterval: 0);
-
-            string message;
-            while (true)
-            {
-                //
-                //  Make the sensor take new readings.
-                //
-                sensor.Update();
-                //
-                //  Prepare a message for the user and output to the debug console.
-                //
-                message = "Temperature: " + sensor.Temperature.ToString("F1") + " C\n";
-                message += "Humidity: " + sensor.Humidity.ToString("F1") + " %\n";
-                message += "Pressure: " + (sensor.Pressure / 100).ToString("F0") + " hPa\n\n";
-                Debug.Print(message);
-                //
-                //  Sleep for 1000ms before repeating the process.
-                //
-                Thread.Sleep(1000);
-            }
-        }
-    }
-}
-```
-
 ### Interrupt Mode
 
 When the driver is operating in interrupt mode, the driver will periodically check the sensor reading.  An interrupt will be generated if the difference between the last reported reading and the current reading is greater than a threshold value.
@@ -142,6 +92,56 @@ namespace BME280InterruptSample
 }
 ```
 
+### Polling Mode
+
+In polling mode, it is the responsibility of the main application to check the sensor readings ona periodic basis.  The following application creates an instance of the `BME280` class using the I2C interface.  The temperature, pressure and humidity are read every second and the readings displayed using the debugger.
+
+The sensor is put into polling mode by setting the `updateInterval` to `0` in the constructor.
+
+```csharp
+using Microsoft.SPOT;
+using Netduino.Foundation.Sensors.Atmospheric;
+using System.Threading;
+
+namespace BME280PollingSample
+{
+    /// <summary>
+    ///     Illustrate how to use the BME280 in polling mode.
+    /// </summary>
+    public class Program
+    {
+        public static void Main()
+        {
+            //
+            //  Create a new BME280 object and put the sensor into polling
+            //  mode (update interval set to 0ms).
+            //
+            BME280 sensor = new BME280(updateInterval: 0);
+
+            string message;
+            while (true)
+            {
+                //
+                //  Make the sensor take new readings.
+                //
+                sensor.Update();
+                //
+                //  Prepare a message for the user and output to the debug console.
+                //
+                message = "Temperature: " + sensor.Temperature.ToString("F1") + " C\n";
+                message += "Humidity: " + sensor.Humidity.ToString("F1") + " %\n";
+                message += "Pressure: " + (sensor.Pressure / 100).ToString("F0") + " hPa\n\n";
+                Debug.Print(message);
+                //
+                //  Sleep for 1000ms before repeating the process.
+                //
+                Thread.Sleep(1000);
+            }
+        }
+    }
+}
+```
+
 ## API
 
 ### Constants
@@ -181,7 +181,7 @@ Default values are set for the sensor properties:
 * Filter is turned off.
 * Standby period is set to 0.5 milliseconds.
 
-In interrupt mode, the `updateInterval` defines the number of milliseconds between samples.  By default, this is set to the `MINIMUM_POLLING_PERIOD` and this places the sensor in interrupt mode.  Setting the `updateInterval` to 0 milliseconds places the sensor in polling mode.
+In interrupt mode, the `updateInterval` defines the number of milliseconds between samples.  By default, this is set to the `MinimumPollingPeriod` and this places the sensor in interrupt mode.  Setting the `updateInterval` to 0 milliseconds places the sensor in polling mode.
 
 `humidityChangeNotificationThreshold`, `temperatureChangeNotificationThreshold` and `pressureChangedNotificationThreshold` define the thresholds for the interrupts (events).  Any changes in the temperature, humidity and pressure readings that exceed the respective thresholds will generate the appropriate event.
 
@@ -189,15 +189,27 @@ In interrupt mode, the `updateInterval` defines the number of milliseconds betwe
 
 #### `float Temperature`
 
-Temperature in &deg;C.
+Retrieve the last read temperature.  In polling mode, the `Temperature` property is only valid after a call to `Update`.  In interrupt mode the `Temperature` property will be updated periodically.
 
-#### `float Pressure`
+#### `public float TemperatureChangeNotificationThreshold { get; set; } = 0.001F`
 
-Air pressure in Pascals.
+Threshold for the `TemperatureChanged` event.  Differences between the last notified value and the current value which exceed + / - `TemperateChangedNotificationThreshold` will generate an interrupt.
 
 #### `float Humidity`
 
-Relative humidity as a percentage.
+Retrieve the last read humidity.  In polling mode, the `Humidity` property is only valid after a call to `Update`.  In interrupt mode the `Humidity` property will be updated periodically.
+
+#### `public float HumidityChangeNotificationThreshold { get; set; } = 0.001F`
+
+Threshold for the `HumidityChanged` event.  Differences between the last notified value and the current value which exceed + / - `HumidityChangedNotificationThreshold` will generate an interrupt.
+
+#### `float Pressure`
+
+Retrieve the last read pressure in Pascals.  In polling mode, the `Pressure` property is only valid after a call to `Update`.  In interrupt mode the `Pressure` property will be updated periodically.
+
+#### `public float PressureChangeNotificationThreshold { get; set; } = 0.001F`
+
+Threshold for the `PressureChanged` event.  Differences between the last notified value and the current value which exceed + / - `PressureChangedNotificationThreshold` will generate an interrupt.
 
 #### `TemperatureOverSampling`
 
