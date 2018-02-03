@@ -105,6 +105,12 @@ namespace ADXL345RegisterTests
 
 The ADXL345 API supports a polling mode of operation.  The general principle is to initialize the sensor and then `Read` values before extracting the measurements from the `X`, `Y` and `Z` properties.
 
+### Constants
+
+#### `const ushort MinimumPollingPeriod = 100`
+
+Minimum number of milliseconds that can be used for the `updatePeriod`.
+
 ### Enums
 
 #### `enum Range { TwoG = 0x00, FourG = 0x01, EightG = 0x02, SixteenG = 0x03 }`
