@@ -39,6 +39,7 @@ namespace Netduino.Foundation.Generators
         protected Thread _th = null;
         protected int _onTimeMilliseconds = 0;
         protected int _offTimeMilliseconds = 0;
+        protected bool _running = false;
 
         public SoftPwm(H.Cpu.Pin outputPin, float dutyCycle = 0.5f, float frequency = 1.0f)
         {
@@ -49,13 +50,11 @@ namespace Netduino.Foundation.Generators
 
         public void Start()
         {
-            if (_th != null) {
-                KillThread();
-            }
+            this._running = true;
 
             // create a new thread that actually writes the pwm to the output port
             _th = new Thread(() => { 
-                while (true)
+                while (this._running)
                 {
                     OutputPort.Write(true);
                     Thread.Sleep(_onTimeMilliseconds);
@@ -68,24 +67,12 @@ namespace Netduino.Foundation.Generators
 
         public void Stop()
         {
-            KillThread();
-        }
+            // setting this will wrap up the thread
+            this._running = false;
 
-        protected void KillThread()
-        {
-            try
-            {
-                _th.Abort();
-            }
-            catch (Exception e)
-            { }
-            finally
-            {
-                // need to make sure the port is off, otherwise it can get
-                // stuck in an ON state.
-                OutputPort.Write(false);
-                _th = null;
-            }
+            // need to make sure the port is off, otherwise it can get
+            // stuck in an ON state.
+            OutputPort.Write(false);
         }
 
         /// <summary>
