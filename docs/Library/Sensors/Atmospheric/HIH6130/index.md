@@ -137,13 +137,13 @@ Retrieve the last read temperature.  The property is only valid after a call to 
 
 Threshold for the `TemperatureChanged` event.  Differences between the last notified value and the current value which exceed + / - `TemperateChangedNotificationThreshold` will generate an interrupt.
 
-#### `public float HumidityChangeNotificationThreshold { get; set; } = 0.001F`
-
-Threshold for the `HumidityChanged` event.  Differences between the last notified value and the current value which exceed + / - `HumidityChangedNotificationThreshold` will generate an interrupt.
-
 #### `float Humidity`
 
 Retrieve the last read humidity.  This property is only valid following a call to `Read`.
+
+#### `public float HumidityChangeNotificationThreshold { get; set; } = 0.001F`
+
+Threshold for the `HumidityChanged` event.  Differences between the last notified value and the current value which exceed + / - `HumidityChangedNotificationThreshold` will generate an interrupt.
 
 ### Methods
 
