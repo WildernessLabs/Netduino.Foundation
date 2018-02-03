@@ -123,7 +123,7 @@ In interrupt mode, the `updateInterval` defines the number of milliseconds betwe
 
 #### `float Temperature`
 
-Last temperature reading made when the `Read` method was called.
+Retrieve the last read temperature.  In polling mode, the `Temperature` property is only valid after a call to `Update`.  In interrupt mode the `Temperature` property will be updated periodically.
 
 #### `public float TemperatureChangeNotificationThreshold { get; set; } = 0.001F`
 
@@ -131,7 +131,7 @@ Threshold for the `TemperatureChanged` event.  Differences between the last noti
 
 #### `float Humidity`
 
-Last humidity reading made when the `Read` method was called.
+Retrieve the last read humidity.  In polling mode, the `Humidity` property is only valid after a call to `Update`.  In interrupt mode the `Humidity` property will be updated periodically.
 
 #### `public float HumidityChangeNotificationThreshold { get; set; } = 0.001F`
 
