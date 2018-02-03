@@ -88,6 +88,12 @@ namespace Si7021Test
 
 ## API
 
+### Constants
+
+#### `const ushort MinimumPollingPeriod = 100`
+
+Minimum value for the `updateInterval` property in the constructor.  This represents the minimum number of milliseconds between sensor samples when operating in interrupt mode.
+
 ### Enums
 
 #### `DeviceType`
