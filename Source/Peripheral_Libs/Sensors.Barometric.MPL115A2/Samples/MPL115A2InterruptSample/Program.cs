@@ -20,7 +20,7 @@ namespace MPL115A2InterruptSample
             //
             var mpl115a2 = new MPL115A2(updateInterval: 500, temperatureChangeNotificationThreshold: 0.1F);
 
-            Debug.Print("MPL115A2 Interrupt Test");
+            Debug.Print("MPL115A2 Interrupt Example");
             //
             //  Attach interrupt handlers to the temperature and pressure sensor.
             //

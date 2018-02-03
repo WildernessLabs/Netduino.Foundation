@@ -5,8 +5,8 @@ using Netduino.Foundation.Sensors.Barometric;
 namespace MPL115A2PollingSample
 {
     /// <summary>
-    ///     This application illustrates how to use the MPL115A2 temperature
-    ///     in polling mode.  I'e' it is the responsibility of the application
+    ///     This application illustrates how to use the MPL115A2 temperature and
+    ///     pressure in polling mode.  It is the responsibility of the application
     ///     to check the sensor readings as required.
     /// </summary>
     public class Program
@@ -19,7 +19,7 @@ namespace MPL115A2PollingSample
             //
             var mpl115a2 = new MPL115A2(updateInterval: 0);
 
-            Debug.Print("MPL115A2 Polling Test");
+            Debug.Print("MPL115A2 Polling Example");
             while (true)
             {
                 //
