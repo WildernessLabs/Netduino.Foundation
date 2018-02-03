@@ -132,6 +132,12 @@ namespace MPL115A2PollingSample
 
 This API supports a polling and interrupt method of reading the sensor.  In polling mode, the `Update` method forces the sensor to take new readings and then record the readings in the `Temperature` and `Pressure` properties.
 
+### Constants
+
+#### `const ushort MinimumPollingPeriod = 100`
+
+Minimum value for the `updateInterval` property in the constructor.  This represents the minimum number of milliseconds between sensor samples when operating in interrupt mode.
+
 ### Constructor
 
 #### `MPL115A2(byte address = 0x60, ushort speed = 100, ushort updateInterval = MinimumPollingPeriod, float temperatureChangeNotificationThreshold = 0.001F, float pressureChangedNotificationThreshold = 10.0F)`
