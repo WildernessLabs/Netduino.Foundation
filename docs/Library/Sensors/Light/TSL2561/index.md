@@ -74,6 +74,7 @@ namespace TSL2561Example
     }
 }
 ```
+
 ### Interrupt Driven Application
 
 In the following application, a threshold window of 100 to 2000 is set.  An interrupt will be generated when the light reading on ADC Channel 0 falls below 100 or rises above 2000.  In a moderately lit room, covering the sensor will generate a reading below 100 and a low power torch will take the reading above 2000.
