@@ -16,13 +16,13 @@ namespace Netduino.Foundation.Sensors.Light
         ///     The command bit in the Command Register.
         ///     See page 13 of the datasheet.
         /// </summary>
-        private byte CommandBit = 0x80;
+        private const byte CommandBit = 0x80;
 
         /// <summary>
         ///     The interrupt clear bit in the Command Register.
         ///     See page 13 of the datasheet.
         /// </summary>
-        private readonly byte ClearInterruptBit = 0xC0;
+        private const byte ClearInterruptBit = 0xC0;
 
         /// <summary>
         ///     This bit control the write operations for the TSL2561.  Setting
@@ -31,7 +31,7 @@ namespace Netduino.Foundation.Sensors.Light
         /// <remarks>
         ///     See page 13 of the data sheet.
         /// </remarks>
-        private readonly byte WordModeBit = 0x20;
+        private const byte WordModeBit = 0x20;
 
         /// <summary>
         ///     Minimum value that should be used for the polling frequency.
