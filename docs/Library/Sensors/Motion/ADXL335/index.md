@@ -106,6 +106,12 @@ namespace ADXL335Test
 
 ## API
 
+### Constants
+
+#### `const ushort MinimumPollingPeriod = 100`
+
+Minimum number of milliseconds that can be used for the `updatePeriod`.
+
 ### Constructor
 
 #### `ADXL335(Cpu.AnalogChannel x, Cpu.AnalogChannel y, Cpu.AnalogChannel z, ushort updateInterval = 100, double accelerationChangeNotificationThreshold = 0.1F)`
