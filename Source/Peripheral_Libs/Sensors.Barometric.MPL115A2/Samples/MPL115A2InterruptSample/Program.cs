@@ -14,7 +14,7 @@ namespace MPL115A2InterruptSample
         public static void Main()
         {
             //
-            //  Create a new MPL object and set the temperature change threashold to 0.1C
+            //  Create a new MPL object and set the temperature change threshold to 0.1C
             //  and leave the pressure threshold set to the default 10 kPa.  Have the
             //  sensor check the current readings every 0.5 seconds (500 milliseconds)
             //
