@@ -81,6 +81,9 @@ namespace Netduino.Foundation.Generators
             { }
             finally
             {
+                // need to make sure the port is off, otherwise it can get
+                // stuck in an ON state.
+                OutputPort.Write(false);
                 _th = null;
             }
         }
