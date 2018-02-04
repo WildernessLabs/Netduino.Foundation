@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<package >
+<package>
   <metadata>
     <id>Netduino.Foundation.GraphicsLibrary</id>
     <title>WildernessLabs.Netduino.Foundation.Displays.GraphicsLibrary</title>
@@ -8,14 +8,14 @@
     <owners>Wilderness Labs</owners>
     <licenseUrl>https://github.com/WildernessLabs/Netduino.Foundation/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/WildernessLabs/Netduino.Foundation</projectUrl>
-<!--    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
+    <!--    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Graphics Library for the display drivers in Netduino.Foundation</description>
-<!--    <releaseNotes>First release on Nuget.</releaseNotes> -->
+    <!--    <releaseNotes>First release on Nuget.</releaseNotes> -->
     <copyright>Copyright 2018 Wilderness Labs</copyright>
     <tags>NETMF Netduino</tags>
     <dependencies>
-        <dependency id="Netduino.Foundation" version="0.10" />
+      <dependency id="Netduino.Foundation" version="0.12" />
     </dependencies>
   </metadata>
   <files>
