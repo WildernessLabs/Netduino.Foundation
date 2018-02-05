@@ -456,6 +456,43 @@ namespace Netduino.Foundation.Displays
             Thread.Sleep(125);
         }
 
+        /// <summary>
+        /// http://maxpromer.github.io/LCD-Character-Creator/
+        /// 
+        /// 0x0 -> 0x07
+        /// </summary>
+        /// <param name="characterMap"></param>
+        /// <param name="address"></param>
+        public void SaveCustomCharacter(byte[] characterMap, byte address)
+        {
+            if (address < 0 || address > 7) {
+                throw new Exception("Address must be 0 - 7");
+            }
+
+            // tell the LCD we want to save a character to an address
+            // 0x4 + address
+            // 0x40 = save in slot 0, 0x46 = save in slot 6
+
+            byte[] command = { ConfigurationCommandCharacter, (byte)(0x40 + address)};
+            byte[] fullCommand = new byte[command.Length + characterMap.Length];
+            command.CopyTo(fullCommand, 0);
+            characterMap.CopyTo(fullCommand, command.Length);
+
+            Send(fullCommand);
+
+            //Send(new byte[] { ConfigurationCommandCharacter, (byte)(0x40 + address) });
+
+            // save the actual character map
+            //Send(characterMap);
+        }
+
+        public void TestCustomChar(byte address)
+        {
+            Clear();
+            SetCursorPosition(0, 0);
+            Send(new byte[] { address });
+        }
+
         #endregion Methods
     }
 }

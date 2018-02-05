@@ -273,6 +273,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftPwmGenerator", "Netduin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialLCDBrightness", "Netduino.Foundation.Core.Samples\SerialLCDBrightness\SerialLCDBrightness.csproj", "{429B6118-8E8C-4B32-BB12-8966DB3CD361}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialLCDCustomCharacter", "Netduino.Foundation.Core.Samples\SerialLCDCustomCharacter\SerialLCDCustomCharacter.csproj", "{C131D5EA-FB63-4238-995F-01D04D9B56EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1744,6 +1746,24 @@ Global
 		{429B6118-8E8C-4B32-BB12-8966DB3CD361}.Release|x86.ActiveCfg = Release|Any CPU
 		{429B6118-8E8C-4B32-BB12-8966DB3CD361}.Release|x86.Build.0 = Release|Any CPU
 		{429B6118-8E8C-4B32-BB12-8966DB3CD361}.Release|x86.Deploy.0 = Release|Any CPU
+		{C131D5EA-FB63-4238-995F-01D04D9B56EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C131D5EA-FB63-4238-995F-01D04D9B56EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C131D5EA-FB63-4238-995F-01D04D9B56EC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{C131D5EA-FB63-4238-995F-01D04D9B56EC}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C131D5EA-FB63-4238-995F-01D04D9B56EC}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C131D5EA-FB63-4238-995F-01D04D9B56EC}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
+		{C131D5EA-FB63-4238-995F-01D04D9B56EC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C131D5EA-FB63-4238-995F-01D04D9B56EC}.Debug|x86.Build.0 = Debug|Any CPU
+		{C131D5EA-FB63-4238-995F-01D04D9B56EC}.Debug|x86.Deploy.0 = Debug|Any CPU
+		{C131D5EA-FB63-4238-995F-01D04D9B56EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C131D5EA-FB63-4238-995F-01D04D9B56EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C131D5EA-FB63-4238-995F-01D04D9B56EC}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{C131D5EA-FB63-4238-995F-01D04D9B56EC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C131D5EA-FB63-4238-995F-01D04D9B56EC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C131D5EA-FB63-4238-995F-01D04D9B56EC}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
+		{C131D5EA-FB63-4238-995F-01D04D9B56EC}.Release|x86.ActiveCfg = Release|Any CPU
+		{C131D5EA-FB63-4238-995F-01D04D9B56EC}.Release|x86.Build.0 = Release|Any CPU
+		{C131D5EA-FB63-4238-995F-01D04D9B56EC}.Release|x86.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1843,5 +1863,6 @@ Global
 		{2F4AACC1-8234-47F7-B528-6A42A8EE0D8C} = {B1CB9A4C-0FA0-4D20-AC92-18B3D23EBD45}
 		{58C10AA3-D5A6-4B1D-A4C4-641795D4E7DB} = {B1CB9A4C-0FA0-4D20-AC92-18B3D23EBD45}
 		{429B6118-8E8C-4B32-BB12-8966DB3CD361} = {9E11B915-F2F4-4575-B498-366E71919991}
+		{C131D5EA-FB63-4238-995F-01D04D9B56EC} = {9E11B915-F2F4-4575-B498-366E71919991}
 	EndGlobalSection
 EndGlobal
