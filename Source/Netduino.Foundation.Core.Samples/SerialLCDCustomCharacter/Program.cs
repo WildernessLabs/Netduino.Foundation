@@ -18,7 +18,7 @@ namespace Netduino.Foundation.Samples
         {
             SerialLCD _display = new SerialLCD();
 
-            byte[] happyFace = { 0x0, 0x0, 0xa, 0x0, 0x11, 0xe, 0x0 };
+            byte[] happyFace = { 0x0, 0x0, 0xa, 0x0, 0x11, 0xe, 0x0, 0x0 };
             //byte[] sadFace = { 0x0, 0x0, 0xa, 0x0, 0xe, 0x11, 0x0, 0x0 };
 
             // save the custom characters
@@ -33,7 +33,7 @@ namespace Netduino.Foundation.Samples
             //s.Append(System.Convert.ToChar(1));
             //_display.WriteLine(s.ToString(), 0);
 
-            // yet this does?
+            // yet this (did for a little while, kind of)
             _display.TestCustomChar(0);
 
             while (true)
