@@ -6,9 +6,9 @@ using Microsoft.SPOT.Net.NetworkInformation;
 using System;
 using Netduino.Foundation.Helpers;
 
-namespace Netduino.Foundation.Network
+namespace Netduino.Foundation
 {
-    public static class Utility
+    public static partial class Networking
     {
         #region Member varialbles / fields
 
@@ -26,7 +26,7 @@ namespace Netduino.Foundation.Network
         ///     Attempt to start the network interface(s).
         /// </summary>
         /// <param name="uri">Web address to check if required.  If this is null then the check will not be performed.</param>
-        /// <returns>True of the netowrk started correctly, false otherwise.</returns>
+        /// <returns>True of the network started correctly, false otherwise.</returns>
         public static bool InitializeNetwork(string uri = null)
         {
             if (Microsoft.SPOT.Hardware.SystemInfo.SystemID.SKU == 3)

@@ -38,7 +38,7 @@
     </Compile>
     <Compile Include="NTP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utility.cs" />
+    <Compile Include="Networking.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Netduino.Foundation\Netduino.Foundation.csproj">
