@@ -142,6 +142,14 @@ It is possible to scroll the contents of the display all the way to the left (or
 
 Writing to the display when the scrolled fully left or right will change the contents of the display memory but not the actual display.  It is necessary to scroll the display in the reverse direction in order to view the updated contents.
 
+#### `public void SetBrightness(float brightness = 0.75f)`
+
+Sets the backlight brightness of the LCD. Valid values are `0` through `1`. Sleeps for 125 milliseconds after setting to let the display settle. `0` turns the backlight off, `1` sets it to 100%, and `0.5` sets it to 50%.
+
+##### Example:
+
+
+
 #### `void SetCursorStyle(CursorStyle style)`
 
 Two cursors are available, box or underline.
