@@ -12,13 +12,15 @@ namespace Netduino.Foundation.Core.Samples
         {
             SerialLCD _display = new SerialLCD();
 
-            _display.SetBrightness(140);
+            // set to 100% brightness in case it got stuck in a strange state
+            _display.SetBrightness(1);
 
             _display.WriteLine("Hello, line 2.", 1);
 
             while (true)
             {
                 float bValue = 0f;
+                // loop through 0 - 100% brightness
                 for (int i = 0; i <= 100; i++)
                 {
                     bValue = (float)i / (float)100;
@@ -27,7 +29,6 @@ namespace Netduino.Foundation.Core.Samples
                     _display.SetBrightness(bValue);
                 }
 
-                //Thread.Sleep(1000);
             }
 
         }
