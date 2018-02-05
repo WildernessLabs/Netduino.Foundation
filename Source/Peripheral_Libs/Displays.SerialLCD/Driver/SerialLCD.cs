@@ -7,7 +7,6 @@ namespace Netduino.Foundation.Displays
 {
     // TODO:
     // * SelectLine (uchar lineNumber)
-    // * SetBacklightBrightness (float brightness) //brightness should be 0-1 but we'll need to translate that to 128-157
     // * WriteMarquee (string text) // or similar
     // * SaveCustomCharacter (character)
 
@@ -426,6 +425,35 @@ namespace Netduino.Foundation.Displays
         public void SetDisplayVisualState(DisplayPowerState state)
         {
             Send(new[] {ExtendedCommandCharacter, (byte) state});
+        }
+
+        /// <summary>
+        ///     Sets the backlight brightness of the LCD. Valid values
+        ///     are 0 through 1. Sleeps for 125milliseconds after setting
+        ///     to let the display settle.
+        ///     
+        ///     0 = Off
+        ///     0.5 = 50%
+        ///     1 = 100%
+        /// </summary>
+        /// <param name="brightness"></param>
+        public void SetBrightness(float brightness = 0.75f)
+        {
+            // clamp
+            if (brightness < 0) brightness = 0.0F;
+            if (brightness > 1) brightness = 1.0F;
+
+            // valid values are 128 - 157, inclusive
+            byte bValue = (byte)(128 + brightness * 29); 
+
+            // clamp again
+            if (bValue < 128) bValue = 128;
+            if (bValue > 157) bValue = 157;
+
+            // set the brightness
+            Send(new[] { ConfigurationCommandCharacter, bValue });
+            // let the display settle
+            Thread.Sleep(125);
         }
 
         #endregion Methods
