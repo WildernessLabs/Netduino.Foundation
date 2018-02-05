@@ -474,15 +474,15 @@ namespace Netduino.Foundation.Displays
             // 0x40 = save in slot 0, 0x46 = save in slot 6
 
             // note that i bundle this all up into a single command in case two threads are calling Send()
-            //byte[] command = { ExtendedCommandCharacter, (byte)(0x40 + address)};
-            //byte[] fullCommand = new byte[command.Length + characterMap.Length];
-            //command.CopyTo(fullCommand, 0);
-            //characterMap.CopyTo(fullCommand, command.Length - 1);
-            //Send(fullCommand);
+            byte[] command = { ExtendedCommandCharacter, (byte)(0x40 + (address * 8)) };
+            byte[] fullCommand = new byte[command.Length + characterMap.Length];
+            command.CopyTo(fullCommand, 0);
+            characterMap.CopyTo(fullCommand, command.Length - 1);
+            Send(fullCommand);
 
-            Send(new byte[] { ConfigurationCommandCharacter, (byte)(0x40 + (address * 8)) });
-            // save the actual character map
-            Send(characterMap);
+            //Send(new byte[] { ConfigurationCommandCharacter, (byte)(0x40 + (address * 8)) });
+            //// save the actual character map
+            //Send(characterMap);
         }
 
         public void TestCustomChar(byte address)
