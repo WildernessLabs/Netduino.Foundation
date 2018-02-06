@@ -6,9 +6,9 @@ using Microsoft.SPOT.Net.NetworkInformation;
 using System;
 using Netduino.Foundation.Helpers;
 
-namespace Netduino.Foundation
+namespace Netduino.Foundation.Network
 {
-    public static partial class Networking
+    public static class Initializer
     {
         #region Member varialbles / fields
 
