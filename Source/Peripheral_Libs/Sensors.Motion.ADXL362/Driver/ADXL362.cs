@@ -1,4 +1,5 @@
-﻿using Microsoft.SPOT.Hardware;
+﻿using System.Threading;
+using Microsoft.SPOT.Hardware;
 using Netduino.Foundation.Communications;
 
 namespace Netduino.Foundation.Sensors.Motion
@@ -15,6 +16,27 @@ namespace Netduino.Foundation.Sensors.Motion
         #endregion Member variables / fields
 
         #region Classes / structures
+
+        /// <summary>
+        ///     Command byte (forst byte in any communication).
+        /// </summary>
+        protected static class Command
+        {
+            /// <summary>
+            ///     Write to one or more registers.
+            /// </summary>
+            public const byte WriteRegister = 0x0a;
+            
+            /// <summary>
+            ///     Read the contents of one or more registers.
+            /// </summary>
+            public const byte Readegister = 0x0b;
+            
+            /// <summary>
+            ///     Raed the FIFO buffer.
+            /// </summary>
+            public const byte ReadFIFO = 0x0d;
+        }
 
         /// <summary>
         ///     Registers in the ADXL362 sensor.
@@ -478,7 +500,7 @@ namespace Netduino.Foundation.Sensors.Motion
         {
             get
             {
-                var deviceID = _adxl362.WriteRead(new byte[] { 0x0b, 0x00 }, 6);
+                var deviceID = _adxl362.WriteRead(new byte[] { Command.Readegister, Registers.DeviceID }, 6);
                 int result = deviceID[0];
                 result |= deviceID[1] << 8;
                 result |= deviceID[2] << 16;
@@ -531,6 +553,15 @@ namespace Netduino.Foundation.Sensors.Motion
         public ADXL362(SPI.SPI_module module, Cpu.Pin chipSelect, ushort speed = 10)
         {
             _adxl362 = new SPIBus(module, chipSelect, speed);
+            //
+            //  Firstly, reset the sensor. 
+            //
+            _adxl362.WriteBytes(new byte[] { Command.WriteRegister, Registers.SoftReset, 0x52 });
+            Thread.Sleep(10);
+            //
+            //  Now start the sensor measurements.
+            //
+            _adxl362.WriteBytes(new byte[] { Command.WriteRegister, Registers.PowerControl, 0x02 });
         }
 
         #endregion Constructors
