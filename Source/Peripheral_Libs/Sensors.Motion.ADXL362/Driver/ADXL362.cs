@@ -11,7 +11,7 @@ namespace Netduino.Foundation.Sensors.Motion
         /// <summary>
         ///     ADXL362 sensor object.
         /// </summary>
-        private readonly ICommunicationBus _adxl362;
+        protected readonly ICommunicationBus _adxl362;
 
         #endregion Member variables / fields
 
@@ -552,6 +552,9 @@ namespace Netduino.Foundation.Sensors.Motion
         /// <param name="speed">Speed of the SPI bus.</param>
         public ADXL362(SPI.SPI_module module, Cpu.Pin chipSelect, ushort speed = 10)
         {
+            //
+            //  ADXL362 works in SPI mode 0 (CPOL = 0, CPHA = 0).
+            //
             _adxl362 = new SPIBus(module, chipSelect, speed);
             //
             //  Firstly, reset the sensor. 
