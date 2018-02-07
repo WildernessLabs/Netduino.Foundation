@@ -465,8 +465,9 @@ namespace Netduino.Foundation.Displays
         /// <param name="address"></param>
         public void SaveCustomCharacter(byte[] characterMap, byte address)
         {
-            if (address < 0 || address > 7) {
-                throw new Exception("Address must be 0 - 7");
+            if (address > 7)
+            {
+                throw new ArgumentOutOfRangeException(nameof(address), "Address must be 0 - 7");
             }
 
             // tell the LCD we want to save a character to an address
