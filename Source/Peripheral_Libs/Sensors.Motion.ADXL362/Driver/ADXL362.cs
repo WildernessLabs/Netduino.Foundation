@@ -14,22 +14,6 @@ namespace Netduino.Foundation.Sensors.Motion
 
         #endregion Member variables / fields
 
-        #region Methods
-
-        /// <summary>
-        ///     Read the sensors and make the readings available through the
-        ///     X, Y and Z properties.
-        /// </summary>
-        public void Update()
-        {
-            var sensorReading = _adxl362.WriteRead(new byte[] { 0x0b, Registers.XAxisLSB }, 8);
-            X = (short) ((sensorReading[3] << 8) | sensorReading[2]);
-            Y = (short) ((sensorReading[5] << 8) | sensorReading[4]);
-            Z = (short) ((sensorReading[7] << 8) | sensorReading[6]);
-        }
-
-        #endregion Methods
-
         #region Classes / structures
 
         /// <summary>
@@ -550,5 +534,21 @@ namespace Netduino.Foundation.Sensors.Motion
         }
 
         #endregion Constructors
+        
+        #region Methods
+
+        /// <summary>
+        ///     Read the sensors and make the readings available through the
+        ///     X, Y and Z properties.
+        /// </summary>
+        public void Update()
+        {
+            var sensorReading = _adxl362.WriteRead(new byte[] { 0x0b, Registers.XAxisLSB }, 8);
+            X = (short) ((sensorReading[3] << 8) | sensorReading[2]);
+            Y = (short) ((sensorReading[5] << 8) | sensorReading[4]);
+            Z = (short) ((sensorReading[7] << 8) | sensorReading[6]);
+        }
+
+        #endregion Methods
     }
 }
