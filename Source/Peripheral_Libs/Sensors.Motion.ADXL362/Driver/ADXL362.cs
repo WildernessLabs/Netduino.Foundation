@@ -20,7 +20,7 @@ namespace Netduino.Foundation.Sensors.Motion
         ///     Read the sensors and make the readings available through the
         ///     X, Y and Z properties.
         /// </summary>
-        public void Read()
+        public void Update()
         {
             var sensorReading = _adxl362.WriteRead(new byte[] { 0x0b, Registers.XAxisLSB }, 8);
             X = (short) ((sensorReading[3] << 8) | sensorReading[2]);
