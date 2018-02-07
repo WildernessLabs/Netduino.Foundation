@@ -130,7 +130,7 @@ namespace Netduino.Foundation.Displays
         /// <param name="config">TextDisplayConfig object defining the LCD dimension (null will default to 16x2).</param>
         /// <param name="port">Com port the display is connected to.</param>
         /// <param name="baudRate">Baud rate to use (default = 9600).</param>
-        /// <param name="parity">Parity to use (deafult is None).</param>
+        /// <param name="parity">Parity to use (default is None).</param>
         /// <param name="dataBits">Number of data bits (default is 8 data bits).</param>
         /// <param name="stopBits">Number of stop bits (default is one stop bit).</param>
         public SerialLCD(TextDisplayConfig config = null,  string port = "COM1", int baudRate = 9600,
@@ -477,7 +477,7 @@ namespace Netduino.Foundation.Displays
             byte[] command = { ExtendedCommandCharacter, (byte)(0x40 + (address * 8)) };
             byte[] fullCommand = new byte[command.Length + characterMap.Length];
             command.CopyTo(fullCommand, 0);
-            characterMap.CopyTo(fullCommand, command.Length - 1);
+            characterMap.CopyTo(fullCommand, command.Length);
             Send(fullCommand);
 
             //Send(new byte[] { ConfigurationCommandCharacter, (byte)(0x40 + (address * 8)) });
