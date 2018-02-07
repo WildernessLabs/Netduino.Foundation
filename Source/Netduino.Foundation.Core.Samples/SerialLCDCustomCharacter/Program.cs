@@ -26,6 +26,10 @@ namespace Netduino.Foundation.Samples
             //_display.SaveCustomCharacter(sadFace, 1);
 
             _display.Clear();
+            _display.SetBrightness();
+            _display.WriteLine("Hello, world", 0);
+            _display.WriteLine("Custom: ", 1);
+            _display.TestCustomChar(0);
 
             // why does this not work?
             //StringBuilder s = new StringBuilder("Chars:");
@@ -34,13 +38,9 @@ namespace Netduino.Foundation.Samples
             //_display.WriteLine(s.ToString(), 0);
 
             // yet this (did for a little while, kind of)
-            _display.TestCustomChar(0);
+            //_display.TestCustomChar(0);
 
-            while (true)
-            {
-                Thread.Sleep(Timeout.Infinite);
-            }
-
+            Thread.Sleep(Timeout.Infinite);
         }
     }
 }
