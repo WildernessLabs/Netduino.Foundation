@@ -16,5 +16,6 @@ Describes whether the circuit on the opposite end of a digital pin is terminated
 
 | Name           | Description   |
 |----------------|---------------|
-| `CommonGround` | Termination is at `GND` voltage. |
-| `High`         | Termination is at `3.3V` voltage.  |
+| `CommonGround` | Termination is at `GND` voltage. Pulls the resistor high.   |
+| `High`         | Termination is at `3.3V` voltage. Pulls the resistor low.   |
+| `Floating`     | Disables the resistor.                                      |

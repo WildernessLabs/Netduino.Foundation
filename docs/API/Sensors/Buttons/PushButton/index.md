@@ -8,7 +8,7 @@ subtitle: Simple push button sensor.
 
 The PushButton class represents a simple push button, such as a tactile momentary button. To get notified when it's clicked, subscribe to the `Clicked` event. If you need to know when the button is held down, subscribe to the `PressStarted` and `PressEnded` events.
 
-# Sourcing
+## Sourcing
 
 One of the most common push buttons are momentary tactile buttons and come in an array of sizes. Most commonly they have 4 leads, two of which are redundant and provide stability and mounting strength when soldered to a PCB, but some have only two leads.
 
@@ -17,6 +17,17 @@ One of the most common push buttons are momentary tactile buttons and come in an
 * [Colored Tactile Buttons on SparkFun](https://www.sparkfun.com/products/10302)
 
 ![](Tactile_Switches.jpg)
+
+## Using with Onboard Button
+
+This class is compatible with the Onboard button, but due to a bug in the current published firmware, `(H.Cpu.Pin)0x15` must be used to address the pin:
+
+```csharp
+var pushButton = new Netduino.Foundation.Sensors.Buttons.PushButton(
+    (H.Cpu.Pin)0x15, CircuitTerminationType.Floating);
+```
+
+Additionally, the `Floating` must be used for the `CircuitTerminationType`.
 
 # Sample Circuit
 

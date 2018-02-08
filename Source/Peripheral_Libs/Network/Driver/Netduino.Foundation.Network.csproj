@@ -6,7 +6,7 @@
     <ProjectGuid>{2C7BDE6F-433C-4AF2-B82F-A4AD26BD0301}</ProjectGuid>
     <ProjectTypeGuids>{B69E3092-B931-443C-ABE7-7E7B65F2A37F};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>Network</RootNamespace>
+    <RootNamespace>Netduino.Foundation.Network</RootNamespace>
     <AssemblyName>Network</AssemblyName>
     <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>
   </PropertyGroup>
@@ -38,7 +38,7 @@
     </Compile>
     <Compile Include="NTP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utility.cs" />
+    <Compile Include="Initializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Netduino.Foundation\Netduino.Foundation.csproj">

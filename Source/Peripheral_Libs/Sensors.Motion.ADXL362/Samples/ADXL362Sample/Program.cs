@@ -13,7 +13,7 @@ namespace ADXL362Test
             var sensor = new ADXL362(SPI_Devices.SPI1, Pins.GPIO_PIN_D7, 100);
             while (true)
             {
-                sensor.Read();
+                sensor.Update();
                 Debug.Print("X: " + sensor.X + ", Y: " + sensor.Y + ", Z: " + sensor.Z);
                 Thread.Sleep(1000);
             }

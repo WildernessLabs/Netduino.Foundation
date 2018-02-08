@@ -1,5 +1,5 @@
 ---
-layout: Library
+layout: API
 title: TypicalForwardVoltage
 subtitle: Forward voltages for typical LEDs.
 ---

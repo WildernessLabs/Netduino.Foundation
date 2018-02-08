@@ -11,11 +11,11 @@ This driver supports the [Sparkfun Serial Backpack](https://www.sparkfun.com/pro
 
 ## Hardware
 
-The Serial LCD requires only three connections; power, ground and serial data.  The T<sub>x</sub> pin on the Netduino should be connected to the R<sub>x</sub> pin on the serial backpack:
+The Serial LCD requires only three connections; power, ground and serial data.  The `T`<sub>`x`</sub> pin on the Netduino should be connected to the `R`<sub>`x`</sub> pin on the serial backpack:
 
 ![Netduino Connected to SerialLCD](SerialLCD.png)
 
-**Note:** This display uses a COM port on the Netduino.  This means that both the T<sub>x</sub> and the R<sub>x</sub> pins are  allocated to the COM port even though the R<sub>x</sub> pin is not used for communication.
+**Note:** This display uses a COM port on the Netduino.  This means that both the `T`<sub>`x`</sub> and the `R`<sub>`x`</sub> pins are  allocated to the COM port even though the R<sub>x</sub> pin is not used for communication. By default, it uses COM1, which means that both pin 1 and 2 are reserved. Attempting to use a reserved pin for another use will result in a runtime error.
 
 ## Software
 
@@ -87,6 +87,62 @@ The properties for a particular display can be set by supplying values for the p
 
 ### Methods
 
+#### `void Clear()`
+
+The `Clear` method will clear the display.
+
+#### `void ClearLine(byte lineNumber)`
+
+Clears the specified line by writing a string of empty characters to it.
+
+#### `void MoveCursor(Direction direction)`
+
+`MoveCursor` moves the cursor left or right on the LCD.
+
+#### `void ScrollDisplay(Direction direction)`
+
+`ScrollDisplay` moves the contents of the display left or right.
+
+It is possible to scroll the contents of the display all the way to the left (or right) so that the contents are no longer visible.
+
+Writing to the display when the scrolled fully left or right will change the contents of the display memory but not the actual display.  It is necessary to scroll the display in the reverse direction in order to view the updated contents.
+
+#### `void SetBaudRate(LCDBaudRate baudRate)`
+
+`SetBaudRate` will change the baud rate of the display.  A new `SerialLCD` object will need to be created once the baud rate is changed as the serial port will still be using the old baud rate.
+
+#### `public void SetBrightness(float brightness = 0.75f)`
+
+Sets the backlight brightness of the LCD. Valid values are `0` through `1`. Sleeps for 125 milliseconds after setting to let the display settle. `0` turns the backlight off, `1` sets it to 100%, and `0.5` sets it to 50%.
+
+The following code creates a new LCD display and sets the brightness to 100%:
+
+```csharp
+SerialLCD _display = new SerialLCD();
+// set to 100% brightness
+_display.SetBrightness(1);
+```
+
+#### `void SetCursorPosition(byte column, byte line)`
+
+This method will set the cursor position on the LCD display.  The cursor locations are zero based.
+
+Example:
+
+```csharp
+SetCursorPosition(0, 0);
+```
+
+This moves the cursor to the top left corner of a 16x2 LCD.
+
+#### `void SetCursorStyle(CursorStyle style)`
+
+Two cursors are available, box or underline.
+
+#### `void SetDisplayVisualState(DisplayPowerState state)`
+
+Turn the display on or off.
+
 #### `void SetSplashScreen(string line1, string line2)`
 
 A splash screen is displayed when the LCD is first powered up.  This can be changed or turned off.
@@ -102,49 +158,13 @@ SetSplashScreen("Weather Station", "Version 1.0");
 This code will set the splash screen to:
 
 ```
-Weat#her Station
+Weather Station
 Version 1.0
 ```
 
 #### `void ToggleSplashScreen()`
 
 `ToggleSplashScreen` will turn the splash screen on or off depending upon the current setting.
-
-#### `void SetBaudRate(LCDBaudRate baudRate)`
-
-`SetBaudRate` will change the baud rate of the display.  A new `SerialLCD` object will need to be created once the baud rate is changed as the serial port will still be using the old baud rate.
-
-#### `void Clear()`
-
-The `Clear` method will clear the display.
-
-#### `void SetCursorPosition(byte column, byte line)`
-
-This method will set the cursor position on the LCD display.  The cursor locations are zero based.
-
-Example:
-
-```csharp
-SetCursorPosition(0, 0);
-```
-
-This moves the cursor to the top left corner of a 16x2 LCD.
-
-#### `void MoveCursor(Direction direction)`
-
-`MoveCursor` moves the cursor left or right on the LCD.
-
-#### `void ScrollDisplay(Direction direction)`
-
-`ScrollDisplay` moves the contents of the display left or right.
-
-It is possible to scroll the contents of the display all the way to the left (or right) so that the contents are no longer visible.
-
-Writing to the display when the scrolled fully left or right will change the contents of the display memory but not the actual display.  It is necessary to scroll the display in the reverse direction in order to view the updated contents.
-
-#### `void SetCursorStyle(CursorStyle style)`
-
-Two cursors are available, box or underline.
 
 #### `void Write(string text)`
 
@@ -153,11 +173,3 @@ Write the text to the current cursor position in the display memory.
 #### `void WriteLine(string text, byte lineNumber)`
 
 Write the text to the specified line on the display.
-
-#### `void ClearLine(byte lineNumber)`
-
-Clears the specified line by writing a string of empty characters to it.
-
-#### `void SetDisplayVisualState(DisplayPowerState state)`
-
-Turn the display on or off.
