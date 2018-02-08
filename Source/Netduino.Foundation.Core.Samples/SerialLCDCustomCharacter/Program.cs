@@ -18,9 +18,12 @@ namespace Netduino.Foundation.Samples
         {
             SerialLCD _display = new SerialLCD();
 
+            // define our character maps.
+            // see http://maxpromer.github.io/LCD-Character-Creator/ for 
+            // a GUI character maker
             byte[] happyFace = { 0x0, 0x0, 0xa, 0x0, 0x11, 0xe, 0x0, 0x0 };
             byte[] sadFace   = { 0x0, 0x0, 0xa, 0x0, 0xe, 0x11, 0x0, 0x0 };
-            byte[] rocket = { 0x4, 0xa, 0xa, 0xa, 0x11, 0x15, 0xa, 0x0 };
+            byte[] rocket    = { 0x4, 0xa, 0xa, 0xa, 0x11, 0x15, 0xa, 0x0 };
             byte[] heart     = { 0x0, 0xa, 0x1f, 0x1f, 0xe, 0x4, 0x0, 0x0 };
 
             // save the custom characters
@@ -32,16 +35,14 @@ namespace Netduino.Foundation.Samples
             _display.Clear();
             _display.SetBrightness();
 
-            // 
-            StringBuilder s = new StringBuilder("Chars:");
-            s.Append((char)1);
-            s.Append((char)2);
-            s.Append((char)3);
-            s.Append((char)4);
+            // create our string, using the addresses of the characters
+            // casted to char.
+            StringBuilder s = new StringBuilder();
+            s.Append("1:" + (char)1 + " ");
+            s.Append("2:" + (char)2 + " ");
+            s.Append("3:" + (char)3 + " ");
+            s.Append("4:" + (char)4 + " ");
             _display.WriteLine(s.ToString(), 0);
-
-            // for 0
-            //_display.TestCustomChar(0);
 
             Thread.Sleep(Timeout.Infinite);
         }
