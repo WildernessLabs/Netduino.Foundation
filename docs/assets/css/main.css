@@ -87,7 +87,7 @@ h1, h2, h3, h4, h5, h6, p {
   margin-top: 0;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4, h5 {
   font-family: 'Roboto Condensed', Helvetica, Arial, sans-serif;
   font-weight: 700;
 }
@@ -97,6 +97,8 @@ h2 {
   font-weight: 700;
   line-height: 1.1;
 }
+
+
 
 pre {
   background: #eeeeee;
@@ -670,6 +672,11 @@ ul.social-block-buttons {
   font-size: 1.5em;
   margin-bottom: .5em;
   font-weight: 400;
+}
+.interior-content .main h5 {
+  font-size: 1.4em;
+  margin-bottom: .5em;
+  font-weight: 300;
 }
 
 .interior-content .main ul, 
