@@ -130,7 +130,7 @@ namespace Netduino.Foundation.Displays
         /// <param name="config">TextDisplayConfig object defining the LCD dimension (null will default to 16x2).</param>
         /// <param name="port">Com port the display is connected to.</param>
         /// <param name="baudRate">Baud rate to use (default = 9600).</param>
-        /// <param name="parity">Parity to use (deafult is None).</param>
+        /// <param name="parity">Parity to use (default is None).</param>
         /// <param name="dataBits">Number of data bits (default is 8 data bits).</param>
         /// <param name="stopBits">Number of stop bits (default is one stop bit).</param>
         public SerialLCD(TextDisplayConfig config = null,  string port = "COM1", int baudRate = 9600,
@@ -376,6 +376,19 @@ namespace Netduino.Foundation.Displays
         }
 
         /// <summary>
+        ///     Displays the characters at the current cursor position. 
+        ///     Unlike the `string text` overload, this assumes the text
+        ///     has already been encoded to characters. Can be useful in 
+        ///     sending pre-encoded characters, or accessing custom a 
+        ///     custom character saved in the 0 slot.
+        /// </summary>
+        /// <param name="chars"></param>
+        public void Write(byte[] chars)
+        {
+            Send(chars);
+        }
+
+        /// <summary>
         ///     Writes the specified text to the specified line.
         /// </summary>
         /// <param name="lineNumber">Line to write the text on (0-3).</param>
@@ -454,6 +467,45 @@ namespace Netduino.Foundation.Displays
             Send(new[] { ConfigurationCommandCharacter, bValue });
             // let the display settle
             Thread.Sleep(125);
+        }
+
+        /// <summary>
+        /// Saves a custom character to one of 8 slots in the CGRAM. 
+        /// Custom characters are defined as charater maps and can 
+        /// be created using online graphical tools such as the one
+        /// found at:
+        /// http://maxpromer.github.io/LCD-Character-Creator/
+        /// 
+        /// **Note:** due to .Net's underlying string implementation,
+        /// slot 0 is unusable unless you decode the string yourself 
+        /// and use the `Write(byte[] chars)` method. Otherwise, 
+        /// when the string is created, .Net treats the `0` character
+        /// as a string terminator. 
+        /// 
+        /// </summary>
+        /// <param name="characterMap">Character map defining the 5x8 character.</param>
+        /// <param name="address">0-7</param>
+        public void SaveCustomCharacter(byte[] characterMap, byte address)
+        {
+            if (address > 7 || address < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(address), "Address must be 0 - 7");
+            }
+
+            // tell the LCD we want to save a character to an address
+            // 0x4 + address
+            // 0x40 = save in slot 0, 0x40 + (6 * 8) = save in slot 6
+
+            // note that i bundle this all up into a single command in case two threads are calling Send()
+            byte[] command = { ExtendedCommandCharacter, (byte)(0x40 + (address * 8)) };
+            byte[] fullCommand = new byte[command.Length + characterMap.Length];
+            command.CopyTo(fullCommand, 0);
+            characterMap.CopyTo(fullCommand, command.Length);
+            Send(fullCommand);
+
+            // simpler, but not threadsafe way:
+            //Send(new byte[] { ConfigurationCommandCharacter, (byte)(0x40 + (address * 8)) });
+            //Send(characterMap);
         }
 
         #endregion Methods
