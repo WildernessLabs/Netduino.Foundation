@@ -235,6 +235,10 @@ Version 1.0
 
 Write the text to the current cursor position in the display memory.
 
+#### `public void Write(byte[] chars)`
+
+Displays the characters at the current cursor position. Unlike the `string text` overload, this assumes the text has already been encoded to characters. Can be useful in sending pre-encoded characters, or accessing custom a custom character saved in the 0 slot.
+
 #### `void WriteLine(string text, byte lineNumber)`
 
 Write the text to the specified line on the display.
