@@ -99,6 +99,71 @@ Clears the specified line by writing a string of empty characters to it.
 
 `MoveCursor` moves the cursor left or right on the LCD.
 
+#### `public void SaveCustomCharacter(byte[] characterMap, byte address)`
+
+Saves a custom character to one of 8 slots in the CGRAM. Custom characters are defined as character maps and can be created using online graphical tools such as the one found at: [maxpromer.github.io/LCD-Character-Creator/](http://maxpromer.github.io/LCD-Character-Creator/).
+
+##### Parameters
+
+| Parameter | Description  |
+|-----------|--------------|
+| `characterMap` | A byte array defining the character. For a list of sample characters, see [this](https://www.quinapalus.com/hd44780udg.html). |
+| `address` | The slot to put the character in. Can be `0`-`7`. <br/><br/>**Note:** due to .Net's underlying string implementation, slot 0 is unusable unless you decode the string yourself and use the `Write(byte[] chars)` method. Otherwise,  when the string is created, .Net treats the `0` character as a string terminator. |
+
+The following code illustrates saving 4 custom characters and then displaying them on the screen.
+
+```csharp
+using System.Threading;
+using System.Text;
+using Microsoft.SPOT;
+using H = Microsoft.SPOT.Hardware;
+using N = SecretLabs.NETMF.Hardware.Netduino;
+using Netduino.Foundation.Displays;
+
+namespace Netduino.Foundation.Samples
+{
+    public class Program
+    {
+        public static void Main()
+        {
+            SerialLCD _display = new SerialLCD();
+
+            // define our character maps.
+            // see http://maxpromer.github.io/LCD-Character-Creator/ for 
+            // a GUI character maker
+            byte[] happyFace = { 0x0, 0x0, 0xa, 0x0, 0x11, 0xe, 0x0, 0x0 };
+            byte[] sadFace   = { 0x0, 0x0, 0xa, 0x0, 0xe, 0x11, 0x0, 0x0 };
+            byte[] rocket    = { 0x4, 0xa, 0xa, 0xa, 0x11, 0x15, 0xa, 0x0 };
+            byte[] heart     = { 0x0, 0xa, 0x1f, 0x1f, 0xe, 0x4, 0x0, 0x0 };
+
+            // save the custom characters
+            _display.SaveCustomCharacter(happyFace, 1);
+            _display.SaveCustomCharacter(sadFace, 2);
+            _display.SaveCustomCharacter(rocket, 3);
+            _display.SaveCustomCharacter(heart, 4);
+
+            _display.Clear();
+            _display.SetBrightness();
+
+            // create our string, using the addresses of the characters
+            // casted to char.
+            StringBuilder s = new StringBuilder();
+            s.Append("1:" + (char)1 + " ");
+            s.Append("2:" + (char)2 + " ");
+            s.Append("3:" + (char)3 + " ");
+            s.Append("4:" + (char)4 + " ");
+            _display.WriteLine(s.ToString(), 0);
+
+            Thread.Sleep(Timeout.Infinite);
+        }
+    }
+}
+```
+
+The output of this code looks like:
+
+![](Custom_Characters_Displayed.jpg)
+
 #### `void ScrollDisplay(Direction direction)`
 
 `ScrollDisplay` moves the contents of the display left or right.
