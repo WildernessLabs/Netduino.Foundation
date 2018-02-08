@@ -19,25 +19,28 @@ namespace Netduino.Foundation.Samples
             SerialLCD _display = new SerialLCD();
 
             byte[] happyFace = { 0x0, 0x0, 0xa, 0x0, 0x11, 0xe, 0x0, 0x0 };
-            //byte[] sadFace = { 0x0, 0x0, 0xa, 0x0, 0xe, 0x11, 0x0, 0x0 };
+            byte[] sadFace   = { 0x0, 0x0, 0xa, 0x0, 0xe, 0x11, 0x0, 0x0 };
+            byte[] rocket = { 0x4, 0xa, 0xa, 0xa, 0x11, 0x15, 0xa, 0x0 };
+            byte[] heart     = { 0x0, 0xa, 0x1f, 0x1f, 0xe, 0x4, 0x0, 0x0 };
 
             // save the custom characters
-            _display.SaveCustomCharacter(happyFace, 0);
-            //_display.SaveCustomCharacter(sadFace, 1);
+            _display.SaveCustomCharacter(happyFace, 1);
+            _display.SaveCustomCharacter(sadFace, 2);
+            _display.SaveCustomCharacter(rocket, 3);
+            _display.SaveCustomCharacter(heart, 4);
 
             _display.Clear();
             _display.SetBrightness();
-            _display.WriteLine("Hello, world", 0);
-            _display.WriteLine("Custom: ", 1);
-            _display.TestCustomChar(0);
 
-            // why does this not work?
-            //StringBuilder s = new StringBuilder("Chars:");
-            //s.Append(System.Convert.ToChar(0));
-            //s.Append(System.Convert.ToChar(1));
-            //_display.WriteLine(s.ToString(), 0);
+            // 
+            StringBuilder s = new StringBuilder("Chars:");
+            s.Append((char)1);
+            s.Append((char)2);
+            s.Append((char)3);
+            s.Append((char)4);
+            _display.WriteLine(s.ToString(), 0);
 
-            // yet this (did for a little while, kind of)
+            // for 0
             //_display.TestCustomChar(0);
 
             Thread.Sleep(Timeout.Infinite);
