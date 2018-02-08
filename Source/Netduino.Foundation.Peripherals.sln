@@ -271,9 +271,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnboardPushButton", "Netdui
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftPwmGenerator", "Netduino.Foundation.Core.Samples\SoftPwmGenerator\SoftPwmGenerator.csproj", "{58C10AA3-D5A6-4B1D-A4C4-641795D4E7DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialLCDBrightness", "Netduino.Foundation.Core.Samples\SerialLCDBrightness\SerialLCDBrightness.csproj", "{429B6118-8E8C-4B32-BB12-8966DB3CD361}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialLCDBrightness", "Peripheral_Libs\Displays.SerialLCD\Samples\SerialLCDBrightness\SerialLCDBrightness.csproj", "{429B6118-8E8C-4B32-BB12-8966DB3CD361}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialLCDCustomCharacter", "Netduino.Foundation.Core.Samples\SerialLCDCustomCharacter\SerialLCDCustomCharacter.csproj", "{C131D5EA-FB63-4238-995F-01D04D9B56EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialLCDCustomCharacter", "Peripheral_Libs\Displays.SerialLCD\Samples\SerialLCDCustomCharacter\SerialLCDCustomCharacter.csproj", "{C131D5EA-FB63-4238-995F-01D04D9B56EC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Network", "Network", "{D44E2EF1-96B1-4D53-A132-EC068A29E055}"
 EndProject
