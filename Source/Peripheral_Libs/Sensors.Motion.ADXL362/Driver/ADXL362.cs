@@ -430,6 +430,57 @@ namespace Netduino.Foundation.Sensors.Motion
         }
 
         /// <summary>
+        ///     Status bit mask.
+        /// </summary>
+        protected static class StatusBitsMask
+        {
+            /// <summary>
+            ///     Indicates if data is ready to be read.
+            /// </summary>
+            public const byte DataReady = 0x01;
+
+            /// <summary>
+            ///     Indicate when FIFO data is ready to be read.
+            /// </summary>
+            public const byte FIFOReady = 0x02;
+
+            /// <summary>
+            ///     Set when the FIFO watermark has been reached.
+            /// </summary>
+            public const byte FIFOWaterMark = 0x04;
+
+            /// <summary>
+            ///     True when incoming data is replacing existing data in the FIFO buffer.
+            /// </summary>
+            public const byte FIFOOverRun = 0x08;
+
+            /// <summary>
+            ///     Activity has been detected.
+            /// </summary>
+            public const byte ActivityDetected = 0x10;
+
+            /// <summary>
+            ///     Indicate that the sensor is either inactive or a freefall condition
+            ///     has been detected.
+            /// </summary>
+            public const byte InactivityDetected = 0x20;
+
+            /// <summary>
+            ///     Indicate if the sensor is awake (true) or inactive (false).
+            /// </summary>
+            public const byte Awake = 0x40;
+
+            /// <summary>
+            ///     SEU Error Detect. 1 indicates one of two conditions: either an
+            ///     SEU event, such as an alpha particle of a power glitch, has disturbed
+            ///     a user register setting or the ADXL362 is not configured. This bit
+            ///     is high upon both startup and soft reset, and resets as soon as any
+            ///     register write commands are performed.
+            /// </summary>
+            public const byte ErroUserRegister = 0x80;
+        }
+
+        /// <summary>
         ///     Control bits determining how the activity / inactivity functionality is configured.
         /// </summary>
         protected static class ActivityInactivityControlMask
@@ -533,6 +584,18 @@ namespace Netduino.Foundation.Sensors.Motion
         /// </remarks>
         public short Z { get; private set; }
 
+        /// <summary>
+        ///     Read the status register.
+        /// </summary>
+        public byte Status
+        {
+            get
+            { 
+                var result = _adxl362.WriteRead(new byte[]{Command.Readegister, Registers.Status}, 1);
+                return result[0];
+            }
+        }
+
         #endregion Properties
 
         #region Constructors
@@ -556,20 +619,40 @@ namespace Netduino.Foundation.Sensors.Motion
             //  ADXL362 works in SPI mode 0 (CPOL = 0, CPHA = 0).
             //
             _adxl362 = new SPIBus(module, chipSelect, speed);
-            //
-            //  Firstly, reset the sensor. 
-            //
-            _adxl362.WriteBytes(new byte[] { Command.WriteRegister, Registers.SoftReset, 0x52 });
-            Thread.Sleep(10);
-            //
-            //  Now start the sensor measurements.
-            //
-            _adxl362.WriteBytes(new byte[] { Command.WriteRegister, Registers.PowerControl, 0x02 });
+            Reset();
+            Start();
         }
 
         #endregion Constructors
         
         #region Methods
+
+        /// <summary>
+        ///     Reset the sensor.
+        /// </summary>
+        public void Reset()
+        {
+            _adxl362.WriteBytes(new byte[] { Command.WriteRegister, Registers.SoftReset, 0x52 });
+            Thread.Sleep(10);
+        }
+
+        /// <summary>
+        ///     Start making sensor readings.
+        /// </summary>
+        public void Start()
+        {
+            _adxl362.WriteBytes(new byte[] { Command.WriteRegister, Registers.PowerControl, 0x02 });
+        }
+
+        /// <summary>
+        ///     Stop the sensor.
+        /// </summary>
+        public void Stop()
+        {
+            var powerControl = _adxl362.WriteRead(new byte[] { Command.Readegister, Registers.PowerControl, 0x02 }, 1);
+            byte power = (byte) ((powerControl[0] & (~PowerControlMask.Measure)) & 0xff);
+            _adxl362.WriteBytes(new byte[] { Command.WriteRegister, Registers.PowerControl, power });
+        }
 
         /// <summary>
         ///     Read the sensors and make the readings available through the
