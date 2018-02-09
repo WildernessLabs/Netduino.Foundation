@@ -577,7 +577,7 @@ namespace Netduino.Foundation.Sensors.Motion
         /// </summary>
         public void Update()
         {
-            var sensorReading = _adxl362.WriteRead(new byte[] { 0x0b, Registers.XAxisLSB }, 8);
+            var sensorReading = _adxl362.WriteRead(new byte[] { Command.Readegister, Registers.XAxisLSB }, 8);
             X = (short) ((sensorReading[3] << 8) | sensorReading[2]);
             Y = (short) ((sensorReading[5] << 8) | sensorReading[4]);
             Z = (short) ((sensorReading[7] << 8) | sensorReading[6]);
