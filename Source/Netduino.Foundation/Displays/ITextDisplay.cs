@@ -7,8 +7,12 @@ namespace Netduino.Foundation.Displays
     {
         TextDisplayConfig DisplayConfig { get; }
 
-        void WriteLine(ushort lineNumber, string text);
+        void WriteLine(string text, byte lineNumber);
 
-        void ClearLine(ushort lineNumber);
+        void Clear();
+
+        void ClearLine(byte lineNumber);
+
+        void SetBrightness(float brightness = 0.75f);
     }
 }

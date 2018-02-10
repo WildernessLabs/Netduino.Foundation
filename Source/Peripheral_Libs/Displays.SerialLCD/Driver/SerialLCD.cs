@@ -14,7 +14,7 @@ namespace Netduino.Foundation.Displays
     /// <summary>
     ///     Encapsulate the functionality required to control the Sparkfun serial LCD display.
     /// </summary>
-    public class SerialLCD : IDisposable
+    public class SerialLCD : IDisposable, ITextDisplay
     {
         #region Properties
 
