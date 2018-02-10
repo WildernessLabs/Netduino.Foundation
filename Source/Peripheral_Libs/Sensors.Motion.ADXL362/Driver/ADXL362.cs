@@ -1,6 +1,8 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Microsoft.SPOT.Hardware;
 using Netduino.Foundation.Communications;
+using Netduino.Foundation.Sensors.Rotary;
 
 namespace Netduino.Foundation.Sensors.Motion
 {
@@ -12,6 +14,16 @@ namespace Netduino.Foundation.Sensors.Motion
         ///     ADXL362 sensor object.
         /// </summary>
         protected readonly ICommunicationBus _adxl362;
+
+        /// <summary>
+        ///     Interrupt port attached to interrupt pin 1 on the ADXL362.
+        /// </summary>
+        private InterruptPort _interrupt1 = null;
+
+        /// <summary>
+        ///     Interrupt port attached to interrupt pin 2 on the ADXL362.
+        /// </summary>
+        private InterruptPort _interrupt2 = null;
 
         #endregion Member variables / fields
 
@@ -447,7 +459,7 @@ namespace Netduino.Foundation.Sensors.Motion
             /// <summary>
             ///     Set when the FIFO watermark has been reached.
             /// </summary>
-            public const byte FIFOWaterMark = 0x04;
+            public const byte FIFOWatermark = 0x04;
 
             /// <summary>
             ///     True when incoming data is replacing existing data in the FIFO buffer.
@@ -477,7 +489,7 @@ namespace Netduino.Foundation.Sensors.Motion
             ///     is high upon both startup and soft reset, and resets as soon as any
             ///     register write commands are performed.
             /// </summary>
-            public const byte ErroUserRegister = 0x80;
+            public const byte ErrorUserRegister = 0x80;
         }
 
         /// <summary>
@@ -544,6 +556,94 @@ namespace Netduino.Foundation.Sensors.Motion
         #region Properties
 
         /// <summary>
+        ///     Indiacte of data is ready to be read.
+        /// </summary>
+        public bool DataReady
+        {
+            get
+            {
+                var status = _adxl362.WriteRead(new byte[] { Command.Readegister, Registers.DeviceID }, 1);
+                return (status[0] & StatusBitsMask.DataReady) != 0;
+            }
+        }
+        
+        /// <summary>
+        ///     Indictae if there is any data in the FIFO buffer.
+        /// </summary>
+        public bool FIFOReady
+        {
+            get
+            {
+                var status = _adxl362.WriteRead(new byte[] { Command.Readegister, Registers.DeviceID }, 1);
+                return (status[0] & StatusBitsMask.FIFOReady) != 0;
+            }
+        }
+        
+        /// <summary>
+        ///     Indicate if there are at least the desired number
+        ///     of samples in the FIFO buffer.
+        /// </summary>
+        public bool FIFOWatermark
+        {
+            get
+            {
+                var status = _adxl362.WriteRead(new byte[] { Command.Readegister, Registers.DeviceID }, 1);
+                return (status[0] & StatusBitsMask.FIFOWatermark) != 0;
+            }
+        }
+        
+        /// <summary>
+        ///     Indicate if the FIFO buffer has overrun (newly generated data
+        ///     is overwriting data already stored in the FIFO buffer.
+        /// </summary>
+        public bool FIFOOverrun
+        {
+            get
+            {
+                var status = _adxl362.WriteRead(new byte[] { Command.Readegister, Registers.DeviceID }, 1);
+                return (status[0] & StatusBitsMask.FIFOOverRun) != 0;
+            }
+        }
+        
+        /// <summary>
+        ///     Indicate if any activity has been detected over the
+        ///     specified threshold.
+        /// </summary>
+        public bool ActivityDetected
+        {
+            get
+            {
+                var status = _adxl362.WriteRead(new byte[] { Command.Readegister, Registers.DeviceID }, 1);
+                return (status[0] & StatusBitsMask.ActivityDetected) != 0;
+            }
+        }
+        
+        /// <summary>
+        ///     Indicate if the sensor ihas detected inactivity or a
+        ///     free fall condition.
+        /// </summary>
+        public bool InactivityDetected
+        {
+            get
+            {
+                var status = _adxl362.WriteRead(new byte[] { Command.Readegister, Registers.DeviceID }, 1);
+                return (status[0] & StatusBitsMask.InactivityDetected) != 0;
+            }
+        }
+        
+        /// <summary>
+        ///     Indicate if the sensor is awake or inactive.
+        /// </summary>
+        public bool Awake
+        {
+            get
+            {
+                var status = _adxl362.WriteRead(new byte[] { Command.Readegister, Registers.DeviceID }, 1);
+                return (status[0] & StatusBitsMask.Awake) != 0;
+            }
+        }
+        
+        /// <summary>
         ///     Read the device ID, MEMS ID, Part ID and silicon revision ID and
         ///     encode the value in a 32-bit integer.
         /// </summary>
@@ -591,11 +691,74 @@ namespace Netduino.Foundation.Sensors.Motion
         {
             get
             { 
-                var result = _adxl362.WriteRead(new byte[]{Command.Readegister, Registers.Status}, 1);
+                var result = _adxl362.WriteRead(new byte[] { Command.Readegister, Registers.Status }, 1);
                 return result[0];
             }
         }
+        
+        /// <summary>
+        ///     Sensor temperature.
+        /// </summary>
+        public double Temperature
+        {
+            get
+            {
+                var result = _adxl362.WriteRead(new byte[] { Command.Readegister, Registers.TemperatureLSB }, 2);
+                short temperature = (short) ((result[1] << 8) + result[0]);
+                return (temperature);
+            }
+        }
 
+        /// <summary>
+        ///     Activity / Inactivity control register (see page 29 of the data sheet).
+        /// </summary>
+        public byte ActivityInactivityControl
+        {
+            get
+            {
+                var registers = _adxl362.WriteRead(new byte[] {Command.Readegister, Registers.ActivityInactivityControl}, 1);
+                return (registers[0]);
+            }
+            set
+            {
+                _adxl362.WriteBytes(new byte[] { Command.WriteRegister, value});
+            }
+        }
+
+        /// <summary>
+        ///     Set the value of the self test register.  Setting this to true will put
+        ///     the device into self test mode, setting this to false will turn off the
+        ///     self test.
+        /// </summary>
+        public bool SelfTest
+        {
+            set
+            {
+                byte selfTest = 0;
+                if (value)
+                {
+                    selfTest = 1;
+                }
+                _adxl362.WriteBytes(new byte[] { Command.WriteRegister, selfTest });
+            }
+        }
+
+        /// <summary>
+        ///      Get / set the filter control register (see page 33 of the data sheet).   
+        /// </summary>
+        public byte FilterControl
+        {
+            get
+            {
+                var register = _adxl362.WriteRead(new byte[] {Command.Readegister, Registers.FilterControl}, 1);
+                return (register[0]);
+            }
+            set
+            {
+                _adxl362.WriteBytes(new byte[] { Command.WriteRegister, value });
+            }
+        }
+        
         #endregion Properties
 
         #region Constructors
@@ -622,7 +785,7 @@ namespace Netduino.Foundation.Sensors.Motion
             Reset();
             Start();
         }
-
+        
         #endregion Constructors
         
         #region Methods
@@ -645,7 +808,7 @@ namespace Netduino.Foundation.Sensors.Motion
         }
 
         /// <summary>
-        ///     Stop the sensor.
+        ///     Stop sensor readings.
         /// </summary>
         public void Stop()
         {
@@ -666,6 +829,147 @@ namespace Netduino.Foundation.Sensors.Motion
             Z = (short) ((sensorReading[7] << 8) | sensorReading[6]);
         }
 
+        /// <summary>
+        ///     Configure the activity threshold and activity time.   Once configured it will be
+        ///     necessary to set the activity/inactivity control and interrupts if required. 
+        /// </summary>
+        /// <remark>
+        ///     The combination of the activity threshold, the activity time, the
+        ///     output data rate and the sensitivity determine if activity is detected
+        ///     according to the following formula:
+        /// 
+        ///     Activity threshold = Threshold / Sensitvity
+        ///     Time = Activity time / output data rate
+        /// 
+        ///     Note that the sensitvity is in the Filter Control register.
+        /// 
+        ///     Further information can be found on page 27 of the datasheet.
+        /// </remark>
+        /// <param name="threshold">11-bit unsigned value for the activity threshold.</param>
+        /// <param name="numberOfSamples">Number of consectuve samples that must exceed the threshold</param>
+        public void ConfigureActivityThreshold(ushort threshold, byte numberOfSamples)
+        {
+            if ((threshold & 0xf8) != 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(threshold), "Activity threshold should be in the range 0-0x7ff");
+            }
+            //
+            //  The threshold and number of samples register are in consecutive locations.
+            //
+            var data = new byte[5];
+            data[0] = Command.WriteRegister;
+            data[1] = Registers.ActivityThresholdLSB;
+            data[2] = (byte) (threshold & 0xff);
+            data[3] = (byte) ((threshold >> 8) & 0xff);
+            data[4] = numberOfSamples;
+            _adxl362.WriteBytes(data);
+        }
+
+        /// <summary>
+        ///     Configure the inactivity threshold and activity time.   Once configured it will be
+        ///     necessary to set the activity/inactivity control and interrupts if required. 
+        /// </summary>
+        /// <remark>
+        ///     The combination of the activity threshold, the activity time, the
+        ///     output data rate and the sensitivity determine if activity is detected
+        ///     according to the following formula:
+        /// 
+        ///     Inactivity threshold = Threshold / Sensitvity
+        ///     Time = Inactivity time / output data rate
+        /// 
+        ///     Note that the sensitvity is in the Filter Control register.
+        /// 
+        ///     Further information can be found on page 27 and 28 of the datasheet.
+        /// </remark>
+        /// <param name="threshold">11-bit unsigned value for the activity threshold.</param>
+        /// <param name="numberOfSamples">Number of consectuve samples that must exceed the threshold</param>
+        public void ConfigureInactivityThreshold(ushort threshold, ushort numberOfSamples)
+        {
+            if ((threshold & 0xf8) != 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(threshold), "Inactivity threshold should be in the range 0-0x7ff");
+            }
+            //
+            //  The threshold and number of samples register are in consecutive locations.
+            //
+            var data = new byte[5];
+            data[0] = Command.WriteRegister;
+            data[1] = Registers.InactivityCountLSB;
+            data[2] = (byte) (threshold & 0xff);
+            data[3] = (byte) ((threshold >> 8) & 0xff);
+            data[4] = (byte) (numberOfSamples & 0xff);
+            data[5] = (byte) ((threshold >> 8) & 0xff);
+            _adxl362.WriteBytes(data);
+        }
+
+        /// <summary>
+        ///     Map the pull-up / pull-down resistor mode based upon the interrupt
+        ///     state (active low or active high) to the appropriate resistor mode.
+        /// </summary>
+        /// <param name="activeLow">True if the resisotr should be pull-up, otherwise a pull-down resistor.</param>
+        /// <returns>Resistor mode mapping based upon the active low state.</returns>
+        private Port.ResistorMode MapResistorMode(bool activeLow)
+        {
+            if (activeLow)
+            {
+                return (Port.ResistorMode.PullUp);
+            }
+            else
+            {
+                return (Port.ResistorMode.PullDown);
+            }
+        }
+
+        /// <summary>
+        ///     Map the interrupt state (active low or active high) to the
+        ///     appropriate interrupt mode.
+        /// </summary>
+        /// <param name="activeLow">True of the interrupt is active low, false for active high.</param>
+        /// <returns>Interrupt mode mapping based upon the active low state.</returns>
+        private Port.InterruptMode MapInterruptMode(bool activeLow)
+        {
+            if (activeLow)
+            {
+                return (Port.InterruptMode.InterruptEdgeLow);
+            }
+            else
+            {
+                return(Port.InterruptMode.InterruptEdgeHigh);
+            }
+        }
+
+        /// <summary>
+        ///     Configure the interrupts for the ADXL362.
+        /// </summary>
+        /// <remark>
+        ///     Set the interrupt mask for interrupt pins 1 and 2 and connect Netduino
+        ///     pins to the interrupt pins on the ADXL362 if requested.
+        /// 
+        ///     Interrupts can be disabled by passing 0 for the interrupt maps.  It is also
+        ///     possible to disconnect the Netduino and ADXL362 by setting the interrupt pin
+        ///     to GPIO_NONE.
+        /// </remark>
+        /// <param name="interruptMap1">Bit mask for interrupt pin 1</param>
+        /// <param name="interruptPin1">Pin connected to interrupt pin 1 on the ADXL362.</param>
+        /// <param name="interruptMap2">Bit mask for interrupt pin 2</param>
+        /// <param name="interruptPin2">Pin connected to interrupt pin 2 on the ADXL362.</param>
+        public void ConfigureInterrupts(byte interruptMap1, Cpu.Pin interruptPin1, byte interruptMap2, Cpu.Pin interruptPin2)
+        {
+            _interrupt1?.Dispose();
+            _interrupt2?.Dispose();
+            _adxl362.WriteBytes(new byte[] { Command.WriteRegister, interruptMap1, interruptMap2 });
+            if (interruptPin1 != Cpu.Pin.GPIO_NONE)
+            {
+                _interrupt1 = new InterruptPort(interruptPin1, false, MapResistorMode((interruptMap1 & 0xf0) > 0),
+                    MapInterruptMode((interruptMap1 & 0xf0) > 0));
+            }
+            if (interruptPin2 != Cpu.Pin.GPIO_NONE)
+            {
+                _interrupt2 = new InterruptPort(interruptPin1, false, MapResistorMode((interruptMap2 & 0xf0) > 0),
+                    MapInterruptMode((interruptMap2 & 0xf0) > 0));
+            }
+        }
+        
         #endregion Methods
     }
 }
