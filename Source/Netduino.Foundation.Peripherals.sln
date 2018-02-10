@@ -279,6 +279,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Network", "Network", "{D44E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkSample", "Peripheral_Libs\Network\Samples\NetworkSample\NetworkSample.csproj", "{1E1CB6E8-3E3F-4BC5-B8AA-6B37A67F6335}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Displays.TextDisplayMenuLibrary", "Displays.TextDisplayMenuLibrary", "{EBCD72EF-4486-4E02-83A2-A500C36C4E60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextDisplayMenu", "Peripheral_Libs\Displays.TextDisplayMenuLibrary\Library\TextDisplayMenu\TextDisplayMenu.csproj", "{A18C19A4-F649-444A-BC08-BD4AE00D8DA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextDisplayMenu_Sample", "Peripheral_Libs\Displays.TextDisplayMenuLibrary\Samples\TextDisplayMenu_Sample\TextDisplayMenu_Sample.csproj", "{EF02F683-C0E8-4F49-96B6-8CB60C2B263C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1786,6 +1792,36 @@ Global
 		{1E1CB6E8-3E3F-4BC5-B8AA-6B37A67F6335}.Release|x86.ActiveCfg = Release|Any CPU
 		{1E1CB6E8-3E3F-4BC5-B8AA-6B37A67F6335}.Release|x86.Build.0 = Release|Any CPU
 		{1E1CB6E8-3E3F-4BC5-B8AA-6B37A67F6335}.Release|x86.Deploy.0 = Release|Any CPU
+		{A18C19A4-F649-444A-BC08-BD4AE00D8DA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A18C19A4-F649-444A-BC08-BD4AE00D8DA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A18C19A4-F649-444A-BC08-BD4AE00D8DA9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A18C19A4-F649-444A-BC08-BD4AE00D8DA9}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A18C19A4-F649-444A-BC08-BD4AE00D8DA9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A18C19A4-F649-444A-BC08-BD4AE00D8DA9}.Debug|x86.Build.0 = Debug|Any CPU
+		{A18C19A4-F649-444A-BC08-BD4AE00D8DA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A18C19A4-F649-444A-BC08-BD4AE00D8DA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A18C19A4-F649-444A-BC08-BD4AE00D8DA9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A18C19A4-F649-444A-BC08-BD4AE00D8DA9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A18C19A4-F649-444A-BC08-BD4AE00D8DA9}.Release|x86.ActiveCfg = Release|Any CPU
+		{A18C19A4-F649-444A-BC08-BD4AE00D8DA9}.Release|x86.Build.0 = Release|Any CPU
+		{EF02F683-C0E8-4F49-96B6-8CB60C2B263C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF02F683-C0E8-4F49-96B6-8CB60C2B263C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF02F683-C0E8-4F49-96B6-8CB60C2B263C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{EF02F683-C0E8-4F49-96B6-8CB60C2B263C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{EF02F683-C0E8-4F49-96B6-8CB60C2B263C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{EF02F683-C0E8-4F49-96B6-8CB60C2B263C}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
+		{EF02F683-C0E8-4F49-96B6-8CB60C2B263C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EF02F683-C0E8-4F49-96B6-8CB60C2B263C}.Debug|x86.Build.0 = Debug|Any CPU
+		{EF02F683-C0E8-4F49-96B6-8CB60C2B263C}.Debug|x86.Deploy.0 = Debug|Any CPU
+		{EF02F683-C0E8-4F49-96B6-8CB60C2B263C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF02F683-C0E8-4F49-96B6-8CB60C2B263C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF02F683-C0E8-4F49-96B6-8CB60C2B263C}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{EF02F683-C0E8-4F49-96B6-8CB60C2B263C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{EF02F683-C0E8-4F49-96B6-8CB60C2B263C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{EF02F683-C0E8-4F49-96B6-8CB60C2B263C}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
+		{EF02F683-C0E8-4F49-96B6-8CB60C2B263C}.Release|x86.ActiveCfg = Release|Any CPU
+		{EF02F683-C0E8-4F49-96B6-8CB60C2B263C}.Release|x86.Build.0 = Release|Any CPU
+		{EF02F683-C0E8-4F49-96B6-8CB60C2B263C}.Release|x86.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1888,5 +1924,7 @@ Global
 		{429B6118-8E8C-4B32-BB12-8966DB3CD361} = {9E11B915-F2F4-4575-B498-366E71919991}
 		{C131D5EA-FB63-4238-995F-01D04D9B56EC} = {9E11B915-F2F4-4575-B498-366E71919991}
 		{1E1CB6E8-3E3F-4BC5-B8AA-6B37A67F6335} = {D44E2EF1-96B1-4D53-A132-EC068A29E055}
+		{A18C19A4-F649-444A-BC08-BD4AE00D8DA9} = {EBCD72EF-4486-4E02-83A2-A500C36C4E60}
+		{EF02F683-C0E8-4F49-96B6-8CB60C2B263C} = {EBCD72EF-4486-4E02-83A2-A500C36C4E60}
 	EndGlobalSection
 EndGlobal
