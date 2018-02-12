@@ -11,6 +11,7 @@ namespace ADXL362PollingSample
         {
             Debug.Print("ADXL362 - Polling Sample");
             var sensor = new ADXL362(SPI_Devices.SPI1, Pins.GPIO_PIN_D7, 100);
+            sensor.DisplayRegisters();
             while (true)
             {
                 sensor.Update();

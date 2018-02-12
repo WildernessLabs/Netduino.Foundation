@@ -2,6 +2,7 @@
 using System.Threading;
 using Microsoft.SPOT.Hardware;
 using Netduino.Foundation.Communications;
+using Netduino.Foundation.Helpers;
 using Netduino.Foundation.Spatial;
 
 namespace Netduino.Foundation.Sensors.Motion
@@ -261,7 +262,7 @@ namespace Netduino.Foundation.Sensors.Motion
             ///     Setting this register to 0x01 forces a self test on th X, Y
             ///     and Z axes.
             /// </remarks>
-            public const byte SelfTest = 0x26;
+            public const byte SelfTest = 0x2e;
         }
 
         /// <summary>
@@ -979,6 +980,7 @@ namespace Netduino.Foundation.Sensors.Motion
         /// <param name="interruptPin2">Pin connected to interrupt pin 2 on the ADXL362.</param>
         public void ConfigureInterrupts(byte interruptMap1, Cpu.Pin interruptPin1, byte interruptMap2 = 0, Cpu.Pin interruptPin2 = Cpu.Pin.GPIO_NONE)
         {
+            Stop();
             _interrupt1?.Dispose();
             _interrupt2?.Dispose();
             _adxl362.WriteBytes(new byte[] { Command.WriteRegister, interruptMap1, interruptMap2 });
@@ -1002,6 +1004,7 @@ namespace Netduino.Foundation.Sensors.Motion
             {
                 _interrupt2 = null;
             }
+            Start();
         }
 
         /// <summary>
@@ -1019,6 +1022,17 @@ namespace Netduino.Foundation.Sensors.Motion
                 _lastZ = Z;
                 AccelerationChanged(this, new SensorVectorEventArgs(lastNotifiedReading, currentReading));
             }
+        }
+
+        /// <summary>
+        ///     Display the register contents.
+        /// </summary>
+        public void DisplayRegisters()
+        {
+            var registers = _adxl362.ReadRegisters(0x00, 4);
+            DebugInformation.DisplayRegisters(0x00, registers);
+            registers = _adxl362.ReadRegisters(Registers.XAxis8Bits, Registers.SelfTest - Registers.XAxis8Bits + 1);
+            DebugInformation.DisplayRegisters(Registers.XAxis8Bits, registers);
         }
 
         #endregion Methods
