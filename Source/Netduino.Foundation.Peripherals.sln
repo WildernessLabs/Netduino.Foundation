@@ -285,6 +285,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextDisplayMenu_Sample", "P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADXL362PollingSample", "Peripheral_Libs\Sensors.Motion.ADXL362\Samples\ADXL362PollingSample\ADXL362PollingSample.csproj", "{BD3E6BC5-EDBA-44BB-AAD2-EEA8E4EC9F31}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADXL362InterruptSample", "Peripheral_Libs\Sensors.Motion.ADXL362\Samples\ADXL362InterruptSample\ADXL362InterruptSample.csproj", "{F549287F-F20F-4BD7-8850-8394C25E3BDE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1826,6 +1828,24 @@ Global
 		{BD3E6BC5-EDBA-44BB-AAD2-EEA8E4EC9F31}.Release|x86.ActiveCfg = Release|Any CPU
 		{BD3E6BC5-EDBA-44BB-AAD2-EEA8E4EC9F31}.Release|x86.Build.0 = Release|Any CPU
 		{BD3E6BC5-EDBA-44BB-AAD2-EEA8E4EC9F31}.Release|x86.Deploy.0 = Release|Any CPU
+		{F549287F-F20F-4BD7-8850-8394C25E3BDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F549287F-F20F-4BD7-8850-8394C25E3BDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F549287F-F20F-4BD7-8850-8394C25E3BDE}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F549287F-F20F-4BD7-8850-8394C25E3BDE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F549287F-F20F-4BD7-8850-8394C25E3BDE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F549287F-F20F-4BD7-8850-8394C25E3BDE}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
+		{F549287F-F20F-4BD7-8850-8394C25E3BDE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F549287F-F20F-4BD7-8850-8394C25E3BDE}.Debug|x86.Build.0 = Debug|Any CPU
+		{F549287F-F20F-4BD7-8850-8394C25E3BDE}.Debug|x86.Deploy.0 = Debug|Any CPU
+		{F549287F-F20F-4BD7-8850-8394C25E3BDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F549287F-F20F-4BD7-8850-8394C25E3BDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F549287F-F20F-4BD7-8850-8394C25E3BDE}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{F549287F-F20F-4BD7-8850-8394C25E3BDE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F549287F-F20F-4BD7-8850-8394C25E3BDE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F549287F-F20F-4BD7-8850-8394C25E3BDE}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
+		{F549287F-F20F-4BD7-8850-8394C25E3BDE}.Release|x86.ActiveCfg = Release|Any CPU
+		{F549287F-F20F-4BD7-8850-8394C25E3BDE}.Release|x86.Build.0 = Release|Any CPU
+		{F549287F-F20F-4BD7-8850-8394C25E3BDE}.Release|x86.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1930,5 +1950,6 @@ Global
 		{A18C19A4-F649-444A-BC08-BD4AE00D8DA9} = {EBCD72EF-4486-4E02-83A2-A500C36C4E60}
 		{EF02F683-C0E8-4F49-96B6-8CB60C2B263C} = {EBCD72EF-4486-4E02-83A2-A500C36C4E60}
 		{BD3E6BC5-EDBA-44BB-AAD2-EEA8E4EC9F31} = {AFDBF25F-ABC5-4A4B-91C7-F910573939AD}
+		{F549287F-F20F-4BD7-8850-8394C25E3BDE} = {AFDBF25F-ABC5-4A4B-91C7-F910573939AD}
 	EndGlobalSection
 EndGlobal

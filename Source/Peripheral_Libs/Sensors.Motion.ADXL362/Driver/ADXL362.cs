@@ -2,7 +2,7 @@
 using System.Threading;
 using Microsoft.SPOT.Hardware;
 using Netduino.Foundation.Communications;
-using Netduino.Foundation.Sensors.Rotary;
+using Netduino.Foundation.Spatial;
 
 namespace Netduino.Foundation.Sensors.Motion
 {
@@ -25,12 +25,27 @@ namespace Netduino.Foundation.Sensors.Motion
         /// </summary>
         private InterruptPort _interrupt2 = null;
 
+        /// <summary>
+        ///     Last X value reported in the interrupt handler.
+        /// </summary>
+        private short _lastX = 0;
+
+        /// <summary>
+        ///     Last Y value reported in the interrupt handler.
+        /// </summary>
+        private short _lastY = 0;
+
+        /// <summary>
+        ///     Last Z value reported in the interrupt handler.
+        /// </summary>
+        private short _lastZ = 0;
+
         #endregion Member variables / fields
 
         #region Classes / structures
 
         /// <summary>
-        ///     Command byte (forst byte in any communication).
+        ///     Command byte (first byte in any communication).
         /// </summary>
         protected static class Command
         {
@@ -45,7 +60,7 @@ namespace Netduino.Foundation.Sensors.Motion
             public const byte Readegister = 0x0b;
             
             /// <summary>
-            ///     Raed the FIFO buffer.
+            ///     Read the FIFO buffer.
             /// </summary>
             public const byte ReadFIFO = 0x0d;
         }
@@ -293,7 +308,7 @@ namespace Netduino.Foundation.Sensors.Motion
         /// <summary>
         ///     Masks for the bit in the filter control register.
         /// </summary>
-        protected static class FilterControlMask
+        public static class FilterControlMask
         {
             /// <summary>
             ///     Data rate of 12.5Hz
@@ -361,7 +376,7 @@ namespace Netduino.Foundation.Sensors.Motion
         /// <summary>
         ///     Bit masks for the interrupt 1 / 2 control.
         /// </summary>
-        protected static class InterruptMask
+        public static class InterruptMask
         {
             /// <summary>
             ///     Bit indicating that data is ready for processing.
@@ -472,7 +487,7 @@ namespace Netduino.Foundation.Sensors.Motion
             public const byte ActivityDetected = 0x10;
 
             /// <summary>
-            ///     Indicate that the sensor is either inactive or a freefall condition
+            ///     Indicate that the sensor is either inactive or a free-fall condition
             ///     has been detected.
             /// </summary>
             public const byte InactivityDetected = 0x20;
@@ -556,7 +571,7 @@ namespace Netduino.Foundation.Sensors.Motion
         #region Properties
 
         /// <summary>
-        ///     Indiacte of data is ready to be read.
+        ///     Indicate of data is ready to be read.
         /// </summary>
         public bool DataReady
         {
@@ -568,7 +583,7 @@ namespace Netduino.Foundation.Sensors.Motion
         }
         
         /// <summary>
-        ///     Indictae if there is any data in the FIFO buffer.
+        ///     Indicate if there is any data in the FIFO buffer.
         /// </summary>
         public bool FIFOReady
         {
@@ -619,7 +634,7 @@ namespace Netduino.Foundation.Sensors.Motion
         }
         
         /// <summary>
-        ///     Indicate if the sensor ihas detected inactivity or a
+        ///     Indicate if the sensor has detected inactivity or a
         ///     free fall condition.
         /// </summary>
         public bool InactivityDetected
@@ -758,8 +773,17 @@ namespace Netduino.Foundation.Sensors.Motion
                 _adxl362.WriteBytes(new byte[] { Command.WriteRegister, value });
             }
         }
-        
+
         #endregion Properties
+
+        #region Events and delegates
+
+        /// <summary>
+        ///     Event to be raised when the acceleration is greater than the activity registers.
+        /// </summary>
+        public event SensorVectorEventHandler AccelerationChanged = delegate { };
+
+        #endregion Events and delegates
 
         #region Constructors
 
@@ -838,18 +862,18 @@ namespace Netduino.Foundation.Sensors.Motion
         ///     output data rate and the sensitivity determine if activity is detected
         ///     according to the following formula:
         /// 
-        ///     Activity threshold = Threshold / Sensitvity
+        ///     Activity threshold = Threshold / Sensitivity
         ///     Time = Activity time / output data rate
         /// 
-        ///     Note that the sensitvity is in the Filter Control register.
+        ///     Note that the sensitivity is in the Filter Control register.
         /// 
-        ///     Further information can be found on page 27 of the datasheet.
+        ///     Further information can be found on page 27 of the data sheet.
         /// </remark>
         /// <param name="threshold">11-bit unsigned value for the activity threshold.</param>
-        /// <param name="numberOfSamples">Number of consectuve samples that must exceed the threshold</param>
+        /// <param name="numberOfSamples">Number of consecutive samples that must exceed the threshold</param>
         public void ConfigureActivityThreshold(ushort threshold, byte numberOfSamples)
         {
-            if ((threshold & 0xf8) != 0)
+            if ((threshold & 0xf800) != 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(threshold), "Activity threshold should be in the range 0-0x7ff");
             }
@@ -874,15 +898,15 @@ namespace Netduino.Foundation.Sensors.Motion
         ///     output data rate and the sensitivity determine if activity is detected
         ///     according to the following formula:
         /// 
-        ///     Inactivity threshold = Threshold / Sensitvity
+        ///     Inactivity threshold = Threshold / Sensitivity
         ///     Time = Inactivity time / output data rate
         /// 
-        ///     Note that the sensitvity is in the Filter Control register.
+        ///     Note that the sensitivity is in the Filter Control register.
         /// 
-        ///     Further information can be found on page 27 and 28 of the datasheet.
+        ///     Further information can be found on page 27 and 28 of the data sheet.
         /// </remark>
         /// <param name="threshold">11-bit unsigned value for the activity threshold.</param>
-        /// <param name="numberOfSamples">Number of consectuve samples that must exceed the threshold</param>
+        /// <param name="numberOfSamples">Number of consecutive samples that must exceed the threshold</param>
         public void ConfigureInactivityThreshold(ushort threshold, ushort numberOfSamples)
         {
             if ((threshold & 0xf8) != 0)
@@ -906,7 +930,7 @@ namespace Netduino.Foundation.Sensors.Motion
         ///     Map the pull-up / pull-down resistor mode based upon the interrupt
         ///     state (active low or active high) to the appropriate resistor mode.
         /// </summary>
-        /// <param name="activeLow">True if the resisotr should be pull-up, otherwise a pull-down resistor.</param>
+        /// <param name="activeLow">True if the resistor should be pull-up, otherwise a pull-down resistor.</param>
         /// <returns>Resistor mode mapping based upon the active low state.</returns>
         private Port.ResistorMode MapResistorMode(bool activeLow)
         {
@@ -953,7 +977,7 @@ namespace Netduino.Foundation.Sensors.Motion
         /// <param name="interruptPin1">Pin connected to interrupt pin 1 on the ADXL362.</param>
         /// <param name="interruptMap2">Bit mask for interrupt pin 2</param>
         /// <param name="interruptPin2">Pin connected to interrupt pin 2 on the ADXL362.</param>
-        public void ConfigureInterrupts(byte interruptMap1, Cpu.Pin interruptPin1, byte interruptMap2, Cpu.Pin interruptPin2)
+        public void ConfigureInterrupts(byte interruptMap1, Cpu.Pin interruptPin1, byte interruptMap2 = 0, Cpu.Pin interruptPin2 = Cpu.Pin.GPIO_NONE)
         {
             _interrupt1?.Dispose();
             _interrupt2?.Dispose();
@@ -962,14 +986,41 @@ namespace Netduino.Foundation.Sensors.Motion
             {
                 _interrupt1 = new InterruptPort(interruptPin1, false, MapResistorMode((interruptMap1 & 0xf0) > 0),
                     MapInterruptMode((interruptMap1 & 0xf0) > 0));
+                _interrupt1.OnInterrupt += SensorInterrupt;
+            }
+            else
+            {
+                _interrupt1 = null;
             }
             if (interruptPin2 != Cpu.Pin.GPIO_NONE)
             {
                 _interrupt2 = new InterruptPort(interruptPin1, false, MapResistorMode((interruptMap2 & 0xf0) > 0),
                     MapInterruptMode((interruptMap2 & 0xf0) > 0));
+                _interrupt2.OnInterrupt += SensorInterrupt;
+            }
+            else
+            {
+                _interrupt2 = null;
             }
         }
-        
+
+        /// <summary>
+        ///     Sensor has generated an interrupt, work out what to do.
+        /// </summary>
+        private void SensorInterrupt(uint data1, uint data2, DateTime time)
+        {
+            var status = Status;
+            if ((status & StatusBitsMask.ActivityDetected) != 0)
+            {
+                Vector lastNotifiedReading = new Vector(_lastX, _lastY, _lastZ);
+                Vector currentReading = new Vector(X, Y, Z);
+                _lastX = X;
+                _lastY = Y;
+                _lastZ = Z;
+                AccelerationChanged(this, new SensorVectorEventArgs(lastNotifiedReading, currentReading));
+            }
+        }
+
         #endregion Methods
     }
 }
