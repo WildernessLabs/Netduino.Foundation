@@ -12,6 +12,7 @@ namespace ADXL362InterruptSample
         {
             Debug.Print("ADXL362 - Interrupt Sample");
             var sensor = new ADXL362(SPI_Devices.SPI1, Pins.GPIO_PIN_D7, 100);
+            sensor.Stop();
             sensor.ConfigureActivityThreshold(50, 10);
             sensor.AccelerationChanged += (s, e) =>
             {
@@ -19,6 +20,7 @@ namespace ADXL362InterruptSample
             };
             sensor.ConfigureInterrupts(ADXL362.InterruptMask.Activity, Pins.GPIO_PIN_D2);
             sensor.DisplayRegisters();
+            sensor.Start();
             Thread.Sleep(Timeout.Infinite);
         }
     }

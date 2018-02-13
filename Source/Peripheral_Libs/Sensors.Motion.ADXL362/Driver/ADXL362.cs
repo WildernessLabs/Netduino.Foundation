@@ -980,7 +980,6 @@ namespace Netduino.Foundation.Sensors.Motion
         /// <param name="interruptPin2">Pin connected to interrupt pin 2 on the ADXL362.</param>
         public void ConfigureInterrupts(byte interruptMap1, Cpu.Pin interruptPin1, byte interruptMap2 = 0, Cpu.Pin interruptPin2 = Cpu.Pin.GPIO_NONE)
         {
-            Stop();
             _interrupt1?.Dispose();
             _interrupt2?.Dispose();
             _adxl362.WriteBytes(new byte[] { Command.WriteRegister, interruptMap1, interruptMap2 });
@@ -1004,7 +1003,6 @@ namespace Netduino.Foundation.Sensors.Motion
             {
                 _interrupt2 = null;
             }
-            Start();
         }
 
         /// <summary>
@@ -1029,10 +1027,17 @@ namespace Netduino.Foundation.Sensors.Motion
         /// </summary>
         public void DisplayRegisters()
         {
-            var registers = _adxl362.ReadRegisters(0x00, 4);
-            DebugInformation.DisplayRegisters(0x00, registers);
-            registers = _adxl362.ReadRegisters(Registers.XAxis8Bits, Registers.SelfTest - Registers.XAxis8Bits + 1);
-            DebugInformation.DisplayRegisters(Registers.XAxis8Bits, registers);
+            var command = new byte[] { Command.Readegister, 0x00 };
+            var registers = _adxl362.WriteRead(command, 6);
+            var idRegisters = new byte[4];
+            Array.Copy(registers, 2, idRegisters, 0, 4);
+            DebugInformation.DisplayRegisters(0x00, idRegisters);
+            command[1] = Registers.XAxis8Bits;
+            var amount = Registers.SelfTest - Registers.XAxis8Bits + 1;
+            registers = _adxl362.WriteRead(command, (ushort) (amount + 2));
+            var dataRegisters = new byte[amount];
+            Array.Copy(registers, 2, dataRegisters, 0, amount);
+            DebugInformation.DisplayRegisters(Registers.XAxis8Bits, dataRegisters);
         }
 
         #endregion Methods
