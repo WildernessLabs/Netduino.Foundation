@@ -29,6 +29,9 @@ namespace SerialLCDCharacters_Sample
 
             public App()
             {
+                // 20 x 4:
+                //TextDisplayConfig displayConfig = new TextDisplayConfig() { Width = 20, Height = 4 };
+                // 16 x 2:
                 TextDisplayConfig displayConfig = new TextDisplayConfig() { Width = 16, Height = 2 };
                 _lcd = new F.Displays.SerialLCD(displayConfig);
             }
