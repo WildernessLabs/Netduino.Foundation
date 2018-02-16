@@ -287,6 +287,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADXL362PollingSample", "Per
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADXL362InterruptSample", "Peripheral_Libs\Sensors.Motion.ADXL362\Samples\ADXL362InterruptSample\ADXL362InterruptSample.csproj", "{F549287F-F20F-4BD7-8850-8394C25E3BDE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialLCD4x20_Sample", "Peripheral_Libs\Displays.SerialLCD\Samples\SerialLCD4x20_Sample\SerialLCD4x20_Sample.csproj", "{60EAE717-3A34-4AC6-80B9-5C9FAB6C4A3B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1846,6 +1848,24 @@ Global
 		{F549287F-F20F-4BD7-8850-8394C25E3BDE}.Release|x86.ActiveCfg = Release|Any CPU
 		{F549287F-F20F-4BD7-8850-8394C25E3BDE}.Release|x86.Build.0 = Release|Any CPU
 		{F549287F-F20F-4BD7-8850-8394C25E3BDE}.Release|x86.Deploy.0 = Release|Any CPU
+		{60EAE717-3A34-4AC6-80B9-5C9FAB6C4A3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60EAE717-3A34-4AC6-80B9-5C9FAB6C4A3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60EAE717-3A34-4AC6-80B9-5C9FAB6C4A3B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{60EAE717-3A34-4AC6-80B9-5C9FAB6C4A3B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{60EAE717-3A34-4AC6-80B9-5C9FAB6C4A3B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{60EAE717-3A34-4AC6-80B9-5C9FAB6C4A3B}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
+		{60EAE717-3A34-4AC6-80B9-5C9FAB6C4A3B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{60EAE717-3A34-4AC6-80B9-5C9FAB6C4A3B}.Debug|x86.Build.0 = Debug|Any CPU
+		{60EAE717-3A34-4AC6-80B9-5C9FAB6C4A3B}.Debug|x86.Deploy.0 = Debug|Any CPU
+		{60EAE717-3A34-4AC6-80B9-5C9FAB6C4A3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60EAE717-3A34-4AC6-80B9-5C9FAB6C4A3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60EAE717-3A34-4AC6-80B9-5C9FAB6C4A3B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{60EAE717-3A34-4AC6-80B9-5C9FAB6C4A3B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{60EAE717-3A34-4AC6-80B9-5C9FAB6C4A3B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{60EAE717-3A34-4AC6-80B9-5C9FAB6C4A3B}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
+		{60EAE717-3A34-4AC6-80B9-5C9FAB6C4A3B}.Release|x86.ActiveCfg = Release|Any CPU
+		{60EAE717-3A34-4AC6-80B9-5C9FAB6C4A3B}.Release|x86.Build.0 = Release|Any CPU
+		{60EAE717-3A34-4AC6-80B9-5C9FAB6C4A3B}.Release|x86.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1951,5 +1971,6 @@ Global
 		{EF02F683-C0E8-4F49-96B6-8CB60C2B263C} = {EBCD72EF-4486-4E02-83A2-A500C36C4E60}
 		{BD3E6BC5-EDBA-44BB-AAD2-EEA8E4EC9F31} = {AFDBF25F-ABC5-4A4B-91C7-F910573939AD}
 		{F549287F-F20F-4BD7-8850-8394C25E3BDE} = {AFDBF25F-ABC5-4A4B-91C7-F910573939AD}
+		{60EAE717-3A34-4AC6-80B9-5C9FAB6C4A3B} = {9E11B915-F2F4-4575-B498-366E71919991}
 	EndGlobalSection
 EndGlobal
