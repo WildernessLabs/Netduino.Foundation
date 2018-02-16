@@ -294,10 +294,10 @@ namespace Netduino.Foundation.Displays
                     absoluteCharacterPosition += 64;
                     break;
                 case 2:
-                    absoluteCharacterPosition += (byte) DisplayConfig.Height;
+                    absoluteCharacterPosition += DisplayConfig.Width == 16 ? (byte)16 : (byte)20;
                     break;
                 case 3:
-                    absoluteCharacterPosition += DisplayConfig.Width == 16 ? (byte) 80 : (byte) 84;
+                    absoluteCharacterPosition += DisplayConfig.Width == 16 ? (byte)80 : (byte) 84;
                     break;
             }
             Send(new[] { ExtendedCommandCharacter, (byte) (0x80 + (absoluteCharacterPosition & 0xff)) });
