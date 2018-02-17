@@ -14,5 +14,12 @@ namespace Netduino.Foundation.Displays
         void ClearLine(byte lineNumber);
 
         void SetBrightness(float brightness = 0.75f);
+
+        /// <summary>
+        ///  is this going to be supported by all text displays?
+        /// </summary>
+        /// <param name="characterMap"></param>
+        /// <param name="address"></param>
+        void SaveCustomCharacter(byte[] characterMap, byte address);
     }
 }
