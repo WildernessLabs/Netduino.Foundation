@@ -36,6 +36,7 @@
     <Compile Include="MenuPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoslynFixHack.cs" />
+    <Compile Include="TextCharacters.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Hardware" />

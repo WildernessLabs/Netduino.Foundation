@@ -30,7 +30,7 @@ namespace TextDisplayMenu_Sample
             _encoder = new RotaryEncoderWithButton(
                 N.Pins.GPIO_PIN_D2, N.Pins.GPIO_PIN_D3, N.Pins.GPIO_PIN_D4,
                 Netduino.Foundation.CircuitTerminationType.CommonGround);
-            _display = new SerialLCD() as ITextDisplay;
+            _display = new SerialLCD(new TextDisplayConfig() { Height = 4, Width = 20 }) as ITextDisplay;
 
             // set display brightness
             _display.SetBrightness();
@@ -65,8 +65,18 @@ namespace TextDisplayMenu_Sample
             MenuPage menuTree = new MenuPage();
             menuTree.MenuItems.Add(new MenuItemBase("Menu Item 1"));
             menuTree.MenuItems.Add(new MenuItemBase("Item the 2nd"));
-            menuTree.MenuItems.Add(new MenuItemBase("3rd menu item"));
+            menuTree.MenuItems.Add(new MenuItemBase("3rd menu item") {
+                SubMenu = new MenuPage() { MenuItems =
+                    {
+                        new MenuItemBase ("I'm first!"),
+                        new MenuItemBase ("I'm second."),
+                        new MenuItemBase ("where the party at?")
+                    }
+                }
+            });
             menuTree.MenuItems.Add(new MenuItemBase("Item 4"));
+            menuTree.MenuItems.Add(new MenuItemBase("Item 5"));
+            menuTree.MenuItems.Add(new MenuItemBase("Item 6"));
 
             return menuTree;
         }

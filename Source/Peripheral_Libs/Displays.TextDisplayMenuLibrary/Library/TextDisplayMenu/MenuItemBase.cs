@@ -6,7 +6,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
 {
     public class MenuItemBase : IMenuItem
     {
-        public MenuPage Children
+        public MenuPage SubMenu
         { get; set; } = new MenuPage();
 
         //public bool IsSelected { get; set; } = false;
