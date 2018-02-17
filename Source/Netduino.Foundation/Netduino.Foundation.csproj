@@ -38,6 +38,8 @@
     <Compile Include="Communications\SerialTextFile.cs" />
     <Compile Include="Communications\SoftwareSPIBus.cs" />
     <Compile Include="Communications\SPIBus.cs" />
+    <Compile Include="Controllers\PID\PIDActionType.cs" />
+    <Compile Include="Controllers\PID\PIDController.cs" />
     <Compile Include="Displays\TextDisplayConfig.cs" />
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="Generators\SoftPWM.cs" />
