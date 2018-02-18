@@ -71,9 +71,9 @@ namespace Netduino.Foundation.Controllers.PID
             float control = 0.0f;
 
             // add the appropriate corrections
-            if (correctionActions == PIDActionType.Proportional) control += proportional;
-            if (correctionActions == PIDActionType.Integral) control += _integral;
-            if (correctionActions == PIDActionType.Derivative) control += derivative;
+            if ((correctionActions & PIDActionType.Proportional) == PIDActionType.Proportional) control += proportional;
+            if ((correctionActions & PIDActionType.Integral) == PIDActionType.Integral) control += _integral;
+            if ((correctionActions & PIDActionType.Derivative) == PIDActionType.Derivative) control += derivative;
 
             _lastUpdateTime = now;
 
