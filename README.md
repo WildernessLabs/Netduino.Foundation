@@ -24,7 +24,27 @@ Netduino.Foundation, is open source and community powered, much like Netduino it
  * **Documentation** - Including a Fritzing breadboard schematic on wiring it up, sourcing info, and API docs. Please see other drivers for examples. Documentation is hosted on the [Netduino.Foundation](http://Netduino.Foundation) GitHub pages site and should be placed in the appropriate place in the `/docs/` folder.
  * **Datasheet** - For the peripheral, if applicable.
  * **Sample** - Application illustrating usage of the peripheral.
- * **Nuspec file** - For building the peripheral's Nuget package (if it's an external peripheral). See other peripherals for an example. [**TODO** explain how nuget packages are automatically built and the requirements for publishing]
+ * **Nuspec file** - For building the peripheral's Nuget package (if it's an external peripheral). See other peripherals for an example.
+
+### Publishing Updated Nuget Packages
+
+When any of the libraries have their assembly version bumped, and that change is checked in, our CI system will automatically build a new package and upload it to Nuget.org (yay!). 
+
+Netduino apps are constrained to VS2015 (VS2017 support coming soon), which doesn't support the latest Nuget Package Manager. As such, it has a bug related to package dependencies. Specifically; if two Netduino.Foundation packages require different minimum versions of the Netduino.Foundation Core, say 0.12, and 0.13, then they cannot be used in the same project, because the version of Nuget in VS2015 will not use 0.12 as the minimum and utilize the 0.13 package. 
+
+As such, whenever a change to the Netduino.Foundation.Core is made, _every_ peripheral package needs to have its Netduino.Foundation.Core dependency to be updated to point to the latest core.
+
+This is a lot of work to do, manually, so we have a script in the `./source` folder called `UpdateNFDependencyVersion.ps1`. It will update the `<dependency.../>` node in each of the project's .nuspec file AND increment the version number of the library in the `Assembly.cs` folder, so that the nuget package will automatically be built and updated.
+
+To run the script, open up a terminal window, navigate to the `./source` folder and execute:
+
+```
+.\UpdateNFDependencyVersion.ps1 0.13
+```
+
+Replace `0.13` with whatever latest version of the Netduino.Foundation.Core package is at.
+
+Note: this script has a small bug that often throws an error. If it does, don't panic, just do a git checkout of master again and re-run the script. If a checkout doesn't clean up the changes that the script did, use `git reset --hard HEAD`.
 
 ### List of Peripherals TODO
 
