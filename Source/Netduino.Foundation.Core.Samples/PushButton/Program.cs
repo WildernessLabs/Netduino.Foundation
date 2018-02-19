@@ -25,6 +25,11 @@ namespace Netduino.Foundation.Core.Samples
                 Debug.Print("Button Clicked");
             };
 
+            pushButton.LongPressClicked += (s, e) =>
+            {
+                Debug.Print("Long pressed!");
+            };
+
             Thread.Sleep(Timeout.Infinite);
         }
     }

@@ -18,11 +18,18 @@ namespace Netduino.Foundation.Sensors.Buttons
 		/// </summary>
 		public TimeSpan DebounceDuration { get; set; }
 
+        /// <summary>
+        /// The minimum duration for a long press.
+        /// </summary>
+        public TimeSpan LongPressThreshold { get; set; } = new TimeSpan(0, 0, 0, 0, 500);
+        protected DateTime _buttonPressStart = DateTime.MaxValue;
+
         public H.InterruptPort DigitalIn { get; private set; }
 
         public event EventHandler PressStarted = delegate { };
         public event EventHandler PressEnded = delegate { };
 		public event EventHandler Clicked = delegate { };
+        public event EventHandler LongPressClicked = delegate { };
 
         /// <summary>
         /// 
@@ -70,29 +77,48 @@ namespace Netduino.Foundation.Sensors.Buttons
 
             // 0 is press, 1 is release
             switch (state) {
-                case 0:
-                    this.OnPressStarted();
+                case 0: // button press
+                    // save our press start time (for long press event)
+                    _buttonPressStart = DateTime.Now;
+                    // raise our event in an inheritance friendly way
+                    this.RaisePressStarted();
                     break;
-                case 1:
-                    this.OnPressEnded();
-                    this.OnClicked();
+                case 1: // button release
+                    // calculate the press duration
+                    TimeSpan pressDuration = DateTime.Now - _buttonPressStart;
+
+                    // reset press start time
+                    _buttonPressStart = DateTime.MaxValue;
+
+                    // if it's a long press, raise our long press event
+                    if (pressDuration > LongPressThreshold) this.RaiseLongPress();
+
+                    // raise the other events
+                    this.RaisePressEnded();
+                    this.RaiseClicked();
                     break;
             }
         }
 
-		protected virtual void OnClicked ()
+		protected virtual void RaiseClicked ()
 		{
 			this.Clicked (this, EventArgs.Empty);
 		}
 
-        protected virtual void OnPressStarted()
+        protected virtual void RaisePressStarted()
         {
+            // raise the press started event
             this.PressStarted(this, new EventArgs());
         }
 
-        protected virtual void OnPressEnded()
+        protected virtual void RaisePressEnded()
         {
             this.PressEnded(this, new EventArgs());
+        }
+
+        protected virtual void RaiseLongPress()
+        {
+            this.LongPressClicked(this, new EventArgs());
         }
 	}
 }
