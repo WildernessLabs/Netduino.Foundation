@@ -46,9 +46,13 @@ This duration controls the debounce filter. It also has the effect of rate limit
 Default time is 20 milliseconds, which should be good for most tactile push buttons.
 
 
-#### `public H.InterruptPort DigitalIn { get; private set; }`
+#### `public InterruptPort DigitalIn { get; private set; }`
 
 Returns the interrupt port that the pushbutton is configured on.
+
+#### `public TimeSpan LongPressThreshold { get; set; }`
+
+The duration needed for a press to raise the `LongPress` event. By default it's half a second.
 
 ## Events
 
@@ -63,6 +67,10 @@ Raised when a press ends (the button is released; circuit is opened).
 #### `public event EventHandler Clicked`
 
 Raised when the button circuit is re-opened after it has been closed (at the end of a "press".
+
+#### `public event EventHandler LongPressClicked`
+
+Raised when the button is pressed for at least the amount of time specified in the `LongPressThreshold` property.
 
 ## Constructors
 
