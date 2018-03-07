@@ -20,21 +20,21 @@ namespace Netduino.Foundation.Core.Samples
             // instantiate an app singleton and set it to run.
             TachometerApp app = new TachometerApp();
             app.Run();
-
+            Debug.Print("Here1");
             Thread.Sleep(Timeout.Infinite);
         }
     }
 
     public class TachometerApp
     {
-        protected HBridgeMotor _motor;
+        protected H.PWM _motor;
         protected LinearHallEffectTachometer _tach;
         protected SerialLCD _lcd;
 
         public TachometerApp()
         {
-            this._motor = new HBridgeMotor(N.PWMChannels.PWM_PIN_D3, 
-                N.PWMChannels.PWM_PIN_D5, N.Pins.GPIO_PIN_D4, 50);
+            Debug.Print("Here2");
+            this._motor = new H.PWM(N.PWMChannels.PWM_PIN_D3, 100, 0, false);
             this._tach = new LinearHallEffectTachometer(N.Pins.GPIO_PIN_D2);
             this._lcd = new SerialLCD(new TextDisplayConfig() { Width = 16, Height = 2 });
 
@@ -51,13 +51,15 @@ namespace Netduino.Foundation.Core.Samples
         {
             this._lcd.Clear();
 
+            this._motor.Start();
+
             while (true)
             {
 
                 // 75% speed
                 Debug.Print("75% Speed");
                 this._lcd.WriteLine("Input speed: 75%", 0);
-                this._motor.Speed = 0.75F;
+                this._motor.DutyCycle = 0.75F;
 
                 // 3 seconds
                 Thread.Sleep(3000);
@@ -65,7 +67,7 @@ namespace Netduino.Foundation.Core.Samples
                 // full speed
                 Debug.Print("100% Speed");
                 this._lcd.WriteLine("Input speed:100%", 0);
-                this._motor.Speed = 1.0F;
+                this._motor.DutyCycle = 1.0F;
 
                 // 3 seconds
                 Thread.Sleep(3000);
@@ -73,11 +75,13 @@ namespace Netduino.Foundation.Core.Samples
                 // off
                 this._lcd.WriteLine("Fan off.", 0);
                 Debug.Print("0% Speed");
-                this._motor.Speed = 0.0F;
+                this._motor.DutyCycle = 0.0F;
 
                 // 3 seconds
                 Thread.Sleep(3000);
             }
+
+            this._motor.Stop();
         }
     }
 
