@@ -257,3 +257,6 @@ SourceVersions
 # MAC Stuff
 .DS_Store
 *.DS_Store
+
+# NETMF
+OnBoardFlash.dat
