@@ -41,6 +41,7 @@
     <Reference Include="Microsoft.SPOT.Graphics" />
     <Reference Include="Microsoft.SPOT.Hardware" />
     <Reference Include="Microsoft.SPOT.Native" />
+    <Reference Include="Microsoft.SPOT.TinyCore" />
     <Reference Include="SecretLabs.NETMF.Hardware.Netduino, Version=4.3.1.0, Culture=neutral, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
