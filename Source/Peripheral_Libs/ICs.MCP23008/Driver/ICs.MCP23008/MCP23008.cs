@@ -34,7 +34,7 @@ namespace Netduino.Foundation.ICs.MCP23008
         private const byte _GPIORegister = 0x09; //GPIO
         private const byte _OutputLatchRegister = 0x0A; //OLAT
 
-        
+
 
         // protected properties
         protected bool SequentialAddressOperationEnabled
@@ -51,10 +51,10 @@ namespace Netduino.Foundation.ICs.MCP23008
         protected MCP23008()
         { }
 
-        public MCP23008(bool pinA0, bool pinA1, bool pinA2, ushort speed = 100) 
+        public MCP23008(bool pinA0, bool pinA1, bool pinA2, ushort speed = 100)
             : this(MCPAddressTable.GetAddressFromPins(pinA0, pinA1, pinA2), speed)
         {
-           // nothing goes here
+            // nothing goes here
         }
 
         public MCP23008(byte address = 0x20, ushort speed = 100)
@@ -70,42 +70,56 @@ namespace Netduino.Foundation.ICs.MCP23008
 
         protected DigitalOutputPort CreateOutputPort(byte pin, bool initialState)
         {
+            // setup the port internally for output
+            this.ConfigureOutputPort(pin);
+
             // create the convenience class
             DigitalOutputPort port = new DigitalOutputPort(this, pin, initialState);
-            
-            // setup the port internally for output in a thread safe way
-            lock (_lock)
-            {
-              
-                // read the IODIR registers to get IO direction config
-                byte iodir = this._i2cBus.ReadRegister(_IODirectionRegister);
-
-                // configure that pin for output
-                iodir |= (byte)(1 << pin); //is that the right pin mask?
-
-                // write our new setting and update our state tracking
-                this._i2cBus.WriteRegister(_IODirectionRegister, iodir);
-                _iodir = iodir;
-            }
 
             // return the port
             return port;
         }
 
-        public bool WriteToPort(int pin, bool value)
+        protected void ConfigureOutputPort(byte pin)
         {
-            bool success = true;
+            // if it's already configured, get out.
+            if ((_iodir & (byte)(1 << pin)) != 0) return;
 
-            // check to see if that port is configured
-            if ((_iodir & (byte)(1 << pin)) == 1)
+            // setup the port internally for output in a thread safe way
+            lock (_lock)
             {
-                // write
+                // read the IODIR registers to get IO direction config
+                byte iodir = this._i2cBus.ReadRegister(_IODirectionRegister);
+
+                // configure that pin for output
+                iodir |= (byte)(1 << pin);
+
+                // write our new setting and update our state tracking
+                this._i2cBus.WriteRegister(_IODirectionRegister, iodir);
+                _iodir = iodir;
             }
-
-
-
-            return success;
         }
+
+        public void WriteToPort(int pin, bool value)
+        {
+            // here fore educational purposes only
+            // byte pinMask = (byte)(1 << pin); // left shift a 1 into the appropriate pin slot
+            // byte pinValueMask = (byte)((value ? 1 : 0) << pin); // left shift on or off into the pin slot
+
+            // if the pin isn't configured for output, configure it
+            this.ConfigureOutputPort((byte)pin);
+
+            // update our output latch 
+            // TODO: (is this needed? e.g., is it safe to rely on our 
+            // stored state? as long as we funnel all calls through here, 
+            // it should be ok, yeah?)
+            _olat = this._i2cBus.ReadRegister(_OutputLatchRegister);
+            _olat |= (byte)((value ? 1 : 0) << pin);
+
+            // write to the output latch (actually does the output setting)
+            this._i2cBus.WriteRegister(_OutputLatchRegister, _olat);
+        }
+
 
 
         // what's a good way to do this? maybe constants? how to name?
