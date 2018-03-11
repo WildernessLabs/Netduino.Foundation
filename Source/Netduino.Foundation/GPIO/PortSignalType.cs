@@ -3,8 +3,9 @@ using Microsoft.SPOT;
 
 namespace Netduino.Foundation.GPIO
 {
-    public interface IDigitalPort : IPort
+    public enum PortSignalType
     {
-        bool State { get; set; }
+        Analog,
+        Digital
     }
 }

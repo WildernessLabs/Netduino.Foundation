@@ -3,8 +3,8 @@ using Microsoft.SPOT;
 
 namespace Netduino.Foundation.GPIO
 {
-    public interface IDigitalPort : IPort
+    interface IDigitalOutputPort : IDigitalPort
     {
-        bool State { get; set; }
+        bool InitialState { get; }
     }
 }

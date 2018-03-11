@@ -6,5 +6,7 @@ namespace Netduino.Foundation.GPIO
     public interface IPort
     {
         PortDirectionType DirectionType { get; }
+
+        PortSignalType SignalType { get; }
     }
 }
