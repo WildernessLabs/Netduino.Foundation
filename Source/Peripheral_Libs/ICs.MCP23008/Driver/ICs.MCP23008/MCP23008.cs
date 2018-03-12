@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Microsoft.SPOT;
 using Netduino.Foundation.Communications;
 
@@ -59,17 +60,37 @@ namespace Netduino.Foundation.ICs.MCP23008
 
         public MCP23008(byte address = 0x20, ushort speed = 100)
         {
-            Debug.Print("Here");
-
             // configure our i2c bus so we can talk to the chip
             this._i2cBus = new I2CBus(address, speed);
 
             Debug.Print("initialized.");
 
+            // make sure the chip is in a default state
+            ResetChip();
+            Debug.Print("Chip Reset.");
+            Thread.Sleep(100);
+
             // read in the initial state of the chip
             _iodir = this._i2cBus.ReadRegister(_IODirectionRegister);
             _gpio = this._i2cBus.ReadRegister(_GPIORegister);
             _olat = this._i2cBus.ReadRegister(_OutputLatchRegister);
+        }
+
+        protected void ResetChip()
+        {
+            byte[] buffers = new byte[10];
+
+            // IO Direction
+            buffers[0] = 0xFF; //all input `11111111`
+
+            // set all the other registers to zeros (we skip the last one, output latch)
+            for (int i = 1; i < 10; i++ )
+            {
+                buffers[i] = 0x00; //all zero'd out `00000000`
+            }
+
+            // the chip will automatically write all registers sequentially.
+            this._i2cBus.WriteRegisters(_IODirectionRegister, buffers);
         }
 
         protected DigitalOutputPort CreateOutputPort(byte pin, bool initialState)

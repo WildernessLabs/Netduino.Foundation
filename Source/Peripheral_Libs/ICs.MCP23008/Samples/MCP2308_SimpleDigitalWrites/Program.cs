@@ -11,18 +11,21 @@ namespace MCP2308_SimpleDigitalWrites
 
         public static void Main()
         {
-            _mcp = new MCP23008(32, 400);
+            _mcp = new MCP23008(39);
 
-            for (int i = 0; i <= 7; i++)
+            while (true)
             {
-                //clear ports (TEMP)
-                for (int j = 0; j <= 7; j++)
+                for (int i = 0; i <= 7; i++)
                 {
-                    _mcp.WriteToPort(j, false);
+                    //clear ports (TEMP)
+                    for (int j = 0; j <= 7; j++)
+                    {
+                        _mcp.WriteToPort(j, false);
+                    }
+                    Debug.Print("i: " + i.ToString());
+                    _mcp.WriteToPort(i, true);
+                    Thread.Sleep(250);
                 }
-
-                _mcp.WriteToPort(i, true);
-                Thread.Sleep(250);
             }
         }
     }
