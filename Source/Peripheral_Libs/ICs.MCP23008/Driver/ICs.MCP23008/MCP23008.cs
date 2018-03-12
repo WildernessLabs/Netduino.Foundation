@@ -59,8 +59,12 @@ namespace Netduino.Foundation.ICs.MCP23008
 
         public MCP23008(byte address = 0x20, ushort speed = 100)
         {
+            Debug.Print("Here");
+
             // configure our i2c bus so we can talk to the chip
             this._i2cBus = new I2CBus(address, speed);
+
+            Debug.Print("initialized.");
 
             // read in the initial state of the chip
             _iodir = this._i2cBus.ReadRegister(_IODirectionRegister);
