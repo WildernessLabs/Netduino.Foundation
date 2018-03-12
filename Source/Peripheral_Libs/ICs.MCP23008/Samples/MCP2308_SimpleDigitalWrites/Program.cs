@@ -11,7 +11,7 @@ namespace MCP2308_SimpleDigitalWrites
 
         public static void Main()
         {
-            _mcp = new MCP23008();
+            _mcp = new MCP23008(32, 400);
 
             for (int i = 0; i <= 7; i++)
             {
