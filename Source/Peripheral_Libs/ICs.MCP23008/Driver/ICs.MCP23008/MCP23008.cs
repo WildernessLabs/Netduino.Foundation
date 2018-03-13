@@ -1,7 +1,9 @@
 using System;
 using System.Threading;
 using Microsoft.SPOT;
+using H = Microsoft.SPOT.Hardware;
 using Netduino.Foundation.Communications;
+using N = SecretLabs.NETMF.Hardware.Netduino;
 
 namespace Netduino.Foundation.ICs.MCP23008
 {
@@ -60,6 +62,12 @@ namespace Netduino.Foundation.ICs.MCP23008
 
         public MCP23008(byte address = 0x20, ushort speed = 100)
         {
+            // tried this, based on a forum post, but seems to have no effect.
+            H.OutputPort SDA = new H.OutputPort(N.Pins.GPIO_PIN_A4, false);
+            H.OutputPort SCK = new H.OutputPort(N.Pins.GPIO_PIN_A5, false);
+            SDA.Dispose();
+            SCK.Dispose();
+
             // configure our i2c bus so we can talk to the chip
             this._i2cBus = new I2CBus(address, speed);
 
@@ -72,8 +80,14 @@ namespace Netduino.Foundation.ICs.MCP23008
 
             // read in the initial state of the chip
             _iodir = this._i2cBus.ReadRegister(_IODirectionRegister);
+            Thread.Sleep(100);
+            //Debug.Print("IODIR: " + _iodir.ToString("X"));
             _gpio = this._i2cBus.ReadRegister(_GPIORegister);
+            Thread.Sleep(100);
+            //Debug.Print("GPIO: " + _gpio.ToString("X"));
             _olat = this._i2cBus.ReadRegister(_OutputLatchRegister);
+            Thread.Sleep(100);
+            //Debug.Print("OLAT: " + _olat.ToString("X"));
         }
 
         protected void ResetChip()
@@ -107,30 +121,28 @@ namespace Netduino.Foundation.ICs.MCP23008
 
         protected void ConfigureOutputPort(byte pin)
         {
-            // if it's already configured, get out.
-            if ((_iodir & (byte)(1 << pin)) != 0) return;
-
+            // if it's already configured, get out. (1 = input, 0 = output)
+            if ((_iodir & (byte)(1 << pin)) == 0) return; //actually checking if the 1 is set, and negating that
+            
             // setup the port internally for output in a thread safe way
             lock (_lock)
             {
                 // read the IODIR registers to get IO direction config
-                byte iodir = this._i2cBus.ReadRegister(_IODirectionRegister);
+                //byte iodir = this._i2cBus.ReadRegister(_IODirectionRegister);
 
-                // configure that pin for output
-                iodir |= (byte)(1 << pin);
+                // configure that pin for output (1 = input, 0 = output)
+                _iodir &= (byte)~(1 << pin);
+
+                //Debug.Print("Writng IODIR: " + _iodir.ToString("X"));
 
                 // write our new setting and update our state tracking
-                this._i2cBus.WriteRegister(_IODirectionRegister, iodir);
-                _iodir = iodir;
+                this._i2cBus.WriteRegister(_IODirectionRegister, _iodir);
+                //_iodir = iodir;
             }
         }
 
         public void WriteToPort(int pin, bool value)
         {
-            // here fore educational purposes only
-            // byte pinMask = (byte)(1 << pin); // left shift a 1 into the appropriate pin slot
-            // byte pinValueMask = (byte)((value ? 1 : 0) << pin); // left shift on or off into the pin slot
-
             // if the pin isn't configured for output, configure it
             this.ConfigureOutputPort((byte)pin);
 
@@ -138,8 +150,15 @@ namespace Netduino.Foundation.ICs.MCP23008
             // TODO: (is this needed? e.g., is it safe to rely on our 
             // stored state? as long as we funnel all calls through here, 
             // it should be ok, yeah?)
-            _olat = this._i2cBus.ReadRegister(_OutputLatchRegister);
-            _olat |= (byte)((value ? 1 : 0) << pin);
+            //_olat = this._i2cBus.ReadRegister(_OutputLatchRegister);
+
+            if (value) {
+                _olat |= (byte)(1 << pin);
+            } else {
+                _olat &= (byte)~(1 << pin); // tricky to zero
+            }
+            //_olat |= (byte)((value ? 1 : 0) << pin);
+            //Debug.Print("Writng OLAT: " + _olat.ToString("X"));
 
             // write to the output latch (actually does the output setting)
             this._i2cBus.WriteRegister(_OutputLatchRegister, _olat);
