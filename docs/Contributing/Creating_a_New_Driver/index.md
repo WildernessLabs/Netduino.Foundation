@@ -42,5 +42,6 @@ When you're done, your project properties should look something like the followi
 ![](Project_Settings.png)
 
 
+## Step 5 - Create a Sample Project
 
 
