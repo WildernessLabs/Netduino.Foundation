@@ -3,9 +3,9 @@ using Microsoft.SPOT;
 
 namespace Netduino.Foundation.GPIO
 {
-    public enum PortDirectionType
+    public enum PortDirectionType : byte
     {
-        Input,
-        Output
+        Input = 0,
+        Output = 1
     }
 }
