@@ -12,7 +12,7 @@ It’s the algorithm that keeps drones balanced in the air, your car at the righ
 
 `IdealPIDController` implements the _ideal_ or textbook standard version of the PID algorithm as defined by many textbooks and [Wikipedia](https://en.wikipedia.org/wiki/PID_controller):
 
-![](PID_Block_Diagram.svg)
+![](Ideal_PID_Block_Diagram.svg)
 
 Despite it's name, the "ideal" PID controller is actually less common and more specialized in its use than the [`StandardPIDController`](/API/Controllers/PID/StandardPIDController/), which is a slight modification on the ideal algorithm.
 
