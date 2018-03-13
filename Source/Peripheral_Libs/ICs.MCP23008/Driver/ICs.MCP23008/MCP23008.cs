@@ -3,7 +3,6 @@ using System.Threading;
 using Microsoft.SPOT;
 using H = Microsoft.SPOT.Hardware;
 using Netduino.Foundation.Communications;
-using N = SecretLabs.NETMF.Hardware.Netduino;
 using Netduino.Foundation.GPIO;
 
 namespace Netduino.Foundation.ICs.MCP23008
@@ -65,10 +64,10 @@ namespace Netduino.Foundation.ICs.MCP23008
         public MCP23008(byte address = 0x20, ushort speed = 100)
         {
             // tried this, based on a forum post, but seems to have no effect.
-            H.OutputPort SDA = new H.OutputPort(N.Pins.GPIO_PIN_A4, false);
-            H.OutputPort SCK = new H.OutputPort(N.Pins.GPIO_PIN_A5, false);
-            SDA.Dispose();
-            SCK.Dispose();
+            //H.OutputPort SDA = new H.OutputPort(N.Pins.GPIO_PIN_A4, false);
+            //H.OutputPort SCK = new H.OutputPort(N.Pins.GPIO_PIN_A5, false);
+            //SDA.Dispose();
+            //SCK.Dispose();
 
             // configure our i2c bus so we can talk to the chip
             this._i2cBus = new I2CBus(address, speed);
@@ -109,7 +108,7 @@ namespace Netduino.Foundation.ICs.MCP23008
             this._i2cBus.WriteRegisters(_IODirectionRegister, buffers);
         }
 
-        protected DigitalOutputPort CreateOutputPort(byte pin, bool initialState)
+        public DigitalOutputPort CreateOutputPort(byte pin, bool initialState)
         {
             // setup the port internally for output
             this.ConfigureOutputPort(pin);
