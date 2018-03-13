@@ -4,12 +4,14 @@ using Microsoft.SPOT;
 using H = Microsoft.SPOT.Hardware;
 using Netduino.Foundation.Communications;
 using N = SecretLabs.NETMF.Hardware.Netduino;
+using Netduino.Foundation.GPIO;
 
 namespace Netduino.Foundation.ICs.MCP23008
 {
     public class MCP23008
     {
         private readonly I2CBus _i2cBus;
+        
 
         // state
         byte _iodir;
@@ -76,17 +78,17 @@ namespace Netduino.Foundation.ICs.MCP23008
             // make sure the chip is in a default state
             ResetChip();
             Debug.Print("Chip Reset.");
-            Thread.Sleep(100);
+            //Thread.Sleep(100);
 
             // read in the initial state of the chip
             _iodir = this._i2cBus.ReadRegister(_IODirectionRegister);
-            Thread.Sleep(100);
+            //Thread.Sleep(100);
             //Debug.Print("IODIR: " + _iodir.ToString("X"));
             _gpio = this._i2cBus.ReadRegister(_GPIORegister);
-            Thread.Sleep(100);
+            //Thread.Sleep(100);
             //Debug.Print("GPIO: " + _gpio.ToString("X"));
             _olat = this._i2cBus.ReadRegister(_OutputLatchRegister);
-            Thread.Sleep(100);
+            //Thread.Sleep(100);
             //Debug.Print("OLAT: " + _olat.ToString("X"));
         }
 
@@ -125,20 +127,31 @@ namespace Netduino.Foundation.ICs.MCP23008
             if ((_iodir & (byte)(1 << pin)) == 0) return; //actually checking if the 1 is set, and negating that
             
             // setup the port internally for output in a thread safe way
+            // note this is only thread safe for this method, we nee readerWriterLockSlim, but 
+            // it's not available in NETMF
             lock (_lock)
             {
-                // read the IODIR registers to get IO direction config
-                //byte iodir = this._i2cBus.ReadRegister(_IODirectionRegister);
-
                 // configure that pin for output (1 = input, 0 = output)
-                _iodir &= (byte)~(1 << pin);
+                //_iodir &= (byte)~(1 << pin);
+                SetRegisterBit(ref _iodir, (byte)pin, false);
 
-                //Debug.Print("Writng IODIR: " + _iodir.ToString("X"));
-
-                // write our new setting and update our state tracking
+                // write our new setting
                 this._i2cBus.WriteRegister(_IODirectionRegister, _iodir);
-                //_iodir = iodir;
             }
+        }
+
+        public void SetPortDirection(byte pin, PortDirectionType direction)
+        {
+            // if it's already configured, get out. (1 = input, 0 = output)
+            if (direction == PortDirectionType.Input) {
+                if ((_iodir & (byte)(1 << pin)) != 0) return;
+            } else {
+                if ((_iodir & (byte)(1 << pin)) == 0) return;
+            }
+
+            // set the IODIR bit and write the setting
+            SetRegisterBit(ref _iodir, (byte)pin, (byte)direction);
+            this._i2cBus.WriteRegister(_IODirectionRegister, _iodir);
         }
 
         public void WriteToPort(int pin, bool value)
@@ -147,23 +160,36 @@ namespace Netduino.Foundation.ICs.MCP23008
             this.ConfigureOutputPort((byte)pin);
 
             // update our output latch 
-            // TODO: (is this needed? e.g., is it safe to rely on our 
-            // stored state? as long as we funnel all calls through here, 
-            // it should be ok, yeah?)
-            //_olat = this._i2cBus.ReadRegister(_OutputLatchRegister);
-
-            if (value) {
-                _olat |= (byte)(1 << pin);
-            } else {
-                _olat &= (byte)~(1 << pin); // tricky to zero
-            }
-            //_olat |= (byte)((value ? 1 : 0) << pin);
-            //Debug.Print("Writng OLAT: " + _olat.ToString("X"));
-
+            SetRegisterBit(ref _olat, (byte)pin, value);
             // write to the output latch (actually does the output setting)
             this._i2cBus.WriteRegister(_OutputLatchRegister, _olat);
         }
 
+        public void OutputWrite(byte outputMask)
+        {
+            // set all IO to output
+            if (_iodir != 0) {
+                _iodir = 0;
+                this._i2cBus.WriteRegister(_IODirectionRegister, _iodir);
+            }
+            // write the output
+            _olat = outputMask;
+            this._i2cBus.WriteRegister(_OutputLatchRegister, _olat);
+        }
+
+        protected void SetRegisterBit(ref byte registerMask, byte bitIndex, byte value)
+        {
+            SetRegisterBit(ref registerMask, bitIndex, (value == 0) ? false : true);
+        }
+
+        protected void SetRegisterBit(ref byte registerMask, byte bitIndex, bool value)
+        {
+            if (value) {
+                registerMask |= (byte)(1 << bitIndex);
+            } else {
+                registerMask &= (byte)~(1 << bitIndex); // tricky to zero
+            }
+        }
 
 
         // what's a good way to do this? maybe constants? how to name?

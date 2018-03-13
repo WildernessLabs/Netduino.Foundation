@@ -17,13 +17,17 @@ namespace MCP2308_SimpleDigitalWrites
             {
                 for (int i = 0; i <= 7; i++)
                 {
-                    //clear ports (TEMP)
-                    for (int j = 0; j <= 7; j++)
-                    {
-                        _mcp.WriteToPort(j, false);
-                    }
+                    // can write a byte mask that specifies all the pin
+                    // values in one byte
+                    _mcp.OutputWrite((byte)(1 << i));
+
+                    // or you can write to individual pins:
+                    //for (int j = 0; j <= 7; j++) {
+                    //    _mcp.WriteToPort(j, false);
+                    //}
+                    //_mcp.WriteToPort(i, true);
+
                     Debug.Print("i: " + i.ToString());
-                    _mcp.WriteToPort(i, true);
                     Thread.Sleep(250);
                 }
             }
