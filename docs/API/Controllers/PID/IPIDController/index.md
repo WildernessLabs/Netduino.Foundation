@@ -8,6 +8,10 @@ subtitle: Interface describing a canonical Proportional, Integral, Derivative (P
 
 Describes the required API for a [Proportional, Integral, Derivative (PID)](https://en.wikipedia.org/wiki/PID_controller) controller. 
 
+PID is the quintessential industrial control algorithm. It is a mathematical tool for efficiently affecting change in a system to get it to a particular target state, and keeping it there, harmoniously.
+
+It’s the algorithm that keeps drones balanced in the air, your car at the right speed when cruise control is on, and ships on the right heading with variable winds. It’s also the algorithm that can efficiently heat a cup of coffee to the perfect temperature and keep it there.
+
 For a detailed discussion and explanation of the PID algorithm, see the Wilderness Labs [PID Guide](http://developer.wildernesslabs.co/Hardware/Reference/Algorithms/Proportional_Integral_Derivative/).
 
 # API

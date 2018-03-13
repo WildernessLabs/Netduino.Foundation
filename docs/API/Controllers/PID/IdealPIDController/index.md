@@ -6,7 +6,15 @@ subtitle: Proportional, Integral, Derivative (PID) controller using the ideal (t
 
 # Info
 
-Describes the required API for a [Proportional, Integral, Derivative (PID)](https://en.wikipedia.org/wiki/PID_controller) controller. 
+PID is the quintessential industrial control algorithm. It is a mathematical tool for efficiently affecting change in a system to get it to a particular target state, and keeping it there, harmoniously.
+
+It’s the algorithm that keeps drones balanced in the air, your car at the right speed when cruise control is on, and ships on the right heading with variable winds. It’s also the algorithm that can efficiently heat a cup of coffee to the perfect temperature and keep it there
+
+`IdealPIDController` implements the _ideal_ or textbook standard version of the PID algorithm as defined by many textbooks and [Wikipedia](https://en.wikipedia.org/wiki/PID_controller):
+
+![](PID_Block_Diagram.svg)
+
+Despite it's name, the "ideal" PID controller is actually less common and more specialized in its use than the [`StandardPIDController`](/API/Controllers/PID/StandardPIDController/), which is a slight modification on the ideal algorithm.
 
 For a detailed discussion and explanation of the PID algorithm, see the Wilderness Labs [PID Guide](http://developer.wildernesslabs.co/Hardware/Reference/Algorithms/Proportional_Integral_Derivative/).
 
@@ -16,15 +24,15 @@ For a detailed discussion and explanation of the PID algorithm, see the Wilderne
 
 #### float ProportionalComponent { get; set; }
 
-The value to use when calculating the proportional corrective action.
+The _gain_ value to use when calculating the proportional corrective action. A good value to start with when tuning is `1.0`.
 
 #### float IntegralComponent { get; set; }
 
-The value to use when calculating the integral corrective action.
+The _gain_ value to use when calculating the integral corrective action. The integral correction is based on a time unit of error/seconds. A good value to start with when tuning is `0.1`.
 
 #### float DerivativeComponent { get; set; }
 
-The value to use when calculating the derivative corrective action.
+The _gain_ value to use when calculating the derivative corrective action. Derivative should only be used when the `ActualInput` value has very little noise, as the derivative uses the slope of change to calculate the corrective action. A good value to start with when tuning is `0.001`.
 
 #### float OutputMax { get; set; }
 
