@@ -8,12 +8,12 @@ namespace Netduino.Foundation.Controllers.PID
         /// <summary>
         /// Integral time in minutes
         /// </summary>
-        public new float IntegralComponent { get; set; } = 0;
+        public override float IntegralComponent { get; set; } = 0;
 
         /// <summary>
         /// Derivative time in minutes
         /// </summary>
-        public new float DerivativeComponent { get; set; } = 0;
+        public override float DerivativeComponent { get; set; } = 0;
 
         public override float CalculateControlOutput()
         {
