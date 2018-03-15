@@ -8,7 +8,7 @@ subtitle: Proportional, Integral, Derivative (PID) controller using the a common
 
 PID is the quintessential industrial control algorithm. It is a mathematical tool for efficiently affecting change in a system to get it to a particular target state, and keeping it there, harmoniously.
 
-It’s the algorithm that keeps drones balanced in the air, your car at the right speed when cruise control is on, and ships on the right heading with variable winds. It’s also the algorithm that can efficiently heat a cup of coffee to the perfect temperature and keep it there
+It’s the algorithm that keeps drones balanced in the air, your car at the right speed when cruise control is on, and ships on the right heading with variable winds. It’s also the algorithm that can efficiently heat a cup of coffee to the perfect temperature and keep it there.
 
 `StandardPIDController` implements the most common version of the PID algorithm, which tends to be more generally applicable than the _ideal_ calculation. The standard version of PID is discussed on the [Wikipedia PID article](https://en.wikipedia.org/wiki/PID_controller#Ideal_versus_standard_PID_form). 
 
