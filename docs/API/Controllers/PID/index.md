@@ -30,7 +30,7 @@ In the constructor, the PID controller is instantiated and configured. In the ca
 
 Additionally, the control output is clamped via the `OutputMin` and `OutputMax` properties between `0.0` and `1.0`, which translates to `0%` to `100%` duty cycle of the PWM that controls the heater element. If the controller were used in an system that kept a boat on a heading, or a car between lines, then the clamp might be between something like `-0.5` and `0.5`, in which a negative value meant a left heading, and a positive value meant a right heading.
 
-```
+```csharp
 public DehydratorController(AnalogTemperature tempSensor, SoftPwm heater, Relay fan, SerialLCD display)
 {
     _tempSensor = tempSensor;
@@ -53,7 +53,7 @@ public DehydratorController(AnalogTemperature tempSensor, SoftPwm heater, Relay 
 
 When the dehydrator is turned on, the `TurnOn` method is called, which sets the temperature and running time, and then calls the `StartRegulatingTemperatureThread` method which is responsible for the bulk of the control work.
 
-```
+```csharp
 public void TurnOn(int temp, TimeSpan runningTime)
 {
     // set our state vars
@@ -80,7 +80,7 @@ public void TurnOn(int temp, TimeSpan runningTime)
 
 This method starts a new thread which is actually responsible for reading the temperature input from the sensor and calling the PID controller's `CalculateControlOutput` method to determine the amount of power to provide to the heating element in order to bring the dehydrator up to the target temperature:
 
-```
+```csharp
 protected void StartRegulatingTemperatureThread()
 {
     _tempControlThread = new Thread(() => {
