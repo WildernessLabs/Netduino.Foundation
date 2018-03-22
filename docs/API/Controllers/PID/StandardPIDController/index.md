@@ -30,11 +30,11 @@ The _gain_ value to use when calculating the proportional corrective action. A g
 
 #### float IntegralComponent { get; set; }
 
-In the standard PID algorithm, the derivative gain is specified in `time in minutes` to zero, or target state. A good value to start with when tuning is `0.1`.
+In the standard PID algorithm, the derivative gain is specified in [`repeats per minute`](http://developer.wildernesslabs.co/Hardware/Reference/Algorithms/Proportional_Integral_Derivative/#integral-and-derivative-gain-components-in-relation-to-time). A good value to start with when tuning is `0.1`.
 
 #### float DerivativeComponent { get; set; }
 
-In the standard PID algorithm, the derivative gain is specified in `time in minutes` to zero, or target state. As with the ideal form, the derivative should only be used when the `ActualInput` value has very little noise, as the derivative uses the slope of change to calculate the corrective action. A good value to start with when tuning is `0.001`.
+In the standard PID algorithm, the derivative gain is specified in [`repeats per minute`](http://developer.wildernesslabs.co/Hardware/Reference/Algorithms/Proportional_Integral_Derivative/#integral-and-derivative-gain-components-in-relation-to-time). As with the ideal form, the derivative should only be used when the `ActualInput` value has very little noise, as the derivative uses the slope of change to calculate the corrective action. A good value to start with when tuning is `0.001`.
 
 #### float OutputMax { get; set; }
 
