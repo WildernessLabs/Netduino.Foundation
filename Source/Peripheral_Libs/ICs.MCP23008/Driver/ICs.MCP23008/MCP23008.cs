@@ -10,14 +10,11 @@ namespace Netduino.Foundation.ICs.MCP23008
     public class MCP23008
     {
         private readonly I2CBus _i2cBus;
-        
 
         // state
         byte _iodir;
         byte _gpio;
         byte _olat;
-
-
 
         /// <summary>
         ///     object for using lock() to do thread synch
@@ -37,8 +34,6 @@ namespace Netduino.Foundation.ICs.MCP23008
         private const byte _InterruptCaptureRegister = 0x08; //INTCAP
         private const byte _GPIORegister = 0x09; //GPIO
         private const byte _OutputLatchRegister = 0x0A; //OLAT
-
-
 
         // protected properties
         protected bool SequentialAddressOperationEnabled
@@ -81,6 +76,7 @@ namespace Netduino.Foundation.ICs.MCP23008
 
             // read in the initial state of the chip
             _iodir = this._i2cBus.ReadRegister(_IODirectionRegister);
+            // tried some sleeping, but also has no effect on its reliability
             //Thread.Sleep(100);
             //Debug.Print("IODIR: " + _iodir.ToString("X"));
             _gpio = this._i2cBus.ReadRegister(_GPIORegister);
@@ -99,8 +95,7 @@ namespace Netduino.Foundation.ICs.MCP23008
             buffers[0] = 0xFF; //all input `11111111`
 
             // set all the other registers to zeros (we skip the last one, output latch)
-            for (int i = 1; i < 10; i++ )
-            {
+            for (int i = 1; i < 10; i++ ) {
                 buffers[i] = 0x00; //all zero'd out `00000000`
             }
 
@@ -108,6 +103,12 @@ namespace Netduino.Foundation.ICs.MCP23008
             this._i2cBus.WriteRegisters(_IODirectionRegister, buffers);
         }
 
+        /// <summary>
+        /// Creates a new DigitalOutputPort using the specified pin and initial state.
+        /// </summary>
+        /// <param name="pin">The pin number to create the port on.</param>
+        /// <param name="initialState">Whether the pin is initially high or low.</param>
+        /// <returns></returns>
         public DigitalOutputPort CreateOutputPort(byte pin, bool initialState)
         {
             // setup the port internally for output
