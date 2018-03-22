@@ -132,8 +132,7 @@ namespace Netduino.Foundation.ICs.MCP23008
             lock (_lock)
             {
                 // configure that pin for output (1 = input, 0 = output)
-                //_iodir &= (byte)~(1 << pin);
-                SetRegisterBit(ref _iodir, (byte)pin, false);
+                _iodir = BitHelpers.SetBit(_iodir, (byte)pin, false);
 
                 // write our new setting
                 this._i2cBus.WriteRegister(_IODirectionRegister, _iodir);
@@ -150,7 +149,7 @@ namespace Netduino.Foundation.ICs.MCP23008
             }
 
             // set the IODIR bit and write the setting
-            SetRegisterBit(ref _iodir, (byte)pin, (byte)direction);
+            _iodir = BitHelpers.SetBit(_iodir, (byte)pin, (byte)direction);
             this._i2cBus.WriteRegister(_IODirectionRegister, _iodir);
         }
 
@@ -160,7 +159,7 @@ namespace Netduino.Foundation.ICs.MCP23008
             this.ConfigureOutputPort((byte)pin);
 
             // update our output latch 
-            SetRegisterBit(ref _olat, (byte)pin, value);
+            _olat = BitHelpers.SetBit(_olat, (byte)pin, value);
             // write to the output latch (actually does the output setting)
             this._i2cBus.WriteRegister(_OutputLatchRegister, _olat);
         }
@@ -175,20 +174,6 @@ namespace Netduino.Foundation.ICs.MCP23008
             // write the output
             _olat = outputMask;
             this._i2cBus.WriteRegister(_OutputLatchRegister, _olat);
-        }
-
-        protected void SetRegisterBit(ref byte registerMask, byte bitIndex, byte value)
-        {
-            SetRegisterBit(ref registerMask, bitIndex, (value == 0) ? false : true);
-        }
-
-        protected void SetRegisterBit(ref byte registerMask, byte bitIndex, bool value)
-        {
-            if (value) {
-                registerMask |= (byte)(1 << bitIndex);
-            } else {
-                registerMask &= (byte)~(1 << bitIndex); // tricky to zero
-            }
         }
 
 
