@@ -35,16 +35,17 @@ namespace Netduino.Foundation.ICs.MCP23008
         private const byte _GPIORegister = 0x09; //GPIO
         private const byte _OutputLatchRegister = 0x0A; //OLAT
 
-        // protected properties
-        protected bool SequentialAddressOperationEnabled
-        {
-            get {
-                return _sequentialAddressOperationEnabled;
-            }
-            set {
-                this._i2cBus.WriteRegister(_IOConfigurationRegister, (byte)(value ? 1 : 0));
-            }
-        } private bool _sequentialAddressOperationEnabled = false;
+        //// protected properties
+        // don't think there's a lot of value in this.  it's enabled by default, and is good.
+        //protected bool SequentialAddressOperationEnabled
+        //{
+        //    get {
+        //        return _sequentialAddressOperationEnabled;
+        //    }
+        //    set {
+        //        this._i2cBus.WriteRegister(_IOConfigurationRegister, (byte)(value ? 1 : 0));
+        //    }
+        //} private bool _sequentialAddressOperationEnabled = false;
 
 
         protected MCP23008()
@@ -139,13 +140,20 @@ namespace Netduino.Foundation.ICs.MCP23008
             }
         }
 
+        /// <summary>
+        /// Sets the direction of a particulare port.
+        /// </summary>
+        /// <param name="pin"></param>
+        /// <param name="direction"></param>
         public void SetPortDirection(byte pin, PortDirectionType direction)
         {
             // if it's already configured, get out. (1 = input, 0 = output)
             if (direction == PortDirectionType.Input) {
-                if ((_iodir & (byte)(1 << pin)) != 0) return;
+                if (BitHelpers.GetBitValue(_iodir, pin)) return;
+                //if ((_iodir & (byte)(1 << pin)) != 0) return;
             } else {
-                if ((_iodir & (byte)(1 << pin)) == 0) return;
+                if (!BitHelpers.GetBitValue(_iodir, pin)) return;
+                //if ((_iodir & (byte)(1 << pin)) == 0) return;
             }
 
             // set the IODIR bit and write the setting
@@ -153,6 +161,13 @@ namespace Netduino.Foundation.ICs.MCP23008
             this._i2cBus.WriteRegister(_IODirectionRegister, _iodir);
         }
 
+        /// <summary>
+        /// Sets a particular pin's value. If that pin is not 
+        /// in output mode, this method will first set its 
+        /// mode to output.
+        /// </summary>
+        /// <param name="pin">The pin to write to.</param>
+        /// <param name="value">The value to write. True for high, false for low.</param>
         public void WriteToPort(int pin, bool value)
         {
             // if the pin isn't configured for output, configure it
@@ -164,6 +179,11 @@ namespace Netduino.Foundation.ICs.MCP23008
             this._i2cBus.WriteRegister(_OutputLatchRegister, _olat);
         }
 
+        /// <summary>
+        /// Outputs a byte value across all of the pins by writing directly 
+        /// to the output latch (OLAT) register.
+        /// </summary>
+        /// <param name="outputMask"></param>
         public void OutputWrite(byte outputMask)
         {
             // set all IO to output
