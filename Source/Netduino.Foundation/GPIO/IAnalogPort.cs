@@ -3,7 +3,7 @@ using Microsoft.SPOT;
 
 namespace Netduino.Foundation.GPIO
 {
-    public interface IAnalogPort
+    public interface IAnalogPort : IPort
     {
     }
 }
