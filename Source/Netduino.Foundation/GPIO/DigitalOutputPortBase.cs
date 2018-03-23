@@ -24,6 +24,7 @@ namespace Netduino.Foundation.GPIO
         protected DigitalOutputPortBase(bool initialState)
         {
             _initialState = initialState;
+            _state = initialState;
         }
     }
 }

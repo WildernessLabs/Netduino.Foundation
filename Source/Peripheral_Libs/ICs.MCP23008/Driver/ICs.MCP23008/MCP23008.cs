@@ -175,6 +175,7 @@ namespace Netduino.Foundation.ICs.MCP23008
 
             // update our output latch 
             _olat = BitHelpers.SetBit(_olat, (byte)pin, value);
+
             // write to the output latch (actually does the output setting)
             this._i2cBus.WriteRegister(_OutputLatchRegister, _olat);
         }
