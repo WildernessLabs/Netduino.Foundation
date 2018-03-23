@@ -12,6 +12,7 @@ namespace Netduino.Foundation.GPIO
 
         public PortSignalType SignalType { get { return PortSignalType.Digital; } }
 
+        // TODO: this sould probably be virtual
         /// <summary>
         /// API question: do we use a property to write, or do we
         /// use a Write(bool) method?
@@ -21,6 +22,7 @@ namespace Netduino.Foundation.GPIO
             set { _state = value; }
         } protected bool _state = false;
 
+        // TODO: get rid of this?
         /// <summary>
         /// what to do here?
         /// </summary>
