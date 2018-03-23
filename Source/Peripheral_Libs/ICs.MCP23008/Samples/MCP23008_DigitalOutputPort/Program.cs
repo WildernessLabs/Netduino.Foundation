@@ -21,12 +21,13 @@ namespace MCP23008_DigitalOutputPort
 
             while (true)
             {
+                // count from 0 to 7 (8 leds)
                 for (int i = 0; i <= 7; i++)
                 {
                     // turn on the LED that matches the count
                     for (byte j = 0; j <= 7; j++)
                     {
-                        ports[i].State = (i == j);
+                        ports[j].State = (i == j);
                     }
 
                     Debug.Print("i: " + i.ToString());
