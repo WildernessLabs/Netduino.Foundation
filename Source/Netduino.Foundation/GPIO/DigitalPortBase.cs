@@ -42,5 +42,7 @@ namespace Netduino.Foundation.GPIO
 
             return success;
         }
+
+        // TODO: protect the default constructor?
     }
 }

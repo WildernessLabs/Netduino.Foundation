@@ -4,7 +4,8 @@ using Microsoft.SPOT;
 namespace Netduino.Foundation.GPIO
 {
 
-    //TODO: this should inherit from DigitalPortBase
+    //TODO: this should inherit from DigitalPortBase and much of the 
+    // implementation should be removed
     public abstract class DigitalOutputPortBase : IDigitalOutputPort
     {
         public PortDirectionType DirectionType
