@@ -56,6 +56,7 @@
     <Compile Include="GPIO\PortDirectionType.cs" />
     <Compile Include="GPIO\PortInterruptEventArgs.cs" />
     <Compile Include="GPIO\PortSignalType.cs" />
+    <Compile Include="GPIO\SPOT\DigitalOutputPort.cs" />
     <Compile Include="Helpers\NumericExtensions.cs" />
     <Compile Include="Displays\ITextDisplay.cs" />
     <Compile Include="LEDs\Helpers.cs" />
