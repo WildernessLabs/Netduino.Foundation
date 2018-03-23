@@ -19,7 +19,7 @@ namespace MCP23008_RelaySample
             MCP23008 mcp = new MCP23008(39); // all address pins pulled high
 
             // create a digital output port from that mcp
-            DigitalOutputPort relayPort = mcp.CreateOutputPort(0, false);
+            DigitalOutputPort relayPort = mcp.CreateOutputPort(1, false);
 
             // create a new relay using that digital output port
             Relay relay = new Relay(relayPort);
@@ -28,6 +28,8 @@ namespace MCP23008_RelaySample
             while (true) {
                 // toggle the relay
                 relay.Toggle();
+
+                Debug.Print("Relay on: " + relay.IsOn.ToString());
 
                 // wait for 5 seconds
                 Thread.Sleep(5000);
