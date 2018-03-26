@@ -30,18 +30,18 @@ relay.Toggle();
 
 ## Interfaces
 
-* **[`IPort`](/API/GPIO/IPort)** - blah
-* **[`IAnalogPort`](/API/GPIO/IAnalogPort)** - blah
-* **[`IDigitalPort`](/API/GPIO/IDigitalPort)** - blah
-* **[`IDigitalOutputPort`](/API/GPIO/IDigitalOutputPort)** - blah
-* **[`IDigitalInputPort`](/API/GPIO/IDigitalInputPort)** - blah
+* **[`IPort`](/API/GPIO/IPort)** - The base interface for all port classes.
+* **[`IAnalogPort`](/API/GPIO/IAnalogPort)** - Implements [`IPort`](/API/GPIO/IPort) and is the base interface for all analog port classes.
+* **[`IDigitalPort`](/API/GPIO/IDigitalPort)** - Implements [`IPort`](/API/GPIO/IPort) and is the base interface for all digital port classes.
+* **[`IDigitalOutputPort`](/API/GPIO/IDigitalOutputPort)** - Implements [`IDigitalPort`](/API/GPIO/IDigitalPort) and is the interface for all digital output port classes.
+* **[`IDigitalInputPort`](/API/GPIO/IDigitalInputPort)** - In Development
 
 ## Base Classes
 
-* **[`DigitalPortBase`](/API/GPIO/DigitalPortBase)** - blah
-* **[`DigitalOutputPortBase`](/API/GPIO/DigitalOutputPortBase)** - blah
+* **[`DigitalPortBase`](/API/GPIO/DigitalPortBase)** - Provides a base implementation for much of the common tasks of classes implementing [`IDigitalPort`](/API/GPIO/IDigitalPort).
+* **[`DigitalOutputPortBase`](/API/GPIO/DigitalOutputPortBase)** - Inherits from [`DigitalPortBase`](/API/GPIO/DigitalPortBase) and provides a base implementation for much of the common tasks of classes implementing [`IDigitalPort`](/API/GPIO/IDigitalPort).
 
 ## Enums
 
-* **[`PortDirectionType`](/API/GPIO/PortDirectionType)** - blah
-* **[`PortSignalType`](/API/GPIO/PortSignalType)** - blah
+* **[`PortDirectionType`](/API/GPIO/PortDirectionType)** - Describes the signal direction (input or output) of the port; input or output.
+* **[`PortSignalType`](/API/GPIO/PortSignalType)** - Describes the signal type (analog or digital) of the port; analog or digital.
