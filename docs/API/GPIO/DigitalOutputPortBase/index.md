@@ -14,6 +14,12 @@ The intent of `IDigitalOutputPort` is to provide an a seamless way to extend per
 
 Note that in addition to the requirements listed here, implementors should follow the requirements for the [`DigitalPortBase`](/API/GPIO/DigitalPortBase) base class.
 
+### Properties
+
+#### `public abstract bool InitialState { get; }`
+
+The `InitialState` property is backed by the `readonly bool _initialState` member and should be during the constructor.
+
 
 ## Sample Implementation
 
