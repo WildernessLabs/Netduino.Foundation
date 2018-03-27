@@ -5,7 +5,9 @@ namespace Netduino.Foundation.GPIO
 {
     public interface IDigitalPort : IPort
     {
-        //TODO: should this be a property? or should we force a method for write(value)?
+        /// <summary>
+        /// Gets or sets the port state, either high (true), or low (false).
+        /// </summary>
         bool State { get; set; }
     }
 }
