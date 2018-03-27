@@ -3,28 +3,21 @@ using Microsoft.SPOT;
 
 namespace Netduino.Foundation.GPIO
 {
-
-    //TODO: this should inherit from DigitalPortBase and much of the 
-    // implementation should be removed
-    public abstract class DigitalOutputPortBase : IDigitalOutputPort
+    /// <summary>
+    /// DigitalOutputPortBase inherits from DigitalPortBase and provides a 
+    /// base implementation for much of the common tasks of classes implementing 
+    /// IDigitalPort.
+    /// </summary>
+    public abstract class DigitalOutputPortBase : DigitalPortBase, IDigitalOutputPort
     {
-        public PortDirectionType DirectionType
-        {
-            get { return PortDirectionType.Output; }
-        }
-        public PortSignalType SignalType { get { return PortSignalType.Digital; } }
-
+        /// <summary>
+        /// The InitialState property is backed by the readonly bool 
+        /// _initialState member and should be during the constructor.
+        /// </summary>
         public abstract bool InitialState { get; }
         protected readonly bool _initialState;
 
-        /// <summary>
-        /// API question: do we use a property to write, or do we
-        /// use a Write(bool) method?
-        /// </summary>
-        public abstract bool State { get; set; }
-        protected bool _state = false;
-
-        protected DigitalOutputPortBase(bool initialState)
+        protected DigitalOutputPortBase(bool initialState) : base(PortDirectionType.Output)
         {
             _initialState = initialState;
             _state = initialState;

@@ -3,46 +3,38 @@ using Microsoft.SPOT;
 
 namespace Netduino.Foundation.GPIO
 {
+    /// <summary>
+    /// DigitalPortBase provides a base implementation for much of the 
+    /// common tasks of classes implementing IDigitalPort.
+    /// </summary>
     public abstract class DigitalPortBase : IDigitalPort
     {
+        /// <summary>
+        /// The PortDirectionType property is backed by the readonly _direction member. 
+        /// This member must be set during the constructor and describes whether the 
+        /// port in an input or output port.
+        /// </summary>
         public PortDirectionType DirectionType
         {
             get { return _direction; }
         } protected readonly PortDirectionType _direction;
 
+        /// <summary>
+        /// The PortSignalType property returns PortSignalType.Digital.
+        /// </summary>
         public PortSignalType SignalType { get { return PortSignalType.Digital; } }
 
-        // TODO: this sould probably be virtual
         /// <summary>
-        /// API question: do we use a property to write, or do we
-        /// use a Write(bool) method?
+        /// Gets or sets the port state, either high (true), or low (false).
         /// </summary>
-        public bool State {
+        public virtual bool State {
             get { return _state; }
             set { _state = value; }
         } protected bool _state = false;
 
-        // TODO: get rid of this?
-        /// <summary>
-        /// what to do here?
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public virtual bool Write(bool value)
+        protected DigitalPortBase(PortDirectionType direction)
         {
-            bool success = true;
-
-            // try to write
-
-
-            if (success)
-            {
-                _state = value;
-            }
-
-            return success;
+            _direction = direction;
         }
-
-        // TODO: protect the default constructor?
     }
 }
