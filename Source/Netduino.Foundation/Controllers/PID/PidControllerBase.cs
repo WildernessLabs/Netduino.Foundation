@@ -33,15 +33,15 @@ namespace Netduino.Foundation.Controllers.PID
         /// <summary>
         /// Proportional gain
         /// </summary>
-        public float ProportionalComponent { get; set; } = 1;
+        public virtual float ProportionalComponent { get; set; } = 1;
         /// <summary>
         /// Integral gain
         /// </summary>
-        public float IntegralComponent { get; set; } = 0;
+        public virtual float IntegralComponent { get; set; } = 0;
         /// <summary>
         /// Derivative gain
         /// </summary>
-        public float DerivativeComponent { get; set; } = 0;
+        public virtual float DerivativeComponent { get; set; } = 0;
         /// <summary>
         /// Whether or not to print the calculation information to the
         /// output console in an comma-delimited form. Useful for 
