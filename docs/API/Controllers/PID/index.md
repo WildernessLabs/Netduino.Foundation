@@ -107,3 +107,7 @@ protected void StartRegulatingTemperatureThread()
     _tempControlThread.Start();
 }
 ```
+
+# Further Reading
+
+For a deeper understanding of how PID works see the Wilderness Labs [PID Guide](http://developer.wildernesslabs.co/Hardware/Reference/Algorithms/Proportional_Integral_Derivative/).
