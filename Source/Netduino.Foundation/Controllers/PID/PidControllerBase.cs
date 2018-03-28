@@ -22,7 +22,7 @@ namespace Netduino.Foundation.Controllers.PID
         public float ActualInput { get; set; }
         /// <summary>
         /// Represents the SetPoint (SP), or the reference target signal
-        /// to acheive. For example, when heating a cup of coffee to 
+        /// to achieve. For example, when heating a cup of coffee to 
         /// 75º, 75º is the target input value.
         /// </summary>
         public float TargetInput { get; set; }
