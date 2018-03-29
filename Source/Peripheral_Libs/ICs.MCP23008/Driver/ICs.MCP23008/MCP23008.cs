@@ -113,31 +113,13 @@ namespace Netduino.Foundation.ICs.MCP23008
         public DigitalOutputPort CreateOutputPort(byte pin, bool initialState)
         {
             // setup the port internally for output
-            this.ConfigureOutputPort(pin);
+            this.SetPortDirection(pin, PortDirectionType.Output);
 
             // create the convenience class
             DigitalOutputPort port = new DigitalOutputPort(this, pin, initialState);
 
             // return the port
             return port;
-        }
-
-        protected void ConfigureOutputPort(byte pin)
-        {
-            // if it's already configured, get out. (1 = input, 0 = output)
-            if ((_iodir & (byte)(1 << pin)) == 0) return; //actually checking if the 1 is set, and negating that
-            
-            // setup the port internally for output in a thread safe way
-            // note this is only thread safe for this method, we nee readerWriterLockSlim, but 
-            // it's not available in NETMF
-            lock (_lock)
-            {
-                // configure that pin for output (1 = input, 0 = output)
-                _iodir = BitHelpers.SetBit(_iodir, (byte)pin, false);
-
-                // write our new setting
-                this._i2cBus.WriteRegister(_IODirectionRegister, _iodir);
-            }
         }
 
         /// <summary>
@@ -171,7 +153,7 @@ namespace Netduino.Foundation.ICs.MCP23008
         public void WriteToPort(int pin, bool value)
         {
             // if the pin isn't configured for output, configure it
-            this.ConfigureOutputPort((byte)pin);
+            this.SetPortDirection((byte)pin, PortDirectionType.Output);
 
             // update our output latch 
             _olat = BitHelpers.SetBit(_olat, (byte)pin, value);
