@@ -143,6 +143,18 @@ namespace Netduino.Foundation.ICs.MCP23008
             this._i2cBus.WriteRegister(_IODirectionRegister, _iodir);
         }
 
+        public void ConfigureInputPort(byte pin, bool pullUpEnabled = false)
+        {
+            // set the port direction
+            this.SetPortDirection(pin, PortDirectionType.Input);
+
+            byte gppu = this._i2cBus.ReadRegister(_PullupResistorConfigurationRegister);
+
+            byte newGppu = BitHelpers.SetBit(gppu, pin, pullUpEnabled);
+
+            this._i2cBus.WriteRegister(_PullupResistorConfigurationRegister, newGppu);
+        }
+
         /// <summary>
         /// Sets a particular pin's value. If that pin is not 
         /// in output mode, this method will first set its 
@@ -150,7 +162,7 @@ namespace Netduino.Foundation.ICs.MCP23008
         /// </summary>
         /// <param name="pin">The pin to write to.</param>
         /// <param name="value">The value to write. True for high, false for low.</param>
-        public void WriteToPort(int pin, bool value)
+        public void WriteToPort(byte pin, bool value)
         {
             // if the pin isn't configured for output, configure it
             this.SetPortDirection((byte)pin, PortDirectionType.Output);
@@ -160,6 +172,18 @@ namespace Netduino.Foundation.ICs.MCP23008
 
             // write to the output latch (actually does the output setting)
             this._i2cBus.WriteRegister(_OutputLatchRegister, _olat);
+        }
+
+        public bool ReadPort(byte pin)
+        {
+            // if the pin isn't set for input, configure it
+            this.SetPortDirection((byte)pin, PortDirectionType.Input);
+
+            // update our GPIO values
+            _gpio = this._i2cBus.ReadRegister(_GPIORegister);
+
+            // return the value on that port
+            return BitHelpers.GetBitValue(_gpio, (byte)pin);
         }
 
         /// <summary>
