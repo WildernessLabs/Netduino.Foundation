@@ -46,9 +46,11 @@
     <Compile Include="Displays\TextDisplayConfig.cs" />
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="Generators\SoftPWM.cs" />
+    <Compile Include="GPIO\DigitalInputPortBase.cs" />
     <Compile Include="GPIO\DigitalOutputPortBase.cs" />
     <Compile Include="GPIO\DigitalPortBase.cs" />
     <Compile Include="GPIO\IAnalogPort.cs" />
+    <Compile Include="GPIO\IDigitalInputPort.cs" />
     <Compile Include="GPIO\IDigitalOutputPort.cs" />
     <Compile Include="GPIO\IDigitalPort.cs" />
     <Compile Include="GPIO\IInterruptPort.cs" />

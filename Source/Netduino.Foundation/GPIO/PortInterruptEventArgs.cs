@@ -5,6 +5,7 @@ namespace Netduino.Foundation.GPIO
 {
     public class PortInterruptEventArgs : EventArgs
     {
+        public bool ValueAtInterrupt { get; set; }
 
     }
 

@@ -122,6 +122,17 @@ namespace Netduino.Foundation.ICs.MCP23008
             return port;
         }
 
+        public DigitalInputPort CreateInputPort(byte pin, bool enablePullUp = false)
+        {
+            // configure the pin
+            this.ConfigureInputPort(pin, enablePullUp, false);
+
+            // create the convenience class
+            DigitalInputPort port = new DigitalInputPort(this, pin, false);
+
+            return port;
+        }
+
         /// <summary>
         /// Sets the direction of a particulare port.
         /// </summary>
@@ -143,16 +154,20 @@ namespace Netduino.Foundation.ICs.MCP23008
             this._i2cBus.WriteRegister(_IODirectionRegister, _iodir);
         }
 
-        public void ConfigureInputPort(byte pin, bool pullUpEnabled = false)
+        public void ConfigureInputPort(byte pin, bool enablePUllUp = false, bool enableInterrupt = true)
         {
             // set the port direction
             this.SetPortDirection(pin, PortDirectionType.Input);
 
             byte gppu = this._i2cBus.ReadRegister(_PullupResistorConfigurationRegister);
 
-            byte newGppu = BitHelpers.SetBit(gppu, pin, pullUpEnabled);
+            byte newGppu = BitHelpers.SetBit(gppu, pin, enablePUllUp);
 
             this._i2cBus.WriteRegister(_PullupResistorConfigurationRegister, newGppu);
+
+            if (enableInterrupt) {
+                // todo, configure the intterupt bullshit
+            }
         }
 
         /// <summary>
