@@ -6,6 +6,8 @@ namespace MCP23008_DigitalInputPort
 {
     /// <summary>
     /// Illustrates using a DigitalInputPort with an MCP23008. 
+    /// 
+    /// To use this sample, wire a push button from pin 0 to ground. 
     /// </summary>
     public class Program
     {
