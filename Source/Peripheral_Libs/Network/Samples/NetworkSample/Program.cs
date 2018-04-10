@@ -9,7 +9,7 @@ namespace NetworkSample
         public static void Main()
         {
             // initialize the network
-            bool isGood = Netduino.Foundation.Network.Initializer.InitializeNetwork("http://www.google.com");
+            bool isGood = Netduino.Foundation.Network.Initializer.InitializeNetwork("http://google.com");
 
 
         }
