@@ -9,12 +9,15 @@ namespace Netduino.Foundation.ICs.MCP23008
 {
     public class MCP23008
     {
+        public event PortInterruptEventHandler InterruptRaised = delegate { };
+
         private readonly I2CBus _i2cBus;
 
         // state
         byte _iodir;
         byte _gpio;
         byte _olat;
+        byte _gppu;
 
         /// <summary>
         ///     object for using lock() to do thread synch
@@ -102,6 +105,12 @@ namespace Netduino.Foundation.ICs.MCP23008
 
             // the chip will automatically write all registers sequentially.
             this._i2cBus.WriteRegisters(_IODirectionRegister, buffers);
+
+            // save our state
+            this._iodir = buffers[0];
+            this._gpio = 0x00;
+            this._olat = 0x00;
+            this._gppu = 0x00;
         }
 
         /// <summary>
@@ -154,19 +163,30 @@ namespace Netduino.Foundation.ICs.MCP23008
             this._i2cBus.WriteRegister(_IODirectionRegister, _iodir);
         }
 
-        public void ConfigureInputPort(byte pin, bool enablePUllUp = false, bool enableInterrupt = true)
+        public void ConfigureInputPort(byte pin, bool enablePullUp = false, bool enableInterrupt = true)
         {
             // set the port direction
             this.SetPortDirection(pin, PortDirectionType.Input);
 
-            byte gppu = this._i2cBus.ReadRegister(_PullupResistorConfigurationRegister);
+            // refresh out pull up state
+            // TODO: do away with this and trust internal state?
+            _gppu = this._i2cBus.ReadRegister(_PullupResistorConfigurationRegister);
 
-            byte newGppu = BitHelpers.SetBit(gppu, pin, enablePUllUp);
+            _gppu = BitHelpers.SetBit(_gppu, pin, enablePullUp);
 
-            this._i2cBus.WriteRegister(_PullupResistorConfigurationRegister, newGppu);
+            this._i2cBus.WriteRegister(_PullupResistorConfigurationRegister, _gppu);
 
             if (enableInterrupt) {
-                // todo, configure the intterupt bullshit
+                // interrupt on change (whether or not we want to raise an interrupt on the interrupt pin on change)
+                byte gpinten = this._i2cBus.ReadRegister(_InterruptOnChangeRegister);
+                gpinten = BitHelpers.SetBit(gpinten, pin, true);
+
+                // interrupt control register; whether or not the change is based 
+                // on default comparison value, or if a change from previous. We 
+                // want to raise on change, so we set it to 0, always.
+                byte interruptControl = this._i2cBus.ReadRegister(_InterruptControlRegister);
+                interruptControl = BitHelpers.SetBit(interruptControl, pin, false);
+
             }
         }
 
