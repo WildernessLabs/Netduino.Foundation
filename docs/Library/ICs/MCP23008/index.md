@@ -44,7 +44,7 @@ The I2C address of the chip is configurable via the address pins and is in the b
 
 For example, if all address pins were tied to ground, then the address of the chip would be `0100000` in binary, or `0x20` in hex, and `32` in decimal.
 
-The I2C is addresses can then be as follows, where `0` represents an address pin connected to ground, and `1` represents an address pin connected to `3.3V`:
+The I2C addresses can then be as follows, where `0` represents an address pin connected to ground, and `1` represents an address pin connected to `3.3V`:
 
 | address header | A2  | A1  | A0  | Resulting Hex Address | Resulting Decimal Address |
 |----------------|-----|-----|-----|-----------------------|---------------------------|
@@ -57,9 +57,9 @@ The I2C is addresses can then be as follows, where `0` represents an address pin
 | `0100`         | `1` | `1` | `0` | `0x26`                | `38`                      | 
 | `0100`         | `1` | `1` | `1` | `0x27`                | `39`                      | 
 
-Because there are 8 address possibilities, it's possible to put 8 MCP2308 chips on a single I2C bus.
+Because there are 8 address possibilities, it's possible to put 8 MCP23008 chips on a single I2C bus.
 
-To make this simpler, when instantiating an MCP2308 object, there is a constructor overload that takes the address pin configurations instead of an address, so that Netduino.Foundation uses the appropriate address based on the pins, instead of requiring a pre-computed address.
+To make this simpler, when instantiating an MCP23008 object, there is a constructor overload that takes the address pin configurations instead of an address, so that Netduino.Foundation uses the appropriate address based on the pins, instead of requiring a pre-computed address.
 
 # API
 
@@ -79,7 +79,7 @@ Instantiates a new MCP23008 using the specified address and I2C bus speed.
 
 Creates a new `DigitalOutputPort` (which implements [`IDigitalOutputPort`](/API/GPIO/IDigitalOutputPort/)) using the specified pin and initial state.
 
-This method allows you to use a pin on the MCP2308 as if it were a digital output pin on the Netduino, via the [unified GPIO architecture](/API/GPIO/).
+This method allows you to use a pin on the MCP23008 as if it were a digital output pin on the Netduino, via the [unified GPIO architecture](/API/GPIO/).
 
 #### `public void SetPortDirection(byte pin, PortDirectionType direction)`
 
@@ -97,7 +97,7 @@ Outputs a byte value across all of the pins by writing directly to the output la
 
 ## Simple Digital Writes
 
-The [MCP23008_SimpleDigitalWrites](https://github.com/WildernessLabs/Netduino.Foundation/tree/MCP23008/Source/Peripheral_Libs/ICs.MCP23008/Samples/MCP2308_SimpleDigitalWrites) sample illustrates how to use the `OutputWrite` and `WriteToPort` methods to write to the output ports:
+The [MCP23008_SimpleDigitalWrites](https://github.com/WildernessLabs/Netduino.Foundation/tree/MCP23008/Source/Peripheral_Libs/ICs.MCP23008/Samples/MCP23008_SimpleDigitalWrites) sample illustrates how to use the `OutputWrite` and `WriteToPort` methods to write to the output ports:
 
 ```csharp
 using System;
@@ -105,7 +105,7 @@ using System.Threading;
 using Microsoft.SPOT;
 using Netduino.Foundation.ICs.MCP23008;
 
-namespace MCP2308_SimpleDigitalWrites
+namespace MCP23008_SimpleDigitalWrites
 {
     public class Program
     {
