@@ -13,7 +13,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
         protected int _navigatedDepth = 0;
         protected MenuPage _rootMenuPage = null;
         protected MenuPage _currentMenuPage = null;
-        
+        protected int _topDisplayLine = 0;
 
         public Menu(ITextDisplay display, MenuPage menuTree)
         {
@@ -35,23 +35,30 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
 
             // if there are no items to render, get out.
             if (_currentMenuPage.MenuItems.Count <= 0) return;
-            
-            // calculate the first item index that should be displayed
-            int displayStartIndex = CalculateDisplayedItemStartIndex(_currentMenuPage.MenuItems.Count, _currentMenuPage.ScrollPosition);
-            int lastDisplayableItem = CalculateLastDisplayableItem(displayStartIndex, _currentMenuPage.MenuItems.Count);
 
-            Debug.Print("Scroll: " + _currentMenuPage.ScrollPosition.ToString() + ", start: " + displayStartIndex + ", end: " + lastDisplayableItem.ToString());
+            // if the scroll position is above the display area, move the display "window"
+            if (_currentMenuPage.ScrollPosition < _topDisplayLine)
+            {
+                _topDisplayLine = _currentMenuPage.ScrollPosition;
+            }
+
+            // if the scroll position is below the display area, move the display "window"
+            if (_currentMenuPage.ScrollPosition > _topDisplayLine + _display.DisplayConfig.Height - 1)
+            {
+                _topDisplayLine = _currentMenuPage.ScrollPosition - _display.DisplayConfig.Height+1;
+            }
+            
+            Debug.Print("Scroll: " + _currentMenuPage.ScrollPosition.ToString() + ", start: " + _topDisplayLine.ToString() + ", end: " + (_topDisplayLine + _display.DisplayConfig.Height - 1).ToString());
 
             byte lineNumber = 0;
-            
-            // 
-            for (int i = displayStartIndex; i < lastDisplayableItem; i++) {
+
+            for (int i = _topDisplayLine; i <= (_topDisplayLine + _display.DisplayConfig.Height - 1); i++)
+            {
                 IMenuItem item = _currentMenuPage.MenuItems[i] as IMenuItem;
 
                 // trim and add selection
                 string lineText = GetItemText(item, (i == _currentMenuPage.ScrollPosition));
                 _display.WriteLine(lineText, lineNumber);
-
                 lineNumber++;
             }
 
@@ -77,37 +84,6 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
             return itemText;
         }
 
-        protected int CalculateDisplayedItemStartIndex(int menuItemCount, int scrollPosition)
-        {
-            int rows = _display.DisplayConfig.Height;
-
-            // if there aren't enough items to scroll
-            if (menuItemCount <= rows) return 0;
-
-            // if the current scroll position doesn't require scrolling to view
-            if (scrollPosition <= (rows - 1)) return 0;
-
-            // otherwise, it should be the current scroll position minus the number of rows
-            // so if the scroll position is 4, and there are 2 rows, we should start at item
-            // index 2
-            return scrollPosition - rows + 1;
-        }
-
-        protected int CalculateLastDisplayableItem(int displayStartIndex, int itemCount)
-        {
-            int rows = _display.DisplayConfig.Height;
-
-            // if the number of items is less than or equal to the row count, there's
-            // only one page
-            if (itemCount <= rows) return itemCount;
-
-            // if we're on the last page
-            if (itemCount - (displayStartIndex + 1) <= rows) return itemCount - 1;
-
-            // otherwise, it's just the first item plus row count
-            return (displayStartIndex + rows);
-        }
-
         /// <summary>
         /// Updates the _currentMenuPage based on the current navigation depth
         /// </summary>
@@ -130,7 +106,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
             Debug.Print("MoveNext");
 
             // if outside of valid range return false
-            if (_currentMenuPage.ScrollPosition >= _currentMenuPage.MenuItems.Count) return false;
+            if (_currentMenuPage.ScrollPosition >= _currentMenuPage.MenuItems.Count-1) return false;
 
             // increment scroll position
             _currentMenuPage.ScrollPosition++;

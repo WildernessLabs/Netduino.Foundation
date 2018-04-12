@@ -40,7 +40,14 @@ namespace TextDisplayMenu_Sample
             _menu = new Menu(_display, menuTree);
 
             _encoder.Rotated += HandlEncoderRotation;
+            _encoder.Clicked += HandleEncoderClick;
 
+
+        }
+
+        private void HandleEncoderClick(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void HandlEncoderRotation(object sender, RotaryTurnedEventArgs e)

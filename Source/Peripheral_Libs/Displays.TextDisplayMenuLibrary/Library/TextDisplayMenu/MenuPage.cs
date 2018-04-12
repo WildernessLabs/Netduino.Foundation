@@ -9,7 +9,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
         {
             get { return _scrollPosition; }
             set {
-                if (value > MenuItems.Count || value < 0) {
+                if (value > MenuItems.Count-1 || value < 0) {
                     Debug.Print("Attempting to set a scroll position outside of item range: " + value.ToString());
                 }
                 _scrollPosition = value;
