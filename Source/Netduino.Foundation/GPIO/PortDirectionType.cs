@@ -5,7 +5,7 @@ namespace Netduino.Foundation.GPIO
 {
     public enum PortDirectionType : byte
     {
-        Input = 0,
-        Output = 1
+        Output = 0,
+        Input = 1
     }
 }
