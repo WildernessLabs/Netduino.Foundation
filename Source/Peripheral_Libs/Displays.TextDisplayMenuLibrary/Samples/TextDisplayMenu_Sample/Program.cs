@@ -7,6 +7,8 @@ using N = SecretLabs.NETMF.Hardware.Netduino;
 using Netduino.Foundation.Sensors.Rotary;
 using Netduino.Foundation.Displays;
 using Netduino.Foundation.Displays.TextDisplayMenu;
+using System.IO;
+using TextDisplayMenu_Sample.Properties;
 
 namespace TextDisplayMenu_Sample
 {
@@ -35,19 +37,25 @@ namespace TextDisplayMenu_Sample
             // set display brightness
             _display.SetBrightness();
 
-            MenuPage menuTree = CreateMenuTree();
+            var menuJson = new string(System.Text.Encoding.UTF8.GetChars(Resources.GetBytes(Resources.BinaryResources.menu)));
+            var menuData = Json.NETMF.JsonSerializer.DeserializeString(menuJson) as Hashtable;
 
-            _menu = new Menu(_display, menuTree);
+            _menu = new Menu(_display, menuData);
 
             _encoder.Rotated += HandlEncoderRotation;
             _encoder.Clicked += HandleEncoderClick;
 
+            _menu.Clicked += HandleMenuClicked;
+        }
 
+        private void HandleMenuClicked(object sender, MenuClickedEventArgs e)
+        {
+            Debug.Print(e.Command);
         }
 
         private void HandleEncoderClick(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            _menu.SelectCurrentItem();
         }
 
         private void HandlEncoderRotation(object sender, RotaryTurnedEventArgs e)
@@ -66,26 +74,6 @@ namespace TextDisplayMenu_Sample
                 Debug.Print("end of items");
             }
         }
-
-        protected MenuPage CreateMenuTree()
-        {
-            MenuPage menuTree = new MenuPage();
-            menuTree.MenuItems.Add(new MenuItemBase("Menu Item 1"));
-            menuTree.MenuItems.Add(new MenuItemBase("Item the 2nd"));
-            menuTree.MenuItems.Add(new MenuItemBase("3rd menu item") {
-                SubMenu = new MenuPage() { MenuItems =
-                    {
-                        new MenuItemBase ("I'm first!"),
-                        new MenuItemBase ("I'm second."),
-                        new MenuItemBase ("where the party at?")
-                    }
-                }
-            });
-            menuTree.MenuItems.Add(new MenuItemBase("Item 4"));
-            menuTree.MenuItems.Add(new MenuItemBase("Item 5"));
-            menuTree.MenuItems.Add(new MenuItemBase("Item 6"));
-
-            return menuTree;
-        }
+        
     }
 }

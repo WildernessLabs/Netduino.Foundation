@@ -15,17 +15,61 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
         protected MenuPage _currentMenuPage = null;
         protected int _topDisplayLine = 0;
 
+        private Stack _menuLevel = null;
+
+        public event MenuClickedHandler Clicked = delegate { };
+
+        public Menu(ITextDisplay display, Hashtable menuData)
+        {
+            if(menuData["menu"] == null)
+            {
+                throw new ArgumentException("JSON root must contain a 'menu' item");
+            }
+            var menuTree = CreateMenuPage((ArrayList)menuData["menu"], false);
+            Init(display, menuTree);
+        }
+
         public Menu(ITextDisplay display, MenuPage menuTree)
+        {
+            Init(display, menuTree);
+        }
+
+        private void Init(ITextDisplay display, MenuPage menuTree)
         {
             _display = display;
             _rootMenuPage = menuTree;
             UpdatedCurrentMenuPage();
             RenderCurrentMenuPage();
+            _menuLevel = new Stack();
 
             // Save our custom characters
             _display.SaveCustomCharacter(TextCharacters.RightArrow.CharMap, TextCharacters.RightArrow.MemorySlot);
             _display.SaveCustomCharacter(TextCharacters.RightArrowSelected.CharMap, TextCharacters.RightArrow.MemorySlot);
             _display.SaveCustomCharacter(TextCharacters.BoxSelected.CharMap, TextCharacters.BoxSelected.MemorySlot);
+        }
+
+        protected MenuPage CreateMenuPage(ArrayList nodes, bool addBack)
+        {
+            MenuPage menuPage = new MenuPage();
+
+            if (addBack)
+            {
+                menuPage.MenuItems.Add(new MenuItemBase("< Back", string.Empty));
+            }
+
+            if (nodes != null)
+            {
+                foreach (Hashtable node in nodes)
+                {
+                    var item = new MenuItemBase(node["name"].ToString(), node["command"]?.ToString());
+                    if (node["sub"] != null)
+                    {
+                        item.SubMenu = CreateMenuPage((ArrayList)node["sub"], true);
+                    }
+                    menuPage.MenuItems.Add(item);
+                }
+            }
+            return menuPage;
         }
 
         protected void RenderCurrentMenuPage()
@@ -35,7 +79,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
 
             // if there are no items to render, get out.
             if (_currentMenuPage.MenuItems.Count <= 0) return;
-
+            
             // if the scroll position is above the display area, move the display "window"
             if (_currentMenuPage.ScrollPosition < _topDisplayLine)
             {
@@ -45,7 +89,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
             // if the scroll position is below the display area, move the display "window"
             if (_currentMenuPage.ScrollPosition > _topDisplayLine + _display.DisplayConfig.Height - 1)
             {
-                _topDisplayLine = _currentMenuPage.ScrollPosition - _display.DisplayConfig.Height+1;
+                _topDisplayLine = _currentMenuPage.ScrollPosition - _display.DisplayConfig.Height + 1;
             }
             
             Debug.Print("Scroll: " + _currentMenuPage.ScrollPosition.ToString() + ", start: " + _topDisplayLine.ToString() + ", end: " + (_topDisplayLine + _display.DisplayConfig.Height - 1).ToString());
@@ -54,14 +98,16 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
 
             for (int i = _topDisplayLine; i <= (_topDisplayLine + _display.DisplayConfig.Height - 1); i++)
             {
-                IMenuItem item = _currentMenuPage.MenuItems[i] as IMenuItem;
+                if(i < _currentMenuPage.MenuItems.Count)
+                {
+                    IMenuItem item = _currentMenuPage.MenuItems[i] as IMenuItem;
 
-                // trim and add selection
-                string lineText = GetItemText(item, (i == _currentMenuPage.ScrollPosition));
-                _display.WriteLine(lineText, lineNumber);
-                lineNumber++;
+                    // trim and add selection
+                    string lineText = GetItemText(item, (i == _currentMenuPage.ScrollPosition));
+                    _display.WriteLine(lineText, lineNumber);
+                    lineNumber++;
+                }
             }
-
         }
 
         protected string GetItemText(IMenuItem item, bool isSelected)
@@ -137,8 +183,48 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
 
         public bool SelectCurrentItem()
         {
-            return true;
+            if(_currentMenuPage.ScrollPosition == 0 && _menuLevel.Count > 0)
+            {
+                MenuPage parent = _menuLevel.Pop() as MenuPage;
+                _currentMenuPage = parent;
+                RenderCurrentMenuPage();
+                return true;
+            }
+
+            int pos = _currentMenuPage.ScrollPosition;
+            MenuItemBase child = ((MenuItemBase)_currentMenuPage.MenuItems[pos]);
+
+            if (child.SubMenu.MenuItems.Count > 0)
+            {
+                _menuLevel.Push(_currentMenuPage);
+                _currentMenuPage = child.SubMenu;
+                RenderCurrentMenuPage();
+                return true;
+            }
+            else if (child.Command != string.Empty)
+            {
+                Clicked(this, new MenuClickedEventArgs(child.Command));
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
+    public class MenuClickedEventArgs : EventArgs
+    {
+        private string _command;
+        public MenuClickedEventArgs(string command)
+        {
+            this._command = command;
         }
 
+        public string Command
+        {
+            get { return this._command; }
+        }
     }
+    public delegate void MenuClickedHandler(object sender, MenuClickedEventArgs e);
 }

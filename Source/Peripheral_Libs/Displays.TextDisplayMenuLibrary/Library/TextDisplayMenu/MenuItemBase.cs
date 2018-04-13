@@ -13,9 +13,12 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
 
         public string Text { get; set; } = "";
 
-        public MenuItemBase(string displayText)
+        public string Command { get; set; } = "";
+
+        public MenuItemBase(string displayText, string command)
         {
             Text = displayText;
+            Command = command ?? string.Empty;
         }
     }
 }
