@@ -2,7 +2,7 @@
 using Microsoft.SPOT.Hardware;
 using Netduino.Foundation.Communications;
 
-namespace Netduino.Foundation.ICs
+namespace Netduino.Foundation.ICs.ShiftRegister74595
 {
     /// <summary>
     ///     Provide an interface to connect to a 74595 shift register.
@@ -99,6 +99,27 @@ namespace Netduino.Foundation.ICs
         }
 
         /// <summary>
+        /// Creates a new DigitalOutputPort using the specified pin and initial state.
+        /// </summary>
+        /// <param name="pin">The pin number to create the port on.</param>
+        /// <param name="initialState">Whether the pin is initially high or low.</param>
+        /// <returns></returns>
+        public DigitalOutputPort CreateOutputPort(byte pin, bool initialState)
+        {
+            // create the convenience class
+            return new DigitalOutputPort(this, pin, initialState);
+        }
+
+        public void WriteToPort(byte pin, bool value)
+        {
+            // write new value on the especific pin
+            _bits[pin] = value;
+
+            // send the data to the SPI interface.
+            LatchData();
+        }
+
+        /// <summary>
         ///     Clear all of the bits in the shift register.
         /// </summary>
         /// <param name="latch">If true, latch the data after the shift register is cleared (default is false)?</param>
@@ -108,6 +129,7 @@ namespace Netduino.Foundation.ICs
             {
                 _bits[index] = false;
             }
+
             if (latch)
             {
                 LatchData();
