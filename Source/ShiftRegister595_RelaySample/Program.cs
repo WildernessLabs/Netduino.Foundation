@@ -1,9 +1,11 @@
-﻿using System.Threading;
+using System.Threading;
 using Microsoft.SPOT.Hardware;
-using SecretLabs.NETMF.Hardware.NetduinoPlus;
+using SecretLabs.NETMF.Hardware.Netduino;
 using Netduino.Foundation.ICs.ShiftRegister74595;
+using Netduino.Foundation.Relays;
+using Microsoft.SPOT;
 
-namespace ShiftRegisterTest
+namespace ShiftRegister74595Sample
 {
     public class Program
     {
@@ -17,17 +19,22 @@ namespace ShiftRegisterTest
                                                Clock_IdleState: true,
                                                Clock_Edge: true,
                                                Clock_RateKHz: 10);
+
             var shiftRegister = new ShiftRegister74595(8, config);
+
+            DigitalOutputPort relayPort = shiftRegister.CreateOutputPort(0, false);
+
+            var relay = new Relay(relayPort);
+
             while (true)
             {
-                shiftRegister.Clear(true);
-                for (byte index = 0; index <= 7; index++)
-                {
-                    shiftRegister[index] = true;
-                    shiftRegister.LatchData();
-                    Thread.Sleep(500);
-                    shiftRegister[index] = false;
-                }
+                // toggle the relay
+                relay.Toggle();
+
+                Debug.Print("Relay on: " + relay.IsOn.ToString());
+
+                // wait for 5 seconds
+                Thread.Sleep(1000);
             }
         }
     }
