@@ -4,11 +4,31 @@ title: 74595 Shift Register
 subtitle: Hardware Driver for expanding IO via the 75xx595 series of shift registers.
 ---
 
+# Overview
+
 Shift registers offer the ability to increase the number of outputs on a microcontroller by using I2C or SPI interfaces.  In the case of the 74xx595 series of shift registers, the SPI interface is used to output a series of bits that are then latched to the output pins of the chip.
 
 This class allows the Netduino to control the output pins on a 74HCT595 shift register using the SPI interface.
 
 Note that when using this chip care should be taken to make sure that the total output load of the chip does not exceed the current and thermal dissipation properties for the specific shift register being used.
+
+## Unified GPIO Architecture
+
+In addition to the low-level API, the Netduino.Foundation 74HCT595 driver conforms to the [unified GPIO architecture](/API/GPIO/), which enables it to be used with other Netduino.Foundation peripherals as if the ports on the shift register chip were part of the Netduino itself. For instance, you can connect an 74HCT595 chip to a Netduino, and then drive a Relay via one of the pins on the expansion chip, just as if it were connected directly to a digital pin on the Netduino:
+
+```csharp
+// create our ShiftRegister74595
+ShiftRegister74595 shiftRegister = new ShiftRegister74595(8, config);
+
+// create a digital output port from that mcp
+DigitalOutputPort relayPort = shiftRegister.CreateOutputPort(0, false);
+
+// create a new relay using that digital output port
+Relay relay = new Relay(relayPort);
+
+// toggle the relay
+relay.Toggle();
+```
 
 ## Hardware
 
@@ -76,6 +96,16 @@ The index operator is overloaded to allow simple access to each of the bits in t
 ```csharp
 shiftRegister[index] = true;
 ```
+
+#### `public DigitalOutputPort CreateOutputPort(byte pin, bool initialState)`
+
+Creates a new `DigitalOutputPort` (which implements [`IDigitalOutputPort`](/API/GPIO/IDigitalOutputPort/)) using the specified pin and initial state.
+
+This method allows you to use an output pin on the 74HC595 as if it were a digital output pin on the Netduino, via the [unified GPIO architecture](/API/GPIO/).
+
+#### `public void WriteToPort(int pin, bool value)`
+
+Sets a particular pin's value, either high/`3.3V` (`true`), or low/`0V` (`false`). If that pin is not in output mode, this method will first set its direction to output.
 
 #### `void Clear(bool latch = false)`
 
