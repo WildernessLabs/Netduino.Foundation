@@ -105,7 +105,7 @@ This method allows you to use an output pin on the 74HC595 as if it were a digit
 
 #### `public void WriteToPort(int pin, bool value)`
 
-Sets a particular pin's value, either high/`3.3V` (`true`), or low/`0V` (`false`). If that pin is not in output mode, this method will first set its direction to output.
+Sets a particular pin's value, either high/`3.3V` (`true`), or low/`0V` (`false`). This method automatically calls LatchData() to send the data to the SPI interface.
 
 #### `void Clear(bool latch = false)`
 
