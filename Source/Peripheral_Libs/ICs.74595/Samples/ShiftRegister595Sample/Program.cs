@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using Microsoft.SPOT.Hardware;
 using SecretLabs.NETMF.Hardware.NetduinoPlus;
-using Netduino.Foundation.ICs.ShiftRegister74595;
+using Netduino.Foundation.ICs.x74595;
 
 namespace ShiftRegisterTest
 {
@@ -17,7 +17,9 @@ namespace ShiftRegisterTest
                                                Clock_IdleState: true,
                                                Clock_Edge: true,
                                                Clock_RateKHz: 10);
-            var shiftRegister = new ShiftRegister74595(8, config);
+
+            var shiftRegister = new x74595(8, config);
+
             while (true)
             {
                 shiftRegister.Clear(true);

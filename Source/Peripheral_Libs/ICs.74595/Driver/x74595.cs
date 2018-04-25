@@ -2,7 +2,7 @@
 using Microsoft.SPOT.Hardware;
 using Netduino.Foundation.Communications;
 
-namespace Netduino.Foundation.ICs.ShiftRegister74595
+namespace Netduino.Foundation.ICs.x74595
 {
     /// <summary>
     ///     Provide an interface to connect to a 74595 shift register.
@@ -11,7 +11,7 @@ namespace Netduino.Foundation.ICs.ShiftRegister74595
     ///     Control the outputs from a 74595 shift register (or a chain of shift registers)
     ///     using a SPI interface.
     /// </remarks>
-    public class ShiftRegister74595
+    public class x74595
     {
         #region Member variables / fields
 
@@ -40,7 +40,7 @@ namespace Netduino.Foundation.ICs.ShiftRegister74595
         /// <remarks>
         ///     This is private to prevent the programmer from calling it explicitly.
         /// </remarks>
-        private ShiftRegister74595()
+        private x74595()
         {
         }
 
@@ -49,7 +49,7 @@ namespace Netduino.Foundation.ICs.ShiftRegister74595
         /// </summary>
         /// <param name="bits">Number of bits in the shift register (should be a multiple of 8 bits).</param>
         /// <param name="config">SPI Configuration object.</param>
-        public ShiftRegister74595(int bits, SPI.Configuration config)
+        public x74595(int bits, SPI.Configuration config)
         {
             if ((bits > 0) && ((bits % 8) == 0))
             {
@@ -61,7 +61,7 @@ namespace Netduino.Foundation.ICs.ShiftRegister74595
             else
             {
                 throw new ArgumentOutOfRangeException(
-                    "ShiftRegister74595: Size must be greater than zero and a multiple of 8 bits");
+                    "x74595: Size must be greater than zero and a multiple of 8 bits");
             }
         }
 

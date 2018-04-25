@@ -1,7 +1,7 @@
 using System.Threading;
 using Microsoft.SPOT.Hardware;
 using SecretLabs.NETMF.Hardware.Netduino;
-using Netduino.Foundation.ICs.ShiftRegister74595;
+using Netduino.Foundation.ICs.x74595;
 using Netduino.Foundation.Relays;
 using Microsoft.SPOT;
 
@@ -20,7 +20,7 @@ namespace ShiftRegister74595Sample
                                                Clock_Edge: true,
                                                Clock_RateKHz: 10);
 
-            var shiftRegister = new ShiftRegister74595(8, config);
+            var shiftRegister = new x74595(8, config);
 
             DigitalOutputPort relayPort = shiftRegister.CreateOutputPort(0, false);
 

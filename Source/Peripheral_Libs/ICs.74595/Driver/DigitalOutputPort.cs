@@ -1,18 +1,18 @@
 using Netduino.Foundation.GPIO;
 
-namespace Netduino.Foundation.ICs.ShiftRegister74595
+namespace Netduino.Foundation.ICs.x74595
 {
     public class DigitalOutputPort : DigitalOutputPortBase
     {
         protected readonly byte _pin;
-        protected readonly ShiftRegister74595 _shiftRegister74595;
+        protected readonly x74595 _x74595;
 
         public override bool State
         {
             get { return _state; }
             set
             {
-                _shiftRegister74595.WriteToPort(_pin, value);
+                _x74595.WriteToPort(_pin, value);
                 _state = value;
             }
         }
@@ -24,9 +24,9 @@ namespace Netduino.Foundation.ICs.ShiftRegister74595
 
         protected DigitalOutputPort() : base(false) { }
 
-        internal DigitalOutputPort(ShiftRegister74595 shiftRegister74595, byte pin, bool initialState) : base(initialState)
+        internal DigitalOutputPort(x74595 x74595, byte pin, bool initialState) : base(initialState)
         {
-            _shiftRegister74595 = shiftRegister74595;
+            _x74595 = x74595;
             _pin = pin;
 
             if (initialState)
