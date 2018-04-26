@@ -16,7 +16,8 @@ namespace ServoSample
 
         public static void Main()
         {
-            _servo = new Standard180Servo(N.PWMChannels.PWM_PIN_D9);
+            //_servo = new Standard180Servo(N.PWMChannels.PWM_PIN_D9);
+            _servo = new CustomServo(N.PWMChannels.PWM_PIN_D9, new ServoConfig(minimumPulseDuration: 550, maximumPulseDuration: 2400 ));
             _button = new PushButton((H.Cpu.Pin)0x15, CircuitTerminationType.Floating);
 
             _button.Clicked += (object sender, Microsoft.SPOT.EventArgs e) =>
@@ -32,10 +33,12 @@ namespace ServoSample
         {
             if (_servo.Angle == 0)
             {
+                Debug.Print("Rotating to 180");
                 _servo.RotateTo(180);
             }
             else
             {
+                Debug.Print("Rotating to 0");
                 _servo.RotateTo(0);
             }
         }

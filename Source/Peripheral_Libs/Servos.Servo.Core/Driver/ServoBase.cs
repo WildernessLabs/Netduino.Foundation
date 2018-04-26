@@ -34,6 +34,11 @@ namespace Netduino.Foundation.Servos
         {
         }
 
+        public void Stop()
+        {
+            _pwm.Stop();
+        }
+
         protected double CalculatePulseDuration(int angle)
         {
             // offset + (angle percent * duration length)
@@ -54,10 +59,7 @@ namespace Netduino.Foundation.Servos
         {
             Debug.Print("Sending Command Pulse");
             _pwm.DutyCycle = CalculateDutyCycle(pulseDuration);
-            _pwm.Start();
-            //Thread.Sleep(pulseDuration + 5); // may or may not be necessary
-            //_pwm.Stop();
-
+            _pwm.Start(); // servo expects to run continuously
         }
     }
 }

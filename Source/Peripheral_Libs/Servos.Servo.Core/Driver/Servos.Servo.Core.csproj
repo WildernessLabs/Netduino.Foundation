@@ -39,9 +39,9 @@
       <Link>RoslynHackFix.cs</Link>
     </Compile>
     <Compile Include="ContinuousRotationServo.cs" />
+    <Compile Include="CustomServo.cs" />
     <Compile Include="IServo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Servo.cs" />
     <Compile Include="ServoBase.cs" />
     <Compile Include="ServoConfig.cs" />
     <Compile Include="Standard180Servo.cs" />
