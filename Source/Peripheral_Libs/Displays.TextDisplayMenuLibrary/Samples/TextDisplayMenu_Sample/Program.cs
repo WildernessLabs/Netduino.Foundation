@@ -37,43 +37,19 @@ namespace TextDisplayMenu_Sample
             // set display brightness
             _display.SetBrightness();
 
-            var menuJson = new string(System.Text.Encoding.UTF8.GetChars(Resources.GetBytes(Resources.BinaryResources.menu)));
-            var menuData = Json.NETMF.JsonSerializer.DeserializeString(menuJson) as Hashtable;
-
-            _menu = new Menu(_display, menuData);
-
-            _encoder.Rotated += HandlEncoderRotation;
-            _encoder.Clicked += HandleEncoderClick;
-
-            _menu.Clicked += HandleMenuClicked;
+            _menu = new Menu(_display, _encoder, Resources.GetBytes(Resources.BinaryResources.menu));
+            _menu.Selected += HandleMenuSelected;
+            _menu.ValueChanged += HandleMenuValueChanged;
         }
 
-        private void HandleMenuClicked(object sender, MenuClickedEventArgs e)
+        private void HandleMenuValueChanged(object sender, ValueChangedEventArgs e)
         {
-            Debug.Print(e.Command);
+            Debug.Print(e.ItemID + " changed with value: " + e.Value);
         }
 
-        private void HandleEncoderClick(object sender, EventArgs e)
+        private void HandleMenuSelected(object sender, MenuSelectedEventArgs e)
         {
-            _menu.SelectCurrentItem();
+            Debug.Print("menu selected: " + e.Command);
         }
-
-        private void HandlEncoderRotation(object sender, RotaryTurnedEventArgs e)
-        {
-            bool moved = false;
-            if (e.Direction == RotationDirection.Clockwise)
-            {
-                moved = _menu.MoveNext();
-            } else
-            {
-                moved = _menu.MovePrevious();
-            }
-
-            if (!moved) {
-                // play a sound?
-                Debug.Print("end of items");
-            }
-        }
-        
     }
 }

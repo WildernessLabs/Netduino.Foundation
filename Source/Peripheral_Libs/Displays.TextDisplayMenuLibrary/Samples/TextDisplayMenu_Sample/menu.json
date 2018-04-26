@@ -1,38 +1,38 @@
 {
   "menu": [
-    { "name": "Item 1" },
-    { "name": "Item 2" },
+    { "text": "Running Time", "id": "time", "type": "TimeDetailed" },
+    { "text": "Item 2" },
     {
-      "name": "Item 3",
+      "text": "Item 3",
       "sub": [
-        { "name": "Sub Item 1" },
-        { "name": "Sub Item 2" },
-        { "name": "Sub Item 3" }
+        { "text": "Sub Item 1" },
+        { "text": "Sub Item 2" },
+        { "text": "Sub Item 3" }
       ]
     },
-    { "name": "Item 4" },
-    { "name": "Item 5", "command": "DoSomething" },
-    { "name": "Item 6" },
-    { "name": "Item 7" },
-    { "name": "Item 8",
+    { "text": "Item 4" },
+    { "text": "Item 5", "command": "DoSomething" },
+    { "text": "Item 6" },
+    { "text": "Item 7" },
+    { "text": "Item 8",
       "sub": [
-        { "name": "Sub Item A" },
-        { "name": "Sub Item B" },
-        { "name": "Sub Item C",
+        { "text": "Sub Item A" },
+        { "text": "Sub Item B" },
+        { "text": "Sub Item C",
           "sub": [
-            { "name": "Sub Item D" },
-            { "name": "Sub Item E" },
-            { "name": "Sub Item F" }
+            { "text": "Sub Item D" },
+            { "text": "Sub Item E" },
+            { "text": "Sub Item F" }
           ] }
       ] },
-    { "name": "Item 9" },
-    { "name": "Item 10" },
-    { "name": "Item 11" },
-    { "name": "Item 12",
+    { "text": "Item 9" },
+    { "text": "Item 10" },
+    { "text": "Item 11" },
+    { "text": "Item 12",
       "sub": [
-        { "name": "Sub Item X" },
-        { "name": "Sub Item Y" },
-        { "name": "Sub Item Z" }
+        { "text": "Sub Item X" },
+        { "text": "Sub Item Y" },
+        { "text": "Sub Item Z" }
       ] }
   ]
 }

@@ -3,12 +3,15 @@ using System.Collections;
 using Microsoft.SPOT;
 using H = Microsoft.SPOT.Hardware;
 using Netduino.Foundation.Displays;
+using Netduino.Foundation.Sensors.Rotary;
 
 namespace Netduino.Foundation.Displays.TextDisplayMenu
 {
     public class Menu
     {
+        const string INPUT_TYPES_NAMESPACE = "Netduino.Foundation.Displays.TextDisplayMenu.InputTypes.";
         protected ITextDisplay _display = null;
+        protected RotaryEncoderWithButton _encoder = null;
 
         protected int _navigatedDepth = 0;
         protected MenuPage _rootMenuPage = null;
@@ -17,30 +20,39 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
 
         private Stack _menuLevel = null;
 
-        public event MenuClickedHandler Clicked = delegate { };
-
-        public Menu(ITextDisplay display, Hashtable menuData)
+        public event MenuSelectedHandler Selected = delegate { };
+        public event ValueChangedHandler ValueChanged = delegate { };
+        
+        public Menu(ITextDisplay display, RotaryEncoderWithButton encoder, byte[] menuResource)
         {
-            if(menuData["menu"] == null)
+            var menuJson = new string(System.Text.Encoding.UTF8.GetChars(menuResource));
+            var menuData = Json.NETMF.JsonSerializer.DeserializeString(menuJson) as Hashtable;
+
+            if (menuData["menu"] == null)
             {
                 throw new ArgumentException("JSON root must contain a 'menu' item");
             }
             var menuTree = CreateMenuPage((ArrayList)menuData["menu"], false);
-            Init(display, menuTree);
+            Init(display, encoder, menuTree);
         }
 
-        public Menu(ITextDisplay display, MenuPage menuTree)
+        public Menu(ITextDisplay display, RotaryEncoderWithButton encoder, MenuPage menuTree)
         {
-            Init(display, menuTree);
+            Init(display, encoder, menuTree);
         }
 
-        private void Init(ITextDisplay display, MenuPage menuTree)
+        private void Init(ITextDisplay display, RotaryEncoderWithButton encoder, MenuPage menuTree)
         {
             _display = display;
+            _encoder = encoder;
+
             _rootMenuPage = menuTree;
             UpdatedCurrentMenuPage();
             RenderCurrentMenuPage();
             _menuLevel = new Stack();
+
+            _encoder.Rotated += HandlEncoderRotation;
+            _encoder.Clicked += HandleEncoderClick;
 
             // Save our custom characters
             _display.SaveCustomCharacter(TextCharacters.RightArrow.CharMap, TextCharacters.RightArrow.MemorySlot);
@@ -54,14 +66,14 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
 
             if (addBack)
             {
-                menuPage.MenuItems.Add(new MenuItemBase("< Back", string.Empty));
+                menuPage.MenuItems.Add(new MenuItem("< Back"));
             }
 
             if (nodes != null)
             {
                 foreach (Hashtable node in nodes)
                 {
-                    var item = new MenuItemBase(node["name"].ToString(), node["command"]?.ToString());
+                    var item = new MenuItem(node["text"].ToString(), node["command"]?.ToString(), node["id"]?.ToString(), node["type"]?.ToString());
                     if (node["sub"] != null)
                     {
                         item.SubMenu = CreateMenuPage((ArrayList)node["sub"], true);
@@ -149,14 +161,11 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
 
         public bool MoveNext()
         {
-            Debug.Print("MoveNext");
-
             // if outside of valid range return false
             if (_currentMenuPage.ScrollPosition >= _currentMenuPage.MenuItems.Count-1) return false;
 
             // increment scroll position
             _currentMenuPage.ScrollPosition++;
-            Debug.Print("New Position: " + _currentMenuPage.ScrollPosition);
 
             // re-render menu
             RenderCurrentMenuPage();
@@ -166,14 +175,11 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
 
         public bool MovePrevious()
         {
-            Debug.Print("MoveNext");
-
             // if outside of valid range return false
             if (_currentMenuPage.ScrollPosition <= 0) return false;
 
             // increment scroll position
             _currentMenuPage.ScrollPosition--;
-            Debug.Print("New Position: " + _currentMenuPage.ScrollPosition);
 
             // re-render menu
             RenderCurrentMenuPage();
@@ -183,6 +189,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
 
         public bool SelectCurrentItem()
         {
+            // if currently on a subpage and user selects back, pop back to parent page.
             if(_currentMenuPage.ScrollPosition == 0 && _menuLevel.Count > 0)
             {
                 MenuPage parent = _menuLevel.Pop() as MenuPage;
@@ -192,8 +199,9 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
             }
 
             int pos = _currentMenuPage.ScrollPosition;
-            MenuItemBase child = ((MenuItemBase)_currentMenuPage.MenuItems[pos]);
+            MenuItem child = ((MenuItem)_currentMenuPage.MenuItems[pos]);
 
+            // go to the submenu if children are present
             if (child.SubMenu.MenuItems.Count > 0)
             {
                 _menuLevel.Push(_currentMenuPage);
@@ -201,9 +209,50 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
                 RenderCurrentMenuPage();
                 return true;
             }
+            // if there is a command, notify the subscribers 
             else if (child.Command != string.Empty)
             {
-                Clicked(this, new MenuClickedEventArgs(child.Command));
+                Selected(this, new MenuSelectedEventArgs(child.Command));
+                return true;
+            }
+            // if there is a type, then let the type handle the input
+            else if (child.Type != string.Empty)
+            {
+                // preserve current menu state and remove handlers
+                _encoder.Rotated -= HandlEncoderRotation;
+                _encoder.Clicked -= HandleEncoderClick;
+                _menuLevel.Push(_currentMenuPage);
+
+                // create the new input type
+                var type = Type.GetType(INPUT_TYPES_NAMESPACE + child.Type);
+                if(type == null)
+                {
+                    throw new ArgumentException(child.Type + " was not found");
+                }
+
+                var constructor = type.GetConstructor(new Type[] { });
+                IMenuInputItem inputItem = constructor.Invoke(new object[] { }) as IMenuInputItem;
+
+                // setup callback
+                inputItem.ValueChanged += delegate(object sender, ValueChangedEventArgs e)
+                {
+                    // set the value and notify the eager listeners
+                    child.Value = e.Value;
+                    ValueChanged(this, new ValueChangedEventArgs(e.ItemID, e.Value));
+
+                    // setup handlers again
+                    _encoder.Rotated += HandlEncoderRotation;
+                    _encoder.Clicked += HandleEncoderClick;
+
+                    // reload the parent menu
+                    MenuPage parent = _menuLevel.Pop() as MenuPage;
+                    _currentMenuPage = parent;
+                    RenderCurrentMenuPage();
+                };
+
+                // initialize input mode and get new value
+                inputItem.Init(_display, _encoder);
+                inputItem.GetInput(child.ItemID, child.Value);
                 return true;
             }
             else
@@ -211,20 +260,37 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
                 return false;
             }
         }
-    }
 
-    public class MenuClickedEventArgs : EventArgs
-    {
-        private string _command;
-        public MenuClickedEventArgs(string command)
+        private void HandleEncoderClick(object sender, EventArgs e)
         {
-            this._command = command;
+            this.SelectCurrentItem();
         }
 
-        public string Command
+        private void HandlEncoderRotation(object sender, RotaryTurnedEventArgs e)
         {
-            get { return this._command; }
+            bool moved = false;
+            if (e.Direction == RotationDirection.Clockwise)
+            {
+                moved = this.MoveNext();
+            }
+            else
+            {
+                moved = this.MovePrevious();
+            }
+
+            if (!moved)
+            {
+                // play a sound?
+                Debug.Print("end of items");
+            }
+        }
+
+        public byte Max(byte a, byte b)
+        {
+            if (a > b) return a;
+            else return b;
         }
     }
-    public delegate void MenuClickedHandler(object sender, MenuClickedEventArgs e);
+
+  
 }
