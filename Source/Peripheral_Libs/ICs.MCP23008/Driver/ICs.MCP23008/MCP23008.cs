@@ -1,11 +1,8 @@
-using System;
-using System.Threading;
 using Microsoft.SPOT;
-using H = Microsoft.SPOT.Hardware;
 using Netduino.Foundation.Communications;
 using Netduino.Foundation.GPIO;
 
-namespace Netduino.Foundation.ICs.MCP23008
+namespace Netduino.Foundation.ICs.IOExpanders.MCP23008
 {
     public class MCP23008
     {

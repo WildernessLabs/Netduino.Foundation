@@ -1,6 +1,6 @@
 using System.Threading;
 using Microsoft.SPOT;
-using Netduino.Foundation.ICs.MCP23008;
+using Netduino.Foundation.ICs.IOExpanders.MCP23008;
 
 namespace MCP23008_DigitalInput
 {

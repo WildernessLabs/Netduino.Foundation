@@ -1,7 +1,7 @@
 using System.Threading;
 using Microsoft.SPOT;
+using Netduino.Foundation.ICs.IOExpanders.MCP23008;
 using Netduino.Foundation.GPIO;
-using Netduino.Foundation.ICs.MCP23008;
 
 namespace MCP23008_DigitalInputPort_Events
 {
