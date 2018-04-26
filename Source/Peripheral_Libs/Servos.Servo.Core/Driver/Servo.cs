@@ -4,9 +4,9 @@ using Microsoft.SPOT.Hardware;
 
 namespace Netduino.Foundation.Servos
 {
-    public class CustomServo : ServoBase
+    public class Servo : ServoBase
     {
-        public CustomServo(Cpu.PWMChannel pin, ServoConfig config) : base(pin, config)
+        public Servo(Cpu.PWMChannel pin, ServoConfig config) : base(pin, config)
         {
 
         }

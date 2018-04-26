@@ -17,7 +17,8 @@ namespace ServoSample
         public static void Main()
         {
             //_servo = new Standard180Servo(N.PWMChannels.PWM_PIN_D9);
-            _servo = new CustomServo(N.PWMChannels.PWM_PIN_D9, new ServoConfig(minimumPulseDuration: 550, maximumPulseDuration: 2400 ));
+            //_servo = new CustomServo(N.PWMChannels.PWM_PIN_D9, new ServoConfig(minimumPulseDuration: 550, maximumPulseDuration: 2400 ));
+            _servo = new Servo(N.PWMChannels.PWM_PIN_D9, new ServoConfig(minimumPulseDuration: 900, maximumPulseDuration: 2100));
             _button = new PushButton((H.Cpu.Pin)0x15, CircuitTerminationType.Floating);
 
             _button.Clicked += (object sender, Microsoft.SPOT.EventArgs e) =>
