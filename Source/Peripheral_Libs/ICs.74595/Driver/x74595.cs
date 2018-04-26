@@ -2,7 +2,7 @@
 using Microsoft.SPOT.Hardware;
 using Netduino.Foundation.Communications;
 
-namespace Netduino.Foundation.ICs.x74595
+namespace Netduino.Foundation.ICs.IOExpanders.x74595
 {
     /// <summary>
     ///     Provide an interface to connect to a 74595 shift register.

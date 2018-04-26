@@ -1,9 +1,9 @@
 ﻿using System.Threading;
 using Microsoft.SPOT.Hardware;
 using SecretLabs.NETMF.Hardware.NetduinoPlus;
-using Netduino.Foundation.ICs.x74595;
+using Netduino.Foundation.ICs.IOExpanders.x74595;
 
-namespace ShiftRegisterTest
+namespace x74595_Sample
 {
     public class Program
     {

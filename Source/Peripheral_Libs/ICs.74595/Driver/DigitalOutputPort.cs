@@ -1,6 +1,6 @@
 using Netduino.Foundation.GPIO;
 
-namespace Netduino.Foundation.ICs.x74595
+namespace Netduino.Foundation.ICs.IOExpanders.x74595
 {
     public class DigitalOutputPort : DigitalOutputPortBase
     {

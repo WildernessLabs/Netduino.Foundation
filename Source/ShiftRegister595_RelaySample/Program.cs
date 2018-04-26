@@ -1,11 +1,11 @@
 using System.Threading;
 using Microsoft.SPOT.Hardware;
 using SecretLabs.NETMF.Hardware.Netduino;
-using Netduino.Foundation.ICs.x74595;
+using Netduino.Foundation.ICs.IOExpanders.x74595;
 using Netduino.Foundation.Relays;
 using Microsoft.SPOT;
 
-namespace ShiftRegister74595Sample
+namespace x74595_RelaySample
 {
     public class Program
     {
