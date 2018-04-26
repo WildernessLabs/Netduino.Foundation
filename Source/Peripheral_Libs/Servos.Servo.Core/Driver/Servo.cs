@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.SPOT.Hardware;
 
 namespace Netduino.Foundation.Servos
@@ -48,8 +48,6 @@ namespace Netduino.Foundation.Servos
         ///     Angle of the servo.
         /// </summary>
         /// <value>Angle of the servo in the range 0 to 180 degrees inclusive.</value>
-        private double _angle;
-
         public double Angle
         {
             get
@@ -62,10 +60,10 @@ namespace Netduino.Foundation.Servos
             }
             set
             {
-                if ((_angle < MINIMUM_ANGLE) || (_angle > MAXIMUM_ANGLE))
-                {
-                    throw new ArgumentOutOfRangeException("angle", "Servo angle out of range 0 to 180 degrees.");
-                }
+                //if ((_angle < MINIMUM_ANGLE) || (_angle > MAXIMUM_ANGLE))
+                //{
+                //    throw new ArgumentOutOfRangeException("angle", "Servo angle out of range 0 to 180 degrees.");
+                //}
                 _angle = value;
                 var pulseWidth = MinimumPulseWidth + (_angle * ((MaximumPulseWidth - MinimumPulseWidth) / 181));
                 var dutyCycle = pulseWidth / 20000;
@@ -80,6 +78,7 @@ namespace Netduino.Foundation.Servos
                 }
             }
         }
+        protected double _angle;
 
         /// <summary>
         ///     PWM pin used to control the servo.
@@ -125,30 +124,18 @@ namespace Netduino.Foundation.Servos
         ///     then calling the <i>Attach</i> method.
         /// </summary>
         /// <param name="pin">PWM pin to which the servo is attached.</param>
-        /// <param name="minimum">Minimum value for the pulse width, the default is 544.</param>
-        /// <param name="maximum">Maximum value for the pulse width, the default value is 2400.</param>
+        /// <param name="minimum">Minimum value for the pulse width, in microseconds, the default is 544.</param>
+        /// <param name="maximum">Maximum value for the pulse width, in microseconds, the default value is 2400.</param>
         public Servo(Cpu.PWMChannel pin, int minimum = 544, int maximum = 2400)
-        {
-            Attach(pin, minimum, maximum);
-        }
-
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        ///     Attach the servo to a specific PWM pin and set the minimum and maximum pulse
-        ///     widths for the 0 and 180 degree angles.
-        /// </summary>
-        /// <param name="pin">PWM pin to use for this servo.</param>
-        /// <param name="minimum">Minimum pulse width for the servo.  The minimum width define the value used for 0 degrees.</param>
-        /// <param name="maximum">Maximum pulse width for the servo.  The maximum value determines the value used for 180 degrees.</param>
-        private void Attach(Cpu.PWMChannel pin, int minimum = 544, int maximum = 2400)
         {
             Pin = pin;
             MinimumPulseWidth = minimum;
             MaximumPulseWidth = maximum;
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>
         ///     Set the angle of the servo to the specified number of degrees.
@@ -200,6 +187,28 @@ namespace Netduino.Foundation.Servos
         {
             throw new NotImplementedException();
         }
+
+        #endregion
+
+
+        #region deprecated stuff
+
+
+        /// <summary>
+        ///     Attach the servo to a specific PWM pin and set the minimum and maximum pulse
+        ///     widths for the 0 and 180 degree angles.
+        /// </summary>
+        /// <param name="pin">PWM pin to use for this servo.</param>
+        /// <param name="minimum">Minimum pulse width, in microseconds, for the servo.  The minimum width define the value used for 0 degrees.</param>
+        /// <param name="maximum">Maximum pulse width, in microseconds, for the servo.  The maximum value determines the value used for 180 degrees.</param>
+        [Obsolete("Use the constructor, instead. This method is going away.")]
+        private void Attach(Cpu.PWMChannel pin, int minimum = 544, int maximum = 2400)
+        {
+            Pin = pin;
+            MinimumPulseWidth = minimum;
+            MaximumPulseWidth = maximum;
+        }
+
 
         #endregion
     }

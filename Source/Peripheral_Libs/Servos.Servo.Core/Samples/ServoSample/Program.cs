@@ -1,26 +1,42 @@
-﻿using System.Threading;
-using SecretLabs.NETMF.Hardware.NetduinoPlus;
+﻿using Microsoft.SPOT;
+using Netduino.Foundation;
+using Netduino.Foundation.Sensors.Buttons;
 using Netduino.Foundation.Servos;
+using System.Threading;
+using H = Microsoft.SPOT.Hardware;
+using N = SecretLabs.NETMF.Hardware.Netduino;
+
 
 namespace ServoSample
 {
     public class Program
     {
+        static IServo _servo = null;
+        static PushButton _button = null;
+
         public static void Main()
         {
-            Servo servo = new Servo(PWMChannels.PWM_PIN_D9, 1000, 2000);
-            while (true)
+            _servo = new Standard180Servo(N.PWMChannels.PWM_PIN_D9);
+            _button = new PushButton((H.Cpu.Pin)0x15, CircuitTerminationType.Floating);
+
+            _button.Clicked += (object sender, Microsoft.SPOT.EventArgs e) =>
             {
-                for (int angle = 0; angle <= 180; angle++)
-                {
-                    servo.Angle = angle;
-                    Thread.Sleep(40);
-                }
-                for (int angle = 179; angle > 0; angle--)
-                {
-                    servo.Angle = angle;
-                    Thread.Sleep(40);
-                }
+                Debug.Print("Button Clicked");
+                ToggleServo();
+            };
+
+            Thread.Sleep(Timeout.Infinite);
+        }
+
+        static void ToggleServo()
+        {
+            if (_servo.Angle == 0)
+            {
+                _servo.RotateTo(180);
+            }
+            else
+            {
+                _servo.RotateTo(0);
             }
         }
     }
