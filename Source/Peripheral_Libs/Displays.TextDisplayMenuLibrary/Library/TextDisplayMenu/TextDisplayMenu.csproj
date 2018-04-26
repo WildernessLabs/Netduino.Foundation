@@ -34,6 +34,7 @@
     <Compile Include="IMenuInputItem.cs" />
     <Compile Include="IMenuItem.cs" />
     <Compile Include="InputTypes\Time.cs" />
+    <Compile Include="InputTypes\TimeBase.cs" />
     <Compile Include="InputTypes\TimeDetailed.cs" />
     <Compile Include="InputTypes\TimeShort.cs" />
     <Compile Include="Menu.cs" />

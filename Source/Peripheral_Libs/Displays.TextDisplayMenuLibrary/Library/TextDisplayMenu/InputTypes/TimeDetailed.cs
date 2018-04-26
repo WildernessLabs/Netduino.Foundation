@@ -3,11 +3,10 @@ using Microsoft.SPOT;
 
 namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
 {
-    public class TimeDetailed : Time
+    public class TimeDetailed : TimeBase
     {
-        public TimeDetailed()
+        public TimeDetailed() : base(TimeMode.HH_MM_SS)
         {
-            this._timeMode = TimeMode.HH_MM_SS;
         }
     }
 }
