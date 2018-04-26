@@ -18,7 +18,8 @@ namespace ServoSample
         {
             //_servo = new Standard180Servo(N.PWMChannels.PWM_PIN_D9);
             //_servo = new CustomServo(N.PWMChannels.PWM_PIN_D9, new ServoConfig(minimumPulseDuration: 550, maximumPulseDuration: 2400 ));
-            _servo = new Servo(N.PWMChannels.PWM_PIN_D9, new ServoConfig(minimumPulseDuration: 900, maximumPulseDuration: 2100));
+            //_servo = new Servo(N.PWMChannels.PWM_PIN_D9, NamedServoConfigs.HiTecStandard);
+            _servo = new Servo(N.PWMChannels.PWM_PIN_D9, NamedServoConfigs.BlueBirdBMS120);
             _button = new PushButton((H.Cpu.Pin)0x15, CircuitTerminationType.Floating);
 
             _button.Clicked += (object sender, Microsoft.SPOT.EventArgs e) =>
@@ -32,15 +33,15 @@ namespace ServoSample
 
         static void ToggleServo()
         {
-            if (_servo.Angle == 0)
+            if (_servo.Angle == _servo.Config.MinimumAngle)
             {
-                Debug.Print("Rotating to 180");
-                _servo.RotateTo(180);
+                Debug.Print("Rotating to " + _servo.Config.MaximumAngle.ToString());
+                _servo.RotateTo(_servo.Config.MaximumAngle);
             }
             else
             {
-                Debug.Print("Rotating to 0");
-                _servo.RotateTo(0);
+                Debug.Print("Rotating to " + _servo.Config.MinimumAngle.ToString());
+                _servo.RotateTo(_servo.Config.MinimumAngle);
             }
         }
     }
