@@ -103,7 +103,7 @@ The [MCP23008_SimpleDigitalWrites](https://github.com/WildernessLabs/Netduino.Fo
 using System;
 using System.Threading;
 using Microsoft.SPOT;
-using Netduino.Foundation.ICs.MCP23008;
+using Netduino.Foundation.ICs.IOExpanders.MCP23008;
 
 namespace MCP23008_SimpleDigitalWrites
 {
@@ -147,7 +147,7 @@ The [MCP23008_DigitalOutputPort](https://github.com/WildernessLabs/Netduino.Foun
 using System;
 using System.Threading;
 using Microsoft.SPOT;
-using Netduino.Foundation.ICs.MCP23008;
+using Netduino.Foundation.ICs.IOExpanders.MCP23008;
 
 namespace MCP23008_DigitalOutputPort
 {
@@ -190,11 +190,9 @@ namespace MCP23008_DigitalOutputPort
 The [MCP23008_RelaySample](https://github.com/WildernessLabs/Netduino.Foundation/tree/MCP23008/Source/Peripheral_Libs/ICs.MCP23008/Samples/MCP23008_RelaySample) illustrates how to use the high level unified GPIO API to combine an MCP23008 and a relay:
 
 ```csharp
-using System;
 using System.Threading;
 using Microsoft.SPOT;
-using Netduino.Foundation.GPIO;
-using Netduino.Foundation.ICs.MCP23008;
+using Netduino.Foundation.ICs.IOExpanders.MCP23008;
 using Netduino.Foundation.Relays;
 
 namespace MCP23008_RelaySample

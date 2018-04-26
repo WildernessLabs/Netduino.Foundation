@@ -17,8 +17,8 @@ Note that when using this chip care should be taken to make sure that the total 
 In addition to the low-level API, the Netduino.Foundation 74HCT595 driver conforms to the [unified GPIO architecture](/API/GPIO/), which enables it to be used with other Netduino.Foundation peripherals as if the ports on the shift register chip were part of the Netduino itself. For instance, you can connect an 74HCT595 chip to a Netduino, and then drive a Relay via one of the pins on the expansion chip, just as if it were connected directly to a digital pin on the Netduino:
 
 ```csharp
-// create our ShiftRegister74595
-ShiftRegister74595 shiftRegister = new ShiftRegister74595(8, config);
+// create our x74595
+x74595 shiftRegister = new x74595(8, config);
 
 // create a digital output port from that mcp
 DigitalOutputPort relayPort = shiftRegister.CreateOutputPort(0, false);
@@ -43,10 +43,12 @@ The application below uses a `ShiftRegister74595` object to cycle through the bi
 ```csharp
 using System.Threading;
 using Microsoft.SPOT.Hardware;
-using Netduino.Foundation.IC;
-using SecretLabs.NETMF.Hardware.NetduinoPlus;
+using SecretLabs.NETMF.Hardware.Netduino;
+using Netduino.Foundation.ICs.IOExpanders.x74595;
+using Netduino.Foundation.Relays;
+using Microsoft.SPOT;
 
-namespace ShiftRegisterTest
+namespace x74595_RelaySample
 {
     public class Program
     {
@@ -60,7 +62,9 @@ namespace ShiftRegisterTest
                                                Clock_IdleState: true,
                                                Clock_Edge: true,
                                                Clock_RateKHz: 10);
-            var shiftRegister = new ShiftRegister74595(8, config);
+
+            var shiftRegister = new x74595(8, config);
+
             while (true)
             {
                 shiftRegister.Clear(true);
