@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using Microsoft.SPOT.Hardware;
-using SecretLabs.NETMF.Hardware.NetduinoPlus;
+using SecretLabs.NETMF.Hardware.Netduino;
 using Netduino.Foundation.ICs.IOExpanders.x74595;
 
 namespace x74595_Sample
