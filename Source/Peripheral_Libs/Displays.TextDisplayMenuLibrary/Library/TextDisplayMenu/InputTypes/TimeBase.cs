@@ -4,18 +4,14 @@ using Netduino.Foundation.Sensors.Rotary;
 
 namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
 {
-    public abstract class TimeBase : IMenuInputItem
+    public abstract class TimeBase : InputBase
     {
-        RotaryEncoderWithButton _encoder;
-        ITextDisplay _display = null;
         int[] _timeParts;
         byte _pos = 0;
-        string _itemID;
-        bool _isInit;
 
         protected TimeMode _timeMode;
 
-        public event ValueChangedHandler ValueChanged;
+        public override event ValueChangedHandler ValueChanged;
 
         public TimeBase(TimeMode timeMode)
         {
@@ -30,9 +26,9 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
                 for (int i = 0; i < _timeParts.Length; i++)
                 {
                     if (i > 0) value += ":";
-                    value += PadLeft(_timeParts[i].ToString(), '0', 2);
+                    value += InputHelpers.PadLeft(_timeParts[i].ToString(), '0', 2);
                 }
-                return value;
+                return InputHelpers.PadLeft(value, ' ', _display.DisplayConfig.Width);
             }
         }
 
@@ -61,38 +57,18 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
         }
 
         /// <summary>
-        /// Initialize the input type
-        /// </summary>
-        /// <param name="display"></param>
-        /// <param name="encoder"></param>
-        public void Init(ITextDisplay display, RotaryEncoderWithButton encoder)
-        {
-            if (_timeMode == TimeMode.HH_MM_SS)
-            {
-                _timeParts = new int[3];
-            }
-            else
-            {
-                _timeParts = new int[2];
-            }
-
-            _display = display;
-            _encoder = encoder;
-            _isInit = true;
-        }
-
-        /// <summary>
         /// Get input from user
         /// </summary>
         /// <param name="itemID">id of the menu item</param>
         /// <param name="currentValue">current value of the menu item</param>
-        public void GetInput(string itemID, object currentValue)
+        public override void GetInput(string itemID, object currentValue)
         {
             if (!_isInit)
             {
                 throw new InvalidOperationException("Init() must be called before getting input.");
             }
 
+            _timeParts = new int[_timeMode == TimeMode.HH_MM_SS ? 3 : 2];
             _itemID = itemID;
             _display.Clear();
             _display.WriteLine("Enter " + this.TimeModeDisplay, 0);
@@ -104,7 +80,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
             {
                 ParseValue(currentValue.ToString());
             }
-            WriteTimeDisplay();
+            RewriteInputLine(TimeDisplay);
         }
 
         private void HandleRotated(object sender, RotaryTurnedEventArgs e)
@@ -131,7 +107,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
                 if (_timeParts[_pos] > min) _timeParts[_pos]--;
             }
 
-            WriteTimeDisplay();
+            RewriteInputLine(TimeDisplay);
         }
 
         private void HandleClicked(object sender, EventArgs e)
@@ -148,7 +124,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
             }
         }
 
-        private void ParseValue(string text)
+        protected override void ParseValue(string text)
         {
             var parts = text.Split(new char[] { ':' });
 
@@ -156,22 +132,6 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
             {
                 _timeParts[i] = int.Parse(parts[i]);
             }
-        }
-
-        private void WriteTimeDisplay()
-        {
-            _display.Write(TimeDisplay);
-            _display.SetCursorPosition(0, 1);
-        }
-
-        private string PadLeft(string text, char filler, int size)
-        {
-            string padded = string.Empty;
-            for (int i = text.Length; i < size; i++)
-            {
-                padded += filler;
-            }
-            return padded + text;
         }
     }
 }
