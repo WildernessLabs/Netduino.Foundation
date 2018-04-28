@@ -12,7 +12,7 @@ namespace ContinuousRotationServoSample
 {
     public class Program
     {
-        static ContinuousRotationServo _servo = null;
+        static IContinuousRotationServo _servo = null;
         static PushButton _button = null;
         static bool _running = false;
 
@@ -42,7 +42,7 @@ namespace ContinuousRotationServoSample
                         for (float speed = 1; speed <= 10; speed++)
                         {
                             if (!_running) break;
-                            _servo.Rotate(Direction.Clockwise, (speed / 10.0f));
+                            _servo.Rotate(RotationDirection.Clockwise, (speed / 10.0f));
                             Thread.Sleep(500);
                         }
 
@@ -55,7 +55,7 @@ namespace ContinuousRotationServoSample
                         for (float speed = 1; speed <= 10; speed++)
                         {
                             if (!_running) break;
-                            _servo.Rotate(Direction.CounterClockwise, (speed / 10.0f));
+                            _servo.Rotate(RotationDirection.CounterClockwise, (speed / 10.0f));
                             Thread.Sleep(500);
                         }
                     }
