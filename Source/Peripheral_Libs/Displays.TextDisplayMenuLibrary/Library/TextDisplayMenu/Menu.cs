@@ -4,6 +4,7 @@ using Microsoft.SPOT;
 using H = Microsoft.SPOT.Hardware;
 using Netduino.Foundation.Displays;
 using Netduino.Foundation.Sensors.Rotary;
+using Netduino.Foundation.Displays.TextDisplayMenu.InputTypes;
 
 namespace Netduino.Foundation.Displays.TextDisplayMenu
 {
@@ -32,8 +33,8 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
             {
                 throw new ArgumentException("JSON root must contain a 'menu' item");
             }
-            var menuTree = CreateMenuPage((ArrayList)menuData["menu"], false);
-            Init(display, encoder, menuTree);
+            _rootMenuPage = CreateMenuPage((ArrayList)menuData["menu"], false);
+            Init(display, encoder, _rootMenuPage);
         }
 
         public Menu(ITextDisplay display, RotaryEncoderWithButton encoder, MenuPage menuTree)
@@ -73,7 +74,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
             {
                 foreach (Hashtable node in nodes)
                 {
-                    var item = new MenuItem(node["text"].ToString(), node["command"]?.ToString(), node["id"]?.ToString(), node["type"]?.ToString());
+                    var item = new MenuItem(node["text"].ToString(), node["command"]?.ToString(), node["id"]?.ToString(), node["type"]?.ToString(), node["value"]?.ToString());
                     if (node["sub"] != null)
                     {
                         item.SubMenu = CreateMenuPage((ArrayList)node["sub"], true);
@@ -124,19 +125,24 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
 
         protected string GetItemText(IMenuItem item, bool isSelected)
         {
-            string itemText = "";
+            string itemText = string.Empty;
+            string displayText = item.Text;
+            if (InputHelpers.Contains(displayText, "{value}") && item.Value != null)
+            {
+                displayText = InputHelpers.Replace(displayText, "{value}", item.Value.ToString());
+            }
 
             if (isSelected)
             {
                 // calculate any neccessary padding to put selector on far right
-                int paddingLength = (_display.DisplayConfig.Width - 1 - item.Text.Length);
-                string padding = "";
+                int paddingLength = (_display.DisplayConfig.Width - 1 - displayText.Length);
+                string padding = string.Empty;
                 if (paddingLength > 0) padding = new string(' ', paddingLength);
                 //
-                itemText = item.Text.Substring(0, (item.Text.Length >= _display.DisplayConfig.Width - 1) ? _display.DisplayConfig.Width - 1 : item.Text.Length) + padding + TextCharacters.BoxSelected.ToChar();
+                itemText = displayText.Substring(0, (displayText.Length >= _display.DisplayConfig.Width - 1) ? _display.DisplayConfig.Width - 1 : displayText.Length) + padding + TextCharacters.BoxSelected.ToChar();
             } else
             {
-                itemText = item.Text.Substring(0, (item.Text.Length >= _display.DisplayConfig.Width) ? _display.DisplayConfig.Width : item.Text.Length);
+                itemText = displayText.Substring(0, (displayText.Length >= _display.DisplayConfig.Width) ? _display.DisplayConfig.Width : displayText.Length);
             }
 
             return itemText;
@@ -258,6 +264,48 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
             else
             {
                 return false;
+            }
+        }
+
+        public void UpdateItemValue(string id, object value)
+        {
+            MenuItem node = null;
+            foreach(var menuItem in _rootMenuPage.MenuItems)
+            {
+                node = FindNodeById(menuItem as MenuItem, id);
+                if (node != null) break;
+            }
+            
+            if(node != null)
+            {
+                node.Value = value;
+                RenderCurrentMenuPage();
+            }
+            else
+            {
+                throw new ArgumentNullException("Item with id: " + id + " does not exist");
+            }
+
+        }
+
+        private MenuItem FindNodeById(MenuItem menuItem, string id)
+        {
+            if (menuItem.ItemID == id)
+            {
+                return menuItem;
+            }
+            else if (menuItem.SubMenu.MenuItems.Count > 0)
+            {
+                foreach (var subMenuItem in menuItem.SubMenu.MenuItems)
+                {
+                    var node = FindNodeById(subMenuItem as MenuItem, id);
+                    if (node != null) return node;
+                }
+                return null;
+            }
+            else
+            {
+                return null;
             }
         }
 

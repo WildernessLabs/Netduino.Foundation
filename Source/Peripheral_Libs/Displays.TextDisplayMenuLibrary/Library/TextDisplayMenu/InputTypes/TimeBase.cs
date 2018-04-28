@@ -1,6 +1,7 @@
 using System;
 using Microsoft.SPOT;
 using Netduino.Foundation.Sensors.Rotary;
+using System.Text;
 
 namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
 {
@@ -75,11 +76,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
             _display.SetCursorPosition(0, 1);
             _encoder.Clicked += HandleClicked;
             _encoder.Rotated += HandleRotated;
-
-            if (currentValue != null)
-            {
-                ParseValue(currentValue.ToString());
-            }
+            ParseValue(currentValue.ToString());
             RewriteInputLine(TimeDisplay);
         }
 
@@ -120,13 +117,18 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
             {
                 _encoder.Clicked -= HandleClicked;
                 _encoder.Rotated -= HandleRotated;
-                ValueChanged(this, new ValueChangedEventArgs(_itemID, TimeDisplay));
+                StringBuilder sb = new StringBuilder(TimeDisplay);
+                ValueChanged(this, new ValueChangedEventArgs(_itemID, sb.Replace(" ", "").ToString()));
             }
         }
 
-        protected override void ParseValue(string text)
+        protected override void ParseValue(object value)
         {
-            var parts = text.Split(new char[] { ':' });
+            if (value == null || value.ToString() == string.Empty) return;
+
+            string currentValue = value.ToString();
+
+            var parts = currentValue.Split(new char[] { ':' });
 
             for (int i = 0; i < parts.Length; i++)
             {

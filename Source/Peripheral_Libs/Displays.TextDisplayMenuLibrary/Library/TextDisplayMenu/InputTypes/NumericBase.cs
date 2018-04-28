@@ -1,6 +1,7 @@
 using System;
 using Microsoft.SPOT;
 using Netduino.Foundation.Sensors.Rotary;
+using System.Text;
 
 namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
 {
@@ -15,7 +16,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
 
         public override event ValueChangedHandler ValueChanged;
 
-        public NumericBase(int max, int min, byte scale)
+        public NumericBase(int min, int max, byte scale)
         {
             this._max = max;
             this._min = min;
@@ -53,10 +54,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
             _display.SetCursorPosition(0, 1);
             _encoder.Clicked += HandleClicked;
             _encoder.Rotated += HandleRotated;
-            if(currentValue != null)
-            {
-                ParseValue(currentValue.ToString());
-            }
+            ParseValue(currentValue);
             RewriteInputLine(NumericDisplay);
         }
 
@@ -98,19 +96,21 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
             {
                 _encoder.Clicked -= HandleClicked;
                 _encoder.Rotated -= HandleRotated;
-                ValueChanged(this, new ValueChangedEventArgs(_itemID, NumericDisplay));
+                ValueChanged(this, new ValueChangedEventArgs(_itemID, double.Parse(NumericDisplay)));
             }
         }
 
-        protected override void ParseValue(string currentValue)
+        protected override void ParseValue(object value)
         {
-            if(currentValue.IndexOf('.') > 0)
+            if (value == null || value.ToString() == string.Empty) return;
+
+            string currentValue = value.ToString();
+
+            if (currentValue.IndexOf('.') > 0)
             {
                 var parts = currentValue.Split(new char[] { '.' });
-                for(int i=0; i< parts.Length; i++)
-                {
-                    _numberParts[i] = int.Parse(parts[i]);
-                }
+                _numberParts[0] = int.Parse(parts[0]);
+                _numberParts[1] = int.Parse(parts[1].Substring(0, _scale));
             }
             else
             {

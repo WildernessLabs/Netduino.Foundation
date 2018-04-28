@@ -35,6 +35,7 @@
     <Compile Include="IMenuItem.cs" />
     <Compile Include="InputTypes\InputBase.cs" />
     <Compile Include="InputTypes\InputHelpers.cs" />
+    <Compile Include="InputTypes\Age.cs" />
     <Compile Include="InputTypes\NumericBase.cs" />
     <Compile Include="InputTypes\Temperature.cs" />
     <Compile Include="InputTypes\Time.cs" />

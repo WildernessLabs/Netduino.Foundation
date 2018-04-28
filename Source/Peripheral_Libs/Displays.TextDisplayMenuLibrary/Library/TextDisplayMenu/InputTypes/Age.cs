@@ -3,9 +3,9 @@ using Microsoft.SPOT;
 
 namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
 {
-    public class Temperature : NumericBase
+    public class Age : NumericBase
     {
-        public Temperature() : base(-10, 100, 2)
+        public Age(): base(0, 100, 0)
         {
         }
     }

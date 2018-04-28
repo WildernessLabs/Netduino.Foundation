@@ -14,7 +14,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
         public abstract event ValueChangedHandler ValueChanged;
 
         public abstract void GetInput(string itemID, object currentValue);
-        protected abstract void ParseValue(string text);
+        protected abstract void ParseValue(object value);
 
         public void Init(ITextDisplay display, RotaryEncoderWithButton encoder)
         {

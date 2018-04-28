@@ -21,8 +21,8 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
     public class ValueChangedEventArgs : EventArgs
     {
         private string _id;
-        private string _value;
-        public ValueChangedEventArgs(string id, string value)
+        private object _value;
+        public ValueChangedEventArgs(string id, object value)
         {
             this._id = id;
             this._value = value;
@@ -33,7 +33,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
             get { return this._id; }
         }
 
-        public string Value
+        public object Value
         {
             get { return this._value; }
         }

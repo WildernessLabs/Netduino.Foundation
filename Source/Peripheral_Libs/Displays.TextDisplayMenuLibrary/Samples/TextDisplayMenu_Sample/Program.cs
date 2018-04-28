@@ -25,6 +25,7 @@ namespace TextDisplayMenu_Sample
     {
         RotaryEncoderWithButton _encoder = null;
         ITextDisplay _display = null;
+
         Menu _menu = null;
 
         public App()
@@ -45,6 +46,16 @@ namespace TextDisplayMenu_Sample
         private void HandleMenuValueChanged(object sender, ValueChangedEventArgs e)
         {
             Debug.Print(e.ItemID + " changed with value: " + e.Value);
+            if (e.ItemID == "age")
+            {
+                _menu.UpdateItemValue("displayAge", e.Value);
+            }
+            else if (e.ItemID == "temp")
+            {
+                // le sigh, doubles... make the display look nice
+                var value = e.Value.ToString();
+                _menu.UpdateItemValue("displayTemp", value.Substring(0, value.IndexOf('.') + 3));
+            }
         }
 
         private void HandleMenuSelected(object sender, MenuSelectedEventArgs e)

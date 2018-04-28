@@ -1,5 +1,6 @@
 using System;
 using Microsoft.SPOT;
+using System.Text;
 
 namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
 {
@@ -25,6 +26,18 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
                 baseNumber *= baseNumber;
             }
             return baseNumber;
+        }
+
+        public static bool Contains(string text, string search)
+        {
+            return text.IndexOf(search, 0) > 0;
+        }
+
+        public static string Replace(string text, string oldValue, string newValue)
+        {
+            StringBuilder temp = new StringBuilder(text);
+            temp.Replace(oldValue, newValue);
+            return temp.ToString();
         }
     }
 }
