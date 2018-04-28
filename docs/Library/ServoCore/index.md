@@ -263,7 +263,7 @@ namespace ContinuousRotationServoSample
 
 ## Base Classes
 
-* **[`ServoBase'](/Library/ServoCore/ServoBase)** - Base class for IServo implementations.
+* **[`ServoBase`](/Library/ServoCore/ServoBase)** - Base class for IServo implementations.
 
 ## Classes
 
