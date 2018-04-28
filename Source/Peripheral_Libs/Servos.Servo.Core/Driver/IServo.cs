@@ -9,7 +9,7 @@ namespace Netduino.Foundation.Servos
 
         void RotateTo(int angle);
 
-        void RotateTo(int angle, double speed);
+        //void RotateTo(int angle, double speed);
 
         int Angle { get; }
     }

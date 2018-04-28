@@ -60,9 +60,9 @@ namespace Netduino.Foundation.Servos
             _angle = angle;
         }
 
-        public void RotateTo(int angle, double speed)
-        {
-        }
+        //public void RotateTo(int angle, double speed)
+        //{
+        //}
 
         /// <summary>
         /// Stops the signal that controls the servo angle. For many servos, this will 
