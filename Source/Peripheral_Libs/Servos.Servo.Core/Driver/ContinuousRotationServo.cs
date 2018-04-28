@@ -112,11 +112,8 @@ namespace Netduino.Foundation.Servos
 
         protected double CalculateDutyCycle(double pulseDuration)
         {
-            //var dutyCycle = pulseDuration / 20000;
-            //Debug.Print("Duty cycle: " + dutyCycle.ToString());
-            // TODO: this is hard coded to 20k because the default frequency is 50hz, but if the
-            // frequency changes, then this is no longer valid. so we need to change this.
-            return pulseDuration / 20000;
+            // the pulse duration is dependent on the frequency we're driving the servo at
+            return pulseDuration / ((1.0f / (float)_config.Frequency) * 1000000f);
         }
 
         protected void SendCommandPulse(double pulseDuration)

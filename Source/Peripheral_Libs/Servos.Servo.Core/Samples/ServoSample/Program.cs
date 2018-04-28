@@ -16,9 +16,9 @@ namespace ServoSample
 
         public static void Main()
         {
-            _servo = new Servo(N.PWMChannels.PWM_PIN_D9, NamedServoConfigs.HiTecStandard);
+            //_servo = new Servo(N.PWMChannels.PWM_PIN_D9, NamedServoConfigs.HiTecStandard);
             //_servo = new Servo(N.PWMChannels.PWM_PIN_D9, NamedServoConfigs.JXHV180);
-            //_servo = new Servo(N.PWMChannels.PWM_PIN_D9, NamedServoConfigs.BlueBirdBMS120);
+            _servo = new Servo(N.PWMChannels.PWM_PIN_D9, NamedServoConfigs.BlueBirdBMS120);
             _button = new PushButton((H.Cpu.Pin)0x15, CircuitTerminationType.Floating);
 
             _button.Clicked += (object sender, Microsoft.SPOT.EventArgs e) =>
