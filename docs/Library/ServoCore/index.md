@@ -60,11 +60,14 @@ Continuous rotation servos still have a minimum and maximum pulse durations, but
 
 The ServoCore API hides all this complexity and exposes easy to use methods that calculate the appropriate pulse signals based on the specified configuration of any given servo. The servo configuration is passed to the `Servo` and `ContinuousRotationServo` class during construction.
 
+### Fixed Range `RotateTo()`
+ 
 To rotate a fixed-range servo, you simply call the `RotateTo` method and pass the angle. For instance, the following code rotates a servo to its maximum angle:
 
 ```csharp
 servo.RotateTo(servo.Config.MaximumAngle);
 ```
+### Continuous `Rotate()`
 
 Similarily, a continuous rotation servo's direction and speed can be set via the `Rotate` method. The following example rotates a continuous rotation servo in the clockwise direction at `50%` speed:
 
@@ -74,7 +77,7 @@ servo.Rotate(Direction.Clockwise, 0.5f);
 
 ### Known Servo Configurations
 
-The [`NamedServoConfigs`] class contains a set of known servo configurations that can be used:
+The [`NamedServoConfigs`](NamedServoConfigs) class contains a set of known servo configurations that can be used:
 
 ```csharp
 IServo servo = new Servo(N.PWMChannels.PWM_PIN_D9, NamedServoConfigs.BlueBirdBMS120);

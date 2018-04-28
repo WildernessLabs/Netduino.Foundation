@@ -33,3 +33,7 @@ ContinuousRotationServo servo = new ContinuousRotationServo(N.PWMChannels.PWM_PI
 | `IdealContinuousRotationServo` | `-1` | `-1`       | `1,000µs`           | `2,000µs`           |
 | `BlueBirdBMS120`   | `0º`          | `120º`        | `900µs`             | `2,100µs`           |
 | `HiTecStandard`    | `0º`          | `180º`        | `900µs`             | `2,100µs`           |
+
+# Open-Source!
+
+This class, as with all of Netduino.Foundation, is open-source, so please feel free to send pull requests with more known configurations!
