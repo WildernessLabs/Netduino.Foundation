@@ -8,6 +8,10 @@ subtitle: Servo command and control framework.
 
 The Netduino.Foundation ServoCore framework simplifies command and control of _servomotors_ (more commonly known as _servos_).
 
+[motors with gears to give them more torque]
+
+[common in radio controlled hobbies]
+
 ![](Servos_Medium.jpg)
 
 [controlled by a PWM signal]
