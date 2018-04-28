@@ -16,8 +16,6 @@ namespace ServoSample
 
         public static void Main()
         {
-            //_servo = new Standard180Servo(N.PWMChannels.PWM_PIN_D9);
-            //_servo = new CustomServo(N.PWMChannels.PWM_PIN_D9, new ServoConfig(minimumPulseDuration: 550, maximumPulseDuration: 2400 ));
             //_servo = new Servo(N.PWMChannels.PWM_PIN_D9, NamedServoConfigs.HiTecStandard);
             _servo = new Servo(N.PWMChannels.PWM_PIN_D9, NamedServoConfigs.BlueBirdBMS120);
             _button = new PushButton((H.Cpu.Pin)0x15, CircuitTerminationType.Floating);
