@@ -15,6 +15,11 @@ namespace Netduino.Foundation.Servos
         public static ServoConfig Ideal270Servo = new ServoConfig(maximumAngle: 270);
 
         /// <summary>
+        /// Represents an ideal continuous rotation servo that has a min and max pulse of 1ms and 2ms.
+        /// </summary>
+        public static ServoConfig IdealContinuousRotationServo = new ServoConfig(-1, -1);
+
+        /// <summary>
         /// Represents the BlueBird BMS models. Maximum angle is 120. Pulse range is 900µs - 2,100µs.
         /// See: https://www.blue-bird-model.com/products_detail/309.htm
         /// </summary>

@@ -45,8 +45,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServoBase.cs" />
     <Compile Include="ServoConfig.cs" />
-    <Compile Include="Standard180Servo.cs" />
-    <Compile Include="Standard270Servo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Netduino.Foundation\Netduino.Foundation.csproj">
