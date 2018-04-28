@@ -45,11 +45,11 @@
     <Reference Include="SecretLabs.NETMF.Hardware.Netduino, Version=4.3.1.0, Culture=neutral, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Netduino.Foundation\Netduino.Foundation.csproj">
+    <ProjectReference Include="..\..\..\..\Netduino.Foundation\Netduino.Foundation.csproj">
       <Project>{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}</Project>
       <Name>Netduino.Foundation</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Peripheral_Libs\Servos.Servo.Core\Driver\Servos.Servo.Core.csproj">
+    <ProjectReference Include="..\..\Driver\Servos.Servo.Core.csproj">
       <Project>{8EFE2319-3D0D-4E57-B25F-02E6401FC45F}</Project>
       <Name>Servos.Servo.Core</Name>
     </ProjectReference>

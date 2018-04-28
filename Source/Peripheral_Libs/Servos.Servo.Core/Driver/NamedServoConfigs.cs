@@ -29,5 +29,10 @@ namespace Netduino.Foundation.Servos
         /// Represents the HiTec "Standard" servo models. Angle: 0-180, Pulse: 900 - 1,200
         /// </summary>0
         public static ServoConfig HiTecStandard = new ServoConfig(minimumPulseDuration: 900, maximumPulseDuration: 2100, maximumAngle: 180);
+        
+        /// <summary>
+        /// Represents the JX HV 180 degree servo models. Angle: 0-180, Pulse: 500 - 2,500
+        /// </summary>0
+        public static ServoConfig JXHV180 = new ServoConfig(minimumPulseDuration: 500, maximumPulseDuration: 2500, maximumAngle: 180);
     }
 }
