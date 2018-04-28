@@ -46,7 +46,7 @@ For fixed-angle servos, the minimum pulse duration will cause them to rotate to 
 
 ### Continuous Rotation Control
 
-Continuous rotation servos still have a minimum and maximum pulse durations, but they work a little differently. At the midpoint between those extremes, a control signal will actually stop the servo, and anything less than that midpoint will cause it to rotate clockwise, and anything more than that midpoint will cause it to rotate counter-clockwise. And the distance from that midpoint controls the speed of rotation. For example, the following table describes rotation and speed of various 
+Continuous rotation servos still have a minimum and maximum pulse durations, but they work a little differently. At the midpoint between those extremes, a control signal will actually stop the servo, and anything less than that midpoint will cause it to rotate clockwise, and anything more than that midpoint will cause it to rotate counter-clockwise. And the distance from that midpoint controls the speed of rotation. For example, the following table describes rotation and speed of various control signals:
 
 | Pulse Duration | Rotation Direction | Speed |
 |----------------|--------------------|-------|
@@ -138,8 +138,10 @@ namespace ServoSample
 
         public static void Main()
         {
-            _servo = new Servo(N.PWMChannels.PWM_PIN_D9, NamedServoConfigs.BlueBirdBMS120);
-            _button = new PushButton((H.Cpu.Pin)0x15, CircuitTerminationType.Floating);
+            _servo = new Servo(N.PWMChannels.PWM_PIN_D9, 
+                               NamedServoConfigs.BlueBirdBMS120);
+            _button = new PushButton((H.Cpu.Pin)0x15, 
+                                      CircuitTerminationType.Floating);
 
             _button.Clicked += (object sender, Microsoft.SPOT.EventArgs e) =>
             {
@@ -154,12 +156,14 @@ namespace ServoSample
         {
             if (_servo.Angle == _servo.Config.MinimumAngle)
             {
-                Debug.Print("Rotating to " + _servo.Config.MaximumAngle.ToString());
+                Debug.Print("Rotating to " + 
+                            _servo.Config.MaximumAngle.ToString());
                 _servo.RotateTo(_servo.Config.MaximumAngle);
             }
             else
             {
-                Debug.Print("Rotating to " + _servo.Config.MinimumAngle.ToString());
+                Debug.Print("Rotating to " + 
+                            _servo.Config.MinimumAngle.ToString());
                 _servo.RotateTo(_servo.Config.MinimumAngle);
             }
         }
@@ -192,8 +196,10 @@ namespace ContinuousRotationServoSample
 
         public static void Main()
         {
-            _servo = new ContinuousRotationServo(N.PWMChannels.PWM_PIN_D9, NamedServoConfigs.IdealContinuousRotationServo);
-            _button = new PushButton((H.Cpu.Pin)0x15, CircuitTerminationType.Floating);
+            _servo = new ContinuousRotationServo(N.PWMChannels.PWM_PIN_D9, 
+                           NamedServoConfigs.IdealContinuousRotationServo);
+            _button = new PushButton((H.Cpu.Pin)0x15, 
+                                      CircuitTerminationType.Floating);
 
             _button.Clicked += (object sender, Microsoft.SPOT.EventArgs e) =>
             {
@@ -212,11 +218,12 @@ namespace ContinuousRotationServoSample
                     _running = true;
                     while (_running)
                     {
-                        Debug.Print("Rotating clockwise at increasing speeds.");
+                        Debug.Print("Rotating clockwise.");
                         for (float speed = 1; speed <= 10; speed++)
                         {
                             if (!_running) break;
-                            _servo.Rotate(Direction.Clockwise, (speed / 10.0f));
+                            _servo.Rotate(Direction.Clockwise, 
+                                          (speed / 10.0f));
                             Thread.Sleep(500);
                         }
 
@@ -225,11 +232,12 @@ namespace ContinuousRotationServoSample
                         _servo.Stop();
                         Thread.Sleep(500);
 
-                        Debug.Print("Rotating counter-clockwise at increasing speeds.");
+                        Debug.Print("Rotating counter-clockwise");
                         for (float speed = 1; speed <= 10; speed++)
                         {
                             if (!_running) break;
-                            _servo.Rotate(Direction.CounterClockwise, (speed / 10.0f));
+                            _servo.Rotate(Direction.CounterClockwise, 
+                                          (speed / 10.0f));
                             Thread.Sleep(500);
                         }
                     }
