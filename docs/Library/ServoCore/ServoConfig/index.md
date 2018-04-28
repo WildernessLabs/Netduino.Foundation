@@ -10,6 +10,8 @@ The `ServoConfig` class is used to describe the operating parameters of any give
 
 There are a number of known servo configurations in the [`NamedServoConfigs`](../NamedServoConfigs) class.
 
+Many servo configuration parameters can be found online at [servodatabase.com/](https://servodatabase.com/).
+
 # API
 
 ### Properties
