@@ -287,6 +287,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkSample", "Netduino.F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation.Network", "Netduino.Foundation.Network\Netduino.Foundation.Network.csproj", "{2C7BDE6F-433C-4AF2-B82F-A4AD26BD0301}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContinuousRotationServo_Sample", "Peripheral_Libs\Servos.Servo.Core\Samples\ContinuousRotationServo_Sample\ContinuousRotationServo_Sample.csproj", "{3C40B29D-388C-4109-A470-4CF37C6E8AFC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1863,6 +1865,24 @@ Global
 		{2C7BDE6F-433C-4AF2-B82F-A4AD26BD0301}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{2C7BDE6F-433C-4AF2-B82F-A4AD26BD0301}.Release|x86.ActiveCfg = Release|Any CPU
 		{2C7BDE6F-433C-4AF2-B82F-A4AD26BD0301}.Release|x86.Build.0 = Release|Any CPU
+		{3C40B29D-388C-4109-A470-4CF37C6E8AFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C40B29D-388C-4109-A470-4CF37C6E8AFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C40B29D-388C-4109-A470-4CF37C6E8AFC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{3C40B29D-388C-4109-A470-4CF37C6E8AFC}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{3C40B29D-388C-4109-A470-4CF37C6E8AFC}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{3C40B29D-388C-4109-A470-4CF37C6E8AFC}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
+		{3C40B29D-388C-4109-A470-4CF37C6E8AFC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3C40B29D-388C-4109-A470-4CF37C6E8AFC}.Debug|x86.Build.0 = Debug|Any CPU
+		{3C40B29D-388C-4109-A470-4CF37C6E8AFC}.Debug|x86.Deploy.0 = Debug|Any CPU
+		{3C40B29D-388C-4109-A470-4CF37C6E8AFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C40B29D-388C-4109-A470-4CF37C6E8AFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C40B29D-388C-4109-A470-4CF37C6E8AFC}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{3C40B29D-388C-4109-A470-4CF37C6E8AFC}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3C40B29D-388C-4109-A470-4CF37C6E8AFC}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{3C40B29D-388C-4109-A470-4CF37C6E8AFC}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
+		{3C40B29D-388C-4109-A470-4CF37C6E8AFC}.Release|x86.ActiveCfg = Release|Any CPU
+		{3C40B29D-388C-4109-A470-4CF37C6E8AFC}.Release|x86.Build.0 = Release|Any CPU
+		{3C40B29D-388C-4109-A470-4CF37C6E8AFC}.Release|x86.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1969,5 +1989,6 @@ Global
 		{60EAE717-3A34-4AC6-80B9-5C9FAB6C4A3B} = {9E11B915-F2F4-4575-B498-366E71919991}
 		{1E1CB6E8-3E3F-4BC5-B8AA-6B37A67F6335} = {B1CB9A4C-0FA0-4D20-AC92-18B3D23EBD45}
 		{2C7BDE6F-433C-4AF2-B82F-A4AD26BD0301} = {82E59041-71D9-420E-B3FE-836243B81E1E}
+		{3C40B29D-388C-4109-A470-4CF37C6E8AFC} = {FF35EA4A-5CF5-4B70-BF82-D68A11AC1FD8}
 	EndGlobalSection
 EndGlobal

@@ -38,8 +38,16 @@
     <Compile Include="..\..\CommonFiles\RoslynHackFix.cs">
       <Link>RoslynHackFix.cs</Link>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ContinuousRotationServo.cs" />
+    <Compile Include="ContinuousRotationServoBase.cs" />
+    <Compile Include="IContinuousRotationServo.cs" />
+    <Compile Include="NamedServoConfigs.cs" />
+    <Compile Include="RotationDirection.cs" />
     <Compile Include="Servo.cs" />
+    <Compile Include="IServo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServoBase.cs" />
+    <Compile Include="ServoConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Netduino.Foundation\Netduino.Foundation.csproj">
