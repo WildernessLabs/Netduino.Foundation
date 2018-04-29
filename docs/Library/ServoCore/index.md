@@ -97,7 +97,9 @@ For just testing however, they can be powered via the `5V` rail on the netduino 
 
 ### External Power Circuit
 
-When powering with an external power source, you must connect the external `GND` to the `GND` rail on the Netduino, or the PWM control signal will not work:
+When powering with an external power source, you must connect the external `GND` to the `GND` rail on the Netduino (as shown in the following schematic and breadboard illustration), or the PWM control signal will not work:
+
+![](Servo_schem.svg)
 
 ![Servo connected to Netduino and external power supply](Servo_bb.svg)
 
