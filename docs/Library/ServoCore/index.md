@@ -93,13 +93,20 @@ For just testing however, they can be powered via the `5V` rail on the netduino 
 
 ### Testing Circuit
 
-![Servo Connected to Netduino](ServoBreadboard.png)
+![Servo connected to Netduino for testing](Servo_Testing_bb.svg)
 
 ### External Power Circuit
 
 When powering with an external power source, you must connect the external `GND` to the `GND` rail on the Netduino, or the PWM control signal will not work:
 
-[need circuit]
+![Servo connected to Netduino and external power supply](Servo_bb.svg)
+
+In the above illustration, (4), AA batteries are used, but we usually use a power supply like the following:
+
+![](PowerSupply_Medium.jpg)
+
+The female plug adapter shown above can be found on [Amazon](https://amzn.to/2r7o20B).
+
 
 ## Cable Colors
 
