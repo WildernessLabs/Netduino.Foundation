@@ -65,9 +65,9 @@
       <Project>{D32F7103-5F7B-4880-8C80-B17570F4380D}</Project>
       <Name>Displays.SerialLCD</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Library\TextDisplayMenu\TextDisplayMenu.csproj">
+    <ProjectReference Include="..\..\Driver\Displays.TextDisplayMenu.csproj">
       <Project>{A18C19A4-F649-444A-BC08-BD4AE00D8DA9}</Project>
-      <Name>TextDisplayMenu</Name>
+      <Name>Displays.TextDisplayMenu</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

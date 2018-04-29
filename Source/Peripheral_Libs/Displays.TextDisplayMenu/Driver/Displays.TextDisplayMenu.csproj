@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
-    <AssemblyName>Netduino.Foundation.Displays.TextDisplayMenuLibrary</AssemblyName>
+    <AssemblyName>Netduino.Foundation.Displays.TextDisplayMenu</AssemblyName>
     <OutputType>Library</OutputType>
     <RootNamespace>Netduino.Foundation.Displays.TextDisplayMenu</RootNamespace>
     <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -52,7 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Json.NetMF, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\Samples\TextDisplayMenu_Sample\packages\Json.NetMF.1.3.0.0\lib\netmf43\Json.NetMF.dll</HintPath>
+      <HintPath>..\Samples\TextDisplayMenu_Sample\packages\Json.NetMF.1.3.0.0\lib\netmf43\Json.NetMF.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.SPOT.Hardware" />
@@ -61,7 +61,7 @@
     <Reference Include="SecretLabs.NETMF.Hardware.Netduino, Version=4.3.1.0, Culture=neutral, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Netduino.Foundation\Netduino.Foundation.csproj">
+    <ProjectReference Include="..\..\..\Netduino.Foundation\Netduino.Foundation.csproj">
       <Project>{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}</Project>
       <Name>Netduino.Foundation</Name>
     </ProjectReference>

@@ -6,9 +6,9 @@ using H = Microsoft.SPOT.Hardware;
 using N = SecretLabs.NETMF.Hardware.Netduino;
 using Netduino.Foundation.Sensors.Rotary;
 using Netduino.Foundation.Displays;
-using Netduino.Foundation.Displays.TextDisplayMenu;
 using System.IO;
 using TextDisplayMenu_Sample.Properties;
+using Netduino.Foundation.Displays.TextDisplayMenu;
 
 namespace TextDisplayMenu_Sample
 {
