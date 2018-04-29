@@ -65,7 +65,7 @@ namespace Netduino.Foundation.Servos
 
             // calculate the appropriate pulse duration for the speed and direction
             double pulseDuration = CalculatePulseDuration(direction, speed);
-            Debug.Print("Pulse Duration: " + pulseDuration.ToString());
+            //Debug.Print("Pulse Duration: " + pulseDuration.ToString());
 
             // send our pulse to the servo to make it move
             SendCommandPulse(pulseDuration);
