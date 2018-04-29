@@ -8,8 +8,8 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
     {
         MenuPage SubMenu { get; set; }
 
-        //bool IsSelected { get; set; }
-
         string Text { get; set; }
+
+        object Value { get; set; }
     }
 }

@@ -4,21 +4,33 @@ using Microsoft.SPOT;
 
 namespace Netduino.Foundation.Displays.TextDisplayMenu
 {
-    public class MenuItemBase : IMenuItem
+    public class MenuItem : IMenuItem
     {
         public MenuPage SubMenu
         { get; set; } = new MenuPage();
 
-        //public bool IsSelected { get; set; } = false;
+        public string Text { get; set; } = string.Empty;
 
-        public string Text { get; set; } = "";
+        public string Command { get; set; } = string.Empty;
 
-        public string Command { get; set; } = "";
+        public string Type { get; set; } = string.Empty;
 
-        public MenuItemBase(string displayText, string command)
+        public string ItemID { get; set; } = string.Empty;
+
+        public object Value { get; set; }
+
+        public MenuItem(string displayText)
+        {
+            Text = displayText;
+        }
+
+        public MenuItem(string displayText, string command, string id, string type, object value)
         {
             Text = displayText;
             Command = command ?? string.Empty;
+            ItemID = id ?? string.Empty;
+            Type = type ?? string.Empty;
+            Value = value ?? null;
         }
     }
 }

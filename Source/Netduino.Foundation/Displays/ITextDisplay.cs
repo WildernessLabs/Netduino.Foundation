@@ -6,9 +6,11 @@ namespace Netduino.Foundation.Displays
     public interface ITextDisplay
     {
         TextDisplayConfig DisplayConfig { get; }
-
         void WriteLine(string text, byte lineNumber);
 
+        void Write(string text);
+
+        void SetCursorPosition(byte column, byte line);
         void Clear();
 
         void ClearLine(byte lineNumber);
