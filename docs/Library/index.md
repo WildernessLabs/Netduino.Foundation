@@ -135,5 +135,5 @@ Netduino.Foundation has two sets of peripheral drivers; the ones listed in the f
 
 | Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
-| [ServoCore](/Library/Servos/Servo)                | Generic servo library. |
+| [ServoCore](/Library/ServoCore/)                | Generic servo library. |
 
