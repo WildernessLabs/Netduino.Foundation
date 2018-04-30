@@ -96,7 +96,8 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
             {
                 _encoder.Clicked -= HandleClicked;
                 _encoder.Rotated -= HandleRotated;
-                ValueChanged(this, new ValueChangedEventArgs(_itemID, double.Parse(NumericDisplay)));
+                
+                ValueChanged(this, new ValueChangedEventArgs(_itemID, _scale == 0 ? _numberParts[0] : double.Parse(NumericDisplay)));
             }
         }
 

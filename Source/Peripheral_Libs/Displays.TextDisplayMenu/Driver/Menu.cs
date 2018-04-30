@@ -23,7 +23,9 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
 
         public event MenuSelectedHandler Selected = delegate { };
         public event ValueChangedHandler ValueChanged = delegate { };
-        
+
+        private bool _isEditMode = false;
+
         public Menu(ITextDisplay display, RotaryEncoderWithButton encoder, byte[] menuResource)
         {
             var menuJson = new string(System.Text.Encoding.UTF8.GetChars(menuResource));
@@ -92,7 +94,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
 
             // if there are no items to render, get out.
             if (_currentMenuPage.MenuItems.Count <= 0) return;
-            
+
             // if the scroll position is above the display area, move the display "window"
             if (_currentMenuPage.ScrollPosition < _topDisplayLine)
             {
@@ -104,14 +106,14 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
             {
                 _topDisplayLine = _currentMenuPage.ScrollPosition - _display.DisplayConfig.Height + 1;
             }
-            
+
             Debug.Print("Scroll: " + _currentMenuPage.ScrollPosition.ToString() + ", start: " + _topDisplayLine.ToString() + ", end: " + (_topDisplayLine + _display.DisplayConfig.Height - 1).ToString());
 
             byte lineNumber = 0;
 
             for (int i = _topDisplayLine; i <= (_topDisplayLine + _display.DisplayConfig.Height - 1); i++)
             {
-                if(i < _currentMenuPage.MenuItems.Count)
+                if (i < _currentMenuPage.MenuItems.Count)
                 {
                     IMenuItem item = _currentMenuPage.MenuItems[i] as IMenuItem;
 
@@ -140,7 +142,8 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
                 if (paddingLength > 0) padding = new string(' ', paddingLength);
                 //
                 itemText = displayText.Substring(0, (displayText.Length >= _display.DisplayConfig.Width - 1) ? _display.DisplayConfig.Width - 1 : displayText.Length) + padding + TextCharacters.BoxSelected.ToChar();
-            } else
+            }
+            else
             {
                 itemText = displayText.Substring(0, (displayText.Length >= _display.DisplayConfig.Width) ? _display.DisplayConfig.Width : displayText.Length);
             }
@@ -168,7 +171,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
         public bool MoveNext()
         {
             // if outside of valid range return false
-            if (_currentMenuPage.ScrollPosition >= _currentMenuPage.MenuItems.Count-1) return false;
+            if (_currentMenuPage.ScrollPosition >= _currentMenuPage.MenuItems.Count - 1) return false;
 
             // increment scroll position
             _currentMenuPage.ScrollPosition++;
@@ -196,7 +199,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
         public bool SelectCurrentItem()
         {
             // if currently on a subpage and user selects back, pop back to parent page.
-            if(_currentMenuPage.ScrollPosition == 0 && _menuLevel.Count > 0)
+            if (_currentMenuPage.ScrollPosition == 0 && _menuLevel.Count > 0)
             {
                 MenuPage parent = _menuLevel.Pop() as MenuPage;
                 _currentMenuPage = parent;
@@ -228,10 +231,11 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
                 _encoder.Rotated -= HandlEncoderRotation;
                 _encoder.Clicked -= HandleEncoderClick;
                 _menuLevel.Push(_currentMenuPage);
+                _isEditMode = true;
 
                 // create the new input type
                 var type = Type.GetType(INPUT_TYPES_NAMESPACE + child.Type);
-                if(type == null)
+                if (type == null)
                 {
                     throw new ArgumentException(child.Type + " was not found");
                 }
@@ -240,7 +244,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
                 IMenuInputItem inputItem = constructor.Invoke(new object[] { }) as IMenuInputItem;
 
                 // setup callback
-                inputItem.ValueChanged += delegate(object sender, ValueChangedEventArgs e)
+                inputItem.ValueChanged += delegate (object sender, ValueChangedEventArgs e)
                 {
                     // set the value and notify the eager listeners
                     child.Value = e.Value;
@@ -254,6 +258,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
                     MenuPage parent = _menuLevel.Pop() as MenuPage;
                     _currentMenuPage = parent;
                     RenderCurrentMenuPage();
+                    _isEditMode = false;
                 };
 
                 // initialize input mode and get new value
@@ -269,23 +274,40 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
 
         public void UpdateItemValue(string id, object value)
         {
+            Hashtable values = new Hashtable(1);
+            values[id] = value;
+            UpdateItemValue(values);
+        }
+
+        public void UpdateItemValue(Hashtable values)
+        {
+            foreach(DictionaryEntry item in values)
+            {
+                UpdateMenuItemValue(item.Key.ToString(), item.Value);
+            }
+            if (!_isEditMode)
+            {
+                RenderCurrentMenuPage();
+            }
+        }
+
+        private void UpdateMenuItemValue(string id, object value)
+        {
             MenuItem node = null;
-            foreach(var menuItem in _rootMenuPage.MenuItems)
+            foreach (var menuItem in _rootMenuPage.MenuItems)
             {
                 node = FindNodeById(menuItem as MenuItem, id);
                 if (node != null) break;
             }
-            
-            if(node != null)
+
+            if (node != null)
             {
                 node.Value = value;
-                RenderCurrentMenuPage();
             }
             else
             {
                 throw new ArgumentNullException("Item with id: " + id + " does not exist");
             }
-
         }
 
         private MenuItem FindNodeById(MenuItem menuItem, string id)
@@ -340,5 +362,5 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
         }
     }
 
-  
+
 }

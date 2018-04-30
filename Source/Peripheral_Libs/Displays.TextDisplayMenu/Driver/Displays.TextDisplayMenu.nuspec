@@ -16,7 +16,6 @@
     <tags>NETMF Netduino</tags>
     <dependencies>
       <dependency id="Netduino.Foundation" version="0.15" />
-      <dependency id="Json.NetMF" version="1.3.0" />
     </dependencies>
   </metadata>
   <files>

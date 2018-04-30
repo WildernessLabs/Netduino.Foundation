@@ -76,7 +76,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
             _display.SetCursorPosition(0, 1);
             _encoder.Clicked += HandleClicked;
             _encoder.Rotated += HandleRotated;
-            ParseValue(currentValue.ToString());
+            ParseValue(currentValue);
             RewriteInputLine(TimeDisplay);
         }
 
@@ -117,8 +117,23 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
             {
                 _encoder.Clicked -= HandleClicked;
                 _encoder.Rotated -= HandleRotated;
-                StringBuilder sb = new StringBuilder(TimeDisplay);
-                ValueChanged(this, new ValueChangedEventArgs(_itemID, sb.Replace(" ", "").ToString()));
+
+                TimeSpan timeSpan;
+
+                switch (_timeMode)
+                {
+                    case TimeMode.HH_MM_SS:
+                        timeSpan = new TimeSpan(_timeParts[0], _timeParts[1], _timeParts[2]);
+                        break;
+                    case TimeMode.HH_MM:
+                        timeSpan = new TimeSpan(_timeParts[0], _timeParts[1], 0);
+                        break;
+                    case TimeMode.MM_SS:
+                        timeSpan = new TimeSpan(0, _timeParts[0], _timeParts[1]);
+                        break;
+                    default: throw new ArgumentException();
+                }
+                ValueChanged(this, new ValueChangedEventArgs(_itemID, timeSpan));
             }
         }
 
@@ -126,13 +141,37 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
         {
             if (value == null || value.ToString() == string.Empty) return;
 
-            string currentValue = value.ToString();
-
-            var parts = currentValue.Split(new char[] { ':' });
-
-            for (int i = 0; i < parts.Length; i++)
+            if(value is TimeSpan)
             {
-                _timeParts[i] = int.Parse(parts[i]);
+                TimeSpan ts = (TimeSpan)value;
+                switch (_timeMode)
+                {
+                    case TimeMode.HH_MM_SS:
+                        _timeParts[0] = ts.Hours;
+                        _timeParts[1] = ts.Minutes;
+                        _timeParts[2] = ts.Seconds;
+                        break;
+                    case TimeMode.HH_MM:
+                        _timeParts[0] = ts.Hours;
+                        _timeParts[1] = ts.Minutes;
+                        break;
+                    case TimeMode.MM_SS:
+                        _timeParts[0] = ts.Minutes;
+                        _timeParts[1] = ts.Seconds;
+                        break;
+                    default: throw new ArgumentException();
+                }
+            }
+            else
+            {
+                string currentValue = value.ToString();
+
+                var parts = currentValue.Split(new char[] { ':' });
+
+                for (int i = 0; i < parts.Length; i++)
+                {
+                    _timeParts[i] = int.Parse(parts[i]);
+                }
             }
         }
     }

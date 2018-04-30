@@ -35,10 +35,12 @@
     <Compile Include="EventHandlers.cs" />
     <Compile Include="IMenuInputItem.cs" />
     <Compile Include="IMenuItem.cs" />
+    <Compile Include="InputTypes\Boolean.cs" />
     <Compile Include="InputTypes\InputBase.cs" />
     <Compile Include="InputTypes\InputHelpers.cs" />
     <Compile Include="InputTypes\Age.cs" />
     <Compile Include="InputTypes\NumericBase.cs" />
+    <Compile Include="InputTypes\ListBase.cs" />
     <Compile Include="InputTypes\Temperature.cs" />
     <Compile Include="InputTypes\Time.cs" />
     <Compile Include="InputTypes\TimeBase.cs" />
