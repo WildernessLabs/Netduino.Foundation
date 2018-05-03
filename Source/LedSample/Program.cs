@@ -9,11 +9,8 @@ namespace LedSample
         {
             var led = new Netduino.Foundation.LEDs.Led(N.Pins.GPIO_PIN_D8);
 
-            //while (true)
-            //{
-                led.StartBlink(500, 1000);
-                Thread.Sleep(Timeout.Infinite);
-            //}
+            led.StartBlink(500, 1000);
+            Thread.Sleep(Timeout.Infinite);
         }
     }
 }
