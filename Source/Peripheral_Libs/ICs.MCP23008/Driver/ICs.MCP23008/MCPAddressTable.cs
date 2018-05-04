@@ -1,7 +1,4 @@
-using System;
-using Microsoft.SPOT;
-
-namespace Netduino.Foundation.ICs.MCP23008
+namespace Netduino.Foundation.ICs.IOExpanders.MCP23008
 {
 /*
 0   1	0	0	A2  A1  A0   HexAddr. Dec.Addr.

@@ -1,15 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
-    <AssemblyName>Netduino.Foundation.ICs.MCP23008</AssemblyName>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Netduino.Foundation.ICs.MCP23008</RootNamespace>
+    <AssemblyName>MCP23008_SimpleDigitalWrites</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>MCP23008_SimpleDigitalWrites</RootNamespace>
     <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{3E2D1916-C1B2-41C4-A368-5081123FD8A3}</ProjectGuid>
+    <ProjectGuid>{4ADF85ED-B597-4823-AC0B-A978DF62CF97}</ProjectGuid>
     <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>
     <NetMfTargetsBaseDir Condition="'$(NetMfTargetsBaseDir)'==''">$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\</NetMfTargetsBaseDir>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -30,14 +34,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\..\Netduino.Foundation\RoslynFixHack.cs">
-      <Link>RoslynFixHack.cs</Link>
-    </Compile>
-    <Compile Include="DigitalInputPort.cs" />
-    <Compile Include="DigitalOutputPort.cs" />
-    <Compile Include="MCP23008.cs" />
-    <Compile Include="MCPAddressTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Hardware" />
@@ -48,6 +46,10 @@
     <ProjectReference Include="..\..\..\..\Netduino.Foundation\Netduino.Foundation.csproj">
       <Project>{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}</Project>
       <Name>Netduino.Foundation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Driver\ICs.MCP23008\ICs.IOExpanders.MCP23008.csproj">
+      <Project>{3E2D1916-C1B2-41C4-A368-5081123FD8A3}</Project>
+      <Name>ICs.IOExpanders.MCP23008</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Condition="EXISTS('$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets')" Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />

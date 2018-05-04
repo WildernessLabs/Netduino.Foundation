@@ -1,8 +1,6 @@
-using System;
 using System.Threading;
 using Microsoft.SPOT;
-using Netduino.Foundation.GPIO;
-using Netduino.Foundation.ICs.MCP23008;
+using Netduino.Foundation.ICs.IOExpanders.MCP23008;
 using Netduino.Foundation.Relays;
 
 namespace MCP23008_RelaySample

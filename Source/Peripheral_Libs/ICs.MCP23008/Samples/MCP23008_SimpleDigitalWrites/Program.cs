@@ -1,9 +1,9 @@
 using System;
 using System.Threading;
 using Microsoft.SPOT;
-using Netduino.Foundation.ICs.MCP23008;
+using Netduino.Foundation.ICs.IOExpanders.MCP23008;
 
-namespace MCP2308_SimpleDigitalWrites
+namespace MCP23008_SimpleDigitalWrites
 {
     public class Program
     {
