@@ -1,8 +1,6 @@
-using System;
-using Microsoft.SPOT;
 using Netduino.Foundation.GPIO;
 
-namespace Netduino.Foundation.ICs.MCP23008
+namespace Netduino.Foundation.ICs.IOExpanders.MCP23008
 {
     /// <summary>
     /// Convenience class for writing to pins on the MCP23008

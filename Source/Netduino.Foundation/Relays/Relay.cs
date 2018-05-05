@@ -7,7 +7,6 @@ namespace Netduino.Foundation.Relays
 {
     public class Relay : IRelay
     {
-        //public H.OutputPort DigitalOut { get; protected set; }
         public IDigitalOutputPort DigitalOut { get; protected set; }
 
         public RelayType Type { get; protected set; }
@@ -18,10 +17,8 @@ namespace Netduino.Foundation.Relays
             {
                 // if turning on,
                 if (value) {
-                    //this.DigitalOut.Write(_onValue); // turn on
                     this.DigitalOut.State = _onValue; // turn on
                 } else { // if turning off
-                    //this.DigitalOut.Write(!_onValue); // turn off
                     this.DigitalOut.State = !_onValue; // turn off
                 }
                 this._isOn = value;
@@ -57,10 +54,7 @@ namespace Netduino.Foundation.Relays
             }
 
             // create a digital output port shim
-            IDigitalOutputPort shim = GPIO.SPOT.DigitalOutputPort.FromPin(pin, !_onValue);
-
-            //// initialize the pin as whatever off is.
-            //this.DigitalOut = new Microsoft.SPOT.Hardware.OutputPort(pin, !_onValue);
+            DigitalOut = GPIO.SPOT.DigitalOutputPort.FromPin(pin, !_onValue);
         }
 
         public void Toggle()

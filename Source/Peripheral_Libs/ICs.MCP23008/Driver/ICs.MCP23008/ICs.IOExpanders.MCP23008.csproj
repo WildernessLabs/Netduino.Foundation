@@ -1,19 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
-    <AssemblyName>ShiftRegister595_RelaySample</AssemblyName>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>ShiftRegister595_RelaySample</RootNamespace>
+    <AssemblyName>Netduino.Foundation.ICs.IOExpanders.MCP23008</AssemblyName>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Netduino.Foundation.ICs.IOExpanders.MCP23008</RootNamespace>
     <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E9A2A355-E352-4C08-A6BF-DBB0E09B6387}</ProjectGuid>
+    <ProjectGuid>{3E2D1916-C1B2-41C4-A368-5081123FD8A3}</ProjectGuid>
     <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>
     <NetMfTargetsBaseDir Condition="'$(NetMfTargetsBaseDir)'==''">$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\</NetMfTargetsBaseDir>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -34,22 +30,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\..\Netduino.Foundation\RoslynFixHack.cs">
+      <Link>RoslynFixHack.cs</Link>
+    </Compile>
+    <Compile Include="DigitalInputPort.cs" />
+    <Compile Include="DigitalOutputPort.cs" />
+    <Compile Include="MCP23008.cs" />
+    <Compile Include="MCPAddressTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Hardware" />
     <Reference Include="Microsoft.SPOT.Native" />
-    <Reference Include="SecretLabs.NETMF.Hardware.Netduino, Version=4.3.1.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.SPOT.TinyCore" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Netduino.Foundation\Netduino.Foundation.csproj">
+    <ProjectReference Include="..\..\..\..\Netduino.Foundation\Netduino.Foundation.csproj">
       <Project>{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}</Project>
       <Name>Netduino.Foundation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Peripheral_Libs\ICs.74595\Driver\ICs.74595.csproj">
-      <Project>{B8ECB2CF-11CF-4C06-A817-CC7700360168}</Project>
-      <Name>ICs.74595</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Condition="EXISTS('$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets')" Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
