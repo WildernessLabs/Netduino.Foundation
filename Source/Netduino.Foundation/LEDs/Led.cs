@@ -9,20 +9,29 @@ namespace Netduino.Foundation.LEDs
     {
         public IDigitalOutputPort DigitalOut { get; protected set; }
 
+        public bool IsOn
+        {
+            get { return _isOn; }
+            set
+            {
+                // if turning on,
+                if (value)
+                {
+                    //this.DigitalOut.Write(_onValue); // turn on
+                    DigitalOut.State = _onValue; // turn on
+                }
+                else
+                { // if turning off
+                    //this.DigitalOut.Write(!_onValue); // turn off
+                    DigitalOut.State = !_onValue; // turn off
+                }
+                this._isOn = value;
+            }
+        }
         protected bool _isOn = false;
-
-        protected H.OutputPort _outPutPort;
+        protected bool _onValue = true;
 
         protected Thread _animationThread = null;
-
-        /// <summary>
-        /// Creates a LED through a pin directly from the Digital IO of the Netduino
-        /// </summary>
-        /// <param name="port"></param>
-        public Led(H.Cpu.Pin port)
-        {
-            _outPutPort = new H.OutputPort(port, false);
-        }
 
         /// <summary>
         /// Creates a LED through a DigitalOutPutPort from an IO Expander
@@ -34,15 +43,12 @@ namespace Netduino.Foundation.LEDs
         }
 
         /// <summary>
-        /// Powers on the LED
+        /// Creates a LED through a pin directly from the Digital IO of the Netduino
         /// </summary>
-        public void SetState(bool isOn)
+        /// <param name="pin"></param>
+        public Led(H.Cpu.Pin pin)
         {
-            if (_outPutPort != null)
-                _outPutPort.Write(isOn);
-
-            if (DigitalOut != null)
-                DigitalOut.State = isOn;
+            IDigitalOutputPort shim = GPIO.SPOT.DigitalOutputPort.FromPin(pin, !_onValue);
         }
 
         /// <summary>
@@ -52,26 +58,29 @@ namespace Netduino.Foundation.LEDs
         /// <param name="offDuration"></param>
         public void StartBlink(uint onDuration = 200, uint offDuration = 200)
         {
-            SetState(false);
+            _isOn = false;
             _animationThread = new Thread(() => 
             {
                 while (true)
                 {
-                    SetState(true);
+                    _isOn = true;
                     Thread.Sleep((int)onDuration);
-                    SetState(false);
+                    _isOn = false;
                     Thread.Sleep((int)offDuration);
                 }
             });
             _animationThread.Start();
         }
 
+        /// <summary>
+        /// Stops blink animation.
+        /// </summary>
         public void Stop()
         {
             if (_animationThread != null)
             {
                 _animationThread.Abort();
-                SetState(false);
+                _isOn = false;
             }
         }
     }
