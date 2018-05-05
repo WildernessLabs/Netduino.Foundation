@@ -1,7 +1,5 @@
 using System;
-using Microsoft.SPOT;
 using H = Microsoft.SPOT.Hardware;
-using N = SecretLabs.NETMF.Hardware.Netduino;
 using System.Threading;
 
 namespace Netduino.Foundation.LEDs
@@ -35,6 +33,7 @@ namespace Netduino.Foundation.LEDs
         public float BlueForwardVoltage { get; protected set; }
 
         protected Thread _animationThread = null;
+        protected bool _running = false;
 
         /// <summary>
         /// The Color the LED has been set to.
@@ -123,17 +122,19 @@ namespace Netduino.Foundation.LEDs
         /// <param name="colors"></param>
         /// <param name="durations"></param>
         /// <param name="loop"></param>
-        public void StartRunningColors(System.Collections.ArrayList colors, int[] durations, bool loop = true)
+        public void StartRunningColors(System.Collections.ArrayList colors, int[] durations)
         {
             if (durations.Length != 1 && colors.Count != durations.Length)
             {
                 throw new Exception("durations must either have a count of 1, if they're all the same, or colors and durations arrays must be same length.");
             }
 
+            _running = true;
+
             // stop any existing animations
             this.Stop();
             this._animationThread = new Thread(() => {
-                while (loop)
+                while (_running)
                 {
                     for (int i = 0; i < colors.Count; i++)
                     {
@@ -230,11 +231,8 @@ namespace Netduino.Foundation.LEDs
         /// </summary>
         public void Stop()
         {
-            if (this._animationThread != null)
-            {
-                this._animationThread.Abort();
-                this.SetColor(new Color(0));
-            }
+            _running = false;
+            SetColor(new Color(0));
         }
     }
 }
