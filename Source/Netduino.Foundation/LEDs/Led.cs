@@ -1,4 +1,3 @@
-using System;
 using Netduino.Foundation.GPIO;
 using H = Microsoft.SPOT.Hardware;
 using System.Threading;
@@ -48,7 +47,7 @@ namespace Netduino.Foundation.LEDs
         /// <param name="pin"></param>
         public Led(H.Cpu.Pin pin)
         {
-            IDigitalOutputPort shim = GPIO.SPOT.DigitalOutputPort.FromPin(pin, !_onValue);
+            DigitalOut = GPIO.SPOT.DigitalOutputPort.FromPin(pin, !_onValue);
         }
 
         /// <summary>
@@ -58,14 +57,14 @@ namespace Netduino.Foundation.LEDs
         /// <param name="offDuration"></param>
         public void StartBlink(uint onDuration = 200, uint offDuration = 200)
         {
-            _isOn = false;
+            IsOn = false;
             _animationThread = new Thread(() => 
             {
                 while (true)
                 {
-                    _isOn = true;
+                    IsOn = true;
                     Thread.Sleep((int)onDuration);
-                    _isOn = false;
+                    IsOn = false;
                     Thread.Sleep((int)offDuration);
                 }
             });
@@ -80,7 +79,7 @@ namespace Netduino.Foundation.LEDs
             if (_animationThread != null)
             {
                 _animationThread.Abort();
-                _isOn = false;
+                IsOn = false;
             }
         }
     }
