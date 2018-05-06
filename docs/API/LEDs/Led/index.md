@@ -47,7 +47,7 @@ namespace LedSample
 
 ## Circuit
 
-![](PwmLed_bb.svg)
+![](Led_bb.svg)
 
 # API Reference
 
