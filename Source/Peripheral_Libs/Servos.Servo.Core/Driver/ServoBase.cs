@@ -77,7 +77,7 @@ namespace Netduino.Foundation.Servos
         protected double CalculatePulseDuration(int angle)
         {
             // offset + (angle percent * duration length)
-            return _config.MinimumPulseDuration + ((angle / _config.MaximumAngle) * (_config.MaximumPulseDuration - _config.MinimumPulseDuration));
+            return _config.MinimumPulseDuration + (((double)angle / _config.MaximumAngle) * (_config.MaximumPulseDuration - _config.MinimumPulseDuration));
             // sample calcs:
             // 0 degrees time = 1000 + ( (0 / 180) * 1000 ) = 1,000 microseconds
             // 90 degrees time = 1000 + ( (90 / 180) * 1000 ) = 1,500 microseconds
