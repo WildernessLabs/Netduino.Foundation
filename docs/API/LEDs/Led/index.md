@@ -10,7 +10,7 @@ subtitle: Single color LED.
 
 # Example
 
-The following example shows how to turn on and off the LED using the `IsOn` property, and uses a `StartBlink(onDuration, offDuration)` method to make the LED blink staying on for 500ms (0.5s) and off for 1000ms (1s):
+The following example shows how to turn on and off the LED using the `IsOn` property, and uses a `StartBlink(onDuration, offDuration)` API method to make the LED blink staying on for 500ms (0.5s) and off for 1000ms (1s):
 
 ## Code
 
@@ -75,7 +75,7 @@ Returns the value of the Led port its connected to.
 
 #### `public void StartBlink(uint onDuration = 200, uint offDuration = 200)`
 
-Start the Blink animation which sets the brightness of the LED alternating off and on, using the durations provided.
+Start the Blink animation which switches the LED on and off, using the durations provided.
 
 #### `public void Stop()`
 
