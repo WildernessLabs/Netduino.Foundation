@@ -9,6 +9,9 @@ using Microsoft.SPOT;
 using N = SecretLabs.NETMF.Hardware.Netduino;
 using H = Microsoft.SPOT.Hardware;
 using System.Threading;
+using Netduino.Foundation.ICs.IOExpanders.MCP23008;
+using Netduino.Foundation.GPIO.SPOT;
+using Netduino.Foundation.GPIO;
 
 namespace Netduino.Foundation.Displays.LCD
 {
@@ -22,13 +25,13 @@ namespace Netduino.Foundation.Displays.LCD
         private const byte LCD_SETDDRAMADDR = 0x80;
         private const byte LCD_SETCGRAMADDR = 0x40;
 
-        public H.OutputPort LCD_E;
-        public H.OutputPort LCD_RS;
-        public H.OutputPort LCD_D4;
-        public H.OutputPort LCD_D5;
-        public H.OutputPort LCD_D6;
-        public H.OutputPort LCD_D7;
-        public H.OutputPort LED_ON;
+        public IDigitalOutputPort LCD_E;
+        public IDigitalOutputPort LCD_RS;
+        public IDigitalOutputPort LCD_D4;
+        public IDigitalOutputPort LCD_D5;
+        public IDigitalOutputPort LCD_D6;
+        public IDigitalOutputPort LCD_D7;
+        public IDigitalOutputPort LED_ON;
 
         private bool LCD_INSTRUCTION = false;
         private bool LCD_DATA = true;
@@ -39,12 +42,26 @@ namespace Netduino.Foundation.Displays.LCD
         {
             DisplayConfig = new TextDisplayConfig { Height = 4, Width = 20 };
 
-            LCD_E = new H.OutputPort(E, false);
-            LCD_RS = new H.OutputPort(RS, false);
-            LCD_D4 = new H.OutputPort(D4, false);
-            LCD_D5 = new H.OutputPort(D5, false);
-            LCD_D6 = new H.OutputPort(D6, false);
-            LCD_D7 = new H.OutputPort(D7, false);
+            LCD_RS = Netduino.Foundation.GPIO.SPOT.DigitalOutputPort.FromPin(RS);
+            LCD_E = Netduino.Foundation.GPIO.SPOT.DigitalOutputPort.FromPin(E);
+            LCD_D4 = Netduino.Foundation.GPIO.SPOT.DigitalOutputPort.FromPin(D4);
+            LCD_D5 = Netduino.Foundation.GPIO.SPOT.DigitalOutputPort.FromPin(D5);
+            LCD_D6 = Netduino.Foundation.GPIO.SPOT.DigitalOutputPort.FromPin(D6);
+            LCD_D7 = Netduino.Foundation.GPIO.SPOT.DigitalOutputPort.FromPin(D7);
+
+            Initialize();
+        }
+
+        public Lcd2004(MCP23008 mcp)
+        {
+            DisplayConfig = new TextDisplayConfig { Height = 4, Width = 20 };
+
+            LCD_RS = mcp.CreateOutputPort(11, false);
+            LCD_E = mcp.CreateOutputPort(12, false);
+            LCD_D4 = mcp.CreateOutputPort(13, false);
+            LCD_D5 = mcp.CreateOutputPort(14, false);
+            LCD_D6 = mcp.CreateOutputPort(15, false);
+            LCD_D7 = mcp.CreateOutputPort(16, false);
 
             Initialize();
         }
@@ -62,29 +79,29 @@ namespace Netduino.Foundation.Displays.LCD
 
         private void SendByte(byte value, bool mode)
         {
-            LCD_RS.Write(mode);
+            LCD_RS.State = mode;
 
             // high bits
-            LCD_D4.Write((value & 0x10) == 0x10);
-            LCD_D5.Write((value & 0x20) == 0x20);
-            LCD_D6.Write((value & 0x40) == 0x40);
-            LCD_D7.Write((value & 0x80) == 0x80);
+            LCD_D4.State = ((value & 0x10) == 0x10);
+            LCD_D5.State = ((value & 0x20) == 0x20);
+            LCD_D6.State = ((value & 0x40) == 0x40);
+            LCD_D7.State = ((value & 0x80) == 0x80);
 
             ToggleEnable();
 
             // low bits
-            LCD_D4.Write((value & 0x01) == 0x01);
-            LCD_D5.Write((value & 0x02) == 0x02);
-            LCD_D6.Write((value & 0x04) == 0x04);
-            LCD_D7.Write((value & 0x08) == 0x08);
+            LCD_D4.State = ((value & 0x01) == 0x01);
+            LCD_D5.State = ((value & 0x02) == 0x02);
+            LCD_D6.State = ((value & 0x04) == 0x04);
+            LCD_D7.State = ((value & 0x08) == 0x08);
 
             ToggleEnable();
         }
 
         private void ToggleEnable()
         {
-            LCD_E.Write(true);
-            LCD_E.Write(false);
+            LCD_E.State = (true);
+            LCD_E.State = (false);
         }
 
         private byte GetLineAddress(int line)
