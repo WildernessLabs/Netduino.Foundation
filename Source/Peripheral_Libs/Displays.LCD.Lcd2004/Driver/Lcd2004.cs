@@ -98,8 +98,6 @@ namespace Netduino.Foundation.Displays.LCD
             LCD_D7.State = ((value & 0x08) == 0x08);
 
             ToggleEnable();
-
-            Thread.Sleep(5);
         }
 
         private void ToggleEnable()
