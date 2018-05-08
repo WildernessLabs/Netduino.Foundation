@@ -57,11 +57,13 @@ namespace Netduino.Foundation.Displays.LCD
             DisplayConfig = new TextDisplayConfig { Height = 4, Width = 20 };
 
             LCD_RS = mcp.CreateOutputPort(1, false);
-            LCD_E = mcp.CreateOutputPort(2, false);
+            LCD_E  = mcp.CreateOutputPort(2, false);
             LCD_D4 = mcp.CreateOutputPort(3, false);
             LCD_D5 = mcp.CreateOutputPort(4, false);
             LCD_D6 = mcp.CreateOutputPort(5, false);
             LCD_D7 = mcp.CreateOutputPort(6, false);
+
+            var lite = mcp.CreateOutputPort(7, true);
 
             Initialize();
         }
@@ -96,6 +98,8 @@ namespace Netduino.Foundation.Displays.LCD
             LCD_D7.State = ((value & 0x08) == 0x08);
 
             ToggleEnable();
+
+            Thread.Sleep(5);
         }
 
         private void ToggleEnable()
