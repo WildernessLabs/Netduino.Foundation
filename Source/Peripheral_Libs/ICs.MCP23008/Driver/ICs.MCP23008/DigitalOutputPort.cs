@@ -31,10 +31,10 @@ namespace Netduino.Foundation.ICs.IOExpanders.MCP23008
             _mcp = mcp;
             _pin = pin;
 
-            if (initialState)
-            {
+            //if (initialState)
+            //{
                 State = initialState;
-            }
+            //}
         }
     }
 }
