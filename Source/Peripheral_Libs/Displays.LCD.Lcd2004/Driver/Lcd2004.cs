@@ -56,12 +56,12 @@ namespace Netduino.Foundation.Displays.LCD
         {
             DisplayConfig = new TextDisplayConfig { Height = 4, Width = 20 };
 
-            LCD_RS = mcp.CreateOutputPort(11, false);
-            LCD_E = mcp.CreateOutputPort(12, false);
-            LCD_D4 = mcp.CreateOutputPort(13, false);
-            LCD_D5 = mcp.CreateOutputPort(14, false);
-            LCD_D6 = mcp.CreateOutputPort(15, false);
-            LCD_D7 = mcp.CreateOutputPort(16, false);
+            LCD_RS = mcp.CreateOutputPort(1, false);
+            LCD_E = mcp.CreateOutputPort(2, false);
+            LCD_D4 = mcp.CreateOutputPort(3, false);
+            LCD_D5 = mcp.CreateOutputPort(4, false);
+            LCD_D6 = mcp.CreateOutputPort(5, false);
+            LCD_D7 = mcp.CreateOutputPort(6, false);
 
             Initialize();
         }
