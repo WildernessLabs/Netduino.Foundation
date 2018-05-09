@@ -8,7 +8,7 @@ subtitle: Single color LED.
 
 An LED is a diode (a component that attempts to let current flow only one way through it) that emits light when voltage is applied to it. Because it is a diode, it only works when a voltage is applied one way. For this reason, LEDs usually have one lead longer (the Cathode) than the other (the Anode). The cathode (longer leg) indicates that it should be hooked to the positive (+) side of a circuit.
 
-Contrary to the `PwmLed` that you can pass in the forward voltage (voltage drop) of the led to limit its current, for this class it is required to limit the current to the LED using resistors.
+Contrary to the `PwmLed` that you can pass in the forward voltage (voltage drop) of the led to limit its current, to use `Led` it is required to limit the current to the LED using resistors.
 
 # Example
 
