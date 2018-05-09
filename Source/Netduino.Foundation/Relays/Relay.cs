@@ -54,7 +54,7 @@ namespace Netduino.Foundation.Relays
             }
 
             // create a digital output port shim
-            DigitalOut = GPIO.SPOT.DigitalOutputPort.FromPin(pin, !_onValue);
+            DigitalOut = new GPIO.SPOT.DigitalOutputPort(pin, !_onValue);
         }
 
         public void Toggle()

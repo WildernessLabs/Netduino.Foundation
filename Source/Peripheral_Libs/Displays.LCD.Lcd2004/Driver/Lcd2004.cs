@@ -42,12 +42,12 @@ namespace Netduino.Foundation.Displays.LCD
         {
             DisplayConfig = new TextDisplayConfig { Height = 4, Width = 20 };
 
-            LCD_RS = Netduino.Foundation.GPIO.SPOT.DigitalOutputPort.FromPin(RS);
-            LCD_E = Netduino.Foundation.GPIO.SPOT.DigitalOutputPort.FromPin(E);
-            LCD_D4 = Netduino.Foundation.GPIO.SPOT.DigitalOutputPort.FromPin(D4);
-            LCD_D5 = Netduino.Foundation.GPIO.SPOT.DigitalOutputPort.FromPin(D5);
-            LCD_D6 = Netduino.Foundation.GPIO.SPOT.DigitalOutputPort.FromPin(D6);
-            LCD_D7 = Netduino.Foundation.GPIO.SPOT.DigitalOutputPort.FromPin(D7);
+            LCD_RS = new GPIO.SPOT.DigitalOutputPort(RS);
+            LCD_E = new GPIO.SPOT.DigitalOutputPort(E);
+            LCD_D4 = new GPIO.SPOT.DigitalOutputPort(D4);
+            LCD_D5 = new GPIO.SPOT.DigitalOutputPort(D5);
+            LCD_D6 = new GPIO.SPOT.DigitalOutputPort(D6);
+            LCD_D7 = new GPIO.SPOT.DigitalOutputPort(D7);
 
             Initialize();
         }

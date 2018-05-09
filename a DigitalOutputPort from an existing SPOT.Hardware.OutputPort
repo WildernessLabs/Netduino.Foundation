@@ -1,0 +1,97 @@
+[1mdiff --git a/Source/Netduino.Foundation/GPIO/SPOT/DigitalOutputPort.cs b/Source/Netduino.Foundation/GPIO/SPOT/DigitalOutputPort.cs[m
+[1mindex 82904a1..72c0930 100644[m
+[1m--- a/Source/Netduino.Foundation/GPIO/SPOT/DigitalOutputPort.cs[m
+[1m+++ b/Source/Netduino.Foundation/GPIO/SPOT/DigitalOutputPort.cs[m
+[36m@@ -38,37 +38,24 @@[m [mnamespace Netduino.Foundation.GPIO.SPOT[m
+             //nothing goes here[m
+         }[m
+ [m
+[31m-        // TODO: should we expose these?[m
+[31m-        protected DigitalOutputPort(H.OutputPort port, bool initialState = false) : base(initialState)[m
+[31m-        {[m
+[31m-            this._digitalOutPort = port;[m
+[31m-        }[m
+[31m-[m
+[31m-        protected DigitalOutputPort(H.Cpu.Pin pin, bool initialState = false) : base(initialState)[m
+[31m-        {[m
+[31m-            this._digitalOutPort = new H.OutputPort(pin, initialState);[m
+[31m-        }[m
+[31m-[m
+         /// <summary>[m
+[31m-        /// Creates a DigitalOutputPort from an existing SPOT.Hardware.OutputPort[m
+[32m+[m[32m        /// Initialize a new port[m
+         /// </summary>[m
+         /// <param name="port"></param>[m
+         /// <param name="initialState"></param>[m
+[31m-        /// <returns></returns>[m
+[31m-        public static DigitalOutputPort FromOutputPort(H.OutputPort port, bool initialState = false)[m
+[32m+[m[32m        public DigitalOutputPort(H.OutputPort port, bool initialState = false) : base(initialState)[m
+         {[m
+[31m-            return new DigitalOutputPort(port, initialState);[m
+[32m+[m[32m            this._digitalOutPort = port;[m
+         }[m
+ [m
+[31m-        // [m
+         /// <summary>[m
+[31m-        /// Creates a new DigitalOutputPort from a pin.[m
+[32m+[m[32m        /// Initialize a new port[m
+         /// </summary>[m
+         /// <param name="pin"></param>[m
+         /// <param name="initialState"></param>[m
+[31m-        public static DigitalOutputPort FromPin(H.Cpu.Pin pin, bool initialState = false)[m
+[32m+[m[32m        public DigitalOutputPort(H.Cpu.Pin pin, bool initialState = false) : base(initialState)[m
+         {[m
+[31m-            return FromOutputPort(new H.OutputPort(pin, initialState), initialState);[m
+[32m+[m[32m            this._digitalOutPort = new H.OutputPort(pin, initialState);[m
+         }[m
+     }[m
+ }[m
+[1mdiff --git a/Source/Netduino.Foundation/LEDs/Led.cs b/Source/Netduino.Foundation/LEDs/Led.cs[m
+[1mindex c1d5d95..61d9d7d 100644[m
+[1m--- a/Source/Netduino.Foundation/LEDs/Led.cs[m
+[1m+++ b/Source/Netduino.Foundation/LEDs/Led.cs[m
+[36m@@ -47,7 +47,7 @@[m [mnamespace Netduino.Foundation.LEDs[m
+         /// <param name="pin"></param>[m
+         public Led(H.Cpu.Pin pin)[m
+         {[m
+[31m-            DigitalOut = GPIO.SPOT.DigitalOutputPort.FromPin(pin, !_onValue);[m
+[32m+[m[32m            DigitalOut = new GPIO.SPOT.DigitalOutputPort(pin, !_onValue);[m
+         }[m
+ [m
+         /// <summary>[m
+[1mdiff --git a/Source/Netduino.Foundation/Relays/Relay.cs b/Source/Netduino.Foundation/Relays/Relay.cs[m
+[1mindex 600589a..8972a98 100644[m
+[1m--- a/Source/Netduino.Foundation/Relays/Relay.cs[m
+[1m+++ b/Source/Netduino.Foundation/Relays/Relay.cs[m
+[36m@@ -54,7 +54,7 @@[m [mnamespace Netduino.Foundation.Relays[m
+             }[m
+ [m
+             // create a digital output port shim[m
+[31m-            DigitalOut = GPIO.SPOT.DigitalOutputPort.FromPin(pin, !_onValue);[m
+[32m+[m[32m            DigitalOut = new GPIO.SPOT.DigitalOutputPort(pin, !_onValue);[m
+         }[m
+ [m
+         public void Toggle()[m
+[1mdiff --git a/Source/Peripheral_Libs/Displays.LCD.Lcd2004/Driver/Lcd2004.cs b/Source/Peripheral_Libs/Displays.LCD.Lcd2004/Driver/Lcd2004.cs[m
+[1mindex 12a931e..9401fd4 100644[m
+[1m--- a/Source/Peripheral_Libs/Displays.LCD.Lcd2004/Driver/Lcd2004.cs[m
+[1m+++ b/Source/Peripheral_Libs/Displays.LCD.Lcd2004/Driver/Lcd2004.cs[m
+[36m@@ -42,12 +42,12 @@[m [mnamespace Netduino.Foundation.Displays.LCD[m
+         {[m
+             DisplayConfig = new TextDisplayConfig { Height = 4, Width = 20 };[m
+ [m
+[31m-            LCD_RS = Netduino.Foundation.GPIO.SPOT.DigitalOutputPort.FromPin(RS);[m
+[31m-            LCD_E = Netduino.Foundation.GPIO.SPOT.DigitalOutputPort.FromPin(E);[m
+[31m-            LCD_D4 = Netduino.Foundation.GPIO.SPOT.DigitalOutputPort.FromPin(D4);[m
+[31m-            LCD_D5 = Netduino.Foundation.GPIO.SPOT.DigitalOutputPort.FromPin(D5);[m
+[31m-            LCD_D6 = Netduino.Foundation.GPIO.SPOT.DigitalOutputPort.FromPin(D6);[m
+[31m-            LCD_D7 = Netduino.Foundation.GPIO.SPOT.DigitalOutputPort.FromPin(D7);[m
+[32m+[m[32m            LCD_RS = new GPIO.SPOT.DigitalOutputPort(RS);[m
+[32m+[m[32m            LCD_E = new GPIO.SPOT.DigitalOutputPort(E);[m
+[32m+[m[32m            LCD_D4 = new GPIO.SPOT.DigitalOutputPort(D4);[m
+[32m+[m[32m            LCD_D5 = new GPIO.SPOT.DigitalOutputPort(D5);[m
+[32m+[m[32m            LCD_D6 = new GPIO.SPOT.DigitalOutputPort(D6);[m
+[32m+[m[32m            LCD_D7 = new GPIO.SPOT.DigitalOutputPort(D7);[m
+ [m
+             Initialize();[m
+         }[m

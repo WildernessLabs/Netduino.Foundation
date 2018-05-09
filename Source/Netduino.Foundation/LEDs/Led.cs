@@ -47,7 +47,7 @@ namespace Netduino.Foundation.LEDs
         /// <param name="pin"></param>
         public Led(H.Cpu.Pin pin)
         {
-            DigitalOut = GPIO.SPOT.DigitalOutputPort.FromPin(pin, !_onValue);
+            DigitalOut = new GPIO.SPOT.DigitalOutputPort(pin, !_onValue);
         }
 
         /// <summary>
