@@ -96,6 +96,8 @@ namespace Netduino.Foundation.LEDs
 
             // stop any existing animations
             this.Stop();
+            _running = true;
+
             this._animationThread = new Thread(() => {
                 while (_running)
                 {
@@ -127,7 +129,10 @@ namespace Netduino.Foundation.LEDs
 
             // stop any existing animations
             this.Stop();
-            this._animationThread = new Thread(() => {
+            _running = true;
+
+            this._animationThread = new Thread(() => 
+            {
                 // pulse the LED by taking the brightness from low to high and back again.
                 float brightness = lowBrightness;
                 bool ascending = true;

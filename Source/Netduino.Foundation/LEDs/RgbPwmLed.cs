@@ -129,11 +129,12 @@ namespace Netduino.Foundation.LEDs
                 throw new Exception("durations must either have a count of 1, if they're all the same, or colors and durations arrays must be same length.");
             }
 
-            _running = true;
-
             // stop any existing animations
             this.Stop();
-            this._animationThread = new Thread(() => {
+            _running = true;
+
+            this._animationThread = new Thread(() => 
+            {
                 while (_running)
                 {
                     for (int i = 0; i < colors.Count; i++)
@@ -143,6 +144,9 @@ namespace Netduino.Foundation.LEDs
                         Thread.Sleep((durations.Length == 1) ? durations[0] : durations[i]);
                     }
                 }
+
+                // When stopped we turn off the LED
+                SetColor(Color.FromHsba(this.Color.Hue, this.Color.Saturation, 0.0));
             });
             this._animationThread.Start();
         }
@@ -232,7 +236,7 @@ namespace Netduino.Foundation.LEDs
         public void Stop()
         {
             _running = false;
-            SetColor(new Color(0));
+            //SetColor(Color.FromHsba(this.Color.Hue, this.Color.Saturation, 0.0));
         }
     }
 }
