@@ -15,10 +15,10 @@ namespace Lcd2004Sample_I2C
             MCP23008 mcp = new MCP23008();
 
             ITextDisplay lcd = new Lcd2004(mcp);
-            lcd.WriteLine("Wilderness Rabs", 0);
-            lcd.WriteLine("Powering", 1);
-            lcd.WriteLine("Connected", 2);
-            lcd.WriteLine("Things", 3);
+            lcd.WriteLine("Wilderness Labs", 0);
+            lcd.WriteLine(" Powering", 1);
+            lcd.WriteLine("  Connected", 2);
+            lcd.WriteLine("   Things", 3);
 
             //Thread.Sleep(3000);
 

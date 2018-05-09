@@ -25,13 +25,13 @@ namespace Netduino.Foundation.Displays.LCD
         private const byte LCD_SETDDRAMADDR = 0x80;
         private const byte LCD_SETCGRAMADDR = 0x40;
 
-        public IDigitalOutputPort LCD_E;
-        public IDigitalOutputPort LCD_RS;
-        public IDigitalOutputPort LCD_D4;
-        public IDigitalOutputPort LCD_D5;
-        public IDigitalOutputPort LCD_D6;
-        public IDigitalOutputPort LCD_D7;
-        public IDigitalOutputPort LED_ON;
+        protected IDigitalOutputPort LCD_E;
+        protected IDigitalOutputPort LCD_RS;
+        protected IDigitalOutputPort LCD_D4;
+        protected IDigitalOutputPort LCD_D5;
+        protected IDigitalOutputPort LCD_D6;
+        protected IDigitalOutputPort LCD_D7;
+        protected IDigitalOutputPort LED_ON;
 
         private bool LCD_INSTRUCTION = false;
         private bool LCD_DATA = true;
@@ -57,7 +57,7 @@ namespace Netduino.Foundation.Displays.LCD
             DisplayConfig = new TextDisplayConfig { Height = 4, Width = 20 };
 
             LCD_RS = mcp.CreateOutputPort(1, false);
-            LCD_E  = mcp.CreateOutputPort(2, false);
+            LCD_E = mcp.CreateOutputPort(2, false);
             LCD_D4 = mcp.CreateOutputPort(3, false);
             LCD_D5 = mcp.CreateOutputPort(4, false);
             LCD_D6 = mcp.CreateOutputPort(5, false);
@@ -81,7 +81,7 @@ namespace Netduino.Foundation.Displays.LCD
 
         private void SendByte(byte value, bool mode)
         {
-            LCD_RS.State = mode;
+            LCD_RS.State = (mode);
 
             // high bits
             LCD_D4.State = ((value & 0x10) == 0x10);
@@ -98,10 +98,13 @@ namespace Netduino.Foundation.Displays.LCD
             LCD_D7.State = ((value & 0x08) == 0x08);
 
             ToggleEnable();
+
+            Thread.Sleep(5);
         }
 
         private void ToggleEnable()
         {
+            LCD_E.State = (false);
             LCD_E.State = (true);
             LCD_E.State = (false);
         }
@@ -158,6 +161,7 @@ namespace Netduino.Foundation.Displays.LCD
         {
             SendByte(0x01, LCD_INSTRUCTION);
             SetCursorPosition(1, 0);
+            Thread.Sleep(5);
         }
 
         public void ClearLine(byte lineNumber)

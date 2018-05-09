@@ -9,6 +9,8 @@ using Netduino.Foundation.Displays;
 using System.IO;
 using TextDisplayMenu_Sample.Properties;
 using Netduino.Foundation.Displays.TextDisplayMenu;
+using Netduino.Foundation.Displays.LCD;
+using Netduino.Foundation.ICs.IOExpanders.MCP23008;
 
 namespace TextDisplayMenu_Sample
 {
@@ -25,15 +27,19 @@ namespace TextDisplayMenu_Sample
     {
         RotaryEncoderWithButton _encoder = null;
         ITextDisplay _display = null;
+        //MCP23008 _mcp = null;
 
         Menu _menu = null;
 
         public App()
         {
             _encoder = new RotaryEncoderWithButton(
-                N.Pins.GPIO_PIN_D2, N.Pins.GPIO_PIN_D3, N.Pins.GPIO_PIN_D4,
+                N.Pins.GPIO_PIN_D7, N.Pins.GPIO_PIN_D6, N.Pins.GPIO_PIN_D5,
                 Netduino.Foundation.CircuitTerminationType.CommonGround);
-            _display = new SerialLCD(new TextDisplayConfig() { Height = 4, Width = 20 }) as ITextDisplay;
+            //_display = new SerialLCD(new TextDisplayConfig() { Height = 4, Width = 20 }) as ITextDisplay;
+            //_mcp = new MCP23008();
+            //_display = new Lcd2004(_mcp);
+            _display = new Lcd2004(N.Pins.GPIO_PIN_D13, N.Pins.GPIO_PIN_D12, N.Pins.GPIO_PIN_D11, N.Pins.GPIO_PIN_D10, N.Pins.GPIO_PIN_D9, N.Pins.GPIO_PIN_D8);
 
             // set display brightness
             _display.SetBrightness();

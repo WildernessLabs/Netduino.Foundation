@@ -61,9 +61,17 @@
       <Project>{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}</Project>
       <Name>Netduino.Foundation</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\Displays.LCD.Lcd2004\Driver\Displays.LCD.Lcd2004.csproj">
+      <Project>{56A2B5B5-C328-4B91-8722-B3BAAC9C69E6}</Project>
+      <Name>Displays.LCD.Lcd2004</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Displays.SerialLCD\Driver\Displays.SerialLCD.csproj">
       <Project>{D32F7103-5F7B-4880-8C80-B17570F4380D}</Project>
       <Name>Displays.SerialLCD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ICs.MCP23008\Driver\ICs.MCP23008\ICs.IOExpanders.MCP23008.csproj">
+      <Project>{3E2D1916-C1B2-41C4-A368-5081123FD8A3}</Project>
+      <Name>ICs.IOExpanders.MCP23008</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Driver\Displays.TextDisplayMenu.csproj">
       <Project>{A18C19A4-F649-444A-BC08-BD4AE00D8DA9}</Project>
