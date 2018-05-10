@@ -72,37 +72,61 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
 
         private void Init(ITextDisplay display, IRotaryEncoder encoder, IButton buttonNext, IButton buttonPrevious, IButton buttonSelect, MenuPage menuTree)
         {
-            _display = display;
-
             if (encoder != null)
             {
                 _encoder = encoder;
-                _encoder.Rotated += HandlEncoderRotation;
             }
             else if (buttonNext != null && buttonPrevious != null)
             {
                 _buttonPrevious = buttonPrevious;
                 _buttonNext = buttonNext;
-                _buttonPrevious.Clicked += HandleButtonPrevious;
-                _buttonNext.Clicked += HandleButtonNext;
             }
             else
             {
                 throw new ArgumentNullException("Must have either a Rotary Encoder or Next/Previous buttons");
             }
 
+            _display = display;
             _buttonSelect = buttonSelect;
-            _buttonSelect.Clicked += HandleEncoderClick;
-
             _rootMenuPage = menuTree;
-            UpdatedCurrentMenuPage();
-            RenderCurrentMenuPage();
             _menuLevel = new Stack();
 
             // Save our custom characters
             _display.SaveCustomCharacter(TextCharacters.RightArrow.CharMap, TextCharacters.RightArrow.MemorySlot);
             _display.SaveCustomCharacter(TextCharacters.RightArrowSelected.CharMap, TextCharacters.RightArrow.MemorySlot);
             _display.SaveCustomCharacter(TextCharacters.BoxSelected.CharMap, TextCharacters.BoxSelected.MemorySlot);
+        }
+
+        public void Enable()
+        {
+            if (_encoder != null)
+            {
+                _encoder.Rotated += HandlEncoderRotation;
+            }
+            else if (_buttonNext != null && _buttonPrevious != null)
+            {
+                _buttonPrevious.Clicked += HandleButtonPrevious;
+                _buttonNext.Clicked += HandleButtonNext;
+            }
+            _buttonSelect.Clicked += HandleEncoderClick;
+
+            UpdatedCurrentMenuPage();
+            RenderCurrentMenuPage();
+        }
+
+        public void Disable()
+        {
+            if (_encoder != null)
+            {
+                _encoder.Rotated -= HandlEncoderRotation;
+            }
+            else if (_buttonNext != null && _buttonPrevious != null)
+            {
+                _buttonPrevious.Clicked -= HandleButtonPrevious;
+                _buttonNext.Clicked -= HandleButtonNext;
+            }
+            _buttonSelect.Clicked -= HandleEncoderClick;
+            _display.Clear();
         }
 
         protected MenuPage CreateMenuPage(ArrayList nodes, bool addBack)

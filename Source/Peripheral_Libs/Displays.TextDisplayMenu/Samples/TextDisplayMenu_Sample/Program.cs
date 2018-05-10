@@ -74,6 +74,8 @@ namespace TextDisplayMenu_Sample
 
             _menu.Selected += HandleMenuSelected;
             _menu.ValueChanged += HandleMenuValueChanged;
+
+            _menu.Enable();
         }
 
         private void HandleMenuValueChanged(object sender, ValueChangedEventArgs e)
@@ -93,6 +95,10 @@ namespace TextDisplayMenu_Sample
 
         private void HandleMenuSelected(object sender, MenuSelectedEventArgs e)
         {
+            if(e.Command == "Quit")
+            {
+                _menu.Disable();
+            }
             Debug.Print("menu selected: " + e.Command);
         }
     }
