@@ -52,41 +52,62 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
             _display.Clear();
             _display.WriteLine("Enter " + itemID, 0);
             _display.SetCursorPosition(0, 1);
-            _encoder.Clicked += HandleClicked;
-            _encoder.Rotated += HandleRotated;
+
+            RegisterHandlers();
             ParseValue(currentValue);
             RewriteInputLine(NumericDisplay);
         }
 
-        private void HandleRotated(object sender, RotaryTurnedEventArgs e)
+        protected override void HandlePrevious(object sender, EventArgs e)
+        {
+            DoPrevious();
+        }
+
+        protected override void HandleNext(object sender, EventArgs e)
+        {
+            DoNext();
+        }
+
+        protected override void HandleRotated(object sender, RotaryTurnedEventArgs e)
         {
             if(e.Direction == RotationDirection.Clockwise)
             {
-                if(_pos == 0)
-                {
-                    if (_numberParts[_pos] < _max) { _numberParts[_pos]++; }
-                    else { _numberParts[_pos + 1] = 0;  }
-                }
-                else
-                {
-                    if (_numberParts[_pos-1] != _max && _numberParts[_pos] < (InputHelpers.Exp(10, _scale)-1)) { _numberParts[_pos]++; }
-                }
+                DoNext();
             }
             else
             {
-                if (_pos == 0)
-                {
-                    if (_numberParts[_pos] > _min) { _numberParts[_pos]--; }
-                }
-                else
-                {
-                    if(_numberParts[_pos] > 0) { _numberParts[_pos]--; }
-                }
+                DoPrevious();
+            }
+        }
+
+        private void DoNext()
+        {
+            if (_pos == 0)
+            {
+                if (_numberParts[_pos] < _max) { _numberParts[_pos]++; }
+                else { _numberParts[_pos + 1] = 0; }
+            }
+            else
+            {
+                if (_numberParts[_pos - 1] != _max && _numberParts[_pos] < (InputHelpers.Exp(10, _scale) - 1)) { _numberParts[_pos]++; }
             }
             RewriteInputLine(NumericDisplay);
         }
 
-        private void HandleClicked(object sender, EventArgs e)
+        private void DoPrevious()
+        {
+            if (_pos == 0)
+            {
+                if (_numberParts[_pos] > _min) { _numberParts[_pos]--; }
+            }
+            else
+            {
+                if (_numberParts[_pos] > 0) { _numberParts[_pos]--; }
+            }
+            RewriteInputLine(NumericDisplay);
+        }
+
+        protected override void HandleClicked(object sender, EventArgs e)
         {
             if (_pos < _numberParts.Length - 1)
             {
@@ -94,9 +115,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
             }
             else
             {
-                _encoder.Clicked -= HandleClicked;
-                _encoder.Rotated -= HandleRotated;
-                
+                UnregisterHandlers();
                 ValueChanged(this, new ValueChangedEventArgs(_itemID, _scale == 0 ? _numberParts[0] : double.Parse(NumericDisplay)));
             }
         }

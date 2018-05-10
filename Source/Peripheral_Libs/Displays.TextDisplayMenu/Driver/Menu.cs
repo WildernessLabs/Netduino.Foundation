@@ -5,6 +5,7 @@ using H = Microsoft.SPOT.Hardware;
 using Netduino.Foundation.Displays;
 using Netduino.Foundation.Sensors.Rotary;
 using Netduino.Foundation.Displays.TextDisplayMenu.InputTypes;
+using Netduino.Foundation.Sensors.Buttons;
 
 namespace Netduino.Foundation.Displays.TextDisplayMenu
 {
@@ -12,7 +13,10 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
     {
         const string INPUT_TYPES_NAMESPACE = "Netduino.Foundation.Displays.TextDisplayMenu.InputTypes.";
         protected ITextDisplay _display = null;
-        protected RotaryEncoderWithButton _encoder = null;
+        protected IButton _buttonPrevious = null;
+        protected IButton _buttonNext = null;
+        protected IButton _buttonSelect = null;
+        protected IRotaryEncoder _encoder = null;
 
         protected int _navigatedDepth = 0;
         protected MenuPage _rootMenuPage = null;
@@ -26,7 +30,25 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
 
         private bool _isEditMode = false;
 
-        public Menu(ITextDisplay display, RotaryEncoderWithButton encoder, byte[] menuResource)
+        public Menu(ITextDisplay display, IRotaryEncoder encoder, IButton buttonSelect, byte[] menuResource)
+        {
+            Init(display, encoder, null, null, buttonSelect, ParseMenuData(menuResource));
+        }
+        public Menu(ITextDisplay display, IRotaryEncoder encoder, IButton buttonSelect, MenuPage menuPage)
+        {
+            Init(display, encoder, null, null, buttonSelect, menuPage);
+        }
+
+        public Menu(ITextDisplay display, IButton buttonNext, IButton buttonPrevious, IButton buttonSelect, byte[] menuResource)
+        {
+            Init(display, null, buttonNext, buttonPrevious, buttonSelect, ParseMenuData(menuResource));
+        }
+        public Menu(ITextDisplay display, IButton buttonNext, IButton buttonPrevious, IButton buttonSelect, MenuPage menuPage)
+        { 
+            Init(display, null, buttonNext, buttonPrevious, buttonSelect, menuPage);
+        }
+
+        private MenuPage ParseMenuData(byte[] menuResource)
         {
             var menuJson = new string(System.Text.Encoding.UTF8.GetChars(menuResource));
             var menuData = Json.NETMF.JsonSerializer.DeserializeString(menuJson) as Hashtable;
@@ -35,27 +57,37 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
             {
                 throw new ArgumentException("JSON root must contain a 'menu' item");
             }
-            _rootMenuPage = CreateMenuPage((ArrayList)menuData["menu"], false);
-            Init(display, encoder, _rootMenuPage);
+            return CreateMenuPage((ArrayList)menuData["menu"], false);
         }
 
-        public Menu(ITextDisplay display, RotaryEncoderWithButton encoder, MenuPage menuTree)
-        {
-            Init(display, encoder, menuTree);
-        }
-
-        private void Init(ITextDisplay display, RotaryEncoderWithButton encoder, MenuPage menuTree)
+        private void Init(ITextDisplay display, IRotaryEncoder encoder, IButton buttonNext, IButton buttonPrevious, IButton buttonSelect, MenuPage menuTree)
         {
             _display = display;
-            _encoder = encoder;
+
+            if (encoder != null)
+            {
+                _encoder = encoder;
+                _encoder.Rotated += HandlEncoderRotation;
+            }
+            else if (buttonNext != null && buttonPrevious != null)
+            {
+                _buttonPrevious = buttonPrevious;
+                _buttonNext = buttonNext;
+                _buttonPrevious.Clicked += HandleButtonPrevious;
+                _buttonNext.Clicked += HandleButtonNext;
+            }
+            else
+            {
+                throw new ArgumentNullException("Must have either a Rotary Encoder or Next/Previous buttons");
+            }
+
+            _buttonSelect = buttonSelect;
+            _buttonSelect.Clicked += HandleEncoderClick;
 
             _rootMenuPage = menuTree;
             UpdatedCurrentMenuPage();
             RenderCurrentMenuPage();
             _menuLevel = new Stack();
-
-            _encoder.Rotated += HandlEncoderRotation;
-            _encoder.Clicked += HandleEncoderClick;
 
             // Save our custom characters
             _display.SaveCustomCharacter(TextCharacters.RightArrow.CharMap, TextCharacters.RightArrow.MemorySlot);
@@ -228,8 +260,17 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
             else if (child.Type != string.Empty)
             {
                 // preserve current menu state and remove handlers
-                _encoder.Rotated -= HandlEncoderRotation;
-                _encoder.Clicked -= HandleEncoderClick;
+                if (_encoder != null)
+                {
+                    _encoder.Rotated -= HandlEncoderRotation;
+                }
+                else
+                {
+                    _buttonPrevious.Clicked -= HandleButtonPrevious;
+                    _buttonNext.Clicked -= HandleButtonNext;
+                }
+                _buttonSelect.Clicked -= HandleEncoderClick;
+
                 _menuLevel.Push(_currentMenuPage);
                 _isEditMode = true;
 
@@ -251,8 +292,16 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
                     ValueChanged(this, new ValueChangedEventArgs(e.ItemID, e.Value));
 
                     // setup handlers again
-                    _encoder.Rotated += HandlEncoderRotation;
-                    _encoder.Clicked += HandleEncoderClick;
+                    if(_encoder != null)
+                    {
+                        _encoder.Rotated += HandlEncoderRotation;
+                    }
+                    else
+                    {
+                        _buttonPrevious.Clicked += HandleButtonPrevious;
+                        _buttonNext.Clicked += HandleButtonNext;
+                    }
+                    _buttonSelect.Clicked += HandleEncoderClick;
 
                     // reload the parent menu
                     MenuPage parent = _menuLevel.Pop() as MenuPage;
@@ -262,7 +311,15 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
                 };
 
                 // initialize input mode and get new value
-                inputItem.Init(_display, _encoder);
+                if(_encoder != null)
+                {
+                    inputItem.Init(_display, _encoder, _buttonSelect);
+                }
+                else
+                {
+                    inputItem.Init(_display, _buttonNext, _buttonPrevious, _buttonSelect);
+                }
+                
                 inputItem.GetInput(child.ItemID, child.Value);
                 return true;
             }
@@ -353,6 +410,16 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
                 // play a sound?
                 Debug.Print("end of items");
             }
+        }
+
+        private void HandleButtonPrevious(object sender, EventArgs e)
+        {
+            this.MovePrevious();
+        }
+
+        private void HandleButtonNext(object sender, EventArgs e)
+        {
+            this.MoveNext();
         }
 
         public byte Max(byte a, byte b)
