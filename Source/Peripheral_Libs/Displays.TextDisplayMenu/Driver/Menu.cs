@@ -257,7 +257,6 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
             if(_currentMenuPage.ScrollPosition==0 && _menuLevel.Count == 0 && _showBackOnRoot)
             {
                 Selected(this, new MenuSelectedEventArgs("Exit"));
-                Disable();
                 return true;
             }
 
