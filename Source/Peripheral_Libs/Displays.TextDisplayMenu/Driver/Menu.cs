@@ -30,6 +30,16 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
 
         private bool _isEditMode = false;
 
+
+        public Menu(ITextDisplay display, IRotaryEncoderWithButton encoder, byte[] menuResource)
+        {
+            Init(display, encoder, null, null, encoder, ParseMenuData(menuResource));
+        }
+        public Menu(ITextDisplay display, IRotaryEncoderWithButton encoder, MenuPage menuPage)
+        {
+            Init(display, encoder, null, null, encoder, menuPage);
+        }
+
         public Menu(ITextDisplay display, IRotaryEncoder encoder, IButton buttonSelect, byte[] menuResource)
         {
             Init(display, encoder, null, null, buttonSelect, ParseMenuData(menuResource));

@@ -67,7 +67,7 @@ namespace TextDisplayMenu_Sample
             _display.SetBrightness();
 
             // Create menu with encoder
-            _menu = new Menu(_display, _encoder, _encoder, Resources.GetBytes(Resources.BinaryResources.menu));
+            _menu = new Menu(_display, _encoder, Resources.GetBytes(Resources.BinaryResources.menu));
 
             // Create menu with buttons
             //_menu = new Menu(_display, _next, _previous, _select, Resources.GetBytes(Resources.BinaryResources.menu));

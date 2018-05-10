@@ -5,7 +5,7 @@ using Netduino.Foundation.Sensors.Buttons;
 
 namespace Netduino.Foundation.Sensors.Rotary
 {
-    public class RotaryEncoderWithButton : RotaryEncoder, IButton
+    public class RotaryEncoderWithButton : RotaryEncoder, IRotaryEncoderWithButton
     {
         public event EventHandler PressStarted = delegate { };
         public event EventHandler PressEnded = delegate { };
