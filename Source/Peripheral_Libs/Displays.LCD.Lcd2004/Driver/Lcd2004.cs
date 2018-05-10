@@ -132,6 +132,7 @@ namespace Netduino.Foundation.Displays.LCD
 
         public void WriteLine(string text, byte lineNumber)
         {
+            ClearLine(lineNumber);
             SetLineAddress(lineNumber);
 
             var bytes = System.Text.Encoding.UTF8.GetBytes(text);
