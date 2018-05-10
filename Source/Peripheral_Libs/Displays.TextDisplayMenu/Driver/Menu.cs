@@ -27,6 +27,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
 
         public event MenuSelectedHandler Selected = delegate { };
         public event ValueChangedHandler ValueChanged = delegate { };
+        public event EventHandler Exited = delegate { };
 
         private bool _isEditMode = false;
         private bool _showBackOnRoot = false;
@@ -256,7 +257,8 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
         {
             if(_currentMenuPage.ScrollPosition==0 && _menuLevel.Count == 0 && _showBackOnRoot)
             {
-                Selected(this, new MenuSelectedEventArgs("Exit"));
+                this.Disable();
+                Exited(this, new EventArgs());
                 return true;
             }
 
