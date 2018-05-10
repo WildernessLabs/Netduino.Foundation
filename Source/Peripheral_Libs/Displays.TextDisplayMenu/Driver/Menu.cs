@@ -29,33 +29,23 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
         public event ValueChangedHandler ValueChanged = delegate { };
 
         private bool _isEditMode = false;
+        private bool _showBackOnRoot = false;
 
-
-        public Menu(ITextDisplay display, IRotaryEncoderWithButton encoder, byte[] menuResource)
+        public Menu(ITextDisplay display, IRotaryEncoderWithButton encoder, byte[] menuResource, bool showBackOnRoot = false)
         {
+            _showBackOnRoot = showBackOnRoot;
             Init(display, encoder, null, null, encoder, ParseMenuData(menuResource));
         }
-        public Menu(ITextDisplay display, IRotaryEncoderWithButton encoder, MenuPage menuPage)
-        {
-            Init(display, encoder, null, null, encoder, menuPage);
-        }
 
-        public Menu(ITextDisplay display, IRotaryEncoder encoder, IButton buttonSelect, byte[] menuResource)
+        public Menu(ITextDisplay display, IRotaryEncoder encoder, IButton buttonSelect, byte[] menuResource, bool showBackOnRoot = false)
         {
+            _showBackOnRoot = showBackOnRoot;
             Init(display, encoder, null, null, buttonSelect, ParseMenuData(menuResource));
         }
-        public Menu(ITextDisplay display, IRotaryEncoder encoder, IButton buttonSelect, MenuPage menuPage)
+        public Menu(ITextDisplay display, IButton buttonNext, IButton buttonPrevious, IButton buttonSelect, byte[] menuResource, bool showBackOnRoot = false)
         {
-            Init(display, encoder, null, null, buttonSelect, menuPage);
-        }
-
-        public Menu(ITextDisplay display, IButton buttonNext, IButton buttonPrevious, IButton buttonSelect, byte[] menuResource)
-        {
+            _showBackOnRoot = showBackOnRoot;
             Init(display, null, buttonNext, buttonPrevious, buttonSelect, ParseMenuData(menuResource));
-        }
-        public Menu(ITextDisplay display, IButton buttonNext, IButton buttonPrevious, IButton buttonSelect, MenuPage menuPage)
-        { 
-            Init(display, null, buttonNext, buttonPrevious, buttonSelect, menuPage);
         }
 
         private MenuPage ParseMenuData(byte[] menuResource)
@@ -67,7 +57,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
             {
                 throw new ArgumentException("JSON root must contain a 'menu' item");
             }
-            return CreateMenuPage((ArrayList)menuData["menu"], false);
+            return CreateMenuPage((ArrayList)menuData["menu"], _showBackOnRoot);
         }
 
         private void Init(ITextDisplay display, IRotaryEncoder encoder, IButton buttonNext, IButton buttonPrevious, IButton buttonSelect, MenuPage menuTree)
@@ -264,6 +254,13 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
 
         public bool SelectCurrentItem()
         {
+            if(_currentMenuPage.ScrollPosition==0 && _menuLevel.Count == 0 && _showBackOnRoot)
+            {
+                Selected(this, new MenuSelectedEventArgs("Exit"));
+                Disable();
+                return true;
+            }
+
             // if currently on a subpage and user selects back, pop back to parent page.
             if (_currentMenuPage.ScrollPosition == 0 && _menuLevel.Count > 0)
             {

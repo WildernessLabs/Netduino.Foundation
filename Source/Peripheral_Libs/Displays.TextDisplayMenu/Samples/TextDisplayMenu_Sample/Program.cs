@@ -67,7 +67,7 @@ namespace TextDisplayMenu_Sample
             _display.SetBrightness();
 
             // Create menu with encoder
-            _menu = new Menu(_display, _encoder, Resources.GetBytes(Resources.BinaryResources.menu));
+            _menu = new Menu(_display, _encoder, Resources.GetBytes(Resources.BinaryResources.menu), true);
 
             // Create menu with buttons
             //_menu = new Menu(_display, _next, _previous, _select, Resources.GetBytes(Resources.BinaryResources.menu));
@@ -95,11 +95,11 @@ namespace TextDisplayMenu_Sample
 
         private void HandleMenuSelected(object sender, MenuSelectedEventArgs e)
         {
-            if(e.Command == "Quit")
-            {
-                _menu.Disable();
-            }
             Debug.Print("menu selected: " + e.Command);
+            if(e.Command == "Exit")
+            {
+                Debug.Print("Exit menu");
+            }
         }
     }
 }
