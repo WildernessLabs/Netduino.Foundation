@@ -19,6 +19,7 @@ namespace Netduino.Foundation.Network
 
         #endregion Member variables / fields
 
+        public static NetworkInterface CurrentNetworkInterface { get; private set; } = null;
 
         #region Methods
 
@@ -56,6 +57,7 @@ namespace Netduino.Foundation.Network
                                     var result = streamReader.ReadToEnd();
                                     Debug.Print("Response from " + uri + ":\n" + result);
                                 }
+                                CurrentNetworkInterface = net;
                                 return (true);
                             }
                             catch (Exception e)
