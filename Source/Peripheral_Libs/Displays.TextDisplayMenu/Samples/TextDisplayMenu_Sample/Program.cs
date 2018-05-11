@@ -68,14 +68,20 @@ namespace TextDisplayMenu_Sample
 
             // Create menu with encoder
             _menu = new Menu(_display, _encoder, Resources.GetBytes(Resources.BinaryResources.menu), true);
-
+            
             // Create menu with buttons
             //_menu = new Menu(_display, _next, _previous, _select, Resources.GetBytes(Resources.BinaryResources.menu));
 
             _menu.Selected += HandleMenuSelected;
             _menu.ValueChanged += HandleMenuValueChanged;
+            _menu.Exited += HandleMenuExited;
 
             _menu.Enable();
+        }
+
+        private void HandleMenuExited(object sender, EventArgs e)
+        {
+            Debug.Print("menu exited");
         }
 
         private void HandleMenuValueChanged(object sender, ValueChangedEventArgs e)
