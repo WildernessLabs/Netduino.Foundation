@@ -35,6 +35,7 @@ namespace Netduino.Foundation.Displays.LCD
 
         private bool LCD_INSTRUCTION = false;
         private bool LCD_DATA = true;
+        private static object _lock = new object();
 
         public TextDisplayConfig DisplayConfig { get; protected set; }
 
@@ -81,25 +82,28 @@ namespace Netduino.Foundation.Displays.LCD
 
         private void SendByte(byte value, bool mode)
         {
-            LCD_RS.State = (mode);
+            lock (_lock)
+            {
+                LCD_RS.State = (mode);
 
-            // high bits
-            LCD_D4.State = ((value & 0x10) == 0x10);
-            LCD_D5.State = ((value & 0x20) == 0x20);
-            LCD_D6.State = ((value & 0x40) == 0x40);
-            LCD_D7.State = ((value & 0x80) == 0x80);
+                // high bits
+                LCD_D4.State = ((value & 0x10) == 0x10);
+                LCD_D5.State = ((value & 0x20) == 0x20);
+                LCD_D6.State = ((value & 0x40) == 0x40);
+                LCD_D7.State = ((value & 0x80) == 0x80);
 
-            ToggleEnable();
+                ToggleEnable();
 
-            // low bits
-            LCD_D4.State = ((value & 0x01) == 0x01);
-            LCD_D5.State = ((value & 0x02) == 0x02);
-            LCD_D6.State = ((value & 0x04) == 0x04);
-            LCD_D7.State = ((value & 0x08) == 0x08);
+                // low bits
+                LCD_D4.State = ((value & 0x01) == 0x01);
+                LCD_D5.State = ((value & 0x02) == 0x02);
+                LCD_D6.State = ((value & 0x04) == 0x04);
+                LCD_D7.State = ((value & 0x08) == 0x08);
 
-            ToggleEnable();
+                ToggleEnable();
 
-            Thread.Sleep(5);
+                Thread.Sleep(5);
+            }
         }
 
         private void ToggleEnable()
