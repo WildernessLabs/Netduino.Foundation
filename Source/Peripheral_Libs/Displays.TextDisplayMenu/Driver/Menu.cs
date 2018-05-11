@@ -24,14 +24,15 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
         protected int _topDisplayLine = 0;
 
         private Stack _menuLevel = null;
+        private bool _isEditMode = false;
+        private bool _showBackOnRoot = false;
 
         public event MenuSelectedHandler Selected = delegate { };
         public event ValueChangedHandler ValueChanged = delegate { };
         public event EventHandler Exited = delegate { };
 
-        private bool _isEditMode = false;
-        private bool _showBackOnRoot = false;
-
+        public bool IsEnabled { get; protected set; } = false;
+        
         public Menu(ITextDisplay display, IRotaryEncoderWithButton encoder, byte[] menuResource, bool showBackOnRoot = false)
         {
             _showBackOnRoot = showBackOnRoot;
@@ -90,6 +91,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
 
         public void Enable()
         {
+            this.IsEnabled = true;
             if (_encoder != null)
             {
                 _encoder.Rotated += HandlEncoderRotation;
@@ -107,6 +109,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
 
         public void Disable()
         {
+            this.IsEnabled = false;
             if (_encoder != null)
             {
                 _encoder.Rotated -= HandlEncoderRotation;
@@ -146,6 +149,8 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu
 
         protected void RenderCurrentMenuPage()
         {
+            if (!IsEnabled) return;
+
             // clear the display
             _display.Clear();
 
