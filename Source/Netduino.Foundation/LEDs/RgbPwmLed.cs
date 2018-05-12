@@ -122,7 +122,7 @@ namespace Netduino.Foundation.LEDs
         /// <param name="colors"></param>
         /// <param name="durations"></param>
         /// <param name="loop"></param>
-        public void StartRunningColors(System.Collections.ArrayList colors, int[] durations)
+        public void StartRunningColors(System.Collections.ArrayList colors, int[] durations, bool loop = true)
         {
             if (durations.Length != 1 && colors.Count != durations.Length)
             {
@@ -131,8 +131,6 @@ namespace Netduino.Foundation.LEDs
 
             // stop any existing animations
             this.Stop();
-            _running = true;
-
             this._animationThread = new Thread(() => 
             {
                 while (_running)
@@ -143,6 +141,9 @@ namespace Netduino.Foundation.LEDs
                         // if all the same, use [0], otherwise individuals
                         Thread.Sleep((durations.Length == 1) ? durations[0] : durations[i]);
                     }
+
+                    if (!loop)
+                        Stop();
                 }
 
                 // When stopped we turn off the LED
