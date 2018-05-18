@@ -19,6 +19,25 @@ namespace Netduino.Foundation.Sensors.Buttons
 		public TimeSpan DebounceDuration { get; set; }
 
         /// <summary>
+        /// Returns the current raw state of the switch. If the switch 
+        /// is pressed (connected), returns true, otherwise false.
+        /// </summary>
+        public bool State
+        {
+            get
+            {
+                if (DigitalIn != null)
+                {
+                    return DigitalIn.Read();
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        /// <summary>
         /// The minimum duration for a long press.
         /// </summary>
         public TimeSpan LongPressThreshold { get; set; } = new TimeSpan(0, 0, 0, 0, 500);
