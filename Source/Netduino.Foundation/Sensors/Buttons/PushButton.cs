@@ -28,7 +28,8 @@ namespace Netduino.Foundation.Sensors.Buttons
             {
                 if (DigitalIn != null)
                 {
-                    return DigitalIn.Read();
+                    // have to invert, closed is 0, open is 1. SMH
+                    return !DigitalIn.Read();
                 }
                 else
                 {
