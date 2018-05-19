@@ -1,7 +1,5 @@
 using System;
-using Microsoft.SPOT;
 using H = Microsoft.SPOT.Hardware;
-using N = SecretLabs.NETMF.Hardware.Netduino;
 using System.Threading;
 
 namespace Netduino.Foundation.LEDs
@@ -35,6 +33,7 @@ namespace Netduino.Foundation.LEDs
         public float BlueForwardVoltage { get; protected set; }
 
         protected Thread _animationThread = null;
+        protected bool _running = false;
 
         /// <summary>
         /// The Color the LED has been set to.
@@ -132,8 +131,9 @@ namespace Netduino.Foundation.LEDs
 
             // stop any existing animations
             this.Stop();
-            this._animationThread = new Thread(() => {
-                while (loop)
+            this._animationThread = new Thread(() => 
+            {
+                while (_running)
                 {
                     for (int i = 0; i < colors.Count; i++)
                     {
@@ -141,7 +141,13 @@ namespace Netduino.Foundation.LEDs
                         // if all the same, use [0], otherwise individuals
                         Thread.Sleep((durations.Length == 1) ? durations[0] : durations[i]);
                     }
+
+                    if (!loop)
+                        Stop();
                 }
+
+                // When stopped we turn off the LED
+                SetColor(Color.FromHsba(this.Color.Hue, this.Color.Saturation, 0.0));
             });
             this._animationThread.Start();
         }
@@ -230,11 +236,8 @@ namespace Netduino.Foundation.LEDs
         /// </summary>
         public void Stop()
         {
-            if (this._animationThread != null)
-            {
-                this._animationThread.Abort();
-                this.SetColor(new Color(0));
-            }
+            _running = false;
+            //SetColor(Color.FromHsba(this.Color.Hue, this.Color.Saturation, 0.0));
         }
     }
 }

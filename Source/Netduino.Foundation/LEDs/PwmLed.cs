@@ -27,7 +27,7 @@ namespace Netduino.Foundation.LEDs
         protected float _maximumPwmDuty = 1;
         protected H.PWM _pwm = null;
         protected Thread _animationThread = null;
-
+        protected bool _running = false;
 
         /// <summary>
         /// Creates a new PwmLed on the specified PWM pin and limited to the appropriate 
@@ -96,8 +96,10 @@ namespace Netduino.Foundation.LEDs
 
             // stop any existing animations
             this.Stop();
+            _running = true;
+
             this._animationThread = new Thread(() => {
-                while (true)
+                while (_running)
                 {
                     this.SetBrightness(highBrightness);
                     Thread.Sleep(onDuration);
@@ -127,7 +129,10 @@ namespace Netduino.Foundation.LEDs
 
             // stop any existing animations
             this.Stop();
-            this._animationThread = new Thread(() => {
+            _running = true;
+
+            this._animationThread = new Thread(() => 
+            {
                 // pulse the LED by taking the brightness from low to high and back again.
                 float brightness = lowBrightness;
                 bool ascending = true;
@@ -138,7 +143,7 @@ namespace Netduino.Foundation.LEDs
                 float changeDown = -1 * changeAmount;
 
                 // TODO: Consider pre calculating these and making a RunBrightnessAnimation like with RgbPwmLed
-                while (true)
+                while (_running)
                 {
                     // are we brightening or dimming?
                     if (brightness <= lowBrightness) { ascending = true; }
@@ -164,12 +169,8 @@ namespace Netduino.Foundation.LEDs
         /// </summary>
         public void Stop()
         {
-            if(this._animationThread != null)
-            {
-                this._animationThread.Abort();
-                SetBrightness(0);
-            }
+            _running = false;
+            SetBrightness(0);
         }
-
     }
 }

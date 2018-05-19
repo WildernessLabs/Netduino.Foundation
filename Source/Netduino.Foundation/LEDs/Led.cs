@@ -31,6 +31,7 @@ namespace Netduino.Foundation.LEDs
         protected bool _onValue = true;
 
         protected Thread _animationThread = null;
+        protected bool _running = false;
 
         /// <summary>
         /// Creates a LED through a DigitalOutPutPort from an IO Expander
@@ -57,10 +58,12 @@ namespace Netduino.Foundation.LEDs
         /// <param name="offDuration"></param>
         public void StartBlink(uint onDuration = 200, uint offDuration = 200)
         {
+            _running = true;
+
             IsOn = false;
             _animationThread = new Thread(() => 
             {
-                while (true)
+                while (_running)
                 {
                     IsOn = true;
                     Thread.Sleep((int)onDuration);
@@ -76,11 +79,8 @@ namespace Netduino.Foundation.LEDs
         /// </summary>
         public void Stop()
         {
-            if (_animationThread != null)
-            {
-                _animationThread.Abort();
-                IsOn = false;
-            }
+            _running = false;
+            _isOn = false;
         }
     }
 }
