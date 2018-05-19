@@ -69,6 +69,7 @@ namespace Netduino.Foundation.Network
                     }
                     else
                     {
+                        CurrentNetworkInterface = net;
                         return (true);
                     }
                 }
