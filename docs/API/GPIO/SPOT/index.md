@@ -4,7 +4,7 @@ title: SPOT Namespace
 subtitle: .NET MicroFramework compatibility classes.
 ---
 
-# Info
+# Intro
 
 In order to provide Unified GPIO Architecture interop with the .NET MicroFramework (NETMF) port classes, this namespace contains wrapper classes that expose the NETMF ports as `IPort` compatible classes.
 
