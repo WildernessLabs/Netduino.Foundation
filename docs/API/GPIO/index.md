@@ -6,6 +6,8 @@ subtitle: General Purpose Input/Output classes and definitions
 
 # Netduino.Foundation Unified GPIO Architecture
 
+**Preview Release**
+
 Netduino.Foundation incorporates an architecture that was designed to extend peripheral support seamlessly across expansion peripherals such as the I2C/SPI/etc. I/O expansion chips. For example, you can connect an MCP23x or 74x595 I/O expansion chip to a Netduino, and then drive a `Relay` via one of the pins on the expansion chip, just as if it were connected directly to the Netduino!
 
 This is possible through the use of GPIO interface and base classes that define GPIO port contracts and provide base level implementation.
@@ -25,6 +27,10 @@ Relay relay = new Relay(relayPort);
 // toggle the relay
 relay.Toggle();
 ```
+
+## Preview Release Version
+
+This API is in preview release. Only the output ports are in this version (there is no `DigitalInputPort` for instance), and the API is subject to change as we validate it.
 
 ## Interfaces
 
