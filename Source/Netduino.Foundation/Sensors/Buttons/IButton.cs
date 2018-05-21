@@ -11,6 +11,6 @@ namespace Netduino.Foundation.Sensors.Buttons
         event EventHandler PressStarted;
         event EventHandler PressEnded;
         event EventHandler Clicked;
-
+        bool State { get; }
     }
 }

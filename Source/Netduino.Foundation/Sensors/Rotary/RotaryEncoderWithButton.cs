@@ -11,6 +11,10 @@ namespace Netduino.Foundation.Sensors.Rotary
         public event EventHandler PressEnded = delegate { };
         public event EventHandler Clicked = delegate { };
 
+        public bool State {
+            get { return _button.State; }
+        }
+
         public PushButton Button
         {
             get { return this._button; }
