@@ -7,7 +7,7 @@
     <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{E9A2A355-E352-4C08-A6BF-DBB0E09B6387}</ProjectGuid>
+    <ProjectGuid>{DBB3C3D2-1A10-48D7-A8BC-071ED81CCBF7}</ProjectGuid>
     <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>
     <NetMfTargetsBaseDir Condition="'$(NetMfTargetsBaseDir)'==''">$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\</NetMfTargetsBaseDir>
     <SccProjectName>SAK</SccProjectName>
@@ -43,11 +43,11 @@
     <Reference Include="SecretLabs.NETMF.Hardware.Netduino, Version=4.3.1.0, Culture=neutral, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Netduino.Foundation\Netduino.Foundation.csproj">
+    <ProjectReference Include="..\..\..\..\Netduino.Foundation\Netduino.Foundation.csproj">
       <Project>{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}</Project>
       <Name>Netduino.Foundation</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Peripheral_Libs\ICs.IOExpanders.x74595\Driver\ICs.IOExpanders.x74595.csproj">
+    <ProjectReference Include="..\..\Driver\ICs.IOExpanders.x74595.csproj">
       <Project>{B8ECB2CF-11CF-4C06-A817-CC7700360168}</Project>
       <Name>ICs.IOExpanders.x74595</Name>
     </ProjectReference>
