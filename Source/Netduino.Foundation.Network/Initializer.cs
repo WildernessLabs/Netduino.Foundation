@@ -39,7 +39,7 @@ namespace Netduino.Foundation.Network
             if (Microsoft.SPOT.Hardware.SystemInfo.SystemID.SKU == 3)
             {
                 Debug.Print("Wireless tests run only on Device");
-                return; //ToDo - is this needed? 
+                return; 
             }
 
             _interfaces = NetworkInterface.GetAllNetworkInterfaces();
@@ -159,8 +159,7 @@ namespace Netduino.Foundation.Network
                 return true;
             }
         }
-
-
+        
         /// <summary>
         ///     Display (on Debug console) the network interface information for all of the interfaces.
         /// </summary>
