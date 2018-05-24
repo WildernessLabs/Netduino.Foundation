@@ -47,7 +47,7 @@
       <Project>{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}</Project>
       <Name>Netduino.Foundation</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Peripheral_Libs\ICs.74595\Driver\ICs.IOExpanders.x74595.csproj">
+    <ProjectReference Include="..\Peripheral_Libs\ICs.IOExpanders.x74595\Driver\ICs.IOExpanders.x74595.csproj">
       <Project>{B8ECB2CF-11CF-4C06-A817-CC7700360168}</Project>
       <Name>ICs.IOExpanders.x74595</Name>
     </ProjectReference>

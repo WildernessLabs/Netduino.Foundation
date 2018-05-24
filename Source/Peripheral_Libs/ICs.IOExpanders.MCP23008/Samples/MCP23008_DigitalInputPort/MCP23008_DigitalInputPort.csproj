@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
-    <AssemblyName>MCP23008_SimpleDigitalWrites</AssemblyName>
+    <AssemblyName>MCP23008_DigitalInputPort</AssemblyName>
     <OutputType>Exe</OutputType>
-    <RootNamespace>MCP23008_SimpleDigitalWrites</RootNamespace>
+    <RootNamespace>MCP23008_DigitalInputPort</RootNamespace>
     <ProjectTypeGuids>{b69e3092-b931-443c-abe7-7e7b65f2a37f};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{4ADF85ED-B597-4823-AC0B-A978DF62CF97}</ProjectGuid>
+    <ProjectGuid>{96DCEB72-0275-4345-BB5D-4E98A973E692}</ProjectGuid>
     <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>
     <NetMfTargetsBaseDir Condition="'$(NetMfTargetsBaseDir)'==''">$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\</NetMfTargetsBaseDir>
     <SccProjectName>SAK</SccProjectName>
@@ -47,7 +47,7 @@
       <Project>{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}</Project>
       <Name>Netduino.Foundation</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Driver\ICs.MCP23008\ICs.IOExpanders.MCP23008.csproj">
+    <ProjectReference Include="..\..\Driver\ICs.IOExpanders.MCP23008\ICs.IOExpanders.MCP23008.csproj">
       <Project>{3E2D1916-C1B2-41C4-A368-5081123FD8A3}</Project>
       <Name>ICs.IOExpanders.MCP23008</Name>
     </ProjectReference>

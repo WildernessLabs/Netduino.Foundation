@@ -69,7 +69,7 @@
       <Project>{D32F7103-5F7B-4880-8C80-B17570F4380D}</Project>
       <Name>Displays.SerialLCD</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\ICs.MCP23008\Driver\ICs.MCP23008\ICs.IOExpanders.MCP23008.csproj">
+    <ProjectReference Include="..\..\..\ICs.IOExpanders.MCP23008\Driver\ICs.IOExpanders.MCP23008\ICs.IOExpanders.MCP23008.csproj">
       <Project>{3E2D1916-C1B2-41C4-A368-5081123FD8A3}</Project>
       <Name>ICs.IOExpanders.MCP23008</Name>
     </ProjectReference>
