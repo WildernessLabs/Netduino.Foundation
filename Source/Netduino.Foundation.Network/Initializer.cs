@@ -19,8 +19,14 @@ namespace Netduino.Foundation.Network
 
         #endregion Member variables / fields
 
+        #region Events, properties & delegates
         public static NetworkInterface CurrentNetworkInterface { get; private set; } = null;
 
+        public delegate void NetworkConnectedDelegate(object sender, EventArgs e);
+        public static event NetworkConnectedDelegate NetworkConnected;
+
+        #endregion
+		
         #region Methods
 
         /// <summary>
@@ -28,74 +34,87 @@ namespace Netduino.Foundation.Network
         /// </summary>
         /// <param name="uri">Web address to check if required.  If this is null then the check will not be performed.</param>
         /// <returns>True of the network started correctly, false otherwise.</returns>
-        public static bool InitializeNetwork(string uri = null)
+        public static void InitializeNetwork(string uri = null)
         {
             if (Microsoft.SPOT.Hardware.SystemInfo.SystemID.SKU == 3)
             {
                 Debug.Print("Wireless tests run only on Device");
-                return false;
+                return; //ToDo - is this needed? 
             }
-            _interfaces = NetworkInterface.GetAllNetworkInterfaces();
-            ListNetworkInterfaces();
-            foreach (var net in _interfaces)
-            {
-                if (CheckIPAddress(net))
-                {
-                    if (uri != null)
-                    {
-                        int retryCount = 0;
-                        while (retryCount < 3)
-                        {
-                            try
-                            {
-                                var httpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
-                                httpWebRequest.Method = "GET";
 
-                                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                                {
-                                    var result = streamReader.ReadToEnd();
-                                    Debug.Print("Response from " + uri + ":\n" + result);
-                                }
-                                CurrentNetworkInterface = net;
-                                return (true);
-                            }
-                            catch (Exception e)
-                            {
-                                Debug.Print(e.Message);
-                                retryCount++;
-                            }
+            _interfaces = NetworkInterface.GetAllNetworkInterfaces();
+
+            ListNetworkInterfaces();
+
+            var th = new Thread(() => CheckNetworkInterfacesForConnection(uri));
+            th.Start();
+        }
+
+        private static bool CheckNetworkInterfacesForConnection (string uri)
+        {
+            foreach (var networkInterface in _interfaces)
+            {
+                if (UpdateIPAddressFromDHCP(networkInterface))
+                {
+                    if (uri == null)
+                    {
+                        CurrentNetworkInterface = networkInterface;
+                        return true;
+                    }
+
+                    int retryCount = 0;
+
+                    while (retryCount < 3)
+                    {
+                        try
+                        {
+                            MakeWebRequest(uri);
+
+                            CurrentNetworkInterface = networkInterface;
+                            return true;
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.Print(e.Message);
+                            retryCount++;
                         }
                     }
-                    else
-                    {
-                        CurrentNetworkInterface = net;
-                        return (true);
-                    }
                 }
-                return (false);
+                return false;
             }
-            //
-            //  If we get here then none of the network interface have started correctly.
-            //
+            //  If we get here then none of the network interface have started correctly
             return false;
         }
 
-        /// <summary>
-        /// Checks the IPA ddress.
-        /// </summary>
-        /// <returns><c>true</c>, if IPA ddress was checked, <c>false</c> otherwise.</returns>
-        /// <param name="net">Net.</param>
-        private static bool CheckIPAddress(NetworkInterface net)
+        private static void MakeWebRequest(string uri)
         {
-            int timeout = 10000; // timeout, in milliseconds to wait for an IP. 10,000 = 10 seconds
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(uri);
+            httpWebRequest.Method = "GET";
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var result = streamReader.ReadToEnd();
+                Debug.Print("Response from " + uri + ":\n" + result);
+            }
+        }
+
+        /// <summary>
+        /// Checks the IP Address.
+        /// </summary>
+        /// <returns><c>true</c> if IP Address was assigned, <c>false</c> otherwise.</returns>
+        /// <param name="networkInterface">Net.</param>
+        private static bool UpdateIPAddressFromDHCP(NetworkInterface networkInterface)
+        {
+            int timeout = 10000; // timeout, in milliseconds to wait for an IP
 
             // check to see if the IP address is empty (0.0.0.0). IPAddress.Any is 0.0.0.0.
-            if (net.IPAddress == IPAddress.Any.ToString())
+            if (networkInterface.IPAddress == IPAddress.Any.ToString())
             {
                 Debug.Print("No IP Address");
 
-                if (net.IsDhcpEnabled)
+                if (networkInterface.IsDhcpEnabled)
                 {
                     Debug.Print("DHCP is enabled, attempting to get an IP Address");
 
@@ -103,39 +122,40 @@ namespace Netduino.Foundation.Network
                     int sleepInterval = 10;
                     int maxIntervalCount = timeout / sleepInterval;
                     int count = 0;
+
                     while (IPAddress.GetDefaultLocalAddress() == IPAddress.Any && count < maxIntervalCount)
                     {
                         Debug.Print("Sleep while obtaining an IP");
-                        Thread.Sleep(10);
+                        Thread.Sleep(sleepInterval);
                         count++;
                     };
 
                     // if we got here, we either timed out or got an address, so let's find out.
-                    if (net.IPAddress == IPAddress.Any.ToString())
+                    if (networkInterface.IPAddress == IPAddress.Any.ToString())
                     {
                         Debug.Print("Failed to get an IP Address in the alotted time.");
                         return false;
                     }
 
-                    Debug.Print("Got IP Address: " + net.IPAddress.ToString());
-                    return true;
+                    Debug.Print("Got an IP Address: " + networkInterface.IPAddress.ToString());
 
-                    //NOTE: this does not work, even though it's on the actual network device. [shrug]
-                    // try to renew the DHCP lease and get a new IP Address
-                    //net.RenewDhcpLease ();
-                    //while (net.IPAddress == "0.0.0.0") {
-                    //    Thread.Sleep (10);
-                    //}
+                    if (NetworkConnected != null)
+                        NetworkConnected.Invoke(null, EventArgs.Empty);
+                    return true;
                 }
                 else
                 {
-                    Debug.Print("DHCP is not enabled, and no IP address is configured.");
+                    Debug.Print("DHCP is not enabled and no IP address is configured.");
                     return false;
                 }
             }
             else
             {
-                Debug.Print("Already had IP Address: " + net.IPAddress.ToString());
+                Debug.Print("Already have an IP Address: " + networkInterface.IPAddress.ToString());
+
+                if (NetworkConnected != null)
+                    NetworkConnected.Invoke(null, EventArgs.Empty);
+
                 return true;
             }
         }
@@ -146,21 +166,21 @@ namespace Netduino.Foundation.Network
         /// </summary>
         public static void ListNetworkInterfaces()
         {
-            foreach (var net in _interfaces)
+            foreach (var networkInterface in _interfaces)
             {
-                ListNetworkInfo((net));
+                ListNetworkInfo((networkInterface));
             }
         }
 
         /// <summary>
         ///     Display the netowrk information for a a specified network interface on the Debug console.
         /// </summary>
-        /// <param name="net">Network interface to decode and display the information for.</param>
-        private static void ListNetworkInfo(NetworkInterface net)
+        /// <param name="networkInterface">Network interface to decode and display the information for.</param>
+        private static void ListNetworkInfo(NetworkInterface networkInterface)
         {
             try
             {
-                switch (net.NetworkInterfaceType)
+                switch (networkInterface.NetworkInterfaceType)
                 {
                     case (NetworkInterfaceType.Ethernet):
                         Debug.Print("Found Ethernet Interface");
@@ -172,15 +192,16 @@ namespace Netduino.Foundation.Network
                         Debug.Print("Found Unknown Interface");
                         break;
                 }
-                Debug.Print("MAC Address: " + DebugInformation.Hexadecimal(net.PhysicalAddress));
-                Debug.Print("DHCP enabled: " + net.IsDhcpEnabled.ToString());
-                Debug.Print("Dynamic DNS enabled: " + net.IsDynamicDnsEnabled.ToString());
-                Debug.Print("IP Address: " + net.IPAddress.ToString());
-                Debug.Print("Subnet Mask: " + net.SubnetMask.ToString());
-                Debug.Print("Gateway: " + net.GatewayAddress.ToString());
-                if (net is Wireless80211)
+                Debug.Print("MAC Address: " + DebugInformation.Hexadecimal(networkInterface.PhysicalAddress));
+                Debug.Print("DHCP enabled: " + networkInterface.IsDhcpEnabled.ToString());
+                Debug.Print("Dynamic DNS enabled: " + networkInterface.IsDynamicDnsEnabled.ToString());
+                Debug.Print("IP Address: " + networkInterface.IPAddress.ToString());
+                Debug.Print("Subnet Mask: " + networkInterface.SubnetMask.ToString());
+                Debug.Print("Gateway: " + networkInterface.GatewayAddress.ToString());
+
+                if (networkInterface is Wireless80211)
                 {
-                    var wifi = net as Wireless80211;
+                    var wifi = networkInterface as Wireless80211;
                     Debug.Print("SSID:" + wifi.Ssid.ToString());
                 }
             }
