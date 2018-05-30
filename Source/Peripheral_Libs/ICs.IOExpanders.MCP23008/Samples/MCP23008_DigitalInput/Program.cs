@@ -13,8 +13,8 @@ namespace MCP23008_DigitalInput
 
         public static void Main()
         {
-            // create a new MCP23008 with all address pins pulled high (address of 39)
-            _mcp = new MCP23008(true, true, true); 
+            // create a new MCP23008 with all address pins pulled low/GND (address of 32)
+            _mcp = new MCP23008(false, false, false); 
 
             // set pin 0 to input with pullup = true, interrupt = false
             _mcp.ConfigureInputPort(0, true, false); 

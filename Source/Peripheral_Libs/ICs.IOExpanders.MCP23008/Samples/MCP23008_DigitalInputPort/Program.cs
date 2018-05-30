@@ -17,7 +17,7 @@ namespace MCP23008_DigitalInputPort
         {
             // Create a new MCP23008. This constructor shows how to pass
             // the address pin configuration instead of an address.
-            _mcp = new MCP23008(true, true, true); // all address pins pulled high (address of 39)
+            _mcp = new MCP23008(false, false, false); // all address pins pulled low (address of 32)
 
             // Create a new DigitalInputPort from pin 0, pulled high
             DigitalInputPort port = _mcp.CreateInputPort(0, true);
