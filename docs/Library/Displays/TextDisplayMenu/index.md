@@ -6,45 +6,19 @@ subtitle: Multiline display menu framework for quick prototyping human interface
 
 # Intro
 
-The `TextDisplayMenu` library is an extensible framework for quickly creating hierarchical, editable menus that can display on an `ITextDisplay` and are driven using either an [`IRotaryEncoder`](/API/Sensors/Rotary/IRotaryEncoder) or [`IButton`](/API/Sensors/Buttons/IButton) interfaces.
-
-***
- 
-I would explain what ITextDisplay is/or similar. basically; folks need to know that they can just plug in an LCD screen and we have drivers. 
-
-***
-
+The `TextDisplayMenu` library is an extensible framework for quickly creating hierarchical, editable menus that can display on an `ITextDisplay` and are driven using either an [`IRotaryEncoder`](/API/Sensors/Rotary/IRotaryEncoder) or [`IButton`](/API/Sensors/Buttons/IButton) interfaces. Drivers for displays, such as MicroLiquidCrystal or Serial LCD, share a common interface `ITextDisplay` that make it easy to plug in and integrate with the `TextDisplayMenu`.
 
 ![](TextDisplayMenu.gif)
 
-The menu can be completely configured either with JSON or programmatically and supports built-in types for time, temperature, and age with the ability to easily create custom types.
-
-***
-
-Maybe:
-
 The menu can be created programmatically or loaded from JSON, and has a number of built-in menu item types for display and editing input including time, temperature, and others. Additionally; you can easily create custom menu item types that allow users to edit their value via the inputs.
-
-***
 
 # Using
 
-Creating a menu requires a LCD display, next button, previous button, and select button.  A rotary encoder can replace the next and previous buttons and a rotary encoder with button can replace all three buttons.
-
-***
-
-maybe:
-
 To use the menu, you'll need; an [`ITextDisplay`](/API/Displays/ITextDisplay/) compatible LCD or other display, as well as some combination of buttons and rotary encoder that allows for **next**, **previous**, and **select** functionality. For instance, you can use; three discrete [`IButton`](link) inputs for next/previous/selection, a rotary encoder for next/previous and an `IButton` for selection, or a [`RotaryEncoderWithPushButton`](link) to handle all three inputs.
 
-TODO: add compatible displays to the ITextDisplay page?
-
-***
+Currently, display drivers are available for [MicroLiquidCrystal Library](/Library/Displays/MicroLiquidCrystal), [Serial LCD](/Library/Displays/SerialLCD), and [SSD 1306](/Library/Displays/SSD1306) with more coming soon.
 
 ## Circuit
-
-***
-[intro:]
 
 The following schematic illustrates a typical holistic configuration for driving the menu and includes a common 4 line LCD display that's driven directly from Netduino's digital GPIO pins, as well as a rotary encoder with push button:
 
@@ -52,17 +26,9 @@ The following schematic illustrates a typical holistic configuration for driving
 
 [photo of it in the appliance control box would be good, too. can link to the 3D stuff]
 
-***
-
 ## Sample Code
 
-***
-
-[intro this, something like the following:]
-
 The following code illustrates how to create a new `TextDisplayMenu`, driven by a `RotaryEncoderWithButton` that loads its contents from JSON:
-
-***
 
 ```csharp
 using System;
@@ -106,22 +72,9 @@ The full sample can be found [here](https://github.com/WildernessLabs/Netduino.F
 
 ### Using Other Inputs
 
-*** I added that heading^ ***
-
-To create a menu with a rotary encoder or buttons requires the appropriate constructor:
-
-*** Maybe:
-
 To create a menu with other inputs, such as buttons or an optional rotary encoder, you can use the other constructors:
 
-[delete the first constructor below, since you show it above.]
-***
-
-
 ```csharp
-// Rotary encoder with button
-public Menu(ITextDisplay display, IRotaryEncoderWithButton encoder, byte[] menuResource, bool showBackOnRoot = false)
-
 // Rotary encoder and select button
 public Menu(ITextDisplay display, IRotaryEncoder encoder, IButton buttonSelect, byte[] menuResource, bool showBackOnRoot = false)
 
@@ -131,23 +84,21 @@ public Menu(ITextDisplay display, IButton buttonNext, IButton buttonPrevious, IB
 
 # Loading a Menu From JSON
 
-*** needs an intro:
-
 To create the menu from JSON, first define the menu contents in a .json file, and then add it as a resource:
-
-***
 
 ## Sample Definition
 
-***
+The root node must be a `menu` array of menu items.  The following table enumerates the properties and associated usage:
 
-[need to explain a little here]
+| Property  | Usage                                                                                  |
+|-----------|--------------------------------------------------------------------------------------- |
+| `text`    | Display text to the rendered. Include {value} to display the current value of the type |
+| `command` | Command name to distinguish menu selection events. If command is set, it takes precedence over editable menu item. |
+| `id`      | Unique identifier for the type.  Required for an editable menu item. |
+| `type`    | Type of the input, ex: `Age`, `Time`. Required for an editable menu item. |
+| `sub`     | Array of child menu items. |
 
-[root node is `menu`, which contains an array of items? should explain the schema here just a little.]
-
-For example, the following json code defines a hierarchical menu arranged in menu pages and items. 
-
-***
+For example, the following json code defines a hierarchical menu arranged in menu pages and items.
 
 ```json
 {
@@ -191,17 +142,9 @@ For example, the following json code defines a hierarchical menu arranged in men
 }
 ```
 
-## Add as a resource 
-
-*** maybe the heading should be "Adding the Menu JSON as a Resource" ***
-
-The JSON file with the menu data needs to be added as a resource to the project. Here are the steps:
-
-***
-since we stated this above now in the JSON intro, i would simplify to:
+## Adding the Menu JSON as a Resource 
 
 To add the JSON file to the project as a resource:
-***
 
 1. Right-click the project and select Properties
 2. Click `Resources` in the left pane
@@ -211,81 +154,47 @@ Now, this resource can be accessed by `Resources.GetBytes(Resources.BinaryResour
 
 # Handling Events
 
-***
-explain that the menu raises events on various interactions.
-***
+The menu raises events when a command is select, menu item is edited, and the menu is exited.
 
 ## Selection Events
 
-To get notified when a menu item with an assigned command is selected, assign a handler to the `Selected` event: `menu.Selected += HandleMenuSelected;`
+To get notified when a menu item with an assigned command is selected, assign a handler to the `Selected` event:
 
 ```csharp
-private void HandleMenuSelected(object sender, MenuSelectedEventArgs e)
+menu.Selected += (s, e) =>
 {
     Debug.Print("menu selected: " + e.Command);
-}
+};
 ```
 
 ## Exit Event
 
-***
-need to explain that this is built-in optional functionality first. 
-***
+If the menu is not the desired screen to be loaded when the application launches, then the menu can be programatically can he loaded or unloaded by using `Enable()` or `Disable()`, respectively.  Additionally, there is an optional parameter when instantiating a new Menu, `showBackOnRoot`, and when set to `true`, "< Back" displays as the first item on the root level and when selected, an `Exited` event will be raised.
 
-To get notified when the menu is exited, assign a handler to the `Exited` event: `menu.Exited += HandleMenuExited`. Also, when instantiating a menu, the `showBackOnRoot` must be set to `True`.
+To get notified when the menu is exited, assign a handler to the `Exited` event:
 
 ```csharp
-private void HandleMenuExited(object sender, EventArgs e)
+menu.Exited += (s, e) =>
 {
     Debug.Print("menu exited");
-}
-
-*** 
-maybe show as a lambda? it feels a little disjointed right now.
-***
+    menu.Disable();
+};
 ```
 
 ## Edit Events
 
-To get notified when a edit menu item value has changed, assign a handler to the `ValueChanged` event: `menu.ValueChanged += HandleMenuValueChanged`
+To get notified when a edit menu item value has changed, assign a handler to the `ValueChanged` event:
 
 ```csharp
-private void HandleMenuValueChanged(object sender, ValueChangedEventArgs e)
+menu.ValueChanged += (s, e) =>
 {
     Debug.Print(e.ItemID + " changed with value: " + e.Value);
-}
+};
 ```
-
-***
-lambda?
-***
 
 # Built in Types
 
-***
-i wrapped values in backticks, fyi
-***
-
-The edit menu with collect the input based on the type. For instance, `age` is an integer between `0` and `100`. Below is a table with a description of the built in types:
-
-***
-a little unclear, maybe simplify since we introduce the concept earlier?
-
 The following table enumerates the built-in menu item types, and their associated usage and values:
-***
-
-
-|Type        |Description                                          |
-|------------|-----------------------------------------------------|
-|Boolean     |A list type including `True` and `False`             |
-|Age         |An integer between 0 and 100                         |
-|Temperature |A decimal value between -10 and 100 with a scale of 2|
-|Time        |24 hour military time with HH:MM                     |
-|TimeDetailed|24 hour military time with HH:MM:SS                  |
-|TimeShort   |24 hour military time with MM:SS                     |
-
-***
-You'll run into menu formatting/parsing issues in some places without spaces, FYI (plus, it looks better/easier to read). Also think you should backtick types and values (also, true and false are lower-case):
 
 | Type           | Description                                                |
 |----------------|------------------------------------------------------------|
@@ -296,17 +205,9 @@ You'll run into menu formatting/parsing issues in some places without spaces, FY
 | `TimeDetailed` | 24 hour military time with `HH:MM:SS`                      |
 | `TimeShort`    | 24 hour military time with `MM:SS`                         |
 
-***
-
 # Creating Custom Menu Item Types
 
-Chances are that a custom menu item can be built from the existing base types to get started quickly.  Here are the available base classes to extend from: `NumericBase`, `ListBase`, and `TimeBase`.
-
-*** 
-I would give a general overview here first, and rearrange the headings based on that:
-
 There are two ways to create custom menu items. The easiest and most common is to inherit from, and modify, the built-in base types. However, you can also create completely custom menu item types.
-
 
 ## Customizing Built-In Base Types
 
@@ -318,19 +219,9 @@ There are two ways to create custom menu items. The easiest and most common is t
 | `TimeBase`    | [describe] |
 | `ListBase`    | Provides a selectable list of items. |
 
-***
-
 ### Custom NumericBase Example [note i modified the heading title to make descriptive]
 
-An example of extending NumericBase is `Age`, a class that inherits from `NumericBase` and specifies the floor, ceiling, and scale of the desired input.
-
-***
-
-Maybe:
-
-The following code is pulled from the `Age` menu type, and illustrates how to....
-
-***
+The following code is pulled from the `Age` menu type, and illustrates how to inherit from `NumericBase` and specify the floor, ceiling, and scale of the desired input.
 
 ```csharp
 using System;
@@ -349,9 +240,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
 
 ### Custom ListBase Example
 
-An example of extending  ListBase is `Boolean`, a class that inherits from `ListBase` and defines the desired list values, in this case `True` and `False`.
-
-*** see previous section edit ***
+The following code is pulled from the `Boolean` menu type, and illustrates how to inherit from `ListBase` and define the desired list values, in this case `true` and `false`.
 
 ```csharp
 using System;
@@ -382,11 +271,7 @@ protected abstract void HandleRotated(object sender, Sensors.Rotary.RotaryTurned
 protected abstract void HandleClicked(object sender, EventArgs e);
 ```
 
-*** 
-
-do we have an example?
-
-***
+To see working examples, check out the implementations for [`NumericBase`](https://github.com/WildernessLabs/Netduino.Foundation/blob/master/Source/Peripheral_Libs/Displays.TextDisplayMenu/Driver/InputTypes/NumericBase.cs) and [`ListBase`](https://github.com/WildernessLabs/Netduino.Foundation/blob/master/Source/Peripheral_Libs/Displays.TextDisplayMenu/Driver/InputTypes/ListBase.cs)
 
 # Troubleshooting
 
