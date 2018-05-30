@@ -10,6 +10,12 @@ Minimum required definition for button classes.
 
 # API
 
+## Properties
+
+#### `public bool State`
+
+Returns the current raw state of the switch. If the switch is pressed (connected), returns true, otherwise false.
+
 ## Events
 
 #### `public event EventHandler PressStarted`

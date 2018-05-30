@@ -45,10 +45,13 @@ This duration controls the debounce filter. It also has the effect of rate limit
 
 Default time is 20 milliseconds, which should be good for most tactile push buttons.
 
-
 #### `public InterruptPort DigitalIn { get; private set; }`
 
 Returns the interrupt port that the pushbutton is configured on.
+
+#### `public bool State`
+
+Returns the current raw state of the switch. If the switch is pressed (connected), returns true, otherwise false.
 
 #### `public TimeSpan LongPressThreshold { get; set; }`
 
