@@ -22,7 +22,7 @@ Currently, display drivers are available for [MicroLiquidCrystal Library](/Libra
 
 The following schematic illustrates a typical holistic configuration for driving the menu and includes a common 4 line LCD display that's driven directly from Netduino's digital GPIO pins, as well as a rotary encoder with push button:
 
-[need this - can be created in Fritzing]
+![](TextDisplayMenu_Board.png)
 
 [photo of it in the appliance control box would be good, too. can link to the 3D stuff]
 
@@ -275,8 +275,8 @@ To see working examples, check out the implementations for [`NumericBase`](https
 
 # Troubleshooting
 
-***
+We experienced periodic problems with the display outputting nonsense data:
 
-we need a pic of the garbage and mention that it's likely a faulty connection, often associated with breadboards, and to make sure to check all the GNDs
+![](TextDisplayMenu_BadOutput.jpg)
 
-***
+To resolve, check that are the connections are securely in place or use a different breadboard.
