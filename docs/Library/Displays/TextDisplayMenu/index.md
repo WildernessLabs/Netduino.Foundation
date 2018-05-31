@@ -6,7 +6,7 @@ subtitle: Multiline display menu framework for quick prototyping human interface
 
 # Intro
 
-The `TextDisplayMenu` library is an extensible framework for quickly creating hierarchical, editable menus that can display on an `ITextDisplay` and are driven using either an [`IRotaryEncoder`](/API/Sensors/Rotary/IRotaryEncoder) or [`IButton`](/API/Sensors/Buttons/IButton) interfaces. Drivers for displays, such as MicroLiquidCrystal or Serial LCD, share a common interface `ITextDisplay` that make it easy to plug in and integrate with the `TextDisplayMenu`.
+The `TextDisplayMenu` library is an extensible framework for quickly creating hierarchical, editable menus that can display on an `ITextDisplay` and are driven using either an [`IRotaryEncoder`](/API/Sensors/Rotary/IRotaryEncoder) or [`IButton`](/API/Sensors/Buttons/IButton) interfaces. Drivers for displays, such as Serial LCD, share a common interface `ITextDisplay` that make it easy to plug in and integrate with the `TextDisplayMenu`.
 
 ![](TextDisplayMenu.gif)
 
@@ -14,17 +14,17 @@ The menu can be created programmatically or loaded from JSON, and has a number o
 
 # Using
 
-To use the menu, you'll need; an [`ITextDisplay`](/API/Displays/ITextDisplay/) compatible LCD or other display, as well as some combination of buttons and rotary encoder that allows for **next**, **previous**, and **select** functionality. For instance, you can use; three discrete [`IButton`](link) inputs for next/previous/selection, a rotary encoder for next/previous and an `IButton` for selection, or a [`RotaryEncoderWithPushButton`](link) to handle all three inputs.
+To use the menu, you'll need an [`ITextDisplay`](/API/Displays/ITextDisplay/) compatible LCD or other display, as well as some combination of buttons and rotary encoder that allows for **next**, **previous**, and **select** functionality. For instance, you can use; three discrete [`IButton`](/API/Sensors/Buttons/IButton/) inputs for next/previous/selection, a rotary encoder for next/previous and an `IButton` for selection, or a [`RotaryEncoderWithPushButton`](/API/Sensors/Rotary/RotaryEncoderWithButton/) to handle all three inputs.
 
-Currently, display drivers are available for [MicroLiquidCrystal Library](/Library/Displays/MicroLiquidCrystal), [Serial LCD](/Library/Displays/SerialLCD), and [SSD 1306](/Library/Displays/SSD1306) with more coming soon.
+Currently, display drivers are available for [Serial LCD](/Library/Displays/SerialLCD) and [SSD 1306](/Library/Displays/SSD1306) with more coming soon.
 
 ## Circuit
 
-The following schematic illustrates a typical holistic configuration for driving the menu and includes a common 4 line LCD display that's driven directly from Netduino's digital GPIO pins, as well as a rotary encoder with push button:
+The following schematic illustrates a typical holistic configuration for driving the menu and includes a common four line LCD display that's driven directly from Netduino's digital GPIO pins, as well as a rotary encoder with push button:
 
 ![](TextDisplayMenu_Board.png)
 
-[photo of it in the appliance control box would be good, too. can link to the 3D stuff]
+![](lcd_container.jpg)
 
 ## Sample Code
 
@@ -84,7 +84,7 @@ public Menu(ITextDisplay display, IButton buttonNext, IButton buttonPrevious, IB
 
 # Loading a Menu From JSON
 
-To create the menu from JSON, first define the menu contents in a .json file, and then add it as a resource:
+To create the menu from JSON, first define the menu contents in a JSON file, and then add it as a resource.
 
 ## Sample Definition
 
@@ -169,7 +169,7 @@ menu.Selected += (s, e) =>
 
 ## Exit Event
 
-If the menu is not the desired screen to be loaded when the application launches, then the menu can be programatically can he loaded or unloaded by using `Enable()` or `Disable()`, respectively.  Additionally, there is an optional parameter when instantiating a new Menu, `showBackOnRoot`, and when set to `true`, "< Back" displays as the first item on the root level and when selected, an `Exited` event will be raised.
+If the menu is not the desired application launch screen, then the menu can be programatically can be loaded or unloaded by using `Enable()` or `Disable()`, respectively.  Additionally, there is an optional parameter when instantiating a new Menu, `showBackOnRoot`, and when set to `true`, "< Back" displays as the first item on the root level and when selected, an `Exited` event will be raised.
 
 To get notified when the menu is exited, assign a handler to the `Exited` event:
 
@@ -211,15 +211,15 @@ There are two ways to create custom menu items. The easiest and most common is t
 
 ## Customizing Built-In Base Types
 
-`TextDisplayMenu` includes a number of built-in base types that handle common types input and can be customized to suit:
+`TextDisplayMenu` includes a number of built-in base types that handle common types and can be customized to suit:
 
 | Base Type     | Description                                                   |
 |---------------|---------------------------------------------------------------|
 | `NumericBase` | Provides a generic numeric display and input. The min/max, and number of decimal places can be modified. |
-| `TimeBase`    | [describe] |
+| `TimeBase`    | Provides an input mask of `XX:XX:XX` or `XX:XX` depending on the mode. |
 | `ListBase`    | Provides a selectable list of items. |
 
-### Custom NumericBase Example [note i modified the heading title to make descriptive]
+### Custom NumericBase Example
 
 The following code is pulled from the `Age` menu type, and illustrates how to inherit from `NumericBase` and specify the floor, ceiling, and scale of the desired input.
 
@@ -231,9 +231,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
 {
     public class Age : NumericBase
     {
-        public Age(): base(0, 100, 0)
-        {
-        }
+        public Age(): base(0, 100, 0) { }
     }
 }
 ```
@@ -279,4 +277,4 @@ We experienced periodic problems with the display outputting nonsense data:
 
 ![](TextDisplayMenu_BadOutput.jpg)
 
-To resolve, check that are the connections are securely in place or use a different breadboard.
+To resolve, check that are the connections are securely in place and/or use a different breadboard.
