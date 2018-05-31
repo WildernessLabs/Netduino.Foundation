@@ -11,7 +11,7 @@ namespace Netduino.Foundation.ICs.IOExpanders.MCP23008
         {
             get
             {
-                return true;
+                return _mcp.ReadPort(_pin);
             }
         }
 
