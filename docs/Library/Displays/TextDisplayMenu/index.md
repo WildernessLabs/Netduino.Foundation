@@ -24,6 +24,8 @@ The following schematic illustrates a typical holistic configuration for driving
 
 ![](TextDisplayMenu_Board.png)
 
+![](Front_Medium.jpg)
+
 ![](lcd_container.jpg)
 
 ## Sample Code
