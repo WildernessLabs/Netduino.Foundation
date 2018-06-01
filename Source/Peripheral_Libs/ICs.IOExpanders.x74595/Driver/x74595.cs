@@ -120,6 +120,11 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
             LatchData();
         }
 
+        public void WriteToPorts()
+        {
+
+        }
+
         /// <summary>
         ///     Clear all of the bits in the shift register.
         /// </summary>
