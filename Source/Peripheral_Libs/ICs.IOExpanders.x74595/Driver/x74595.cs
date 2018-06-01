@@ -90,6 +90,7 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
                 if ((bit >= 0) && (bit < _bits.Length))
                 {
                     _bits[bit] = value;
+                    LatchData();
                 }
                 else
                 {
@@ -139,7 +140,7 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
         /// <summary>
         ///     Send the data to the SPI interface.
         /// </summary>
-        public void LatchData()
+        void LatchData()
         {
             var data = new byte[_numberOfChips];
 
