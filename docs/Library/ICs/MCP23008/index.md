@@ -75,21 +75,31 @@ Instantiates a new MCP23008 using the specified address and I2C bus speed.
 
 ### Methods
 
+#### `public DigitalInputPort CreateInputPort(byte pin, bool enablePullUp = false)`
+
+Creates a new `DigitalInputPort` (which implements [`IDigitalInputPort`](/API/GPIO/IDigitalInputPort/) using the specified pin and pull up resistor setting.
+
+#### `public void ConfigureInputPort(byte pin, bool enablePullUp = false, bool enableInterrupt = true)`
+
+Configures the specified pin to be an input port. 
+
+**NOTE** This is a pre-release driver, and interrupts have not been implemented yet.
+
 #### `public DigitalOutputPort CreateOutputPort(byte pin, bool initialState)`
 
-Creates a new `DigitalOutputPort` (which implements [`IDigitalOutputPort`](/API/GPIO/IDigitalOutputPort/)) using the specified pin and initial state.
+Creates a new `DigitalOutputPort` (which implements [`IDigitalOutputPort`](/API/GPIO/IDigitalOutputPort/) using the specified pin and initial state.
 
 This method allows you to use a pin on the MCP23008 as if it were a digital output pin on the Netduino, via the [unified GPIO architecture](/API/GPIO/).
 
 #### `public void SetPortDirection(byte pin, PortDirectionType direction)`
 
-Configures the specified pin to be either an input or output port.
+Configures the specified pin to be either an input or output port. Note: when using the high-level `IDigitalPort` API, it's not necessary to call this method.
 
 #### `public void WriteToPort(int pin, bool value)`
 
 Sets a particular pin's value, either high/`3.3V` (`true`), or low/`0V` (`false`). If that pin is not in output mode, this method will first set its direction to output.
 
-#### `public void OutputWrite(byte outputMask)`
+#### `public void WriteToPorts(byte outputMask)`
 
 Outputs a byte value across all of the pins by writing directly to the output latch (OLAT) register.
 
