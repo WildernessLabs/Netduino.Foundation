@@ -10,6 +10,9 @@ The MCP23008 chip is an 8-bit (8 port) digital I/O expander chip that uses I2C t
 
 MCP23008 is a ubiquitous chip in the hardware world and is the typical interface chip for common I2C LCD backpacks, with the [`74595`](/Library/ICs/74595/) chip being the typical interface chip for SPI LCD backpacks.
 
+**NOTE** This is a pre-release driver, and interrupts have not been implemented yet.
+
+
 ## MCP Chip Family
 
 In addition to the MCP23008, the MCP family of chips includes; the MCP23017, which is a 16-bit version of the MCP23008, offering 16 digital ports in total, and the MCP23S08 and MCP23S017 which are SPI versions of the MCP23008 and MCP23017, respectively.
@@ -31,10 +34,6 @@ Relay relay = new Relay(relayPort);
 // toggle the relay
 relay.Toggle();
 ```
-
-# Hardware
-
-[schematic of wiring it up]
 
 ## Chip Addressing
 
@@ -149,9 +148,19 @@ namespace MCP23008_SimpleDigitalWrites
 
 ```
 
+### Circuit
+
+The following circuit illustrates using an MCP23008 chip to drive 8 LEDs. Note that I2C pins are pulled to high (`3.3V`) using `4.7kΩ` resistors. For more information on pull-up resistors, see the [Netduino I2C documentation](http://developer.wildernesslabs.co/Netduino/Input_Output/Digital/I2C/).
+
+![](Output_bb.svg)
+
+Also note that all three address pins are pulled high for an I2C address of `39`.
+
 ## Digital Output Port High-level API Sample
 
 The [MCP23008_DigitalOutputPort](https://github.com/WildernessLabs/Netduino.Foundation/tree/MCP23008/Source/Peripheral_Libs/ICs.MCP23008/Samples/MCP23008_DigitalOutputPort) sample illustrates using the high-level unified GPIO API to write to a pin on the chip via a `DigitalOutputPort` object.
+
+Note that this example code uses the same circuit as above:
 
 ```csharp
 using System;
@@ -238,3 +247,11 @@ namespace MCP23008_RelaySample
     }
 }
 ```
+
+### Circuit
+
+The following breadboard circuit diagram illustrates the concept of driving a relay via an MCP23008 output pin. 
+
+![](Output_w_Relay_bb.svg)
+
+Note that in this case, the relay actually represents a relay circuit board such as the one described in the Wilderness Labs [relay guide](http://developer.wildernesslabs.co/Hardware/Reference/Peripherals/Relays/). When driving a relay directly, a slightly more complicated circuit is required. See the relay guide for more information.
