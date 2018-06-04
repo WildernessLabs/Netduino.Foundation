@@ -223,7 +223,7 @@ namespace Netduino.Foundation.ICs.IOExpanders.MCP23008
         /// to the output latch (OLAT) register.
         /// </summary>
         /// <param name="outputMask"></param>
-        public void OutputWrite(byte outputMask)
+        public void WriteToPorts(byte outputMask)
         {
             // set all IO to output
             if (_iodir != 0) {

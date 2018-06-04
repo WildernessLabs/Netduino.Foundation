@@ -19,7 +19,7 @@ namespace MCP23008_SimpleDigitalWrites
                 {
                     // can write a byte mask that specifies all the pin
                     // values in one byte
-                    _mcp.OutputWrite((byte)(1 << i));
+                    _mcp.WriteToPorts((byte)(1 << i));
 
                     // or you can write to individual pins:
                     //for (int j = 0; j <= 7; j++) {
