@@ -24,7 +24,7 @@ The following schematic illustrates a typical holistic configuration for driving
 
 ![](TextDisplayMenu_Board.png)
 
-The [Appliance Hacking Enclosure](https://github.com/WildernessLabs/3D_Print_Designs/tree/master/Enclosures/ApplianceControl) was specifically designed and 3D printed with the TextMenuDisplay in mind.
+The [Appliance Hacking Enclosure](https://github.com/WildernessLabs/3D_Print_Designs/tree/master/Enclosures/ApplianceControl) was specifically designed and 3D printed with the TextMenuDisplay in mind:
 
 ![](Front_Medium.jpg)
 
