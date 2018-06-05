@@ -107,22 +107,47 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
         /// <returns></returns>
         public DigitalOutputPort CreateOutputPort(byte pin, bool initialState)
         {
-            // create the convenience class
-            return new DigitalOutputPort(this, pin, initialState);
+            if (IsValidPin(pin))
+            {
+                // create the convenience class
+                return new DigitalOutputPort(this, pin, initialState);
+            }
+
+            throw new System.Exception("Pin is out of range");
         }
 
+        /// <summary>
+        /// Sets a particular pin's value. 
+        /// </summary>
+        /// <param name="pin">The pin to write to.</param>
+        /// <param name="value">The value to write. True for high, false for low.</param>
         public void WriteToPort(byte pin, bool value)
         {
-            // write new value on the especific pin
-            _bits[pin] = value;
+            if (IsValidPin(pin))
+            {
+                // write new value on the especific pin
+                _bits[pin] = value;
 
-            // send the data to the SPI interface.
-            LatchData();
+                // send the data to the SPI interface.
+                LatchData();
+            }
+            else
+            {
+                throw new System.Exception("Pin is out of range");
+            }
         }
 
-        public void WriteToPorts()
+        /// <summary>
+        /// Outputs a byte value across all of the pins by writing directly 
+        /// to the shift register.
+        /// </summary>
+        /// <param name="mask"></param>
+        public void WriteToPorts(byte mask)
         {
-
+            for (byte i=0; i<8; i++)
+            {
+                _bits[i] = BitHelpers.GetBitValue(mask, i);
+            }
         }
 
         /// <summary>
@@ -145,7 +170,7 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
         /// <summary>
         ///     Send the data to the SPI interface.
         /// </summary>
-        void LatchData()
+        protected void LatchData()
         {
             var data = new byte[_numberOfChips];
 
@@ -164,6 +189,11 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
                 }
             }
             _spi.WriteBytes(data);
+        }
+
+        protected bool IsValidPin(byte pin)
+        {
+            return (pin >= 0 && pin <= 7);
         }
 
         #endregion

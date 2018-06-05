@@ -261,8 +261,8 @@ namespace Netduino.Foundation.ICs.IOExpanders.MCP23008
         /// Outputs a byte value across all of the pins by writing directly 
         /// to the output latch (OLAT) register.
         /// </summary>
-        /// <param name="outputMask"></param>
-        public void WriteToPorts(byte outputMask)
+        /// <param name="mask"></param>
+        public void WriteToPorts(byte mask)
         {
             // set all IO to output
             if (_iodir != 0) {
@@ -270,7 +270,7 @@ namespace Netduino.Foundation.ICs.IOExpanders.MCP23008
                 this._i2cBus.WriteRegister(_IODirectionRegister, _iodir);
             }
             // write the output
-            _olat = outputMask;
+            _olat = mask;
             this._i2cBus.WriteRegister(_OutputLatchRegister, _olat);
         }
 
