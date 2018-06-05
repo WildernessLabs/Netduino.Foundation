@@ -148,6 +148,9 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
             {
                 _bits[i] = BitHelpers.GetBitValue(mask, i);
             }
+
+            // send the data to the SPI interface.
+            LatchData();
         }
 
         /// <summary>
