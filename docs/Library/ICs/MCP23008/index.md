@@ -90,17 +90,9 @@ Creates a new `DigitalOutputPort` (which implements [`IDigitalOutputPort`](/API/
 
 This method allows you to use a pin on the MCP23008 as if it were a digital output pin on the Netduino, via the [unified GPIO architecture](/API/GPIO/).
 
-#### `public DigitalInputPort CreateInputPort(byte pin, bool enablePullUp = false)`
-
-Creates a new `DigitalInputPort'
-
 #### `public void SetPortDirection(byte pin, PortDirectionType direction)`
 
 Configures the specified pin to be either an input or output port. Note: when using the high-level `IDigitalPort` API, it's not necessary to call this method.
-
-#### `public void ConfigureInputPort(byte pin, bool enablePullUp = false, bool enableInterrupt = true)`
-
-Creates a new `DigitalInputPort'
 
 #### `public void WriteToPort(int pin, bool value)`
 
