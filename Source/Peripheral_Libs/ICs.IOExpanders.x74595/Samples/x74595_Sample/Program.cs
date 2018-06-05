@@ -26,7 +26,6 @@ namespace x74595_Sample
                 for (byte index = 0; index <= 7; index++)
                 {
                     shiftRegister[index] = true;
-                    shiftRegister.LatchData();
                     Thread.Sleep(500);
                     shiftRegister[index] = false;
                 }

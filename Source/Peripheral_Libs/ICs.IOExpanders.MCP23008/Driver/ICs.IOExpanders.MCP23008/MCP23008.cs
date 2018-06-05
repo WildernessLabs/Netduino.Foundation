@@ -71,7 +71,7 @@ namespace Netduino.Foundation.ICs.IOExpanders.MCP23008
             Debug.Print("initialized.");
 
             // make sure the chip is in a default state
-            ResetChip();
+            Initialize();
             Debug.Print("Chip Reset.");
             //Thread.Sleep(100);
 
@@ -88,7 +88,7 @@ namespace Netduino.Foundation.ICs.IOExpanders.MCP23008
             //Debug.Print("OLAT: " + _olat.ToString("X"));
         }
 
-        protected void ResetChip()
+        protected void Initialize()
         {
             byte[] buffers = new byte[10];
 
@@ -118,25 +118,35 @@ namespace Netduino.Foundation.ICs.IOExpanders.MCP23008
         /// <returns></returns>
         public DigitalOutputPort CreateOutputPort(byte pin, bool initialState)
         {
-            // setup the port internally for output
-            this.SetPortDirection(pin, PortDirectionType.Output);
+            if (IsValidPin(pin))
+            {
+                // setup the port internally for output
+                this.SetPortDirection(pin, PortDirectionType.Output);
 
-            // create the convenience class
-            DigitalOutputPort port = new DigitalOutputPort(this, pin, initialState);
+                // create the convenience class
+                DigitalOutputPort port = new DigitalOutputPort(this, pin, initialState);
 
-            // return the port
-            return port;
+                // return the port
+                return port;
+            }
+
+            throw new System.Exception("Pin is out of range");
         }
 
         public DigitalInputPort CreateInputPort(byte pin, bool enablePullUp = false)
         {
-            // configure the pin
-            this.ConfigureInputPort(pin, enablePullUp, false);
+            if (IsValidPin(pin))
+            {
+                // configure the pin
+                this.ConfigureInputPort(pin, enablePullUp, false);
 
-            // create the convenience class
-            DigitalInputPort port = new DigitalInputPort(this, pin, false);
+                // create the convenience class
+                DigitalInputPort port = new DigitalInputPort(this, pin, false);
 
-            return port;
+                return port;
+            }
+
+            throw new System.Exception("Pin is out of range");
         }
 
         /// <summary>
@@ -146,44 +156,61 @@ namespace Netduino.Foundation.ICs.IOExpanders.MCP23008
         /// <param name="direction"></param>
         public void SetPortDirection(byte pin, PortDirectionType direction)
         {
-            // if it's already configured, get out. (1 = input, 0 = output)
-            if (direction == PortDirectionType.Input) {
-                if (BitHelpers.GetBitValue(_iodir, pin)) return;
-                //if ((_iodir & (byte)(1 << pin)) != 0) return;
-            } else {
-                if (!BitHelpers.GetBitValue(_iodir, pin)) return;
-                //if ((_iodir & (byte)(1 << pin)) == 0) return;
-            }
+            if (IsValidPin(pin))
+            {
+                // if it's already configured, get out. (1 = input, 0 = output)
+                if (direction == PortDirectionType.Input)
+                {
+                    if (BitHelpers.GetBitValue(_iodir, pin)) return;
+                    //if ((_iodir & (byte)(1 << pin)) != 0) return;
+                }
+                else
+                {
+                    if (!BitHelpers.GetBitValue(_iodir, pin)) return;
+                    //if ((_iodir & (byte)(1 << pin)) == 0) return;
+                }
 
-            // set the IODIR bit and write the setting
-            _iodir = BitHelpers.SetBit(_iodir, (byte)pin, (byte)direction);
-            this._i2cBus.WriteRegister(_IODirectionRegister, _iodir);
+                // set the IODIR bit and write the setting
+                _iodir = BitHelpers.SetBit(_iodir, (byte)pin, (byte)direction);
+                this._i2cBus.WriteRegister(_IODirectionRegister, _iodir);
+            }
+            else
+            {
+                throw new System.Exception("Pin is out of range");
+            }
         }
 
         public void ConfigureInputPort(byte pin, bool enablePullUp = false, bool enableInterrupt = true)
         {
-            // set the port direction
-            this.SetPortDirection(pin, PortDirectionType.Input);
+            if (IsValidPin(pin))
+            {
+                // set the port direction
+                this.SetPortDirection(pin, PortDirectionType.Input);
 
-            // refresh out pull up state
-            // TODO: do away with this and trust internal state?
-            _gppu = this._i2cBus.ReadRegister(_PullupResistorConfigurationRegister);
+                // refresh out pull up state
+                // TODO: do away with this and trust internal state?
+                _gppu = this._i2cBus.ReadRegister(_PullupResistorConfigurationRegister);
 
-            _gppu = BitHelpers.SetBit(_gppu, pin, enablePullUp);
+                _gppu = BitHelpers.SetBit(_gppu, pin, enablePullUp);
 
-            this._i2cBus.WriteRegister(_PullupResistorConfigurationRegister, _gppu);
+                this._i2cBus.WriteRegister(_PullupResistorConfigurationRegister, _gppu);
 
-            if (enableInterrupt) {
-                // interrupt on change (whether or not we want to raise an interrupt on the interrupt pin on change)
-                byte gpinten = this._i2cBus.ReadRegister(_InterruptOnChangeRegister);
-                gpinten = BitHelpers.SetBit(gpinten, pin, true);
+                if (enableInterrupt)
+                {
+                    // interrupt on change (whether or not we want to raise an interrupt on the interrupt pin on change)
+                    byte gpinten = this._i2cBus.ReadRegister(_InterruptOnChangeRegister);
+                    gpinten = BitHelpers.SetBit(gpinten, pin, true);
 
-                // interrupt control register; whether or not the change is based 
-                // on default comparison value, or if a change from previous. We 
-                // want to raise on change, so we set it to 0, always.
-                byte interruptControl = this._i2cBus.ReadRegister(_InterruptControlRegister);
-                interruptControl = BitHelpers.SetBit(interruptControl, pin, false);
-
+                    // interrupt control register; whether or not the change is based 
+                    // on default comparison value, or if a change from previous. We 
+                    // want to raise on change, so we set it to 0, always.
+                    byte interruptControl = this._i2cBus.ReadRegister(_InterruptControlRegister);
+                    interruptControl = BitHelpers.SetBit(interruptControl, pin, false);
+                }
+            }
+            else
+            {
+                throw new System.Exception("Pin is out of range");
             }
         }
 
@@ -196,34 +223,46 @@ namespace Netduino.Foundation.ICs.IOExpanders.MCP23008
         /// <param name="value">The value to write. True for high, false for low.</param>
         public void WriteToPort(byte pin, bool value)
         {
-            // if the pin isn't configured for output, configure it
-            this.SetPortDirection((byte)pin, PortDirectionType.Output);
+            if (IsValidPin(pin))
+            {
+                // if the pin isn't configured for output, configure it
+                this.SetPortDirection((byte)pin, PortDirectionType.Output);
 
-            // update our output latch 
-            _olat = BitHelpers.SetBit(_olat, (byte)pin, value);
+                // update our output latch 
+                _olat = BitHelpers.SetBit(_olat, (byte)pin, value);
 
-            // write to the output latch (actually does the output setting)
-            this._i2cBus.WriteRegister(_OutputLatchRegister, _olat);
+                // write to the output latch (actually does the output setting)
+                this._i2cBus.WriteRegister(_OutputLatchRegister, _olat);
+            }
+            else
+            {
+                throw new System.Exception("Pin is out of range");
+            }
         }
 
         public bool ReadPort(byte pin)
         {
-            // if the pin isn't set for input, configure it
-            this.SetPortDirection((byte)pin, PortDirectionType.Input);
+            if (IsValidPin(pin))
+            {
+                // if the pin isn't set for input, configure it
+                this.SetPortDirection((byte)pin, PortDirectionType.Input);
 
-            // update our GPIO values
-            _gpio = this._i2cBus.ReadRegister(_GPIORegister);
+                // update our GPIO values
+                _gpio = this._i2cBus.ReadRegister(_GPIORegister);
 
-            // return the value on that port
-            return BitHelpers.GetBitValue(_gpio, (byte)pin);
+                // return the value on that port
+                return BitHelpers.GetBitValue(_gpio, (byte)pin);
+            }
+
+            throw new System.Exception("Pin is out of range");
         }
 
         /// <summary>
         /// Outputs a byte value across all of the pins by writing directly 
         /// to the output latch (OLAT) register.
         /// </summary>
-        /// <param name="outputMask"></param>
-        public void WriteToPorts(byte outputMask)
+        /// <param name="mask"></param>
+        public void WriteToPorts(byte mask)
         {
             // set all IO to output
             if (_iodir != 0) {
@@ -231,10 +270,14 @@ namespace Netduino.Foundation.ICs.IOExpanders.MCP23008
                 this._i2cBus.WriteRegister(_IODirectionRegister, _iodir);
             }
             // write the output
-            _olat = outputMask;
+            _olat = mask;
             this._i2cBus.WriteRegister(_OutputLatchRegister, _olat);
         }
 
+        protected bool IsValidPin(byte pin)
+        {
+            return (pin >= 0 && pin <= 7);
+        }
 
         // what's a good way to do this? maybe constants? how to name?
         public enum ValidSpeeds : ushort
