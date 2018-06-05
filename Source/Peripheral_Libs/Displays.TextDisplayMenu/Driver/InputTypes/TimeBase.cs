@@ -74,15 +74,36 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
             _display.Clear();
             _display.WriteLine("Enter " + this.TimeModeDisplay, 0);
             _display.SetCursorPosition(0, 1);
-            _encoder.Clicked += HandleClicked;
-            _encoder.Rotated += HandleRotated;
+
+            RegisterHandlers();
             ParseValue(currentValue);
             RewriteInputLine(TimeDisplay);
         }
 
-        private void HandleRotated(object sender, RotaryTurnedEventArgs e)
+        protected override void HandlePrevious(object sender, EventArgs e)
         {
-            int min = 0, max = 0;
+            DoPrevious();
+        }
+
+        protected override void HandleNext(object sender, EventArgs e)
+        {
+            DoNext();
+        }
+
+        protected override void HandleRotated(object sender, RotaryTurnedEventArgs e)
+        {
+            if (e.Direction == RotationDirection.Clockwise)
+            {
+                DoNext();
+            }
+            else
+            {
+                DoPrevious();
+            }
+        }
+        private void DoNext()
+        {
+            int max = 0;
 
             if (_pos == 0)
             {
@@ -95,19 +116,19 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
                 max = 59;
             }
 
-            if (e.Direction == RotationDirection.Clockwise)
-            {
-                if (_timeParts[_pos] < max) _timeParts[_pos]++;
-            }
-            else
-            {
-                if (_timeParts[_pos] > min) _timeParts[_pos]--;
-            }
-
+            if (_timeParts[_pos] < max) _timeParts[_pos]++;
             RewriteInputLine(TimeDisplay);
         }
 
-        private void HandleClicked(object sender, EventArgs e)
+
+        private void DoPrevious()
+        {
+            int min = 0;
+            if (_timeParts[_pos] > min) _timeParts[_pos]--;
+            RewriteInputLine(TimeDisplay);
+        }
+
+        protected override void HandleClicked(object sender, EventArgs e)
         {
             if (_pos < _timeParts.Length - 1)
             {
@@ -115,8 +136,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
             }
             else
             {
-                _encoder.Clicked -= HandleClicked;
-                _encoder.Rotated -= HandleRotated;
+                UnregisterHandlers();
 
                 TimeSpan timeSpan;
 

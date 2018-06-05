@@ -46,6 +46,10 @@
       <Project>{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}</Project>
       <Name>Netduino.Foundation</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\ICs.IOExpanders.MCP23008\Driver\ICs.IOExpanders.MCP23008.csproj">
+      <Project>{3E2D1916-C1B2-41C4-A368-5081123FD8A3}</Project>
+      <Name>ICs.IOExpanders.MCP23008</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\$(TargetFrameworkVersion)\CSharp.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\$(TargetFrameworkVersion)\CSharp.targets')" />
   <Import Project="$([System.Environment]::GetFolderPath(SpecialFolder.LocalApplicationData))\.NETMicroFramework\xbuild\Microsoft\.NET Micro Framework\$(TargetFrameworkVersion)\CSharp.targets" Condition="!Exists('$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\$(TargetFrameworkVersion)\CSharp.targets')" />

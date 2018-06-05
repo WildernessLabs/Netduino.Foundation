@@ -30,7 +30,7 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
 
         public static bool Contains(string text, string search)
         {
-            return text.IndexOf(search, 0) > 0;
+            return text.IndexOf(search, 0) >= 0;
         }
 
         public static string Replace(string text, string oldValue, string newValue)

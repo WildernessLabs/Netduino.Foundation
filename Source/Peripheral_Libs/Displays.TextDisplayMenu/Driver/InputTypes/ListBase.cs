@@ -32,30 +32,50 @@ namespace Netduino.Foundation.Displays.TextDisplayMenu.InputTypes
             _display.WriteLine("Select", 0);
             _display.SetCursorPosition(0, 1);
 
-            _encoder.Rotated += HandleRotated;
-            _encoder.Clicked += HandleClicked;
+            RegisterHandlers();
             ParseValue(currentValue);
             RewriteInputLine(OutputDisplay);
         }
 
-        private void HandleClicked(object sender, EventArgs e)
+        protected override void HandlePrevious(object sender, EventArgs e)
         {
-            _encoder.Clicked -= HandleClicked;
-            _encoder.Rotated -= HandleRotated;
+            DoPrevious();
+        }
 
+        protected override void HandleNext(object sender, EventArgs e)
+        {
+            DoNext();
+        }
+
+        protected override void HandleClicked(object sender, EventArgs e)
+        {
+            UnregisterHandlers();
             ValueChanged(this, new ValueChangedEventArgs(_itemID, _choices[_selectedIndex]));
         }
 
-        private void HandleRotated(object sender, Sensors.Rotary.RotaryTurnedEventArgs e)
+        protected override void HandleRotated(object sender, Sensors.Rotary.RotaryTurnedEventArgs e)
         {
             if (e.Direction == RotationDirection.Clockwise)
             {
-                _rotatedIndex++;
+                DoNext();
             }
             else
             {
-                _rotatedIndex--;
+                DoPrevious();
             }
+        }
+
+        private void DoNext()
+        {
+            _rotatedIndex++;
+            _selectedIndex = _rotatedIndex % _choices.Length;
+            if (_selectedIndex < 0) _selectedIndex *= -1;
+            RewriteInputLine(OutputDisplay);
+        }
+       
+        private void DoPrevious()
+        {
+            _rotatedIndex--;
             _selectedIndex = _rotatedIndex % _choices.Length;
             if (_selectedIndex < 0) _selectedIndex *= -1;
             RewriteInputLine(OutputDisplay);

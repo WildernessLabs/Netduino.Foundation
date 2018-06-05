@@ -24,7 +24,8 @@ namespace Netduino.Foundation.Controllers.PID
             // time delta (how long since last calculation)
             var dt = now - _lastUpdateTime;
             // seconds is better than ticks to bring our calculations into perspective
-            var seconds = (float)(dt.Ticks / 10000 / 1000);
+            //var seconds = (float)(dt.Ticks / 10000 / 1000);
+            var seconds = ((float)dt.Ticks / 10000f / 1000f);
 
             // if no time has passed, don't make any changes.
             if (dt.Ticks <= 0.0) return _lastControlOutputValue;

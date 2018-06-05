@@ -5,11 +5,15 @@ using Netduino.Foundation.Sensors.Buttons;
 
 namespace Netduino.Foundation.Sensors.Rotary
 {
-    public class RotaryEncoderWithButton : RotaryEncoder, IButton
+    public class RotaryEncoderWithButton : RotaryEncoder, IRotaryEncoderWithButton
     {
         public event EventHandler PressStarted = delegate { };
         public event EventHandler PressEnded = delegate { };
         public event EventHandler Clicked = delegate { };
+
+        public bool State {
+            get { return _button.State; }
+        }
 
         public PushButton Button
         {

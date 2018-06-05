@@ -14,9 +14,9 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE,MF_FRAMEWORK_VERSION_V4_3</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ArrayEventArgs.cs" />
+    <Compile Include="BitHelpers.cs" />
     <Compile Include="Color.cs" />
     <Compile Include="Communications\I2CBus.cs" />
     <Compile Include="Communications\ICommunicationBus.cs" />
@@ -45,9 +46,23 @@
     <Compile Include="Displays\TextDisplayConfig.cs" />
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="Generators\SoftPWM.cs" />
+    <Compile Include="GPIO\DigitalInputPortBase.cs" />
+    <Compile Include="GPIO\DigitalOutputPortBase.cs" />
+    <Compile Include="GPIO\DigitalPortBase.cs" />
+    <Compile Include="GPIO\IAnalogPort.cs" />
+    <Compile Include="GPIO\IDigitalInputPort.cs" />
+    <Compile Include="GPIO\IDigitalOutputPort.cs" />
+    <Compile Include="GPIO\IDigitalPort.cs" />
+    <Compile Include="GPIO\IInterruptPort.cs" />
+    <Compile Include="GPIO\IPort.cs" />
+    <Compile Include="GPIO\PortDirectionType.cs" />
+    <Compile Include="GPIO\PortInterruptEventArgs.cs" />
+    <Compile Include="GPIO\PortSignalType.cs" />
+    <Compile Include="GPIO\SPOT\DigitalOutputPort.cs" />
     <Compile Include="Helpers\NumericExtensions.cs" />
     <Compile Include="Displays\ITextDisplay.cs" />
     <Compile Include="LEDs\Helpers.cs" />
+    <Compile Include="LEDs\Led.cs" />
     <Compile Include="LEDs\PwmLed.cs" />
     <Compile Include="LEDs\RgbPwmLed.cs" />
     <Compile Include="LEDs\TypicalForwardVoltage.cs" />
@@ -65,6 +80,7 @@
     <Compile Include="Sensors\ILightSensor.cs" />
     <Compile Include="Sensors\IPressureSensor.cs" />
     <Compile Include="Sensors\ISensor.cs" />
+    <Compile Include="Sensors\Rotary\IRotaryEncoderWithButton.cs" />
     <Compile Include="Sensors\Rotary\RotaryEncoderWithButton.cs" />
     <Compile Include="Sensors\Rotary\TwoBitGrayCode.cs" />
     <Compile Include="Sensors\Rotary\IRotaryEncoder.cs" />

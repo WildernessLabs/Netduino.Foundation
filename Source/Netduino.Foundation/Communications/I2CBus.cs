@@ -169,15 +169,25 @@ namespace Netduino.Foundation.Communications
             };
             var bytesTransferred = 0;
             var retryCount = 0;
-            while (bytesTransferred != (write.Length + read.Length))
+
+            while (_device.Execute(transaction, _transactionTimeout) != (write.Length + read.Length))
             {
                 if (retryCount > 3)
                 {
                     throw new Exception("WriteRead: Retry count exceeded.");
                 }
                 retryCount++;
-                bytesTransferred = _device.Execute(transaction, _transactionTimeout);
             }
+
+            //while (bytesTransferred != (write.Length + read.Length))
+            //{
+            //    if (retryCount > 3)
+            //    {
+            //        throw new Exception("WriteRead: Retry count exceeded.");
+            //    }
+            //    retryCount++;
+            //    bytesTransferred = _device.Execute(transaction, _transactionTimeout);
+            //}
             return read;
         }
 

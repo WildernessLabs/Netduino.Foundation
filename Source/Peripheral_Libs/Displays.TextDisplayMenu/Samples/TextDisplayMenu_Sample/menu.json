@@ -14,7 +14,7 @@
       ]
     },
     { "text": "My Command", "command": "DoSomething"},
-    { "text": "Item 6" },
+    { "text": "Quit" },
     { "text": "Item 7" },
     { "text": "Item 8",
       "sub": [
