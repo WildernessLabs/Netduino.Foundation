@@ -30,7 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\..\Netduino.Foundation\RoslynFixHack.cs">
+    <Compile Include="..\..\..\Netduino.Foundation\RoslynFixHack.cs">
       <Link>RoslynFixHack.cs</Link>
     </Compile>
     <Compile Include="DigitalInputPort.cs" />
@@ -45,7 +45,7 @@
     <Reference Include="Microsoft.SPOT.TinyCore" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Netduino.Foundation\Netduino.Foundation.csproj">
+    <ProjectReference Include="..\..\..\Netduino.Foundation\Netduino.Foundation.csproj">
       <Project>{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}</Project>
       <Name>Netduino.Foundation</Name>
     </ProjectReference>
