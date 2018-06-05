@@ -60,6 +60,15 @@ Because there are 8 address possibilities, it's possible to put 8 MCP23008 chips
 
 To make this simpler, when instantiating an MCP23008 object, there is a constructor overload that takes the address pin configurations instead of an address, so that Netduino.Foundation uses the appropriate address based on the pins, instead of requiring a pre-computed address.
 
+## Other Pins
+
+In addition to the address pins, there are a number of other pins that must be connected up:
+
+ * **Not Reset** - The `RESET` pin is actually a "Not Reset." The line above "Reset" means "not." So unless that pin is pulled high (`3.3V`), the chip will reset itself at random times and you'll get connection errors.
+ * **SCL** and **SDA** - The `SCL` and `SDA` pins are the I2C clock and data pins and go to the `SC` and `SD` pins on the Netduino, respectively. Each of these should also generally be pulled high (`3.3V`) via a `4.7kΩ` resistor. See the [I2C guide](http://developer.wildernesslabs.co/Netduino/Input_Output/Digital/I2C/) for more information.
+ * **INT** - The `INT` pin is for interrupt notifications, and is only necessary when using the GPIO pins in input mode and you want an event raised when the input value changes.
+ * **VSS** and **VDD** - These go to ground and 3.3V power, respectively, and power the chip.
+
 # API
 
 ### Constructors
