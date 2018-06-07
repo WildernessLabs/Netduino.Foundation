@@ -2,6 +2,7 @@ nuget pack Netduino.Foundation/Netduino.Foundation.nuspec -NoDefaultExcludes
 nuget pack Peripheral_Libs/Displays.GraphicsLibrary/Driver/Displays.GraphicsLibrary.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Peripheral_Libs/Displays.MicroLiquidCrystal/Driver/Displays.MicroLiquidCrystal.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Peripheral_Libs/Displays.SerialLCD/Driver/Displays.SerialLCD.csproj -NoDefaultExcludes -Prop Configuration=Release
+nuget pack Peripheral_Libs/Displays.LCD.Lcd2004/Driver/Displays.LCD.Lcd2004.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Peripheral_Libs/Displays.SSD1306/Driver/Displays.SSD1306.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Peripheral_Libs/ICs.74595/Driver/ICs.74595.csproj -NoDefaultExcludes -Prop Configuration=Release
 nuget pack Peripheral_Libs/ICs.EEPROM.AT24Cxx/Driver/ICs.EEPROM.AT24Cxx.csproj -NoDefaultExcludes -Prop Configuration=Release
