@@ -4,13 +4,13 @@
     <id>Netduino.Foundation.MCP23008</id>
     <title>WildernessLabs.Netduino.Foundation.ICs.IOExpanders.MCP23008</title>
     <version>$version$</version>
-    <authors>Jorge Ramirez</authors>
+    <authors>Bryan Costanich, Jorge Ramirez</authors>
     <owners>Wilderness Labs</owners>
     <licenseUrl>https://github.com/WildernessLabs/Netduino.Foundation/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/WildernessLabs/Netduino.Foundation</projectUrl>
     <!--    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>MCP23008 for Netduino.Foundation</description>
+    <description>MCP23008 driver for Netduino.Foundation</description>
     <!--    <releaseNotes>First release on Nuget.</releaseNotes> -->
     <copyright>Copyright 2018 Wilderness Labs</copyright>
     <tags>NETMF Netduino</tags>
