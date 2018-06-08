@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <metadata>
-    <id>Netduino.Foundation.SerialLCD</id>
+    <id>Netduino.Foundation.Lcd2004</id>
     <title>WildernessLabs.Netduino.Foundation.Displays.LCD.Lcd2004</title>
     <version>$version$</version>
     <authors>Brian Kim</authors>
