@@ -4,7 +4,7 @@
     <id>Netduino.Foundation.Network</id>
     <title>WildernessLabs.Netduino.Foundation.Network</title>
     <version>$version$</version>
-    <authors>Mark Stevens</authors>
+    <authors>Bryan Costanich, Mark Stevens, Brian Kim, Adrian Stevens</authors>
     <owners>Wilderness Labs</owners>
     <licenseUrl>https://github.com/WildernessLabs/Netduino.Foundation/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/WildernessLabs/Netduino.Foundation</projectUrl>
@@ -15,7 +15,7 @@
     <copyright>Copyright 2018 WildernessLabs</copyright>
     <tags>NETMF Netduino</tags>
     <dependencies>
-      <dependency id="Netduino.Foundation" version="0.15" />
+      <dependency id="Netduino.Foundation" version="0.17" />
     </dependencies>
   </metadata>
   <files>
