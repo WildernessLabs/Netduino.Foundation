@@ -131,6 +131,8 @@ namespace Netduino.Foundation.LEDs
 
             // stop any existing animations
             this.Stop();
+
+            _running = true;
             this._animationThread = new Thread(() => 
             {
                 while (_running)
