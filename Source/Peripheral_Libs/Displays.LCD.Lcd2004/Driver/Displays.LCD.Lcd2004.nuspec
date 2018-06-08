@@ -21,6 +21,6 @@
   <files>
     <file src="bin\Release\Netduino.Foundation.Displays.LCD.Lcd2004.*" target="lib\netmf43" />
     <file src="bin\Release\le\Netduino.Foundation.Displays.LCD.Lcd2004.*" target="lib\netmf43\le" />
-    <file src="bin\Release\be\Netduino.Foundation.Displays.LCD.Lcd2004." target="lib\netmf43\be" />
+    <file src="bin\Release\be\Netduino.Foundation.Displays.LCD.Lcd2004.*" target="lib\netmf43\be" />
   </files>
 </package>
