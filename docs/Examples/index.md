@@ -124,4 +124,4 @@ All external peripherals also include sample code.
 
 | Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
-| [ServoCore](/Library/Servos/Servo)                | Generic servo library. |
+| [ServoCore](/Library/ServoCore)                | Generic servo library. |
