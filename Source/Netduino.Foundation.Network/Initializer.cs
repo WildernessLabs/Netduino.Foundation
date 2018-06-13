@@ -58,7 +58,6 @@ namespace Netduino.Foundation.Network
                 {
                     if (uri == null)
                     {
-                        CurrentNetworkInterface = networkInterface;
                         return true;
                     }
 
@@ -69,8 +68,6 @@ namespace Netduino.Foundation.Network
                         try
                         {
                             MakeWebRequest(uri);
-
-                            CurrentNetworkInterface = networkInterface;
                             return true;
                         }
                         catch (Exception e)
@@ -139,6 +136,8 @@ namespace Netduino.Foundation.Network
 
                     Debug.Print("Got an IP Address: " + networkInterface.IPAddress.ToString());
 
+                    CurrentNetworkInterface = networkInterface;
+
                     if (NetworkConnected != null)
                         NetworkConnected.Invoke(null, EventArgs.Empty);
                     return true;
@@ -152,6 +151,8 @@ namespace Netduino.Foundation.Network
             else
             {
                 Debug.Print("Already have an IP Address: " + networkInterface.IPAddress.ToString());
+
+                CurrentNetworkInterface = networkInterface;
 
                 if (NetworkConnected != null)
                     NetworkConnected.Invoke(null, EventArgs.Empty);
