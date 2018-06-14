@@ -1,6 +1,7 @@
 using System;
 using H = Microsoft.SPOT.Hardware;
 using System.Threading;
+using System.Collections;
 
 namespace Netduino.Foundation.LEDs
 {
@@ -13,6 +14,13 @@ namespace Netduino.Foundation.LEDs
     /// </summary>
     public class RgbPwmLed
     {
+        protected class RunningColorsConfig
+        {
+            public ArrayList Colors { get; set; }
+            public int[] Durations { get; set; }
+            public bool Loop { get; set; }
+        }
+
         public bool IsCommonCathode { get; protected set; }
         public H.Cpu.PWMChannel RedPin { get; protected set; }
         public H.PWM RedPwm { get; protected set; }
@@ -23,7 +31,7 @@ namespace Netduino.Foundation.LEDs
 
 
         // TODO: this should be based on voltage drop so it can be used with or without resistors.
-        protected double dutyCycleMax = .3; // RGB Led doesn't seem to get much brighter than at 30%
+        protected double dutyCycleMax = 0.3; // RGB Led doesn't seem to get much brighter than at 30%
 
         protected float _maximumRedPwmDuty = 1;
         protected float _maximumGreenPwmDuty = 1;
@@ -33,14 +41,15 @@ namespace Netduino.Foundation.LEDs
         public float BlueForwardVoltage { get; protected set; }
 
         protected Thread _animationThread = null;
-        protected bool _running = false;
+        protected bool _isRunning = false;
+        protected RunningColorsConfig _nextRunningColorConfig = null;
 
         /// <summary>
         /// The Color the LED has been set to.
         /// </summary>
         public Color Color
         {
-            get { return this._color; }
+            get { return _color; }
         } protected Color _color = new Color(0, 0, 0);
         
         
@@ -65,34 +74,41 @@ namespace Netduino.Foundation.LEDs
             // validate and persist forward voltages
             if (redLedForwardVoltage < 0 || redLedForwardVoltage > 3.3F) {
                 throw new ArgumentOutOfRangeException("redLedForwardVoltage", "error, forward voltage must be between 0, and 3.3");
-            } this.RedForwardVoltage = redLedForwardVoltage;
+            } RedForwardVoltage = redLedForwardVoltage;
             if (greenLedForwardVoltage < 0 || greenLedForwardVoltage > 3.3F) {
                 throw new ArgumentOutOfRangeException("greenLedForwardVoltage", "error, forward voltage must be between 0, and 3.3");
-            } this.GreenForwardVoltage = greenLedForwardVoltage;
+            } GreenForwardVoltage = greenLedForwardVoltage;
             if (blueLedForwardVoltage < 0 || blueLedForwardVoltage > 3.3F) {
                 throw new ArgumentOutOfRangeException("blueLedForwardVoltage", "error, forward voltage must be between 0, and 3.3");
-            } this.BlueForwardVoltage = blueLedForwardVoltage;
+            } BlueForwardVoltage = blueLedForwardVoltage;
             // calculate and set maximum PWM duty cycles
-            this._maximumRedPwmDuty = Helpers.CalculateMaximumDutyCycle(RedForwardVoltage);
-            this._maximumGreenPwmDuty = Helpers.CalculateMaximumDutyCycle(GreenForwardVoltage);
-            this._maximumBluePwmDuty = Helpers.CalculateMaximumDutyCycle(BlueForwardVoltage);
+            _maximumRedPwmDuty = Helpers.CalculateMaximumDutyCycle(RedForwardVoltage);
+            _maximumGreenPwmDuty = Helpers.CalculateMaximumDutyCycle(GreenForwardVoltage);
+            _maximumBluePwmDuty = Helpers.CalculateMaximumDutyCycle(BlueForwardVoltage);
 
-            this.IsCommonCathode = isCommonCathode;
-            this.RedPin = redPin;
-            this.GreenPin = greenPin;
-            this.BluePin = bluePin;
+            IsCommonCathode = isCommonCathode;
+            RedPin = redPin;
+            GreenPin = greenPin;
+            BluePin = bluePin;
 
-            this.RedPwm = new Microsoft.SPOT.Hardware.PWM(this.RedPin, 100, 0, false);
-            this.GreenPwm = new Microsoft.SPOT.Hardware.PWM(this.GreenPin, 100, 0, false);
-            this.BluePwm = new Microsoft.SPOT.Hardware.PWM(this.BluePin, 100, 0, false);
+            RedPwm = new H.PWM(RedPin, 100, 0, false);
+            GreenPwm = new H.PWM(GreenPin, 100, 0, false);
+            BluePwm = new H.PWM(BluePin, 100, 0, false);
         }
 
         /// <summary>
         /// Sets the current color of the LED.
         /// </summary>
+        /// 
         public void SetColor(Color color)
         {
-            this._color = color;
+            _nextRunningColorConfig = null;
+            UpdateColor(color);
+        }
+
+        void UpdateColor(Color color)
+        {
+            _color = color;
 
             // set the color based on the RGB values
             RedPwm.DutyCycle = (this._color.R * _maximumRedPwmDuty);
@@ -107,9 +123,9 @@ namespace Netduino.Foundation.LEDs
             }
 
             // start our PWMs.
-            this.RedPwm.Start();
-            this.GreenPwm.Start();
-            this.BluePwm.Start();
+            RedPwm.Start();
+            GreenPwm.Start();
+            BluePwm.Start();
         }
 
         // HACK/TODO: this is the signature i want, but it's broken until 4.4. (https://github.com/NETMF/netmf-interpreter/issues/87)
@@ -124,42 +140,70 @@ namespace Netduino.Foundation.LEDs
         /// <param name="loop"></param>
         public void StartRunningColors(System.Collections.ArrayList colors, int[] durations, bool loop = true)
         {
+            if(_isRunning)
+            {
+                _nextRunningColorConfig = new RunningColorsConfig()
+                {
+                    Colors = colors,
+                    Durations = durations,
+                    Loop = loop
+                };
+
+                _isRunning = false;
+                return;
+            }
+            else
+            {
+                _nextRunningColorConfig = null;
+            }
+
             if (durations.Length != 1 && colors.Count != durations.Length)
             {
                 throw new Exception("durations must either have a count of 1, if they're all the same, or colors and durations arrays must be same length.");
             }
 
             // stop any existing animations
-            this.Stop();
+            Stop();
 
-            _running = true;
-            this._animationThread = new Thread(() => 
+            _isRunning = true;
+            _animationThread = new Thread(() => 
             {
-                while (_running)
+                while (_isRunning)
                 {
                     for (int i = 0; i < colors.Count; i++)
                     {
-                        this.SetColor((Color)colors[i]);
+                        if (_isRunning == false)
+                            break;
+
+                        UpdateColor((Color)colors[i]);
                         // if all the same, use [0], otherwise individuals
                         Thread.Sleep((durations.Length == 1) ? durations[0] : durations[i]);
                     }
 
-                    if (!loop)
+                    if (!loop || _nextRunningColorConfig != null)
                         Stop();
                 }
 
                 // When stopped we turn off the LED
-                SetColor(Color.FromHsba(this.Color.Hue, this.Color.Saturation, 0.0));
+                UpdateColor(Color.FromHsba(Color.Hue, Color.Saturation, 0.0));
             });
-            this._animationThread.Start();
+            _animationThread.Start();
+
+            StartNextRunningColor();
+        }
+
+        void StartNextRunningColor ()
+        {
+            if (_nextRunningColorConfig == null)
+                return;
+
+            StartRunningColors(_nextRunningColorConfig.Colors, _nextRunningColorConfig.Durations, _nextRunningColorConfig.Loop);
         }
 
         // consider removing
         public void StartAlternatingColors(Color colorOne, Color colorTwo, int colorOneDuration, int colorTwoDuration)
         {
-            System.Collections.ArrayList foo = new System.Collections.ArrayList{ colorOne, colorTwo };
-
-            this.StartRunningColors(new System.Collections.ArrayList { colorOne, colorTwo }, new int[] { colorOneDuration, colorTwoDuration });
+            StartRunningColors(new ArrayList { colorOne, colorTwo }, new int[] { colorOneDuration, colorTwoDuration });
         }
 
         /// <summary>
@@ -184,7 +228,7 @@ namespace Netduino.Foundation.LEDs
             var highColor = Color.FromHsba(color.Hue, color.Saturation, highBrightness);
             var lowColor = Color.FromHsba(color.Hue, color.Saturation, lowBrightness);
 
-            this.StartRunningColors(new System.Collections.ArrayList { highColor, lowColor }, new int[] { highDuration, lowDuration });
+            StartRunningColors(new ArrayList { highColor, lowColor }, new int[] { highDuration, lowDuration });
             //this.StartAlternate(highColor, lowColor, highDuration, lowDuration);
         }
 
@@ -197,10 +241,12 @@ namespace Netduino.Foundation.LEDs
             {
                 throw new ArgumentOutOfRangeException("highBrightness", "highBrightness must be > 0 and <= 1");
             }
+
             if (lowBrightness >= 1 || lowBrightness < 0)
             {
                 throw new ArgumentOutOfRangeException("lowBrightness", "lowBrightness must be >= 0 and < 1");
             }
+
             if (lowBrightness >= highBrightness)
             {
                 throw new Exception("lowBrightness must be less than highbrightness");
@@ -214,8 +260,8 @@ namespace Netduino.Foundation.LEDs
 
             // array of colors we'll walk up and down
             float brightnessStep;
-            System.Collections.ArrayList colors = new System.Collections.ArrayList();
-            Color[] colorsAscending = new Color[steps];
+            var colors = new ArrayList();
+            var colorsAscending = new Color[steps];
 
             // walk up
             for (int i = 0; i < steps; i++)
@@ -224,13 +270,14 @@ namespace Netduino.Foundation.LEDs
                 //colorsAscending[i] = Color.FromHsba(this._color.Hue, this._color.Saturation, brightnessStep);
                 colors.Add(Color.FromHsba(color.Hue, color.Saturation, brightnessStep));
             } // walk down (start at penultimate to not repeat, and finish at 1
+
             for (int i = (steps - 2); i > 0; i--)
             {
                 brightnessStep = lowBrightness + (brightnessIncrement * i);
                 colors.Add(Color.FromHsba(color.Hue, color.Saturation, brightnessStep));
             }
 
-            this.StartRunningColors(colors, new int[] { intervalTime });
+            StartRunningColors(colors, new int[] { intervalTime });
         }
 
         /// <summary>
@@ -238,7 +285,7 @@ namespace Netduino.Foundation.LEDs
         /// </summary>
         public void Stop()
         {
-            _running = false;
+            _isRunning = false;
             //SetColor(Color.FromHsba(this.Color.Hue, this.Color.Saturation, 0.0));
         }
     }
