@@ -125,3 +125,12 @@ All external peripherals also include sample code.
 | Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
 | [ServoCore](/Library/ServoCore)                | Generic servo library. |
+
+# Maple
+
+These samples showcase how to control peripherals through the network using Maple.
+
+| Name                | Description                         |
+|---------------------------|-------------------------------------|
+| [Connected RGB LED](/Examples/MapleRgbLed)                | Controlling a RGB LED with Maple. |
+| [Connected Servo](/Examples/MapleServo)                | Controlling a Servo with Maple. |
