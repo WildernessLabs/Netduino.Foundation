@@ -33,7 +33,6 @@ namespace Netduino.Foundation.LEDs
         public float BlueForwardVoltage { get; protected set; }
 
         protected Thread _animationThread = null;
-        protected bool _running = false;
 
         /// <summary>
         /// The Color the LED has been set to.
@@ -130,12 +129,11 @@ namespace Netduino.Foundation.LEDs
             }
 
             // stop any existing animations
-            this.Stop();
+            this._animationThread?.Abort();
 
-            _running = true;
             this._animationThread = new Thread(() => 
             {
-                while (_running)
+                while (true)
                 {
                     for (int i = 0; i < colors.Count; i++)
                     {
@@ -147,9 +145,6 @@ namespace Netduino.Foundation.LEDs
                     if (!loop)
                         Stop();
                 }
-
-                // When stopped we turn off the LED
-                SetColor(Color.FromHsba(this.Color.Hue, this.Color.Saturation, 0.0));
             });
             this._animationThread.Start();
         }
@@ -238,8 +233,8 @@ namespace Netduino.Foundation.LEDs
         /// </summary>
         public void Stop()
         {
-            _running = false;
-            //SetColor(Color.FromHsba(this.Color.Hue, this.Color.Saturation, 0.0));
+            _animationThread?.Abort();
+            SetColor(Color.FromHsba(this.Color.Hue, this.Color.Saturation, 0.0));
         }
     }
 }
