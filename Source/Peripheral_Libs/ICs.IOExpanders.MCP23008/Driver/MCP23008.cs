@@ -1,12 +1,13 @@
 using Microsoft.SPOT;
 using Netduino.Foundation.Communications;
 using Netduino.Foundation.GPIO;
+using H = Microsoft.SPOT.Hardware;
 
 namespace Netduino.Foundation.ICs.IOExpanders.MCP23008
 {
     public class MCP23008
     {
-        public event PortInterruptEventHandler InterruptRaised = delegate { };
+        public event DeviceInterruptEventHandler InterruptRaised = delegate { };
 
         private readonly I2CBus _i2cBus;
 
@@ -35,18 +36,14 @@ namespace Netduino.Foundation.ICs.IOExpanders.MCP23008
         private const byte _GPIORegister = 0x09; //GPIO
         private const byte _OutputLatchRegister = 0x0A; //OLAT
 
-        //// protected properties
-        // don't think there's a lot of value in this.  it's enabled by default, and is good.
-        //protected bool SequentialAddressOperationEnabled
-        //{
-        //    get {
-        //        return _sequentialAddressOperationEnabled;
-        //    }
-        //    set {
-        //        this._i2cBus.WriteRegister(_IOConfigurationRegister, (byte)(value ? 1 : 0));
-        //    }
-        //} private bool _sequentialAddressOperationEnabled = false;
+        // TODO: do we want this public? it's so we can use IOExpanders
+        //public IDigitalInputPort DigitalIn { get; protected set; }
+        protected H.InterruptPort _interruptPort = null;
 
+        /// <summary>
+        /// We track these so we can raise events on them.
+        /// </summary>
+        protected DigitalInputPort[] _inputPorts = new DigitalInputPort[7]; 
 
         protected MCP23008()
         { }
@@ -56,36 +53,69 @@ namespace Netduino.Foundation.ICs.IOExpanders.MCP23008
         {
             // nothing goes here
         }
+        public MCP23008(bool pinA0, bool pinA1, bool pinA2, H.Cpu.Pin interruptPin, ushort speed = 100)
+            : this(interruptPin, MCPAddressTable.GetAddressFromPins(pinA0, pinA1, pinA2), speed)
+        {
+            // nothing goes here
+        }
+
+        public MCP23008(H.Cpu.Pin interruptPin, byte address = 0x20, ushort speed = 100)
+            : this(address, speed)
+        {
+            //TODO: should I do this here, or in the main CTOR below?
+            // 
+            _interruptPort = new H.InterruptPort(interruptPin, false, H.Port.ResistorMode.PullDown, H.Port.InterruptMode.InterruptEdgeHigh);
+            _interruptPort.OnInterrupt += OnInterrupt;
+        }
+
+        protected void OnInterrupt(uint data1, uint data2, System.DateTime time)
+        {
+            // TODO: right now, we're only raising the first interrupt we find,
+            // but multiple interrupts can come in at once.
+
+            // 1) determine which pin it was
+            byte interruptFlags = _i2cBus.ReadRegister(_InterruptFlagRegister);
+            for (byte i = 0; i <= 7; i++) // loop through each flag
+            {
+                // if the flag is set, that pin has an interrupt 
+                // (multiple pins can have interrupt at same time)
+                if (BitHelpers.GetBitValue(interruptFlags, i))
+                {
+                    // 2) get value (note, this clears on read. it also clears on 
+                    // GPIO read, so we will need to think about this more later).
+                    byte interruptCapture = _i2cBus.ReadRegister(_InterruptCaptureRegister);
+
+                    // 3) raise events
+                    bool valueAtInterrupt = BitHelpers.GetBitValue(interruptCapture, i);
+
+                    //   a) raise chip wide event
+                    this.InterruptRaised(this, new DeviceInterruptEventArgs() { Pin = i, ValueAtInterrupt = valueAtInterrupt });
+
+                    //   b) raise on the port, if interrupt is enabled
+                    if (this._inputPorts[i].InterruptEnabled)
+                    {
+                        this._inputPorts[i].RaiseInterrupt(valueAtInterrupt);
+                    }
+
+                    break;
+                }
+            }
+        
+        }
 
         public MCP23008(byte address = 0x20, ushort speed = 100)
         {
-            // tried this, based on a forum post, but seems to have no effect.
-            //H.OutputPort SDA = new H.OutputPort(N.Pins.GPIO_PIN_A4, false);
-            //H.OutputPort SCK = new H.OutputPort(N.Pins.GPIO_PIN_A5, false);
-            //SDA.Dispose();
-            //SCK.Dispose();
-
             // configure our i2c bus so we can talk to the chip
             this._i2cBus = new I2CBus(address, speed);
-
-            Debug.Print("initialized.");
 
             // make sure the chip is in a default state
             Initialize();
             Debug.Print("Chip Reset.");
-            //Thread.Sleep(100);
 
             // read in the initial state of the chip
             _iodir = this._i2cBus.ReadRegister(_IODirectionRegister);
-            // tried some sleeping, but also has no effect on its reliability
-            //Thread.Sleep(100);
-            //Debug.Print("IODIR: " + _iodir.ToString("X"));
             _gpio = this._i2cBus.ReadRegister(_GPIORegister);
-            //Thread.Sleep(100);
-            //Debug.Print("GPIO: " + _gpio.ToString("X"));
             _olat = this._i2cBus.ReadRegister(_OutputLatchRegister);
-            //Thread.Sleep(100);
-            //Debug.Print("OLAT: " + _olat.ToString("X"));
         }
 
         protected void Initialize()
@@ -133,7 +163,7 @@ namespace Netduino.Foundation.ICs.IOExpanders.MCP23008
             throw new System.Exception("Pin is out of range");
         }
 
-        public DigitalInputPort CreateInputPort(byte pin, bool enablePullUp = false)
+        public DigitalInputPort CreateInputPort(byte pin, bool enablePullUp = false, bool enableInterrupt = false)
         {
             if (IsValidPin(pin))
             {
@@ -142,6 +172,21 @@ namespace Netduino.Foundation.ICs.IOExpanders.MCP23008
 
                 // create the convenience class
                 DigitalInputPort port = new DigitalInputPort(this, pin, false);
+
+                // persist out port locally
+                // TODO: we really need to check to see if one already exists
+                // and use that, but they generally never change once setup
+                // so we can get away with what we're doing here for now.
+                // we should be a little more sophisticated with Meadow
+                // they should probably also release when finalized and all that.
+                this._inputPorts[pin] = port;
+
+                // if interrupts are enabled, we have additional work
+                if (enableInterrupt)
+                {
+                    ConfigureInterrupt(pin);
+                }
+
 
                 return port;
             }
@@ -180,7 +225,7 @@ namespace Netduino.Foundation.ICs.IOExpanders.MCP23008
             }
         }
 
-        public void ConfigureInputPort(byte pin, bool enablePullUp = false, bool enableInterrupt = true)
+        public void ConfigureInputPort(byte pin, bool enablePullUp = false, bool enableInterrupt = false)
         {
             if (IsValidPin(pin))
             {
@@ -195,23 +240,44 @@ namespace Netduino.Foundation.ICs.IOExpanders.MCP23008
 
                 this._i2cBus.WriteRegister(_PullupResistorConfigurationRegister, _gppu);
 
+                // if interrupts are enabled, we have additional work
                 if (enableInterrupt)
                 {
-                    // interrupt on change (whether or not we want to raise an interrupt on the interrupt pin on change)
-                    byte gpinten = this._i2cBus.ReadRegister(_InterruptOnChangeRegister);
-                    gpinten = BitHelpers.SetBit(gpinten, pin, true);
-
-                    // interrupt control register; whether or not the change is based 
-                    // on default comparison value, or if a change from previous. We 
-                    // want to raise on change, so we set it to 0, always.
-                    byte interruptControl = this._i2cBus.ReadRegister(_InterruptControlRegister);
-                    interruptControl = BitHelpers.SetBit(interruptControl, pin, false);
+                    ConfigureInterrupt(pin);
                 }
             }
             else
             {
                 throw new System.Exception("Pin is out of range");
             }
+        }
+
+        protected void ConfigureInterrupt(byte pin)
+        {
+            if (!IsInterruptValid()) { throw new System.Exception("interrupt pin must be set to use interrupts. specifiy the interrupt pin in the ctor.")}
+
+            // interrupt on change (whether or not we want to raise an interrupt on the interrupt pin on change)
+            byte gpinten = this._i2cBus.ReadRegister(_InterruptOnChangeRegister);
+            gpinten = BitHelpers.SetBit(gpinten, pin, true);
+
+            // interrupt control register; whether or not the change is based 
+            // on default comparison value, or if a change from previous. We 
+            // want to raise on change, so we set it to 0, always.
+            byte interruptControl = this._i2cBus.ReadRegister(_InterruptControlRegister);
+            interruptControl = BitHelpers.SetBit(interruptControl, pin, false);
+
+            // update IOCON: ODR and INTPOL settings
+            byte ioConfiguration = this._i2cBus.ReadRegister(_IOConfigurationRegister);
+            // set ODR = 0
+            ioConfiguration = BitHelpers.SetBit(ioConfiguration, 2, false);
+            // set INTPOL = 1
+            ioConfiguration = BitHelpers.SetBit(ioConfiguration, 1, true);
+
+            // write all the registers
+            this._i2cBus.WriteRegister(_InterruptOnChangeRegister, gpinten);
+            this._i2cBus.WriteRegister(_InterruptControlRegister, interruptControl);
+            this._i2cBus.WriteRegister(_IOConfigurationRegister, ioConfiguration);
+
         }
 
         /// <summary>
@@ -242,19 +308,19 @@ namespace Netduino.Foundation.ICs.IOExpanders.MCP23008
 
         public bool ReadPort(byte pin)
         {
-            if (IsValidPin(pin))
+            if (!IsValidPin(pin))
             {
-                // if the pin isn't set for input, configure it
-                this.SetPortDirection((byte)pin, PortDirectionType.Input);
-
-                // update our GPIO values
-                _gpio = this._i2cBus.ReadRegister(_GPIORegister);
-
-                // return the value on that port
-                return BitHelpers.GetBitValue(_gpio, (byte)pin);
+                throw new System.Exception("Pin is out of range");
             }
 
-            throw new System.Exception("Pin is out of range");
+            // if the pin isn't set for input, configure it
+            this.SetPortDirection((byte)pin, PortDirectionType.Input);
+
+            // update our GPIO values
+            _gpio = this._i2cBus.ReadRegister(_GPIORegister);
+
+            // return the value on that port
+            return BitHelpers.GetBitValue(_gpio, (byte)pin);
         }
 
         /// <summary>
@@ -277,6 +343,15 @@ namespace Netduino.Foundation.ICs.IOExpanders.MCP23008
         protected bool IsValidPin(byte pin)
         {
             return (pin >= 0 && pin <= 7);
+        }
+
+        /// <summary>
+        /// Checks to see whether or not the interrupt port is configured.
+        /// </summary>
+        /// <returns></returns>
+        protected bool IsInterruptValid()
+        {
+            return !(_interruptPort == null);
         }
 
         // what's a good way to do this? maybe constants? how to name?

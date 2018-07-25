@@ -2,6 +2,7 @@ using System.Threading;
 using Microsoft.SPOT;
 using Netduino.Foundation.ICs.IOExpanders.MCP23008;
 using Netduino.Foundation.GPIO;
+using N = SecretLabs.NETMF.Hardware.Netduino;
 
 namespace MCP23008_DigitalInputPort_Events
 {
@@ -13,7 +14,7 @@ namespace MCP23008_DigitalInputPort_Events
         {
             // Create a new MCP23008. This constructor shows how to pass
             // the address pin configuration instead of an address.
-            _mcp = new MCP23008(true, true, true); // all address pins pulled high (address of 39)
+            _mcp = new MCP23008(true, true, true, N.Pins.GPIO_PIN_D2); // all address pins pulled high (address of 39)
 
             // Create a new DigitalInputPort from pin 0, pulled high
             DigitalInputPort port = _mcp.CreateInputPort(0, true);

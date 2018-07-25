@@ -25,7 +25,16 @@ namespace Netduino.Foundation.ICs.IOExpanders.MCP23008
             if (enableIntterupt)
             {
                 // enable the interrupt stuff on the MCP
+                //TODO
             }
+        }
+
+        /// <summary>
+        /// might be a better way to handle this, architecturally.
+        /// </summary>
+        internal void RaiseInterrupt(bool value)
+        {
+            this.RaiseChanged(value);
         }
     }
 }
