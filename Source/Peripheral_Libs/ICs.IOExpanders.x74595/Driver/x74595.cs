@@ -13,6 +13,15 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
     /// </remarks>
     public class x74595
     {
+        #region Constants
+
+        /// <summary>
+        ///     Error message for a pin number out of range exception.
+        /// </summary>
+        private const string EM_PIN_RANGE_MESSAGE = "x74595: Pin number is out of range.";
+
+        #endregion
+
         #region Member variables / fields
 
         /// <summary>
@@ -83,7 +92,7 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
                 {
                     return _pins[pin];
                 }
-                throw new IndexOutOfRangeException("ShiftRegister74595: Bit index out of range.");
+                throw new IndexOutOfRangeException(EM_PIN_RANGE_MESSAGE);
             }
             set
             {
@@ -94,7 +103,7 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
                 }
                 else
                 {
-                    throw new IndexOutOfRangeException("ShiftRegister74595: Bit index out of range.");
+                    throw new IndexOutOfRangeException(EM_PIN_RANGE_MESSAGE);
                 }
             }
         }
@@ -113,7 +122,7 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
                 return new DigitalOutputPort(this, pin, initialState);
             }
 
-            throw new System.Exception("Pin is out of range");
+            throw new System.Exception(EM_PIN_RANGE_MESSAGE);
         }
 
         /// <summary>
@@ -133,7 +142,7 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
             }
             else
             {
-                throw new System.Exception("Pin is out of range");
+                throw new System.Exception(EM_PIN_RANGE_MESSAGE);
             }
         }
 
