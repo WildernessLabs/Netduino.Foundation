@@ -125,7 +125,7 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
         {
             if (IsValidPin(pin))
             {
-                // write new value on the especific pin
+                // write new value on the specific pin
                 _bits[pin] = value;
 
                 // send the data to the SPI interface.
@@ -144,7 +144,7 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
         /// <param name="mask"></param>
         public void WriteToPorts(byte mask)
         {
-            for (byte i=0; i<8; i++)
+            for (byte i = 0; i < 8; i++)
             {
                 _bits[i] = BitHelpers.GetBitValue(mask, i);
             }
@@ -194,9 +194,14 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
             _spi.WriteBytes(data);
         }
 
+        /// <summary>
+        ///     Check if the specified pin is valid.
+        /// </summary>
+        /// <param name="pin">Pin number</param>
+        /// <returns>True if the pin number is valid, false if it not.</returns>
         protected bool IsValidPin(byte pin)
         {
-            return (pin >= 0 && pin <= 7);
+            return (pin <= _bits.Length);
         }
 
         #endregion
