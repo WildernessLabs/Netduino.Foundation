@@ -122,7 +122,7 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
                 return new DigitalOutputPort(this, pin, initialState);
             }
 
-            throw new System.Exception(EM_PIN_RANGE_MESSAGE);
+            throw new IndexOutOfRangeException(EM_PIN_RANGE_MESSAGE);
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
             }
             else
             {
-                throw new System.Exception(EM_PIN_RANGE_MESSAGE);
+                throw new IndexOutOfRangeException(EM_PIN_RANGE_MESSAGE);
             }
         }
 
