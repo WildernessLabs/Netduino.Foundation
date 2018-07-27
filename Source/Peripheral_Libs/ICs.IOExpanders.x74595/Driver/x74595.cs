@@ -16,9 +16,9 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
         #region Member variables / fields
 
         /// <summary>
-        ///     Array containing the bits to be output to the shift register.
+        ///     Array containing the pins to be output to the shift register.
         /// </summary>
-        private readonly bool[] _bits;
+        private readonly bool[] _pins;
 
         /// <summary>
         ///     Number of chips required to implement this ShiftRegister.
@@ -47,21 +47,21 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
         /// <summary>
         ///     Constructor a ShiftRegister74595 object.
         /// </summary>
-        /// <param name="bits">Number of bits in the shift register (should be a multiple of 8 bits).</param>
+        /// <param name="pins">Number of pins in the shift register (should be a multiple of 8 pins).</param>
         /// <param name="config">SPI Configuration object.</param>
-        public x74595(int bits, SPI.Configuration config)
+        public x74595(int pins, SPI.Configuration config)
         {
-            if ((bits > 0) && ((bits % 8) == 0))
+            if ((pins > 0) && ((pins % 8) == 0))
             {
-                _bits = new bool[bits];
-                _numberOfChips = bits / 8;
+                _pins = new bool[pins];
+                _numberOfChips = pins / 8;
                 Clear();
                 _spi = new SPIBus(config);
             }
             else
             {
                 throw new ArgumentOutOfRangeException(
-                    "x74595: Size must be greater than zero and a multiple of 8 bits");
+                    "x74595: Size must be greater than zero and a multiple of 8 pins");
             }
         }
 
@@ -71,25 +71,25 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
 
         /// <summary>
         ///     Overload the index operator to allow the user to get/set a particular
-        ///     bit in the shift register.
+        ///     pin in the shift register.
         /// </summary>
-        /// <param name="bit">Bit number to get/set.</param>
-        /// <returns>Value in the specified bit.</returns>
-        public bool this[int bit]
+        /// <param name="pin">Bit number to get/set.</param>
+        /// <returns>Value in the specified pin.</returns>
+        public bool this[int pin]
         {
             get
             {
-                if ((bit >= 0) && (bit < _bits.Length))
+                if ((pin >= 0) && (pin < _pins.Length))
                 {
-                    return _bits[bit];
+                    return _pins[pin];
                 }
                 throw new IndexOutOfRangeException("ShiftRegister74595: Bit index out of range.");
             }
             set
             {
-                if ((bit >= 0) && (bit < _bits.Length))
+                if ((pin >= 0) && (pin < _pins.Length))
                 {
-                    _bits[bit] = value;
+                    _pins[pin] = value;
                     LatchData();
                 }
                 else
@@ -126,7 +126,7 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
             if (IsValidPin(pin))
             {
                 // write new value on the specific pin
-                _bits[pin] = value;
+                _pins[pin] = value;
 
                 // send the data to the SPI interface.
                 LatchData();
@@ -146,7 +146,7 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
         {
             for (byte i = 0; i < 8; i++)
             {
-                _bits[i] = BitHelpers.GetBitValue(mask, i);
+                _pins[i] = BitHelpers.GetBitValue(mask, i);
             }
 
             // send the data to the SPI interface.
@@ -154,14 +154,14 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
         }
 
         /// <summary>
-        ///     Clear all of the bits in the shift register.
+        ///     Clear all of the pins in the shift register.
         /// </summary>
         /// <param name="latch">If true, latch the data after the shift register is cleared (default is false)?</param>
         public void Clear(bool latch = false)
         {
-            for (var index = 0; index < _bits.Length; index++)
+            for (var index = 0; index < _pins.Length; index++)
             {
-                _bits[index] = false;
+                _pins[index] = false;
             }
 
             if (latch)
@@ -184,7 +184,7 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
                 var offset = chip * 8;
                 for (var bit = 0; bit < 8; bit++)
                 {
-                    if (_bits[offset + bit])
+                    if (_pins[offset + bit])
                     {
                         data[chip] |= bitValue;
                     }
@@ -201,7 +201,7 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
         /// <returns>True if the pin number is valid, false if it not.</returns>
         protected bool IsValidPin(byte pin)
         {
-            return (pin <= _bits.Length);
+            return (pin <= _pins.Length);
         }
 
         #endregion
