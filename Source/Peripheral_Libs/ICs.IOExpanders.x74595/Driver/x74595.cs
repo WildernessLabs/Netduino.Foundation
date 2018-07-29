@@ -95,7 +95,7 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
             {
                 if ((pin >= 0) && (pin < _numberOfPins))
                 {
-                    int chip = pin / 8;
+                    int chip = _chips.Length - (pin / 8) - 1;
                     int bit = pin % 8;
                     return ((_chips[chip] & bit) == 1);
                 }
