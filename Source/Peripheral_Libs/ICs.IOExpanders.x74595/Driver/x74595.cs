@@ -20,19 +20,25 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
         /// </summary>
         private const string EM_PIN_RANGE_MESSAGE = "x74595: Pin number is out of range.";
 
+        /// <summary>
+        ///     Error message for the when the input data length (byte array) does not match
+        ///     the number of chips in the shift register chain.
+        /// </summary>
+        private const string EM_LENGTH_MISMATCH = "x74595: input data length does not match shift register length.";
+
         #endregion
 
         #region Member variables / fields
 
         /// <summary>
-        ///     Array containing the pins to be output to the shift register.
+        ///     Array containing the byte values for each of the 74595 chips.
         /// </summary>
-        private readonly bool[] _pins;
+        private readonly byte[] _chips;
 
         /// <summary>
-        ///     Number of chips required to implement this ShiftRegister.
+        ///     Number of pins available based upon the number of chips in the chain.
         /// </summary>
-        private readonly int _numberOfChips;
+        private readonly byte _numberOfPins = 0;
 
         /// <summary>
         ///     SPI interface used to communicate with the shift registers.
@@ -54,23 +60,22 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
         }
 
         /// <summary>
-        ///     Constructor a ShiftRegister74595 object.
+        ///     Constructor a x74595 object.
         /// </summary>
         /// <param name="pins">Number of pins in the shift register (should be a multiple of 8 pins).</param>
         /// <param name="config">SPI Configuration object.</param>
-        public x74595(int pins, SPI.Configuration config)
+        public x74595(byte pins, SPI.Configuration config)
         {
             if ((pins > 0) && ((pins % 8) == 0))
             {
-                _pins = new bool[pins];
-                _numberOfChips = pins / 8;
-                Clear();
+                _numberOfPins = pins;
+                _chips = new byte[pins / 8];
                 _spi = new SPIBus(config);
+                Clear();
             }
             else
             {
-                throw new ArgumentOutOfRangeException(
-                    "x74595: Size must be greater than zero and a multiple of 8 pins");
+                throw new ArgumentOutOfRangeException(nameof(pins), "x74595: Size must be greater than zero and a multiple of 8 pins");
             }
         }
 
@@ -88,18 +93,25 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
         {
             get
             {
-                if ((pin >= 0) && (pin < _pins.Length))
+                if ((pin >= 0) && (pin < _numberOfPins))
                 {
-                    return _pins[pin];
+                    int chip = pin / 8;
+                    int bit = pin % 8;
+                    return ((_chips[chip] & bit) == 1);
                 }
                 throw new IndexOutOfRangeException(EM_PIN_RANGE_MESSAGE);
             }
             set
             {
-                if ((pin >= 0) && (pin < _pins.Length))
+                //
+                //  This check is effectively done twice as WriteToPort also checks the
+                //  pin number.  However, this check is slightly different as the input
+                //  type is an integer and not a byte and so it needs to be done here
+                //  as well.
+                //
+                if ((pin >= 0) && (pin < _numberOfPins))
                 {
-                    _pins[pin] = value;
-                    LatchData();
+                    WriteToPort((byte) (pin & 0xff), value);
                 }
                 else
                 {
@@ -126,7 +138,7 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
         }
 
         /// <summary>
-        /// Sets a particular pin's value. 
+        ///     Sets a particular pin's value. 
         /// </summary>
         /// <param name="pin">The pin to write to.</param>
         /// <param name="value">The value to write. True for high, false for low.</param>
@@ -134,10 +146,20 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
         {
             if (IsValidPin(pin))
             {
-                // write new value on the specific pin
-                _pins[pin] = value;
-
-                // send the data to the SPI interface.
+                //
+                //  Convert the pin number to a chip and bit combination in
+                //  little endian form.
+                //
+                int chip = _chips.Length - (pin / 8) - 1;
+                int bit = pin % 8;
+                if (value)
+                {
+                    _chips[chip] |= (byte) (1 << bit);
+                }
+                else
+                {
+                    _chips[chip] &= (byte) (~(1 << bit));
+                }
                 LatchData();
             }
             else
@@ -147,30 +169,50 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
         }
 
         /// <summary>
-        /// Outputs a byte value across all of the pins by writing directly 
-        /// to the shift register.
+        ///     Outputs a byte value across all of the pins by writing directly 
+        ///     to the shift register.
         /// </summary>
-        /// <param name="mask"></param>
-        public void WriteToPorts(byte mask)
+        /// <remarks>
+        ///     Calling this method will result in an exception being thrown if
+        ///     the shift register chain contains more than one shift register.
+        /// </remarks>
+        /// <param name="value">Byte value to be written to the chain of shift registers.</param>
+        public void WriteToPorts(byte value)
         {
-            for (byte i = 0; i < 8; i++)
+            WriteToPorts(new byte[] { value });
+        }
+
+        /// <summary>
+        ///     Write a number of bytes to the shift register.
+        /// </summary>
+        /// <remarks>
+        ///     Note that the number of bytes being written must match the number
+        ///     of bytes used to implement the shift register.
+        /// </remarks>
+        /// <param name="values">Array of byte values to be written.</param>
+        public void WriteToPorts(byte[] values)
+        {
+            if (values.Length != _chips.Length)
             {
-                _pins[i] = BitHelpers.GetBitValue(mask, i);
+                throw new ArgumentOutOfRangeException(nameof(values), EM_LENGTH_MISMATCH);
             }
 
-            // send the data to the SPI interface.
+            for (var index = 0; index < values.Length; index++)
+            {
+                _chips[index] = values[index];
+            }
             LatchData();
         }
 
         /// <summary>
         ///     Clear all of the pins in the shift register.
         /// </summary>
-        /// <param name="latch">If true, latch the data after the shift register is cleared (default is false)?</param>
+        /// <param name="latch">If true, latch the data after the shift register is cleared (default is false).</param>
         public void Clear(bool latch = false)
         {
-            for (var index = 0; index < _pins.Length; index++)
+            for (var index = 0; index < _chips.Length; index++)
             {
-                _pins[index] = false;
+                _chips[index] = 0;
             }
 
             if (latch)
@@ -184,33 +226,17 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
         /// </summary>
         protected void LatchData()
         {
-            var data = new byte[_numberOfChips];
-
-            for (var chip = 0; chip < _numberOfChips; chip++)
-            {
-                data[chip] = 0;
-                byte bitValue = 1;
-                var offset = chip * 8;
-                for (var bit = 0; bit < 8; bit++)
-                {
-                    if (_pins[offset + bit])
-                    {
-                        data[chip] |= bitValue;
-                    }
-                    bitValue <<= 1;
-                }
-            }
-            _spi.WriteBytes(data);
+            _spi.WriteBytes(_chips);
         }
 
         /// <summary>
         ///     Check if the specified pin is valid.
         /// </summary>
         /// <param name="pin">Pin number</param>
-        /// <returns>True if the pin number is valid, false if it not.</returns>
+        /// <returns>True if the pin number is valid, false if it is invalid.</returns>
         protected bool IsValidPin(byte pin)
         {
-            return (pin <= _pins.Length);
+            return (pin <= _numberOfPins);
         }
 
         #endregion
