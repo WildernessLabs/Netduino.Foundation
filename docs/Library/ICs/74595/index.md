@@ -38,7 +38,7 @@ The board below shows the Netduino connected to a shift register and 8 LEDs.  Th
 
 ## Software
 
-The application below uses a `ShiftRegister74595` object to cycle through the bits on the shift register and light the appropriate LED.
+The application below uses a `x74595` object to cycle through the bits on the shift register and light the appropriate LED.
 
 ```csharp
 using System.Threading;
@@ -87,15 +87,17 @@ The hardware and software configuration above can be seen running on the [Netdui
 
 ### Constructors
 
-#### `ShiftRegister74595(int bits, SPI.Configuration config)`
+#### `x74595(int pins, SPI.Configuration config)`
 
-Create a new `ShiftRegister74595` object using the parameters in the `SPI.Configuration` object.  The `SPI.Configuration` object in the sample application above is correct for a 74xx595.
+Create a new `x74595` object using the parameters in the `SPI.Configuration` object.  The `SPI.Configuration` object in the sample application above is correct for a 74xx595.
+
+The number of `pins` should be a multiple of 8 as there are 8 pins on each 74xx595 shift register.
 
 ### Methods
 
-#### `bool this[int bit]`
+#### `bool this[int pin]`
 
-The index operator is overloaded to allow simple access to each of the bits in the shift register as follows:
+The index operator is overloaded to allow simple access to each of the pins in the shift register as follows:
 
 ```csharp
 shiftRegister[index] = true;
@@ -109,12 +111,16 @@ This method allows you to use an output pin on the 74HC595 as if it were a digit
 
 #### `public void WriteToPort(int pin, bool value)`
 
-Sets a particular pin's value, either high/`3.3V` (`true`), or low/`0V` (`false`). This method automatically calls LatchData() to send the data to the SPI interface.
+Sets a particular pin's value, either high/`3.3V` (`true`), or low/`0V` (`false`). This method automatically calls `LatchData()` to send the data to the SPI interface.
 
-#### `void Clear(bool latch = false)`
+#### `public void Clear(bool latch = false)`
 
 Clear all of the bits in the shift register.  The optional `latch` parameter can be used to force the bits onto the output from the shift register.
 
-#### `void LatchData()`
+#### `protected void LatchData()`
 
 Latch the data onto the shift register outputs.
+
+#### `protected IsValidPin(byte pin)`
+
+Chec to see if the specified `pin` number is valid. The `pin` number is zero based and so it should be less than the number of pins used to construct the instance of the `x74595` class.
