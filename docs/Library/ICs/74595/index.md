@@ -8,6 +8,10 @@ subtitle: Hardware Driver for expanding IO via the 75xx595 series of shift regis
 
 Shift registers offer the ability to increase the number of outputs on a microcontroller by using I2C or SPI interfaces.  In the case of the 74xx595 series of shift registers, the SPI interface is used to output a series of bits that are then latched to the output pins of the chip.
 
+The Netduino uses 3.3V to represent a logic level of 1 (high).  It is essential that the shift register used supports the use of 3.3V logic.  The HC and HCT range of shift registers are suitable for use with the Netduino family of microcontroller boards.
+
+The 74xx595 shift registers support chaining allowing a number of chips to implement a larger shift register.  A single 74xx595 will allow the Netduino to output 8 data bits using only three lines (the SPI interface).  By adding a second shift register a an additional 8 lines can be controlled.
+
 This class allows the Netduino to control the output pins on a 74HCT595 shift register using the SPI interface.
 
 Note that when using this chip care should be taken to make sure that the total output load of the chip does not exceed the current and thermal dissipation properties for the specific shift register being used.
@@ -30,13 +34,13 @@ Relay relay = new Relay(relayPort);
 relay.Toggle();
 ```
 
-## Hardware
+## Single Shift Register
 
 The board below shows the Netduino connected to a shift register and 8 LEDs.  The binary value on the output pins of the shift register will be presented on the LEDs:
 
 ![Shift Register and LEDs on Breadboard](ShiftRegisterAndLEDsOnBreadboard.png)
 
-## Software
+### Software
 
 The application below uses a `x74595` object to cycle through the bits on the shift register and light the appropriate LED.
 
@@ -71,7 +75,6 @@ namespace x74595_RelaySample
                 for (byte index = 0; index <= 7; index++)
                 {
                     shiftRegister[index] = true;
-                    shiftRegister.LatchData();
                     Thread.Sleep(500);
                     shiftRegister[index] = false;
                 }
@@ -82,6 +85,59 @@ namespace x74595_RelaySample
 ```
 
 The hardware and software configuration above can be seen running on the [Netduino YouTube channel](https://youtu.be/uLxth43EwIQ).
+
+## Chained Shift Registers
+
+As noted above, 74xx595 shift registers can be chained together to form a larger shift register.  The circuit below shows how to connect two shift registers together to control 16 digital outputs:
+
+![Chained shift registers and LEDs on Breadboard](ChainedShiftRegistersAndLEDs.png)
+
+The LEDs are will show a 16-bit value with the least significant bit at the far right of the sequence.
+
+Note the small yellow wire connecting the two shift registers together.  This takes the data out of the first shift register and feeds it as an input to the second shift register.
+
+### Software
+
+The following code will turn on each of the 16 LEDs for 0.5 seconds and then turn it off again:
+
+```csharp
+using System.Threading;
+using Microsoft.SPOT.Hardware;
+using SecretLabs.NETMF.Hardware.Netduino;
+using Netduino.Foundation.ICs.IOExpanders.x74595;
+using Netduino.Foundation.Relays;
+using Microsoft.SPOT;
+
+namespace x74595_RelaySample
+{
+    public class Program
+    {
+        public static void Main()
+        {
+            var config = new SPI.Configuration(SPI_mod: SPI_Devices.SPI1,
+                                               ChipSelect_Port: Pins.GPIO_PIN_D8,
+                                               ChipSelect_ActiveState: false,
+                                               ChipSelect_SetupTime: 0,
+                                               ChipSelect_HoldTime: 0,
+                                               Clock_IdleState: true,
+                                               Clock_Edge: true,
+                                               Clock_RateKHz: 10);
+
+            var shiftRegister = new x74595(16, config);
+
+            while (true)
+            {
+                shiftRegister.Clear(true);
+                for (byte index = 0; index < 16; index++)
+                {
+                    shiftRegister[index] = true;
+                    Thread.Sleep(500);
+                    shiftRegister[index] = false;
+                }
+            }
+        }
+    }
+```
 
 ## API
 
