@@ -2,6 +2,7 @@ using System;
 using H = Microsoft.SPOT.Hardware;
 using System.Threading;
 using System.Collections;
+using Microsoft.SPOT;
 
 namespace Netduino.Foundation.LEDs
 {
@@ -12,7 +13,7 @@ namespace Netduino.Foundation.LEDs
     /// RGB LED can express millions of colors, as opposed to the 8 colors that can be expressed
     /// via binary digital output.
     /// </summary>
-    public class RgbPwmLed
+    public class RgbPwmLedLocal
     {
         protected class RunningColorsConfig
         {
@@ -42,7 +43,7 @@ namespace Netduino.Foundation.LEDs
 
         protected Thread _animationThread = null;
         protected bool _isRunning = false;
-        protected RunningColorsConfig _nextRunningColorConfig = null;
+        protected RunningColorsConfig _runningColorConfig = null;
 
         /// <summary>
         /// The Color the LED has been set to.
@@ -64,7 +65,7 @@ namespace Netduino.Foundation.LEDs
         /// <param name="greenPin"></param>
         /// <param name="bluePin"></param>
         /// <param name="isCommonCathode"></param>
-        public RgbPwmLed(
+        public RgbPwmLedLocal(
             H.Cpu.PWMChannel redPin, H.Cpu.PWMChannel greenPin, H.Cpu.PWMChannel bluePin,
             float redLedForwardVoltage = TypicalForwardVoltage.ResistorLimited, 
             float greenLedForwardVoltage = TypicalForwardVoltage.ResistorLimited, 
@@ -102,7 +103,8 @@ namespace Netduino.Foundation.LEDs
         /// 
         public void SetColor(Color color)
         {
-            _nextRunningColorConfig = null;
+            _runningColorConfig = null;
+            Stop();
             UpdateColor(color);
         }
 
@@ -111,9 +113,9 @@ namespace Netduino.Foundation.LEDs
             _color = color;
 
             // set the color based on the RGB values
-            RedPwm.DutyCycle = (this._color.R * _maximumRedPwmDuty);
-            GreenPwm.DutyCycle = (this._color.G * _maximumGreenPwmDuty);
-            BluePwm.DutyCycle = (this._color.B * _maximumBluePwmDuty);
+            RedPwm.DutyCycle = (_color.R * _maximumRedPwmDuty);
+            GreenPwm.DutyCycle = (_color.G * _maximumGreenPwmDuty);
+            BluePwm.DutyCycle = (_color.B * _maximumBluePwmDuty);
 
             if(IsCommonCathode == false)
             {
@@ -128,7 +130,7 @@ namespace Netduino.Foundation.LEDs
             BluePwm.Start();
         }
 
-        // HACK/TODO: this is the signature i want, but it's broken until 4.4. (https://github.com/NETMF/netmf-interpreter/issues/87)
+        // HACK/TODO: this is the signature I want, but it's broken until 4.4. (https://github.com/NETMF/netmf-interpreter/issues/87)
         // using arraylist for now
         //public void StartRunningColors(Color[] colors, int[] durations, bool loop)
         /// <summary>
@@ -138,23 +140,22 @@ namespace Netduino.Foundation.LEDs
         /// <param name="colors"></param>
         /// <param name="durations"></param>
         /// <param name="loop"></param>
-        public void StartRunningColors(System.Collections.ArrayList colors, int[] durations, bool loop = true)
+        /// 
+        public void StartRunningColors(ArrayList colors, int[] durations, bool loop = true)
         {
-            if(_isRunning)
-            {
-                _nextRunningColorConfig = new RunningColorsConfig()
-                {
-                    Colors = colors,
-                    Durations = durations,
-                    Loop = loop
-                };
+            Debug.Print("StartRunningColors() isRunning = " + _isRunning);
 
-                _isRunning = false;
-                return;
-            }
-            else
+            _runningColorConfig = new RunningColorsConfig()
             {
-                _nextRunningColorConfig = null;
+                Colors = colors,
+                Durations = durations,
+                Loop = loop
+            };
+
+            if (_isRunning)
+            {
+                Stop();
+                return;
             }
 
             if (durations.Length != 1 && colors.Count != durations.Length)
@@ -162,42 +163,42 @@ namespace Netduino.Foundation.LEDs
                 throw new Exception("durations must either have a count of 1, if they're all the same, or colors and durations arrays must be same length.");
             }
 
-            // stop any existing animations
-            Stop();
-
-            _isRunning = true;
             _animationThread = new Thread(() => 
             {
-                while (_isRunning)
+                while(_runningColorConfig != null)
                 {
-                    for (int i = 0; i < colors.Count; i++)
-                    {
-                        if (_isRunning == false)
-                            break;
+                    var nextColors = _runningColorConfig.Colors;
+                    var nextDurations = _runningColorConfig.Durations;
+                    var nextLoop = _runningColorConfig.Loop;
+                    _runningColorConfig = null;
 
-                        UpdateColor((Color)colors[i]);
-                        // if all the same, use [0], otherwise individuals
-                        Thread.Sleep((durations.Length == 1) ? durations[0] : durations[i]);
-                    }
-
-                    if (!loop || _nextRunningColorConfig != null)
-                        Stop();
+                    _isRunning = true;
+                    AnimateColors(nextColors, nextDurations, nextLoop);
                 }
 
                 // When stopped we turn off the LED
                 UpdateColor(Color.FromHsba(Color.Hue, Color.Saturation, 0.0));
             });
             _animationThread.Start();
-
-            StartNextRunningColor();
         }
 
-        void StartNextRunningColor ()
+        void AnimateColors (ArrayList colors, int[] durations, bool loop)
         {
-            if (_nextRunningColorConfig == null)
-                return;
+            while (_isRunning)
+            {
+                for (int i = 0; i < colors.Count; i++)
+                {
+                    if (_isRunning == false)
+                        break;
 
-            StartRunningColors(_nextRunningColorConfig.Colors, _nextRunningColorConfig.Durations, _nextRunningColorConfig.Loop);
+                    UpdateColor((Color)colors[i]);
+                    // if all the same, use [0], otherwise individuals
+                    Thread.Sleep((durations.Length == 1) ? durations[0] : durations[i]);
+                }
+
+                if (!loop)
+                    Stop();
+            }
         }
 
         // consider removing
@@ -229,7 +230,6 @@ namespace Netduino.Foundation.LEDs
             var lowColor = Color.FromHsba(color.Hue, color.Saturation, lowBrightness);
 
             StartRunningColors(new ArrayList { highColor, lowColor }, new int[] { highDuration, lowDuration });
-            //this.StartAlternate(highColor, lowColor, highDuration, lowDuration);
         }
 
         /// <summary>
@@ -286,7 +286,7 @@ namespace Netduino.Foundation.LEDs
         public void Stop()
         {
             _isRunning = false;
-            //SetColor(Color.FromHsba(this.Color.Hue, this.Color.Saturation, 0.0));
+            Debug.Print("Stop() isRunning = " + _isRunning);
         }
     }
 }
