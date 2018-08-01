@@ -4,7 +4,7 @@
     <id>Netduino.Foundation</id>
     <title>WildernessLabs.Netduino.Foundation.Core</title>
     <version>$version$</version>
-    <authors>Bryan Costanich, Frank Krueger, Craig Dunn, Mark Stevens</authors>
+    <authors>Bryan Costanich, Frank Krueger, Craig Dunn, Mark Stevens, Jorge Ramirez</authors>
     <owners>Wilderness Labs</owners>
     <licenseUrl>https://github.com/WildernessLabs/Netduino.Foundation/blob/master/LICENSE</licenseUrl>
     <projectUrl>http://Netduino.Foundation</projectUrl>
