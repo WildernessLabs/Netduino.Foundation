@@ -13,7 +13,7 @@ namespace Netduino.Foundation.LEDs
     /// RGB LED can express millions of colors, as opposed to the 8 colors that can be expressed
     /// via binary digital output.
     /// </summary>
-    public class RgbPwmLedLocal
+    public class RgbPwmLed
     {
         protected class RunningColorsConfig
         {
@@ -65,7 +65,7 @@ namespace Netduino.Foundation.LEDs
         /// <param name="greenPin"></param>
         /// <param name="bluePin"></param>
         /// <param name="isCommonCathode"></param>
-        public RgbPwmLedLocal(
+        public RgbPwmLed(
             H.Cpu.PWMChannel redPin, H.Cpu.PWMChannel greenPin, H.Cpu.PWMChannel bluePin,
             float redLedForwardVoltage = TypicalForwardVoltage.ResistorLimited, 
             float greenLedForwardVoltage = TypicalForwardVoltage.ResistorLimited, 
