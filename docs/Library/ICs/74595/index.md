@@ -94,7 +94,11 @@ As noted above, 74xx595 shift registers can be chained together to form a larger
 
 The LEDs are will show a 16-bit value with the least significant bit at the far right of the sequence.
 
-Note the small yellow wire connecting the two shift registers together.  This takes the data out of the first shift register and feeds it as an input to the second shift register.
+The clock (green wire) and chip select (orange wire) are common to all shift registers in the chain.
+
+Note the small yellow wire connecting the two shift registers together.  This takes the data out of the first shift register (least significant byte) and feeds it as an input to the second shift register (most significant byte).
+
+The blue wires take the signals representing the bits for the least significant byte to the LEDs.  The grey wires perform the same task for the most significant byte.
 
 ### Software
 
@@ -129,9 +133,7 @@ namespace x74595_RelaySample
             {
                 shiftRegister.Clear(true);
                 for (byte index = 0; index < 16; index++)
-                {
-                    shiftRegister[index] = true;
-                    Thread.Sleep(500);
+                    shiftRegister[index] = true;v                    Thread.Sleep(500);
                     shiftRegister[index] = false;
                 }
             }
