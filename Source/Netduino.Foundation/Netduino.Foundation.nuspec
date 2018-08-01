@@ -21,6 +21,7 @@
       <frameworkAssembly assemblyName="Microsoft.SPOT.Hardware.SerialPort" targetFramework="netmf" />
       <frameworkAssembly assemblyName="Microsoft.SPOT.IO" targetFramework="netmf" />
       <frameworkAssembly assemblyName="Microsoft.SPOT.Native" targetFramework="netmf" />
+      <frameworkAssembly assemblyName="Microsoft.SPOT.Graphics" targetFramework="netmf" />
       <frameworkAssembly assemblyName="Microsoft.SPOT.TinyCore" targetFramework="netmf" />
       <frameworkAssembly assemblyName="SecretLabs.NETMF.Hardware.Netduino" targetFramework="netmf" />
     </frameworkAssemblies>
