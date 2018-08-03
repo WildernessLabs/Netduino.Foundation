@@ -393,13 +393,20 @@ namespace Netduino.Foundation.Sensors.Temperature
         {
             if (BusMode == BusModeType.SingleDevice)
             {
+                //
+                //  When there is only one device we can skip sending the device ID.
+                //
                 Sensor.WriteByte(Commands.SkipROM);
             }
             else
             {
-                //
-                //  Need to send the device address here.
-                //
+                Sensor.WriteByte(Commands.MatchID);
+                for (var index = 0; index < DeviceIDLength; index++)
+                {
+                    int places = 8 * index;
+                    UInt64 value = DeviceID;
+                    Sensor.WriteByte((byte) ((value >> places) & 0xff));
+                }
             }
         }
 
