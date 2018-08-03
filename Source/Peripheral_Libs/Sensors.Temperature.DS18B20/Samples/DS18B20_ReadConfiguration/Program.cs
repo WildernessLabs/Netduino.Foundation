@@ -17,6 +17,7 @@ namespace DS18B20_ReadConfiguration
         public static void Main()
         {
             DS18B20 ds18b20 = new DS18B20(Pins.GPIO_PIN_D3, updateInterval: 0);
+            ds18b20.ReadDeviceID();
             Debug.Print("Device ID: 0x" + ds18b20.DeviceID.ToString("X16"));
             Debug.Print("Resolution: " + ds18b20.Resolution + " bits");
             Thread.Sleep(Timeout.Infinite);

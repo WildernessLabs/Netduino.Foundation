@@ -300,21 +300,7 @@ namespace Netduino.Foundation.Sensors.Temperature
         ///     Note that this will only work if there is only one sensor
         ///     on the one wire bus.
         /// </remarks>
-        public UInt64 DeviceID
-        {
-            get
-            {
-                Sensor.TouchReset();
-                Sensor.WriteByte(Commands.ReadID);
-                UInt64 deviceID = 0;
-                for (var index = 0; index < DeviceIDLength; index++)
-                {
-                    int places = 8 * index;
-                    deviceID |= ((UInt64) Sensor.ReadByte()) << places;
-                }
-                return (deviceID);
-            }
-        }
+        public UInt64 DeviceID { get; set; }
 
         #endregion Properties
 
@@ -338,13 +324,13 @@ namespace Netduino.Foundation.Sensors.Temperature
         }
 
         /// <summary>
-        /// 
+        ///     Create a new DS18B20 temperature sensor object with the specified configuration.
         /// </summary>
-        /// <param name="oneWirePin"></param>
-        /// <param name="busMode"></param>
-        /// <param name="address"></param>
-        /// <param name="updateInterval"></param>
-        /// <param name="temperatureChangeNotificationThreshold"></param>
+        /// <param name="oneWirePin">GPIO pin the DS18B20 is connected to.</param>
+        /// <param name="busMode">Single or multiple devices on the bus?</param>
+        /// <param name="address">Address of the DS18B20 device.</param>
+        /// <param name="updateInterval">Update period in milliseconds.  Note that this most be greater than the conversion period for the sensor.</param>
+        /// <param name="temperatureChangeNotificationThreshold">Threshold for temperature changes that will generate an interrupt.</param>
         public DS18B20(Cpu.Pin oneWirePin, BusModeType busMode = BusModeType.SingleDevice, byte[] address = null,
             ushort updateInterval = MinimumPollingPeriod, float temperatureChangeNotificationThreshold = 0.001F)
         {
@@ -400,11 +386,11 @@ namespace Netduino.Foundation.Sensors.Temperature
         }
 
         /// <summary>
-        ///     Update the Temperature property.
+        ///     Send the device ID if necessary to ensure that the object is
+        ///     talking to the right device.
         /// </summary>
-        public void Update()
+        protected void SendDeviceID()
         {
-            Sensor.TouchReset();
             if (BusMode == BusModeType.SingleDevice)
             {
                 Sensor.WriteByte(Commands.SkipROM);
@@ -415,6 +401,15 @@ namespace Netduino.Foundation.Sensors.Temperature
                 //  Need to send the device address here.
                 //
             }
+        }
+
+        /// <summary>
+        ///     Update the Temperature property.
+        /// </summary>
+        public void Update()
+        {
+            Sensor.TouchReset();
+            SendDeviceID();
             Sensor.WriteByte(Commands.StartConversion);
             while (Sensor.ReadByte() == 0) ;
             Sensor.TouchReset();
@@ -430,6 +425,26 @@ namespace Netduino.Foundation.Sensors.Temperature
         }
 
         /// <summary>
+        ///     Read the device ID from the EEPROM on the DS18B20 and update the DeviceID property.
+        /// </summary>
+        /// <remarks>
+        ///     This will only work if there is only one device on the one wire bus.
+        /// </remarks>
+        public void ReadDeviceID()
+        {
+            Sensor.TouchReset();
+            Sensor.WriteByte(Commands.ReadID);
+            UInt64 deviceID = 0;
+            for (var index = 0; index < DeviceIDLength; index++)
+            {
+                int places = 8 * index;
+                deviceID |= ((UInt64)Sensor.ReadByte()) << places;
+            }
+
+            DeviceID = deviceID;
+        }
+
+        /// <summary>
         ///     Read the scratch pad area from the DS18B20.
         /// </summary>
         /// <returns>Scratch pad contents as a byte array.</returns>
@@ -437,17 +452,7 @@ namespace Netduino.Foundation.Sensors.Temperature
         {
             byte[] scratchPad = new byte[ScratchPadSize];
             Sensor.TouchReset();
-            if (BusMode == BusModeType.SingleDevice)
-            {
-                Sensor.WriteByte(Commands.SkipROM);
-            }
-            else
-            {
-                //
-                //  Need to send the device address here.
-                //
-            }
-
+            SendDeviceID();
             Sensor.WriteByte(Commands.ReadScratchPad);
             for (var index = 0; index < ScratchPadSize; index++)
             {
