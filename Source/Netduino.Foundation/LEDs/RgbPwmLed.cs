@@ -53,7 +53,6 @@ namespace Netduino.Foundation.LEDs
             get { return _color; }
         } protected Color _color = new Color(0, 0, 0);
         
-        
         /// <summary>
         /// 
         /// Implementation notes: Architecturally, it would be much cleaner to construct this class
@@ -101,11 +100,19 @@ namespace Netduino.Foundation.LEDs
         /// Sets the current color of the LED.
         /// </summary>
         /// 
-        public void SetColor(Color color)
+        public void SetColor(Color color, int duration = 0)
         {
-            _runningColorConfig = null;
-            Stop();
-            UpdateColor(color);
+            if (duration <= 0)
+            {
+                _runningColorConfig = null;
+                Stop();
+
+                UpdateColor(color);
+            }
+            else
+            {
+                StartRunningColors(GetFadeConfig(_color, color, duration));
+            }
         }
 
         void UpdateColor(Color color)
@@ -143,8 +150,6 @@ namespace Netduino.Foundation.LEDs
         /// 
         public void StartRunningColors(ArrayList colors, int[] durations, bool loop = true)
         {
-            Debug.Print("StartRunningColors() isRunning = " + _isRunning);
-
             _runningColorConfig = new RunningColorsConfig()
             {
                 Colors = colors,
@@ -163,6 +168,16 @@ namespace Netduino.Foundation.LEDs
                 throw new Exception("durations must either have a count of 1, if they're all the same, or colors and durations arrays must be same length.");
             }
 
+            int count = 0;
+            while (_animationThread.IsAlive && count < 10)
+            {
+                Thread.Sleep(100);
+                count++;
+            }
+
+            if (count == 10)
+                return;
+
             _animationThread = new Thread(() => 
             {
                 while(_runningColorConfig != null)
@@ -175,14 +190,16 @@ namespace Netduino.Foundation.LEDs
                     _isRunning = true;
                     AnimateColors(nextColors, nextDurations, nextLoop);
                 }
-
-                // When stopped we turn off the LED
-                UpdateColor(Color.FromHsba(Color.Hue, Color.Saturation, 0.0));
             });
             _animationThread.Start();
         }
 
-        void AnimateColors (ArrayList colors, int[] durations, bool loop)
+        private void StartRunningColors(RunningColorsConfig config)
+        {
+            StartRunningColors(config.Colors, config.Durations, config.Loop);
+        }
+
+        private void AnimateColors (ArrayList colors, int[] durations, bool loop)
         {
             while (_isRunning)
             {
@@ -239,12 +256,12 @@ namespace Netduino.Foundation.LEDs
         {
             if (highBrightness > 1 || highBrightness <= 0)
             {
-                throw new ArgumentOutOfRangeException("highBrightness", "highBrightness must be > 0 and <= 1");
+                throw new ArgumentOutOfRangeException("highBrightness", "highBrightness must be between 0 and 1");
             }
 
             if (lowBrightness >= 1 || lowBrightness < 0)
             {
-                throw new ArgumentOutOfRangeException("lowBrightness", "lowBrightness must be >= 0 and < 1");
+                throw new ArgumentOutOfRangeException("lowBrightness", "lowBrightness must be between 0 and 1");
             }
 
             if (lowBrightness >= highBrightness)
@@ -252,33 +269,67 @@ namespace Netduino.Foundation.LEDs
                 throw new Exception("lowBrightness must be less than highbrightness");
             }
 
+            StartRunningColors(GetPulseConfig(color, pulseDuration, highBrightness, lowBrightness));
+        }
+
+        RunningColorsConfig GetFadeConfig (Color colorStart, Color colorEnd, int duration)
+        {
+            int interval = 60; // 60 miliseconds is probably the fastest update we want to do, given that threads are given 20 miliseconds by default. 
+            int steps = duration / interval;
+
+            var colors = new ArrayList();
+
+            for (int i = 0; i < steps; i++)
+            {
+                double r = colorStart.R * (steps - i) / steps + colorEnd.R * i / steps;
+                double g = colorStart.G * (steps - i) / steps + colorEnd.G * i / steps;
+                double b = colorStart.B * (steps - i) / steps + colorEnd.B * i / steps;
+
+                colors.Add(Color.FromRgb(r, g, b));
+            } // walk down (start at penultimate to not repeat, and finish at 1
+
+            colors.Add(colorEnd);    
+
+            return new RunningColorsConfig()
+            {
+                Colors = colors,
+                Durations = new int[] { interval },
+                Loop = false
+            };
+        }
+
+        RunningColorsConfig GetPulseConfig (Color color, int pulseDuration, float highBrightness, float lowBrightness)
+        {
             // precalculate the colors to keep the loop tight
-            float brightness = lowBrightness;
-            int intervalTime = 60; // 60 miliseconds is probably the fastest update we want to do, given that threads are given 20 miliseconds by default. 
-            int steps = pulseDuration / intervalTime;
+            int interval = 60; // 60 miliseconds is probably the fastest update we want to do, given that threads are given 20 miliseconds by default. 
+            int steps = pulseDuration / interval;
             float brightnessIncrement = (highBrightness - lowBrightness) / steps;
 
             // array of colors we'll walk up and down
             float brightnessStep;
             var colors = new ArrayList();
-            var colorsAscending = new Color[steps];
 
             // walk up
             for (int i = 0; i < steps; i++)
             {
                 brightnessStep = lowBrightness + (brightnessIncrement * i);
-                //colorsAscending[i] = Color.FromHsba(this._color.Hue, this._color.Saturation, brightnessStep);
                 colors.Add(Color.FromHsba(color.Hue, color.Saturation, brightnessStep));
             } // walk down (start at penultimate to not repeat, and finish at 1
 
-            for (int i = (steps - 2); i > 0; i--)
+            for (int i = steps - 2; i > 0; i--)
             {
                 brightnessStep = lowBrightness + (brightnessIncrement * i);
                 colors.Add(Color.FromHsba(color.Hue, color.Saturation, brightnessStep));
             }
 
-            StartRunningColors(colors, new int[] { intervalTime });
+            return new RunningColorsConfig()
+            {
+                Colors = colors,
+                Durations = new int[] { interval },
+                Loop = true
+            };
         }
+
 
         /// <summary>
         /// Stops any running animations.
@@ -286,7 +337,6 @@ namespace Netduino.Foundation.LEDs
         public void Stop()
         {
             _isRunning = false;
-            Debug.Print("Stop() isRunning = " + _isRunning);
         }
     }
 }
