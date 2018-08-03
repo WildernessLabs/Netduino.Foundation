@@ -15,6 +15,9 @@ namespace DS18B20_ReadConfiguration
         /// <summary>
         ///     Read the configuration and ID from the DS18B20 and display the information
         ///     retrieved in the Debug Output window.
+        ///
+        ///     Note that this sample will only work if there is only one device on the
+        ///     one wire bus.
         /// </summary>
         public static void Main()
         {
