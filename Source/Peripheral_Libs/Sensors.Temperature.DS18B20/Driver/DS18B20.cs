@@ -114,6 +114,70 @@ namespace Netduino.Foundation.Sensors.Temperature
 
         #endregion Command class
 
+        #region ScratchPad class
+
+        /// <summary>
+        ///     Class holding the constants defining the layout of the DS18B20 Scratch Pad.
+        /// </summary>
+        protected class ScratchPad
+        {
+            /// <summary>
+            ///     Lower 8 bits of the temperature following a conversion.
+            /// </summary>
+            /// <remarks>
+            ///     At power on this will be set to 0x50.
+            /// </remarks>
+            public const byte TemperatureLow = 0;
+
+            /// <summary>
+            ///     Upper 8 bits of the temperature following a conversion.
+            /// </summary>
+            /// <remarks>
+            ///     At power on this will be set to 0x05.
+            /// </remarks>
+            public const byte TemperatureHigh = 1;
+
+            /// <summary>
+            ///     Temperature high alarm (or user byte 1).
+            /// </summary>
+            public const byte HighAlarm = 2;
+
+            /// <summary>
+            ///     Temperature low alarm (or user byte 2).
+            /// </summary>
+            public const byte LowAlarm = 3;
+
+            /// <summary>
+            ///     Configuration byte.
+            /// </summary>
+            public const byte Configuration = 4;
+
+            /// <summary>
+            ///     Reserved byte (number 5) usually set to 0xff.
+            /// </summary>
+            public const byte ReservedByte5 = 5;
+
+            /// <summary>
+            ///     Reserved byte (number 6).
+            /// </summary>
+            public const byte ReservedByte6 = 6;
+
+            /// <summary>
+            ///     Reserved byte (number 7) usually set to 0x10.
+            /// </summary>
+            public const byte Reserved7 = 7;
+
+            /// <summary>
+            ///     CRC byte.
+            /// </summary>
+            /// <remarks>
+            ///     Polynomial for the CRC is X^8 + X^5 + X^4 + 1
+            /// </remarks>
+            public const byte CRC = 8;
+        }
+
+        #endregion ScratchPad class
+
         #region Constants
 
         /// <summary>
@@ -123,6 +187,16 @@ namespace Netduino.Foundation.Sensors.Temperature
         ///     Default assumes that the sensor is working in 12-bit mode (factory setting).
         /// </remarks>
         public const ushort MinimumPollingPeriod = 750;
+
+        /// <summary>
+        ///     Number of bytes in the scratch pad.
+        /// </summary>
+        public const byte ScratchPadSize = 9;
+
+        /// <summary>
+        ///     Number of bytes (including the CRC) in the device ID array.
+        /// </summary>
+        public const byte DeviceIDLength = 8;
 
         #endregion Constants
 
@@ -216,6 +290,29 @@ namespace Netduino.Foundation.Sensors.Temperature
                 }
 
                 return (period);
+            }
+        }
+
+        /// <summary>
+        ///     Read the device ID from the DS18B20 temperature sensor.
+        /// </summary>
+        /// <remarks>
+        ///     Note that this will only work if there is only one sensor
+        ///     on the one wire bus.
+        /// </remarks>
+        public UInt64 DeviceID
+        {
+            get
+            {
+                Sensor.TouchReset();
+                Sensor.WriteByte(Commands.ReadID);
+                UInt64 deviceID = 0;
+                for (var index = 0; index < DeviceIDLength; index++)
+                {
+                    int places = 8 * index;
+                    deviceID |= ((UInt64) Sensor.ReadByte()) << places;
+                }
+                return (deviceID);
             }
         }
 
@@ -333,14 +430,51 @@ namespace Netduino.Foundation.Sensors.Temperature
         }
 
         /// <summary>
+        ///     Read the scratch pad area from the DS18B20.
+        /// </summary>
+        /// <returns>Scratch pad contents as a byte array.</returns>
+        protected byte[] ReadScratchPad()
+        {
+            byte[] scratchPad = new byte[ScratchPadSize];
+            Sensor.TouchReset();
+            if (BusMode == BusModeType.SingleDevice)
+            {
+                Sensor.WriteByte(Commands.SkipROM);
+            }
+            else
+            {
+                //
+                //  Need to send the device address here.
+                //
+            }
+
+            Sensor.WriteByte(Commands.ReadScratchPad);
+            for (var index = 0; index < ScratchPadSize; index++)
+            {
+                scratchPad[index] = (byte) Sensor.ReadByte();
+            }
+            //
+            //  TODO: Could add CRC check here for completeness.
+            //
+            return (scratchPad);
+        }
+
+        /// <summary>
         ///     Read the configuration from the temperature sensor.
         /// </summary>
         /// <remarks>
         ///     This method will also update the Resolution property.
+        ///
+        ///     Format of the configuration register:
+        ///         b7 b6 b5 b4 b3 b2 b1 b0
+        ///         0  R1 R0 1  1  1  1  1
+        ///
+        ///     Where R0 and R1 are the resolution bits (0 = 9, 1 = 10, 2 = 11 and 3 = 12).
         /// </remarks>
         public void ReadConfiguration()
         {
-            Resolution = 12;
+            byte[] scratchPad = ReadScratchPad();
+            Resolution = 9 + ((scratchPad[ScratchPad.Configuration] & 0x60) >> 5);
         }
 
         #endregion Methods
