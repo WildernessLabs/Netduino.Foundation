@@ -32,7 +32,7 @@ namespace PiezoSample
             {
                 for(int i=0; i<NUMBER_TONES; i++)
                 {
-                    piezo.PlayTone(melody[i], beats[i]);
+                    piezo.PlayTone(melody[i], beats[i] * 100);
                 }
                 
                 Thread.Sleep(1000);

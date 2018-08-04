@@ -24,11 +24,14 @@ namespace Netduino.Foundation.Piezos
             {
                 _isPlaying = true;
 
-                var period = (uint)(1000000 / frequency);
+                if (frequency > 0)
+                {
+                    var period = (uint)(1000000 / frequency);
 
-                _pwm.Period = period;
-                _pwm.Duration = period / 2;
-                _pwm.Start();
+                    _pwm.Period = period;
+                    _pwm.Duration = period / 2;
+                    _pwm.Start();
+                }
 
                 Thread.Sleep(duration);
 
