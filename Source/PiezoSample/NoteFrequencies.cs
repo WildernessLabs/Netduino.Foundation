@@ -1,6 +1,6 @@
 namespace Netduino.Foundation.Piezos
 {
-    public static class ToneFrequency
+    public static class NoteFrequencies
     {
         public const float REST     = 0;
         public const float NOTE_B0  = 31;

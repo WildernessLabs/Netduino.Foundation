@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace Netduino.Foundation.Piezos
 {
-    public class PiezoSpeaker : ITuneGenerator
+    public class PiezoSpeaker : IToneGenerator
     {
         private PWM _pwm;
         private bool _isPlaying = false;
@@ -17,35 +17,36 @@ namespace Netduino.Foundation.Piezos
         /// Play a frequency for a specified duration
         /// </summary>
         /// <param name="frequency">The frequency in hertz of the tone to be played</param>
-        /// <param name="duration">How long the note is played in milliseconds</param>
-        /// <param name="volume">The volume to play the note [0..1] </param>
-        public void PlayTone(float frequency, int duration, float volume = 1)
+        /// <param name="duration">How long the note is played in milliseconds, if durration is 0, tone plays indefinitely</param>
+        public void PlayTone(float frequency, int duration = 0)
         {
+            if (frequency <= 0)
+                throw new System.Exception("frequency must be greater than 0");
+
             if (!_isPlaying)
             {
                 _isPlaying = true;
+ 
+                var period = (uint)(1000000 / frequency);
 
-                if (frequency > 0)
+                _pwm.Period = period;
+                _pwm.Duration = period / 2;
+
+                _pwm.Start();
+
+                if (duration > 0)
                 {
-                    var period = (uint)(1000000 / frequency);
-
-                    _pwm.Period = period;
-                    _pwm.Duration = period / 2;
-                    _pwm.DutyCycle = Map(volume, 0, 1, 0, 0.025f);
-                    _pwm.Start();
+                    Thread.Sleep(duration);
+                    _pwm.Stop();
                 }
-
-                Thread.Sleep(duration);
-
-                _pwm.Stop();
 
                 _isPlaying = false;
             }
         }
 
-        float Map(float value, float fromLow, float fromHigh, float toLow, float toHigh)
+        public void StopTone()
         {
-            return (((toHigh - toLow) * (value - fromLow)) / (fromHigh - fromLow)) - toLow;
+            _pwm.Stop();
         }
     }
 }
