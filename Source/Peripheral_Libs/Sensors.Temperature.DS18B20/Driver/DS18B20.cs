@@ -204,7 +204,7 @@ namespace Netduino.Foundation.Sensors.Temperature
         /// <summary>
         ///     Update interval in milliseconds
         /// </summary>
-        protected ushort _updateInterval = 100;
+        private ushort _updateInterval = 100;
 
         #endregion Member variables
 
@@ -287,7 +287,7 @@ namespace Netduino.Foundation.Sensors.Temperature
         /// <summary>
         ///     Device ID of the DS18B20 temperature sensor.
         /// </summary>
-        public UInt64 DeviceID { get; set; }
+        public UInt64 DeviceID { get; private set; }
 
         #endregion Properties
 
