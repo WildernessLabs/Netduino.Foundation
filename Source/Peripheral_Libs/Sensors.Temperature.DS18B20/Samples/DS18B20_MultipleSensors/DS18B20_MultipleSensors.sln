@@ -5,18 +5,46 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS18B20_MultipleSensors", "DS18B20_MultipleSensors.csproj", "{38ED0777-6657-4CAC-8F67-90AD45D0E318}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Temperature.DS18B20", "..\..\Driver\Sensors.Temperature.DS18B20.csproj", "{17108484-8789-4439-9C53-A2AFAEEB54BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netduino.Foundation", "..\..\..\..\Netduino.Foundation\Netduino.Foundation.csproj", "{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{38ED0777-6657-4CAC-8F67-90AD45D0E318}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{38ED0777-6657-4CAC-8F67-90AD45D0E318}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38ED0777-6657-4CAC-8F67-90AD45D0E318}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{38ED0777-6657-4CAC-8F67-90AD45D0E318}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{38ED0777-6657-4CAC-8F67-90AD45D0E318}.Debug|x86.Build.0 = Debug|Any CPU
+		{38ED0777-6657-4CAC-8F67-90AD45D0E318}.Debug|x86.Deploy.0 = Debug|Any CPU
 		{38ED0777-6657-4CAC-8F67-90AD45D0E318}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38ED0777-6657-4CAC-8F67-90AD45D0E318}.Release|Any CPU.Build.0 = Release|Any CPU
 		{38ED0777-6657-4CAC-8F67-90AD45D0E318}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{38ED0777-6657-4CAC-8F67-90AD45D0E318}.Release|x86.ActiveCfg = Release|Any CPU
+		{38ED0777-6657-4CAC-8F67-90AD45D0E318}.Release|x86.Build.0 = Release|Any CPU
+		{38ED0777-6657-4CAC-8F67-90AD45D0E318}.Release|x86.Deploy.0 = Release|Any CPU
+		{17108484-8789-4439-9C53-A2AFAEEB54BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17108484-8789-4439-9C53-A2AFAEEB54BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17108484-8789-4439-9C53-A2AFAEEB54BE}.Debug|x86.ActiveCfg = Debug|x86
+		{17108484-8789-4439-9C53-A2AFAEEB54BE}.Debug|x86.Build.0 = Debug|x86
+		{17108484-8789-4439-9C53-A2AFAEEB54BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17108484-8789-4439-9C53-A2AFAEEB54BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17108484-8789-4439-9C53-A2AFAEEB54BE}.Release|x86.ActiveCfg = Release|x86
+		{17108484-8789-4439-9C53-A2AFAEEB54BE}.Release|x86.Build.0 = Release|x86
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Debug|x86.Build.0 = Debug|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Release|x86.ActiveCfg = Release|Any CPU
+		{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

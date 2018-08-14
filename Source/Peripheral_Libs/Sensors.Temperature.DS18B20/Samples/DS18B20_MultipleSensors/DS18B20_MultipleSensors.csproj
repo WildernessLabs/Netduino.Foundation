@@ -41,9 +41,20 @@
     <Reference Include="Microsoft.SPOT.Hardware.SerialPort" />
     <Reference Include="Microsoft.SPOT.Native" />
     <Reference Include="Microsoft.SPOT.Net" />
+    <Reference Include="Microsoft.SPOT.TinyCore" />
     <Reference Include="SecretLabs.NETMF.Hardware" />
-    <Reference Include="SecretLabs.NETMF.Hardware.Netduino" />
+    <Reference Include="SecretLabs.NETMF.Hardware.NetduinoPlus, Version=4.3.1.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="GoBus" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Netduino.Foundation\Netduino.Foundation.csproj">
+      <Project>{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}</Project>
+      <Name>Netduino.Foundation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Driver\Sensors.Temperature.DS18B20.csproj">
+      <Project>{17108484-8789-4439-9C53-A2AFAEEB54BE}</Project>
+      <Name>Sensors.Temperature.DS18B20</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
