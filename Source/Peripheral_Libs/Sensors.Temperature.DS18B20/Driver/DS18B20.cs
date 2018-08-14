@@ -427,7 +427,7 @@ namespace Netduino.Foundation.Sensors.Temperature
                 Sensor.DeviceBus.WriteByte(Commands.StartConversion);
                 while (Sensor.DeviceBus.ReadByte() == 0) ;
                 Sensor.DeviceBus.TouchReset();
-                Sensor.DeviceBus.WriteByte(Commands.SkipROM);
+                SendDeviceID();
                 Sensor.DeviceBus.WriteByte(Commands.ReadScratchPad);
                 //
                 //  The conversions in the next two lines are required as the ReadByte
@@ -447,6 +447,11 @@ namespace Netduino.Foundation.Sensors.Temperature
         /// </remarks>
         public void ReadDeviceID()
         {
+            if (BusMode == BusModeType.MultimpleDevices)
+            {
+                throw new InvalidOperationException("Cannot read device IDs from the OneWire bus when more than one device is connected.");
+            }
+
             UInt64 deviceID = 0;
             lock (OneWireBus.Instance)
             {
