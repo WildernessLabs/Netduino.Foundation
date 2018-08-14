@@ -287,12 +287,8 @@ namespace Netduino.Foundation.Sensors.Temperature
         }
 
         /// <summary>
-        ///     Read the device ID from the DS18B20 temperature sensor.
+        ///     Device ID of the DS18B20 temperature sensor.
         /// </summary>
-        /// <remarks>
-        ///     Note that this will only work if there is only one sensor
-        ///     on the one wire bus.
-        /// </remarks>
         public UInt64 DeviceID { get; set; }
 
         #endregion Properties
@@ -323,8 +319,8 @@ namespace Netduino.Foundation.Sensors.Temperature
         /// <param name="deviceID">Address of the DS18B20 device.</param>
         /// <param name="updateInterval">Update period in milliseconds.  Note that this most be greater than the conversion period for the sensor.</param>
         /// <param name="temperatureChangeNotificationThreshold">Threshold for temperature changes that will generate an interrupt.</param>
-        public DS18B20(Cpu.Pin oneWirePin, UInt64 deviceID = 0,
-            ushort updateInterval = MinimumPollingPeriod, float temperatureChangeNotificationThreshold = 0.001F)
+        public DS18B20(Cpu.Pin oneWirePin, UInt64 deviceID = 0, ushort updateInterval = MinimumPollingPeriod, 
+            float temperatureChangeNotificationThreshold = 0.001F)
         {
             if (oneWirePin == Cpu.Pin.GPIO_NONE)
             {
