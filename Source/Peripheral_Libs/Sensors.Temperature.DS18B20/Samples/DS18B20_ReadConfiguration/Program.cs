@@ -13,6 +13,8 @@ namespace DS18B20_ReadConfiguration
         ///
         ///     Note that this sample will only work if there is only one device on the
         ///     one wire bus.
+        ///
+        ///     Connect the DS18B20 temperature sensor to GPIO D3.
         /// </summary>
         public static void Main()
         {
