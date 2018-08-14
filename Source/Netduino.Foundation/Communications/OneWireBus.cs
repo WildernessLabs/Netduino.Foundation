@@ -5,10 +5,28 @@ using Microsoft.SPOT.Hardware;
 
 namespace Netduino.Foundation.Communications
 {
+    /// <summary>
+    ///     Singleton class used to allow access to multiple OneWire devices on a single pin
+    ///     in a multi-threaded application.
+    /// </summary>
+    /// <remarks>
+    ///     The OneWire class allows for a single bus to have one or more devices attached to it.
+    ///     It also allows for multiple OneWire devices to be connected to different pins on the
+    ///     Netduino.
+    ///
+    ///     The multiple devices on different pins is not an issue in a multi-threaded environment.
+    ///
+    ///     Multiple devices attached to a single pin on a multi-threaded environment could be an
+    ///     issue as the command sequencing could clash.  Using this object with locking allows
+    ///     for this scenario to be implemented in a safe way.
+    /// </remarks>
     public sealed class OneWireBus
     {
         #region Classes
 
+        /// <summary>
+        ///     Hold information about the devices that are attached to a single pin.
+        /// </summary>
         public class Devices
         {
             #region Properties
