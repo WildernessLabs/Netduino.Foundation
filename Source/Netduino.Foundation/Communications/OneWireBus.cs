@@ -1,24 +1,41 @@
 using System;
 using System.Collections;
-using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
-using Netduino.Foundation;
-using System.Threading;
-using SecretLabs.NETMF.Hardware.Netduino;
+
 
 namespace Netduino.Foundation.Communications
 {
     public sealed class OneWireBus
     {
+        #region Classes
+
         public class Devices
         {
+            #region Properties
+
+            /// <summary>
+            ///     Pin connected to the OneWire devices.
+            /// </summary>
             public Cpu.Pin Pin { get; set; }
 
+            /// <summary>
+            ///     OutputPoert object used to talk to the OneWire bus.
+            /// </summary>
             private OutputPort Port { get; set; }
 
+            /// <summary>
+            ///     Object used to talk to the OneWire devices using the OneWire protocol.
+            /// </summary>
             public OneWire DeviceBus { get; set; }
 
+            /// <summary>
+            ///     Device IS connected to this instance of the OneWire bus.
+            /// </summary>
             public ArrayList DeviceIDs { get; set; }
+
+            #endregion Properties
+
+            #region Constructor
 
             /// <summary>
             ///     Default constructor is private to prevent it being invoked.
@@ -28,9 +45,9 @@ namespace Netduino.Foundation.Communications
             }
 
             /// <summary>
-            /// 
+            ///     Create a new instance of a OneWire Device object.
             /// </summary>
-            /// <param name="pin"></param>
+            /// <param name="pin">Pin connected to the OneWire devices.</param>
             public Devices(Cpu.Pin pin)
             {
                 Pin = pin;
@@ -40,9 +57,18 @@ namespace Netduino.Foundation.Communications
                 ScanForDevices();
             }
 
+            #endregion Constructor
+
+            #region Methods
+
             /// <summary>
-            /// 
+            ///     Scan the specified device bus for OneWire devices.
             /// </summary>
+            /// <remarks>
+            ///     The OneWire protocol allows for multiple OneWire devices to be
+            ///     attached to the same pin.  This method identifies all of the devices
+            ///     that are connected to the pin used to create this object.
+            /// </remarks>
             private void ScanForDevices()
             {
                 ArrayList deviceList;
@@ -66,13 +92,36 @@ namespace Netduino.Foundation.Communications
                     DeviceIDs.Add(deviceID);
                 }
             }
+
+            #endregion Methods
         };
 
+        #endregion Classes
+
+        #region Private member variables
+
+        /// <summary>
+        ///     Static instance
+        /// </summary>
         private static readonly OneWireBus oneWireBus = new OneWireBus();
 
+        /// <summary>
+        ///     List of all of the pins and the associates OneWire devices.
+        /// </summary>
         private static readonly ArrayList _devices = new ArrayList();
 
+        #endregion Private member variables
+
+        #region Properties
+
+        /// <summary>
+        ///     Return the singleton object.
+        /// </summary>
         public static OneWireBus Instance { get { return oneWireBus; } }
+
+        #endregion Properties
+
+        #region Constructor(s)
 
         static OneWireBus()
         {
@@ -85,6 +134,15 @@ namespace Netduino.Foundation.Communications
         {
         }
 
+        #endregion Constructors
+
+        #region Methods
+
+        /// <summary>
+        ///     Add a new pin to the list of those with OneWire devices attached.
+        /// </summary>
+        /// <param name="pin">Pin number with the OneWire devices attached.</param>
+        /// <returns><see cref="Devices"/> object for the specified pin.</returns>
         public static Devices Add(Cpu.Pin pin)
         {
             Devices result = null;
@@ -103,5 +161,7 @@ namespace Netduino.Foundation.Communications
             }
             return (result);
         }
+
+        #endregion Methods
     }
 }
