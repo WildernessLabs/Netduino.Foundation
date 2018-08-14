@@ -1,7 +1,5 @@
 ﻿using System;
-using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
-using Netduino.Foundation;
 using System.Threading;
 using Netduino.Foundation.Communications;
 
