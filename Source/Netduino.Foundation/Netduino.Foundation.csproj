@@ -36,6 +36,7 @@
     <Compile Include="Color.cs" />
     <Compile Include="Communications\I2CBus.cs" />
     <Compile Include="Communications\ICommunicationBus.cs" />
+    <Compile Include="Communications\OneWireBus.cs" />
     <Compile Include="Communications\SerialTextFile.cs" />
     <Compile Include="Communications\SoftwareSPIBus.cs" />
     <Compile Include="Communications\SPIBus.cs" />
@@ -111,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Hardware" />
+    <Reference Include="Microsoft.SPOT.Hardware.OneWire" />
     <Reference Include="Microsoft.SPOT.Hardware.PWM" />
     <Reference Include="Microsoft.SPOT.Hardware.SerialPort" />
     <Reference Include="Microsoft.SPOT.Native">

@@ -3,6 +3,7 @@ using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
 using Netduino.Foundation;
 using System.Threading;
+using Netduino.Foundation.Communications;
 
 namespace Netduino.Foundation.Sensors.Temperature
 {
@@ -207,14 +208,6 @@ namespace Netduino.Foundation.Sensors.Temperature
         /// </summary>
         protected ushort _updateInterval = 100;
 
-        /// <summary>
-        ///     Output port connected to the DS18B20 sensor.
-        /// </summary>
-        /// <remarks>
-        ///     This object is used by the Sensor object.
-        /// </remarks>
-        private readonly OutputPort _sensorPort;
-
         #endregion Member variables
 
         #region Properties
@@ -222,7 +215,7 @@ namespace Netduino.Foundation.Sensors.Temperature
         /// <summary>
         ///     Instance of the DS18B20 temperature sensor
         /// </summary>
-        protected OneWire Sensor { get; private set; }
+        protected OneWireBus.Devices Sensor { get; private set; }
 
         /// <summary>
         ///     Bus mode type, default is single device on the bus.
@@ -327,11 +320,10 @@ namespace Netduino.Foundation.Sensors.Temperature
         ///     Create a new DS18B20 temperature sensor object with the specified configuration.
         /// </summary>
         /// <param name="oneWirePin">GPIO pin the DS18B20 is connected to.</param>
-        /// <param name="busMode">Single or multiple devices on the bus?</param>
-        /// <param name="address">Address of the DS18B20 device.</param>
+        /// <param name="deviceID">Address of the DS18B20 device.</param>
         /// <param name="updateInterval">Update period in milliseconds.  Note that this most be greater than the conversion period for the sensor.</param>
         /// <param name="temperatureChangeNotificationThreshold">Threshold for temperature changes that will generate an interrupt.</param>
-        public DS18B20(Cpu.Pin oneWirePin, BusModeType busMode = BusModeType.SingleDevice, byte[] address = null,
+        public DS18B20(Cpu.Pin oneWirePin, UInt64 deviceID = 0,
             ushort updateInterval = MinimumPollingPeriod, float temperatureChangeNotificationThreshold = 0.001F)
         {
             if (oneWirePin == Cpu.Pin.GPIO_NONE)
@@ -341,12 +333,28 @@ namespace Netduino.Foundation.Sensors.Temperature
             //
             //  Create the OutputPort and OneWire objects necessary to talk to the sensor.
             //
-            _sensorPort = new OutputPort(oneWirePin, false);
-            Sensor = new OneWire(_sensorPort);
-            if (Sensor.TouchReset() == 0)
+            lock (OneWireBus.Instance)
             {
-                throw new Exception("Cannot find DS18B20 sensor on the OneWire interface.");
+                Sensor = OneWireBus.Add(oneWirePin);
+                if (Sensor.DeviceBus.TouchReset() == 0)
+                {
+                    throw new Exception("Cannot find DS18B20 sensor on the OneWire interface.");
+                }
+                if (Sensor.DeviceIDs.Count == 1)
+                { 
+                    BusMode = BusModeType.SingleDevice;
+                }
+                else
+                {
+                    if (deviceID == 0)
+                    {
+                        throw new ArgumentException("Device deviceID cannot be 0 on a OneWireBus with multiple devices.", nameof(deviceID));
+                    }
+                    BusMode = BusModeType.MultimpleDevices;
+                }
             }
+
+            DeviceID = deviceID;
             ReadConfiguration();
             if ((updateInterval != 0) && (MaximumConversionPeriod > updateInterval))
             {
@@ -396,16 +404,16 @@ namespace Netduino.Foundation.Sensors.Temperature
                 //
                 //  When there is only one device we can skip sending the device ID.
                 //
-                Sensor.WriteByte(Commands.SkipROM);
+                Sensor.DeviceBus.WriteByte(Commands.SkipROM);
             }
             else
             {
-                Sensor.WriteByte(Commands.MatchID);
+                Sensor.DeviceBus.WriteByte(Commands.MatchID);
                 for (var index = 0; index < DeviceIDLength; index++)
                 {
                     int places = 8 * index;
                     UInt64 value = DeviceID;
-                    Sensor.WriteByte((byte) ((value >> places) & 0xff));
+                    Sensor.DeviceBus.WriteByte((byte) ((value >> places) & 0xff));
                 }
             }
         }
@@ -415,19 +423,23 @@ namespace Netduino.Foundation.Sensors.Temperature
         /// </summary>
         public void Update()
         {
-            Sensor.TouchReset();
-            SendDeviceID();
-            Sensor.WriteByte(Commands.StartConversion);
-            while (Sensor.ReadByte() == 0) ;
-            Sensor.TouchReset();
-            Sensor.WriteByte(Commands.SkipROM);
-            Sensor.WriteByte(Commands.ReadScratchPad);
-            //
-            //  The conversions in the next two lines are required as the ReadByte
-            //  method returns an int !
-            //
-            UInt16 temperature = (byte)Sensor.ReadByte();
-            temperature |= (UInt16)(Sensor.ReadByte() << 8);
+            UInt16 temperature = 0;
+            lock (OneWireBus.Instance)
+            {
+                Sensor.DeviceBus.TouchReset();
+                SendDeviceID();
+                Sensor.DeviceBus.WriteByte(Commands.StartConversion);
+                while (Sensor.DeviceBus.ReadByte() == 0) ;
+                Sensor.DeviceBus.TouchReset();
+                Sensor.DeviceBus.WriteByte(Commands.SkipROM);
+                Sensor.DeviceBus.WriteByte(Commands.ReadScratchPad);
+                //
+                //  The conversions in the next two lines are required as the ReadByte
+                //  method returns an int !
+                //
+                temperature = (byte) Sensor.DeviceBus.ReadByte();
+                temperature |= (UInt16) (Sensor.DeviceBus.ReadByte() << 8);
+            }
             Temperature = ((float)temperature) / 16;
         }
 
@@ -439,15 +451,17 @@ namespace Netduino.Foundation.Sensors.Temperature
         /// </remarks>
         public void ReadDeviceID()
         {
-            Sensor.TouchReset();
-            Sensor.WriteByte(Commands.ReadID);
             UInt64 deviceID = 0;
-            for (var index = 0; index < DeviceIDLength; index++)
+            lock (OneWireBus.Instance)
             {
-                int places = 8 * index;
-                deviceID |= ((UInt64)Sensor.ReadByte()) << places;
+                Sensor.DeviceBus.TouchReset();
+                Sensor.DeviceBus.WriteByte(Commands.ReadID);
+                for (var index = 0; index < DeviceIDLength; index++)
+                {
+                    int places = 8 * index;
+                    deviceID |= ((UInt64) Sensor.DeviceBus.ReadByte()) << places;
+                }
             }
-
             DeviceID = deviceID;
         }
 
@@ -458,12 +472,15 @@ namespace Netduino.Foundation.Sensors.Temperature
         protected byte[] ReadScratchPad()
         {
             byte[] scratchPad = new byte[ScratchPadSize];
-            Sensor.TouchReset();
-            SendDeviceID();
-            Sensor.WriteByte(Commands.ReadScratchPad);
-            for (var index = 0; index < ScratchPadSize; index++)
+            lock (OneWireBus.Instance)
             {
-                scratchPad[index] = (byte) Sensor.ReadByte();
+                Sensor.DeviceBus.TouchReset();
+                SendDeviceID();
+                Sensor.DeviceBus.WriteByte(Commands.ReadScratchPad);
+                for (var index = 0; index < ScratchPadSize; index++)
+                {
+                    scratchPad[index] = (byte) Sensor.DeviceBus.ReadByte();
+                }
             }
             //
             //  TODO: Could add CRC check here for completeness.
