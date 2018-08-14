@@ -326,9 +326,6 @@ namespace Netduino.Foundation.Sensors.Temperature
             {
                 throw new ArgumentException("OneWire pin cannot be null.", nameof(oneWirePin));
             }
-            //
-            //  Create the OutputPort and OneWire objects necessary to talk to the sensor.
-            //
             lock (OneWireBus.Instance)
             {
                 Sensor = OneWireBus.Add(oneWirePin);
@@ -347,6 +344,26 @@ namespace Netduino.Foundation.Sensors.Temperature
                         throw new ArgumentException("Device deviceID cannot be 0 on a OneWireBus with multiple devices.", nameof(deviceID));
                     }
                     BusMode = BusModeType.MultimpleDevices;
+                }
+                //
+                //  Check for the ROM ID in the list of devices connected to the bus.
+                //
+                if (deviceID != 0)
+                {
+                    bool found = false;
+                    foreach (UInt64 id in Sensor.DeviceIDs)
+                    {
+                        if (id == deviceID)
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (!found)
+                    {
+                        throw new Exception("Cannot locate the specified device ID on the OneWire bus.");
+                    }
                 }
             }
 
