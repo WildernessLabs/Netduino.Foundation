@@ -4,9 +4,9 @@ title: DS18B20
 subtitle: Under development.
 ---
 
-The DS18B20 is a 1-Wire temperature sensor manufactured by Maxim.  The sensor can operate in 9, 10, 11 or 12 bit precision and has a range of -55&deg;C to 125 &deb;C.
+The DS18B20 is a 1-Wire temperature sensor manufactured by Maxim.  The sensor can operate in 9, 10, 11 or 12 bit precision and has a range of -55&deg;C to 125 &deg;C.
 
-Each sensor has a 64-bit unique identifier built into each sensor.  This allows multiple sensors to be connected to the same 1-Wire bus.  So for instance, a project could measure internal and external temperature using a single GPIO pin.
+Each sensor has a 64-bit unique identifier built in.  This allows multiple sensors to be connected to the same 1-Wire bus.  So for instance, a project could measure internal and external temperature using a single GPIO pin.
 
 # Purchasing
 
@@ -254,11 +254,11 @@ Minimum value for the `updateInterval` property in the constructor.  This repres
 
 #### `public public DS18B20(Cpu.Pin oneWirePin, UInt64 deviceID = 0, ushort updateInterval = MinimumPollingPeriod, float temperatureChangeNotificationThreshold = 0.001F)`
 
-Creates a new DS18B20 objects where the sensor is connected to the specified `oneWirePin`.
+Creates a new DS18B20 object where the sensor is connected to the specified `oneWirePin`.
 
 The `deviceID` parameter is options for circuits containing one DS18B20 sensor on each GPIO pin.  The `deviceID` must be specified when multiple 1-Wire devices are connected to a single pin.
 
-`updatePeriod` determines the operating mode of the driver.  An `updatePeriod` of 0 puts the device into polling mode.  In this mode the application is responsible for calling the `Update` method prior to accessing the `Temperature` property.  Non-zero values for the `updatePeriod` will case the temperature to be checked periodically and an event raised should the change in temperature be outside the `temperatureChangeNotificationThreshold` parameter.
+`updatePeriod` determines the operating mode of the driver.  An `updatePeriod` of `0` puts the device into polling mode.  In this mode the application is responsible for calling the `Update` method prior to accessing the `Temperature` property.  Non-zero values for the `updatePeriod` will cause the temperature to be checked periodically and an event raised should the change in temperature be outside the `temperatureChangeNotificationThreshold` parameter.
 
 ### Properties
 
@@ -282,7 +282,7 @@ Maximum conversion time for the DS18B20 based upon the current resolution.
 
 #### `public UInt64 DeviceID`
 
-Device ID of the current sensor.  This is used to identify the sensor being used when more than one sensor is attached to the 1-Wire bus.
+`DeviceID` is used to identify the sensor being used when more than one sensor is attached to the 1-Wire bus.
 
 ### Methods
 
