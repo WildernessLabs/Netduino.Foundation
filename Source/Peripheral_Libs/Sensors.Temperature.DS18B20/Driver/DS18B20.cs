@@ -522,6 +522,22 @@ namespace Netduino.Foundation.Sensors.Temperature
             Resolution = 9 + ((scratchPad[ScratchPad.Configuration] & 0x60) >> 5);
         }
 
+        /// <summary>
+        ///     Load the configuration from the device EEPROM.
+        /// </summary>
+        public void LoadConfiguration()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        ///     Save the current configuration to the device EEPROM.
+        /// </summary>
+        public void SaveConfiguration()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion Methods
     }
 }
