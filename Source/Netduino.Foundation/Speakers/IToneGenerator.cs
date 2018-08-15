@@ -1,4 +1,4 @@
-namespace Netduino.Foundation.Piezos
+namespace Netduino.Foundation.Audio
 {
     interface IToneGenerator
     {

@@ -1,7 +1,7 @@
 using Microsoft.SPOT.Hardware;
 using System.Threading;
 
-namespace Netduino.Foundation.Piezos
+namespace Netduino.Foundation.Audio
 {
     public class PiezoSpeaker : IToneGenerator
     {

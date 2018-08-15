@@ -1,4 +1,4 @@
-namespace Netduino.Foundation.Piezos
+namespace PiezoSample
 {
     public static class NoteFrequencies
     {
