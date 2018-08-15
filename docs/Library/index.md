@@ -78,7 +78,7 @@ Netduino.Foundation has two sets of peripheral drivers; the ones listed in the f
 |---------------------------|-------------------------------------|
 | [BME280](/Library/Sensors/Atmospheric/BME280)      | Combined I2C/SPI temperature, humidity, and pressure sensor. |
 | BMP085                    | In development |
-| DS18B20                   | [DS18B20](/Library/Sensors/Temperature/DS18B20) 9, 10, 11, 12 bit temperature sensor. |
+| [DS18B20](/Library/Sensors/Temperature/DS18B20)    |  Temperature sensor with 9-12 bit resolution of a range of -55 to 125 C. |
 | GroveTH02                 | In development |
 | [HIH6130](/Library/Sensors/Atmospheric/HIH6130)    | Combined I2C temperature and humidity sensor. |
 | HTU21DF                   | In development |
