@@ -92,18 +92,18 @@ namespace Netduino.Foundation.Sensors.Buttons
                 //
                 return;
             }
-            this._lastClicked = time;
+            _lastClicked = time;
 
 
             // 0 is press, 1 is release
             switch (state) {
-                case 0: // button press
+                case 1: // button press
                     // save our press start time (for long press event)
                     _buttonPressStart = DateTime.Now;
                     // raise our event in an inheritance friendly way
                     this.RaisePressStarted();
                     break;
-                case 1: // button release
+                case 0: // button release
                     // calculate the press duration
                     TimeSpan pressDuration = DateTime.Now - _buttonPressStart;
 
