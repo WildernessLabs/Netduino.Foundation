@@ -8,7 +8,7 @@ namespace DS18B20_PollingSample
     public class Program
     {
         /// <summary>
-        ///     This application demonstrates how to create a new DS18B20object and read
+        ///     This application demonstrates how to create a new DS18B20 object and read
         ///     the temperature from the sensor.  The current temperature will be displayed
         ///     in the Debug Output window every 500-1250ms.
         ///
