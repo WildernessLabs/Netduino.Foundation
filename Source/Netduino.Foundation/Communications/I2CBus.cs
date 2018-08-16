@@ -57,6 +57,7 @@ namespace Netduino.Foundation.Communications
             {
                 _device = new I2CDevice(_configuration);
             }
+            _transactionTimeout = transactionTimeout;
         }
 
         #endregion Constructors
