@@ -1,7 +1,7 @@
 ---
 layout: Library
-title: DS18B20
-subtitle: Under development.
+title: DS18B20 1-Wire Temperature Sensor
+subtitle: Hardware Driver for the DS18B20 1-Wire temperature sensor
 ---
 
 The DS18B20 is a 1-Wire temperature sensor manufactured by Maxim.  The sensor can operate in 9, 10, 11 or 12 bit precision and has a range of -55&deg;C to 125 &deg;C.
