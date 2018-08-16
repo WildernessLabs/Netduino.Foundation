@@ -319,7 +319,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "x74595_Sample", "Peripheral
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICs.IOExpanders.MCP23008", "Peripheral_Libs\ICs.IOExpanders.MCP23008\Driver\ICs.IOExpanders.MCP23008.csproj", "{3E2D1916-C1B2-41C4-A368-5081123FD8A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiezoSample", "PiezoSample\PiezoSample.csproj", "{36D634E4-988E-4960-82C9-D99C1333A57C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiezoSample", "Netduino.Foundation.Core.Samples\PiezoSample\PiezoSample.csproj", "{36D634E4-988E-4960-82C9-D99C1333A57C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS18B20_PollingSample", "Peripheral_Libs\Sensors.Temperature.DS18B20\Samples\DS18B20_PollingSample\DS18B20_PollingSample.csproj", "{495A6DFD-B68C-4AD6-A046-E4B326C98FAD}"
 EndProject

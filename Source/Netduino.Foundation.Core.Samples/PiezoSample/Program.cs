@@ -1,4 +1,4 @@
-using Netduino.Foundation.Piezos;
+using Netduino.Foundation.Audio;
 using System.Threading;
 using N = SecretLabs.NETMF.Hardware.Netduino;
 
