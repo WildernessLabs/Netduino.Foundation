@@ -169,10 +169,13 @@ namespace Netduino.Foundation.LEDs
             }
 
             int count = 0;
-            while (_animationThread.IsAlive && count < 10)
+            if(_animationThread != null)
             {
-                Thread.Sleep(100);
-                count++;
+                while (_animationThread.IsAlive && count < 10)
+                {
+                    Thread.Sleep(100);
+                    count++;
+                }
             }
 
             if (count == 10)
