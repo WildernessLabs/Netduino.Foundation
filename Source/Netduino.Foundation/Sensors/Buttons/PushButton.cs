@@ -87,23 +87,16 @@ namespace Netduino.Foundation.Sensors.Buttons
 
         private void DigitalIn_OnInterrupt(uint port, uint state, DateTime time)
         {
-            uint STATE_PRESSED = 0;
-            uint STATE_RELEASED = 1;
-
             // check how much time has elapsed since the last click
             var timeSinceLast = time - _lastClicked;
             if (timeSinceLast <= DebounceDuration)
             {
-                //
                 return;
             }
             _lastClicked = time;
 
-            if(_circuitType == CircuitTerminationType.High)
-            {
-                STATE_PRESSED = 1;
-                STATE_RELEASED = 0;
-            }
+            int STATE_PRESSED = _circuitType == CircuitTerminationType.High ? 1 : 0;
+            int STATE_RELEASED = _circuitType == CircuitTerminationType.High ? 0 : 1;
 
             if(state == STATE_PRESSED)
             {
