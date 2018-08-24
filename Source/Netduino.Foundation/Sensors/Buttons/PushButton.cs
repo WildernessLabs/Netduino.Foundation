@@ -9,14 +9,16 @@ namespace Netduino.Foundation.Sensors.Buttons
 	/// </summary>
 	public class PushButton : IButton
 	{
-        DateTime _lastClicked = DateTime.MinValue;
+        protected DateTime _lastClicked = DateTime.MinValue;
+        protected DateTime _buttonPressStart = DateTime.MaxValue;
+        protected CircuitTerminationType _circuitType;
 
-		/// <summary>
-		/// This duration controls the debounce filter. It also has the effect
-		/// of rate limiting clicks. Decrease this time to allow users to click
-		/// more quickly.
-		/// </summary>
-		public TimeSpan DebounceDuration { get; set; }
+        /// <summary>
+        /// This duration controls the debounce filter. It also has the effect
+        /// of rate limiting clicks. Decrease this time to allow users to click
+        /// more quickly.
+        /// </summary>
+        public TimeSpan DebounceDuration { get; set; }
 
         /// <summary>
         /// Returns the current raw state of the switch. If the switch 
@@ -42,7 +44,6 @@ namespace Netduino.Foundation.Sensors.Buttons
         /// The minimum duration for a long press.
         /// </summary>
         public TimeSpan LongPressThreshold { get; set; } = new TimeSpan(0, 0, 0, 0, 500);
-        protected DateTime _buttonPressStart = DateTime.MaxValue;
 
         public H.InterruptPort DigitalIn { get; private set; }
 
@@ -59,7 +60,8 @@ namespace Netduino.Foundation.Sensors.Buttons
         /// <param name="debounceDuration">in milliseconds</param>
 		public PushButton(H.Cpu.Pin inputPin, CircuitTerminationType type, int debounceDuration = 20) 
 		{
-            this.DebounceDuration = new TimeSpan(0, 0, 0, 0, debounceDuration);
+            _circuitType = type;
+            DebounceDuration = new TimeSpan(0, 0, 0, 0, debounceDuration);
 
             // if we terminate in ground, we need to pull the port high to test for circuit completion, otherwise down.
             H.Port.ResistorMode resistorMode = H.Port.ResistorMode.Disabled;
@@ -85,6 +87,9 @@ namespace Netduino.Foundation.Sensors.Buttons
 
         private void DigitalIn_OnInterrupt(uint port, uint state, DateTime time)
         {
+            uint STATE_PRESSED = 0;
+            uint STATE_RELEASED = 1;
+
             // check how much time has elapsed since the last click
             var timeSinceLast = time - _lastClicked;
             if (timeSinceLast <= DebounceDuration)
@@ -92,31 +97,35 @@ namespace Netduino.Foundation.Sensors.Buttons
                 //
                 return;
             }
-            this._lastClicked = time;
+            _lastClicked = time;
 
+            if(_circuitType == CircuitTerminationType.High)
+            {
+                STATE_PRESSED = 1;
+                STATE_RELEASED = 0;
+            }
 
-            // 0 is press, 1 is release
-            switch (state) {
-                case 0: // button press
-                    // save our press start time (for long press event)
-                    _buttonPressStart = DateTime.Now;
-                    // raise our event in an inheritance friendly way
-                    this.RaisePressStarted();
-                    break;
-                case 1: // button release
-                    // calculate the press duration
-                    TimeSpan pressDuration = DateTime.Now - _buttonPressStart;
+            if(state == STATE_PRESSED)
+            {
+                // save our press start time (for long press event)
+                _buttonPressStart = DateTime.Now;
+                // raise our event in an inheritance friendly way
+                this.RaisePressStarted();
+            }
+            else if(state == STATE_RELEASED)
+            {
+                // calculate the press duration
+                TimeSpan pressDuration = DateTime.Now - _buttonPressStart;
 
-                    // reset press start time
-                    _buttonPressStart = DateTime.MaxValue;
+                // reset press start time
+                _buttonPressStart = DateTime.MaxValue;
 
-                    // if it's a long press, raise our long press event
-                    if (pressDuration > LongPressThreshold) this.RaiseLongPress();
+                // if it's a long press, raise our long press event
+                if (pressDuration > LongPressThreshold) this.RaiseLongPress();
 
-                    // raise the other events
-                    this.RaisePressEnded();
-                    this.RaiseClicked();
-                    break;
+                // raise the other events
+                this.RaisePressEnded();
+                this.RaiseClicked();
             }
         }
 
