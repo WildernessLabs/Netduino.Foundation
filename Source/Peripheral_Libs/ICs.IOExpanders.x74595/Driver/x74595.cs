@@ -188,14 +188,15 @@ namespace Netduino.Foundation.ICs.IOExpanders.x74595
 
             for (var chip = 0; chip < _numberOfChips; chip++)
             {
-                data[chip] = 0;
+                var dataByte = _numberOfChips - chip - 1;
+                data[dataByte] = 0;
                 byte bitValue = 1;
                 var offset = chip * 8;
                 for (var bit = 0; bit < 8; bit++)
                 {
                     if (_pins[offset + bit])
                     {
-                        data[chip] |= bitValue;
+                        data[dataByte] |= bitValue;
                     }
                     bitValue <<= 1;
                 }
