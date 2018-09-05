@@ -329,6 +329,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS18B20_InterruptSample", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DS18B20_MultipleSensors", "Peripheral_Libs\Sensors.Temperature.DS18B20\Samples\DS18B20_MultipleSensors\DS18B20_MultipleSensors.csproj", "{38ED0777-6657-4CAC-8F67-90AD45D0E318}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpdtSwitch", "Netduino.Foundation.Core.Samples\SpdtSwitch\SpdtSwitch.csproj", "{F654673A-80D8-441F-AE51-8CE4B656D44C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -2235,6 +2237,24 @@ Global
 		{38ED0777-6657-4CAC-8F67-90AD45D0E318}.Release|x86.ActiveCfg = Release|Any CPU
 		{38ED0777-6657-4CAC-8F67-90AD45D0E318}.Release|x86.Build.0 = Release|Any CPU
 		{38ED0777-6657-4CAC-8F67-90AD45D0E318}.Release|x86.Deploy.0 = Release|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44C}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44C}.Debug|x86.Build.0 = Debug|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44C}.Debug|x86.Deploy.0 = Debug|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44C}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44C}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44C}.Release|x86.ActiveCfg = Release|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44C}.Release|x86.Build.0 = Release|Any CPU
+		{F654673A-80D8-441F-AE51-8CE4B656D44C}.Release|x86.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -2360,5 +2380,6 @@ Global
 		{403C9014-02C4-44E6-AD4C-69357CDFE8AC} = {A010BAF1-2220-49A3-B478-15E05FE8B3EC}
 		{E570E753-D61C-4338-8904-45E97BC55686} = {A010BAF1-2220-49A3-B478-15E05FE8B3EC}
 		{38ED0777-6657-4CAC-8F67-90AD45D0E318} = {A010BAF1-2220-49A3-B478-15E05FE8B3EC}
+		{F654673A-80D8-441F-AE51-8CE4B656D44C} = {B1CB9A4C-0FA0-4D20-AC92-18B3D23EBD45}
 	EndGlobalSection
 EndGlobal
