@@ -48,6 +48,7 @@
     <Compile Include="..\..\..\Netduino.Foundation\RoslynFixHack.cs">
       <Link>RoslynFixHack.cs</Link>
     </Compile>
+    <Compile Include="DeviceInterruptEventArgs.cs" />
     <Compile Include="DigitalInputPort.cs" />
     <Compile Include="DigitalOutputPort.cs" />
     <Compile Include="MCP23008.cs" />
