@@ -77,7 +77,7 @@ namespace Netduino.Foundation.Displays
         private readonly byte[] _buffer;
 
         /// <summary>
-        ///     Sequence of commans bytes that must be set to the display before
+        ///     Sequence of command bytes that must be sent to the display before
         ///     the Show method can send the data buffer.
         /// </summary>
         private readonly byte[] _showPreamble;
@@ -292,15 +292,11 @@ namespace Netduino.Foundation.Displays
             }
         }
 
-        /// <summary>
-        ///     Coordinates start with index 0
-        /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="colored">True = turn on pixel, false = turn off pixel</param>
-        public override void DrawPixel(int x, int y, bool colored)
+        public override void DrawPixel(int x, int y, Color color)
         {
-            DrawPixel((byte) x, (byte) y, colored);
+            var colored = (color == Color.Black) ? false : true;
+
+            DrawPixel(x, y, colored);
         }
 
         /// <summary>
@@ -309,7 +305,7 @@ namespace Netduino.Foundation.Displays
         /// <param name="x">Abscissa of the pixel to the set / reset.</param>
         /// <param name="y">Ordinate of the pixel to the set / reset.</param>
         /// <param name="colored">True = turn on pixel, false = turn off pixel</param>
-        public override void DrawPixel(byte x, byte y, bool colored)
+        public override void DrawPixel(int x, int y, bool colored)
         {
             if ((x >= _width) || (y >= _height))
             {

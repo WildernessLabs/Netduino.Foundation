@@ -55,6 +55,11 @@ namespace Netduino.Foundation.Displays
         /// <param name="colored">Turn the pixel on (true) or off (false).</param>
         public void DrawLine(int x0, int y0, int x1, int y1, bool colored = true)
         {
+            DrawLine(x0, y0, x1, y1, (colored ? Color.White : Color.Black));
+        }
+
+        public void DrawLine(int x0, int y0, int x1, int y1, Color color)
+        {
             var steep = Math.Abs(y1 - y0) > Math.Abs(x1 - x0);
             if (steep)
             {
@@ -83,7 +88,7 @@ namespace Netduino.Foundation.Displays
             var y = y0;
             for (var x = x0; x <= x1; x++)
             {
-                _display.DrawPixel(steep ? y : x, steep ? x : y, colored);
+                _display.DrawPixel(steep ? y : x, steep ? x : y, color);
                 error = error - dy;
                 if (error < 0)
                 {
@@ -108,6 +113,14 @@ namespace Netduino.Foundation.Displays
             }
         }
 
+        public void DrawHorizontalLine(int x0, int y0, int length, Color color)
+        {
+            for (var x = x0; (x - x0) < length; x++)
+            {
+                _display.DrawPixel(x, y0, color);
+            }
+        }
+
         /// <summary>
         ///     Draw a vertical line.
         /// </summary>
@@ -120,6 +133,14 @@ namespace Netduino.Foundation.Displays
             for (var y = y0; (y - y0) < length; y++)
             {
                 _display.DrawPixel(x0, y, colored);
+            }
+        }
+
+        public void DrawVerticalLine(int x0, int y0, int length, Color color)
+        {
+            for (var y = y0; (y - y0) < length; y++)
+            {
+                _display.DrawPixel(x0, y, color);
             }
         }
 
@@ -141,6 +162,11 @@ namespace Netduino.Foundation.Displays
         /// <param name="filled">Draw a filled circle?</param>
         public void DrawCircle(int centerX, int centerY, int radius, bool colored = true, bool filled = false)
         {
+            DrawCircle(centerX, centerY, radius, (colored ? Color.White : Color.Black), filled);
+        }
+
+        public void DrawCircle(int centerX, int centerY, int radius, Color color, bool filled = false)
+        {
             var d = (5 - (radius * 4)) / 4;
             var x = 0;
             var y = radius;
@@ -148,21 +174,21 @@ namespace Netduino.Foundation.Displays
             {
                 if (filled)
                 {
-                    DrawLine(centerX + x, centerY + y, centerX - x, centerY + y, colored);
-                    DrawLine(centerX + x, centerY - y, centerX - x, centerY - y, colored);
-                    DrawLine(centerX - y, centerY + x, centerX + y, centerY + x, colored);
-                    DrawLine(centerX - y, centerY - x, centerX + y, centerY - x, colored);
+                    DrawLine(centerX + x, centerY + y, centerX - x, centerY + y, color);
+                    DrawLine(centerX + x, centerY - y, centerX - x, centerY - y, color);
+                    DrawLine(centerX - y, centerY + x, centerX + y, centerY + x, color);
+                    DrawLine(centerX - y, centerY - x, centerX + y, centerY - x, color);
                 }
                 else
                 {
-                    _display.DrawPixel(centerX + x, centerY + y, colored);
-                    _display.DrawPixel(centerX + y, centerY + x, colored);
-                    _display.DrawPixel(centerX - y, centerY + x, colored);
-                    _display.DrawPixel(centerX - x, centerY + y, colored);
-                    _display.DrawPixel(centerX - x, centerY - y, colored);
-                    _display.DrawPixel(centerX - y, centerY - x, colored);
-                    _display.DrawPixel(centerX + x, centerY - y, colored);
-                    _display.DrawPixel(centerX + y, centerY - x, colored);
+                    _display.DrawPixel(centerX + x, centerY + y, color);
+                    _display.DrawPixel(centerX + y, centerY + x, color);
+                    _display.DrawPixel(centerX - y, centerY + x, color);
+                    _display.DrawPixel(centerX - x, centerY + y, color);
+                    _display.DrawPixel(centerX - x, centerY - y, color);
+                    _display.DrawPixel(centerX - y, centerY - x, color);
+                    _display.DrawPixel(centerX + x, centerY - y, color);
+                    _display.DrawPixel(centerX + y, centerY - x, color);
                 }
                 if (d < 0)
                 {
@@ -187,6 +213,11 @@ namespace Netduino.Foundation.Displays
         public void DrawFilledCircle(int centerX, int centerY, int radius, bool colored = true)
         {
             DrawCircle(centerX, centerY, radius, colored, true);
+        }
+
+        public void DrawFilledCircle(int centerX, int centerY, int radius, Color color)
+        {
+            DrawCircle(centerX, centerY, radius, color, true);
         }
 
         /// <summary>
@@ -218,6 +249,26 @@ namespace Netduino.Foundation.Displays
             }
         }
 
+        public void DrawRectangle(int xLeft, int yTop, int width, int height, Color color, bool filled = false)
+        {
+            width--;
+            height--;
+            if (filled)
+            {
+                for (var i = 0; i <= height; i++)
+                {
+                    DrawLine(xLeft, yTop + i, xLeft + width, yTop + i, color);
+                }
+            }
+            else
+            {
+                DrawLine(xLeft, yTop, xLeft + width, yTop, color);
+                DrawLine(xLeft + width, yTop, xLeft + width, yTop + height, color);
+                DrawLine(xLeft + width, yTop + height, xLeft, yTop + height, color);
+                DrawLine(xLeft, yTop, xLeft, yTop + height, color);
+            }
+        }
+
         /// <summary>
         ///     Draw a filled rectangle.
         /// </summary>
@@ -229,6 +280,11 @@ namespace Netduino.Foundation.Displays
         public void DrawFilledRectangle(int xLeft, int yTop, int width, int height, bool colored = true)
         {
             DrawRectangle(xLeft, yTop, width, height, colored, true);
+        }
+
+        public void DrawFilledRectangle(int xLeft, int yTop, int width, int height, Color color)
+        {
+            DrawRectangle(xLeft, yTop, width, height, color, true);
         }
 
         /// <summary>
@@ -255,6 +311,24 @@ namespace Netduino.Foundation.Displays
                 }
             }
             DrawBitmap(x, y, text.Length, CurrentFont.Height, bitMap, DisplayBase.BitmapMode.And);
+        }
+
+        public void DrawText(int x, int y, int spacing, string text, Color color, bool wrap = false)
+        {
+            if (CurrentFont == null)
+            {
+                throw new Exception("CurrentFont must be set before calling DrawText.");
+            }
+            byte[] bitMap = new byte[text.Length * CurrentFont.Height];
+            for (int index = 0; index < text.Length; index++)
+            {
+                byte[] characterMap = CurrentFont[text[index]];
+                for (int characterSegment = 0; characterSegment < CurrentFont.Height; characterSegment++)
+                {
+                    bitMap[index + (characterSegment * text.Length)] = characterMap[characterSegment];
+                }
+            }
+            DrawBitmap(x, y, text.Length, CurrentFont.Height, bitMap, color);
         }
 
         #endregion Methods
@@ -293,6 +367,12 @@ namespace Netduino.Foundation.Displays
         {
             _display.DrawBitmap(x, y, width, height, bitmap, bitmapMode);
         }
+
+        public void DrawBitmap(int x, int y, int width, int height, byte[] bitmap, Color color)
+        {
+            _display.DrawBitmap(x, y, width, height, bitmap, color);
+        }
+
 
         #endregion Display
     }

@@ -33,12 +33,7 @@
         /// <param name="updateDisplay">Update the dipslay once the buffer has been cleared when true.</param>
         public abstract void Clear(bool updateDisplay = false);
 
-        /// <summary>
-        /// </summary>
-        /// <param name="x">Abscissa of the pixel.</param>
-        /// <param name="y">Ordinate of the pixel.</param>
-        /// <param name="colored"></param>
-        public abstract void DrawPixel(byte x, byte y, bool colored);
+        public abstract void DrawPixel(int x, int y, Color color);
 
         /// <summary>
         /// </summary>
@@ -57,5 +52,7 @@
         /// <param name="bitmap">Bitmap to transfer</param>
         /// <param name="bitmapMode">How should the bitmap be transferred to the display?</param>
         public abstract void DrawBitmap(int x, int y, int width, int height, byte[] bitmap, BitmapMode bitmapMode);
+
+        public abstract void DrawBitmap(int x, int y, int width, int height, byte[] bitmap, Color color);
     }
 }
