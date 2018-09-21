@@ -15,12 +15,12 @@
     <copyright>Copyright 2018 Wilderness Labs</copyright>
     <tags>NETMF Netduino</tags>
     <dependencies>
-      <dependency id="Netduino.Foundation" version="0.23" />
+      <dependency id="Netduino.Foundation" version="0.24" />
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Netduino.Foundation.Sensors.Motion.MPU6050.*" target="lib\netmf43" />
-    <file src="bin\Release\le\Netduino.Foundation.Sensors.Motion.MPU6050.*" target="lib\netmf43\le" />
-    <file src="bin\Release\be\Netduino.Foundation.Sensors.Motion.MPU6050.*" target="lib\netmf43\be" />
+    <file src="bin\Release\Netduino.Foundation.Sensors.Motion.ParallaxPIR.*" target="lib\netmf43" />
+    <file src="bin\Release\le\Netduino.Foundation.Sensors.Motion.ParallaxPIR.*" target="lib\netmf43\le" />
+    <file src="bin\Release\be\Netduino.Foundation.Sensors.Motion.ParallaxPIR.*" target="lib\netmf43\be" />
   </files>
 </package>
