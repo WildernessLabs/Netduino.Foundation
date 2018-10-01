@@ -1,12 +1,21 @@
 using System;
 using Microsoft.SPOT;
 using System.Threading;
+using Microsoft.SPOT.Hardware;
 
 namespace Netduino.Foundation.Displays
 {
     //Samsung S6D02A1 controller
     public class S6D02A1 : DisplaySpiTft
     {
+        private S6D02A1() { }
+
+        public S6D02A1(Cpu.Pin chipSelectPin, Cpu.Pin dcPin, Cpu.Pin resetPin,
+            uint width, uint height,
+            SPI.SPI_module spiModule = SPI.SPI_module.SPI1,
+            uint speedKHz = 9500) : base(chipSelectPin, dcPin, resetPin, width, height, spiModule, speedKHz)
+        { }
+
         protected override void Initialize()
         {
             resetPort.Write(true);
