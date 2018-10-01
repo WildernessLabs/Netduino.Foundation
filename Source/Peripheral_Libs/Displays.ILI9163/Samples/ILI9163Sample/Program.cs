@@ -49,6 +49,20 @@ namespace ILI9163Test
 
         static void UITest()
         {
+            display.CurrentFont = new Font8x12();
+            //display.DrawText(4, 10, "Meadow 3 WiFi", Color.SkyBlue);
+            
+            display.DrawText(4, 5, "abcdefghijklm", Color.SkyBlue);
+            display.DrawText(4, 20, "nopqrstuvwxyz", Color.SkyBlue);
+            display.DrawText(4, 35, "`1234567890-=", Color.SkyBlue);
+            display.DrawText(4, 50, "~!@#$%^&*()_+", Color.SkyBlue);
+            display.DrawText(4, 65, "[]\\;',.//", Color.SkyBlue);
+            display.DrawText(4, 80, "{}|:\"<>?", Color.SkyBlue);
+            display.DrawText(4, 95, "ABCDEFGHIJKLM", Color.SkyBlue);
+            display.DrawText(4, 110, "NOPQRSTUVWXYZ", Color.SkyBlue);
+            display.Show();
+            Thread.Sleep(20000);
+
             display.Clear();
 
             var bytes = Resources.GetBytes(Resources.BinaryResources.trees);
@@ -76,8 +90,8 @@ namespace ILI9163Test
             tft.Refresh();
             Thread.Sleep(1000);
 
-            display.CurrentFont = new Font8x8();
-            display.DrawText(4, 10, 0, "NETDUINO 3 WiFi", Color.SkyBlue);
+            display.CurrentFont = new Font8x12();
+            display.DrawText(4, 10, "abgjkyz", Color.SkyBlue);
             display.Show();
             Thread.Sleep(Timeout.Infinite);
         }
