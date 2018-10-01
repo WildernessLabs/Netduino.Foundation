@@ -49,12 +49,23 @@ namespace Netduino.Foundation.Displays
             /// <summary>
             ///     0.91 128x32 pixel display.
             /// </summary>
-            OLED128x32
+            OLED128x32,
+
+            /// <summary>
+            ///     64x48 pixel display.
+            /// </summary>
+            //OLED64x48, (coming soon)
         }
 
         #endregion Enums
 
         #region Member variables / fields
+
+        public override DisplayColorMode ColorMode => DisplayColorMode.Format1bpp;
+
+        public override uint Width => _width;
+
+        public override uint Height => _height;
 
         /// <summary>
         ///     SSD1306 display.
@@ -64,12 +75,12 @@ namespace Netduino.Foundation.Displays
         /// <summary>
         ///     Width of the display in pixels.
         /// </summary>
-        private readonly int _width;
+        private readonly uint _width;
 
         /// <summary>
         ///     Height of the display in pixels.
         /// </summary>
-        private readonly int _height;
+        private readonly uint _height;
 
         /// <summary>
         ///     Buffer holding the pixels in the display.
@@ -286,10 +297,9 @@ namespace Netduino.Foundation.Displays
         public override void Clear(bool updateDisplay = false)
         {
             Array.Clear(_buffer, 0, _buffer.Length);
+
             if (updateDisplay)
-            {
                 Show();
-            }
         }
 
         public override void DrawPixel(int x, int y, Color color)
@@ -343,7 +353,7 @@ namespace Netduino.Foundation.Displays
         /// <param name="height">Height of the bitmap in bytes.</param>
         /// <param name="bitmap">Bitmap to transfer</param>
         /// <param name="bitmapMode">How should the bitmap be transferred to the display?</param>
-        public override void DrawBitmap(int x, int y, int width, int height, byte[] bitmap, BitmapMode bitmapMode)
+        public void DrawBitmap(int x, int y, int width, int height, byte[] bitmap, BitmapMode bitmapMode)
         {
             if ((width * height) != bitmap.Length)
             {
