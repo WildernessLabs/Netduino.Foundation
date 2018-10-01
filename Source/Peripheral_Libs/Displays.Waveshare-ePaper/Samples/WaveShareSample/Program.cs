@@ -23,7 +23,7 @@ namespace WaveShareEPaper
                 resetPin: Pins.GPIO_PIN_D6,
                 busyPin: Pins.GPIO_PIN_D5,
                 spiModule: SPI.SPI_module.SPI1,
-                speedKHz: 1500);
+                speedKHz: 10000);
             
             ePaper.Clear(true, true);
             Thread.Sleep(500);
@@ -34,19 +34,19 @@ namespace WaveShareEPaper
 
             display.DrawLine(10, 10, 118, 150);
             display.Show();
-            Thread.Sleep(500);
+         //   Thread.Sleep(500);
 
             display.DrawCircle(160, 160, 24);
             display.Show();
-            Thread.Sleep(500);
+         //   Thread.Sleep(500);
 
             display.DrawRectangle(5, 5, 118, 150);
             display.Show();
-            Thread.Sleep(1000);
+          //  Thread.Sleep(1000);
 
             display.DrawFilledRectangle(10, 100, 108, 50);
             display.Show();
-            Thread.Sleep(500);
+        //    Thread.Sleep(500);
 
             display.CurrentFont = new Font8x8();
             display.DrawText(2, 2, 0, "Netduino 3 WiFi");
@@ -78,22 +78,22 @@ namespace WaveShareEPaper
 
             display.DrawLine(10, 10, 118, 150, Color.OrangeRed);
             display.Show();
-            Thread.Sleep(500);
+       //     Thread.Sleep(500);
             display.DrawLine(118, 10, 10, 150, Color.OrangeRed);
             display.Show();
-            Thread.Sleep(500);
+         //   Thread.Sleep(500);
 
             display.DrawCircle(64, 64, 25, Color.Purple);
             display.Show();
-            Thread.Sleep(1000);
+        //    Thread.Sleep(1000);
 
             display.DrawRectangle(5, 5, 118, 150, Color.Aquamarine);
             display.Show();
-            Thread.Sleep(1000);
+       //     Thread.Sleep(1000);
 
-            display.DrawFilledRectangle(10, 100, 108, 50, Color.Yellow);
+            display.DrawFilledRectangle(10, 125, 108, 25, Color.Yellow);
             display.Show();
-            Thread.Sleep(1000);
+        //    Thread.Sleep(1000);
 
             display.CurrentFont = new Font8x8();
             display.DrawText(4, 10, 0, "NETDUINO 3 WiFi", Color.SkyBlue);

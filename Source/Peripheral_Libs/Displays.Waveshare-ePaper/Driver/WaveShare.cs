@@ -11,15 +11,16 @@ namespace Netduino.Foundation.Displays
     public class WaveShare : DisplayBase, IDisposable
     {
         #region Enums
-        
+
         #endregion
 
-        public const byte Width = 200;
-        public const byte Height = 200;
+        public override uint Width => 200;
+        public override uint Height => 200;
+        public override DisplayColorMode ColorMode => DisplayColorMode.Format1bpp;
 
         protected readonly byte[] imageBuffer;
-        
         protected readonly byte[] spiBOneByteBuffer = new byte[1];
+
         protected OutputPort dataCommandPort;
         protected OutputPort resetPort;
         protected InputPort busyPort;
@@ -292,12 +293,12 @@ namespace Netduino.Foundation.Displays
             x &= 0xF8;
             image_width &= 0xF8;
             if (x + image_width >= Width)
-                x_end = Width - 1;
+                x_end = (int)Width - 1;
             else
                 x_end = x + image_width - 1;
 
             if (y + image_height >= Height)
-                y_end = Height - 1;
+                y_end = (int)Height - 1;
             else
                 y_end = y + image_height - 1;
 
@@ -316,7 +317,7 @@ namespace Netduino.Foundation.Displays
 
         public void SetFrameMemory(byte[] image_buffer)
         {
-            SetMemoryArea(0, 0, Width - 1, Height - 1);
+            SetMemoryArea(0, 0, (int)Width - 1, (int)Height - 1);
             SetMemoryPointer(0, 0);
             SendCommand(WRITE_RAM);
             /* send the image data */
@@ -328,7 +329,7 @@ namespace Netduino.Foundation.Displays
 
         public void ClearFrameMemory(byte color)
         {
-            SetMemoryArea(0, 0, Width - 1, Height - 1);
+            SetMemoryArea(0, 0, (int)Width - 1, (int)Height - 1);
             SetMemoryPointer(0, 0);
             SendCommand(WRITE_RAM);
             /* send the color data */
