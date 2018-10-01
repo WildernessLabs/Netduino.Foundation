@@ -37,8 +37,11 @@
     <Compile Include="..\..\CommonFiles\RoslynHackFix.cs">
       <Link>RoslynHackFix.cs</Link>
     </Compile>
+    <Compile Include="DisplaySpiTft.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ILI9163.cs" />
+    <Compile Include="S6D02A1.cs" />
+    <Compile Include="ST7735.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Netduino.Foundation\Netduino.Foundation.csproj">
