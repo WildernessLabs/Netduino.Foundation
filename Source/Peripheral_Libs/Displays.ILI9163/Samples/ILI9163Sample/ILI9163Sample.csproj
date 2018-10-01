@@ -62,9 +62,9 @@
       <Project>{F99B3A2B-8E77-4A8E-AD2B-C43C65153C9B}</Project>
       <Name>Displays.GraphicsLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Driver\Displays.ILI9163.csproj">
+    <ProjectReference Include="..\..\Driver\Displays.TFTSPI.csproj">
       <Project>{CC0BB903-7EA1-4C44-BD4E-FCBE41CE7B23}</Project>
-      <Name>Displays.ILI9163</Name>
+      <Name>Displays.TFTSPI</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

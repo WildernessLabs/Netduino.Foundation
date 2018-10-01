@@ -22,6 +22,8 @@ namespace ILI9163Test
             tft = new ILI9163(chipSelectPin: Pins.GPIO_PIN_D4,
                 dcPin: Pins.GPIO_PIN_D7,
                 resetPin: Pins.GPIO_PIN_D6,
+                width: 128,
+                height: 160,
                 spiModule: SPI.SPI_module.SPI1,
                 speedKHz: 15000);
 

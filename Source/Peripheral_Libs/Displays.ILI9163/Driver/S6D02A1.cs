@@ -4,6 +4,7 @@ using System.Threading;
 
 namespace Netduino.Foundation.Displays
 {
+    //Samsung S6D02A1 controller
     public class S6D02A1 : DisplaySpiTft
     {
         protected override void Initialize()
@@ -55,7 +56,7 @@ namespace Netduino.Foundation.Displays
             SendCommand(0x29, null);                // Display on
             SendCommand(0x2c, null);				// Memory write
 
-            SetAddressWindow(0, 0, (byte)_width - 1, (byte)_height - 1);
+            SetAddressWindow(0, 0, (byte)(_width - 1), (byte)(_height - 1));
 
             dataCommandPort.Write(Data);
         }

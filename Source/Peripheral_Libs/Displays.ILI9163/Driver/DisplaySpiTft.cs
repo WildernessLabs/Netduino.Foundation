@@ -1,7 +1,5 @@
 using System;
-using Netduino.Foundation.Communications;
 using Microsoft.SPOT.Hardware;
-using System.Threading;
 
 namespace Netduino.Foundation.Displays
 {
@@ -17,20 +15,20 @@ namespace Netduino.Foundation.Displays
 
         #endregion
 
-        //this display supports 12, 16 & 18 bit but the current driver only supports 16
+        //these displays typicalls supports 12, 16 & 18 bit but the current driver only supports 16
         public override DisplayColorMode ColorMode => DisplayColorMode.Format16bppRgb565;
         public override uint Width => _width;
         public override uint Height => _height;
 
-        public const uint _width = 128;
-        public const uint _height = 160;
-
-        public readonly byte[] spiBuffer = new byte[_width * _height * sizeof(ushort)];
-
-        protected readonly byte[] spiBOneByteBuffer = new byte[1];
         protected OutputPort dataCommandPort;
         protected OutputPort resetPort;
         protected SPI spi;
+
+        protected readonly byte[] spiBuffer;
+        protected readonly byte[] spiBOneByteBuffer = new byte[1];
+
+        protected uint _width = 128;
+        protected uint _height = 160;
 
         protected const bool Data = true;
         protected const bool Command = false;
@@ -42,8 +40,16 @@ namespace Netduino.Foundation.Displays
 
         }
 
-        public DisplaySpiTft(Cpu.Pin chipSelectPin, Cpu.Pin dcPin, Cpu.Pin resetPin, SPI.SPI_module spiModule = SPI.SPI_module.SPI1, uint speedKHz = (uint)9500)
+        public DisplaySpiTft(Cpu.Pin chipSelectPin, Cpu.Pin dcPin, Cpu.Pin resetPin,
+            uint width, uint height,
+            SPI.SPI_module spiModule = SPI.SPI_module.SPI1,
+            uint speedKHz = 9500)
         {
+            _width = width;
+            _height = height;
+
+            spiBuffer = new byte[_width * _height * sizeof(ushort)];
+
             dataCommandPort = new OutputPort(dcPin, false);
             resetPort = new OutputPort(resetPin, true);
 
@@ -80,7 +86,7 @@ namespace Netduino.Foundation.Displays
                 Refresh();
         }
 
-        public void DrawBitmap(int x, int y, int width, int height, byte[] bitmap, BitmapMode bitmapMode)
+        public override void DrawBitmap(int x, int y, int width, int height, byte[] bitmap, BitmapMode bitmapMode)
         {
             if ((width * height) != bitmap.Length)
             {
@@ -103,7 +109,7 @@ namespace Netduino.Foundation.Displays
             }
         }
 
-        public void DrawBitmap(int x, int y, int width, int height, byte[] bitmap, Color color)
+        public override void DrawBitmap(int x, int y, int width, int height, byte[] bitmap, Color color)
         {
             if ((width * height) != bitmap.Length)
             {
@@ -144,7 +150,7 @@ namespace Netduino.Foundation.Displays
 
         private void SetPixel(int x, int y, ushort color)
         {
-            if ((x < 0) || (x >= _width) || (y < 0) || (y >= _height))
+            if (x < 0 || y < 0 || x >= _width || y >= _height)
                 return;
 
             var index = ((y * _width) + x) * sizeof(ushort);

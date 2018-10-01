@@ -1,11 +1,20 @@
 using System;
 using Microsoft.SPOT;
 using System.Threading;
+using Microsoft.SPOT.Hardware;
 
 namespace Netduino.Foundation.Displays
 {
-    public class ST7735 : ILI9163
+    public class ST7735 : DisplaySpiTft
     {
+        private ST7735() { }
+
+        public ST7735(Cpu.Pin chipSelectPin, Cpu.Pin dcPin, Cpu.Pin resetPin,
+            uint width, uint height,
+            SPI.SPI_module spiModule = SPI.SPI_module.SPI1,
+            uint speedKHz = 9500) : base(chipSelectPin, dcPin, resetPin, width, height, spiModule, speedKHz)
+        { }
+
         new public enum LcdCommand
         {
             NOP = 0x0,
@@ -201,7 +210,7 @@ namespace Netduino.Foundation.Displays
             Write((byte)LcdCommand.NORON);  // normal display on
             Thread.Sleep(10);
 
-            SetAddressWindow(0, 0, (byte)_width - 1, (byte)_height - 1);
+            SetAddressWindow(0, 0, (byte)(_width - 1), (byte)(_height - 1));
 
             dataCommandPort.Write(Data);
         }

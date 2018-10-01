@@ -6,6 +6,15 @@ namespace Netduino.Foundation.Displays
 {
     public class ILI9163 : DisplaySpiTft
     {
+        private ILI9163() { }
+
+        public ILI9163(Cpu.Pin chipSelectPin, Cpu.Pin dcPin, Cpu.Pin resetPin,
+            uint width, uint height,
+            SPI.SPI_module spiModule = SPI.SPI_module.SPI1,
+            uint speedKHz = 9500) : base(chipSelectPin, dcPin, resetPin, width, height, spiModule, speedKHz)
+        { }
+
+        
         protected override void Initialize()
         {
             resetPort.Write(true);
@@ -139,7 +148,7 @@ namespace Netduino.Foundation.Displays
             Write(0x29);           // Set display on
             Thread.Sleep(10);
 
-            SetAddressWindow(0, 0, (byte)_width - 1, (byte)_height - 1);
+            SetAddressWindow(0, 0, (byte)(_width - 1), (byte)(_height - 1));
 
             dataCommandPort.Write(Data);
         }
