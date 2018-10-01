@@ -57,5 +57,28 @@
         /// <param name="y"></param>
         /// <param name="colored"></param>
         public abstract void DrawPixel(int x, int y, bool colored);
+
+
+        /// <summary>
+        ///     Copy a 1bpp bitmap to the display.
+        /// </summary>
+        /// <param name="x">Abscissa of the top left corner of the bitmap.</param>
+        /// <param name="y">Ordinate of the top left corner of the bitmap.</param>
+        /// <param name="width">Width of the bitmap.</param>
+        /// <param name="height">Height of the bitmap.</param>
+        /// <param name="bitmap">Bitmap to transfer</param>
+        /// <param name="bitmapMode">How should the bitmap be transferred to the display?</param>
+        public abstract void DrawBitmap(int x, int y, int width, int height, byte[] bitmap, BitmapMode bitmapMode);
+
+        /// <summary>
+        ///     Copy a 1bpp bit bitmap to the display.
+        /// </summary>
+        /// <param name="x">Abscissa of the top left corner of the bitmap.</param>
+        /// <param name="y">Ordinate of the top left corner of the bitmap.</param>
+        /// <param name="width">Width of the bitmap.</param>
+        /// <param name="height">Height of the bitmap.</param>
+        /// <param name="bitmap">Bitmap to transfer</param>
+        /// <param name="bitmap">Color to transfer</param>
+        public abstract void DrawBitmap(int x, int y, int width, int height, byte[] bitmap, Color color);
     }
 }
