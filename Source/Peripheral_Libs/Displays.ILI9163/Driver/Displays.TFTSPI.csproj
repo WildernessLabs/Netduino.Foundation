@@ -38,6 +38,7 @@
       <Link>RoslynHackFix.cs</Link>
     </Compile>
     <Compile Include="DisplaySpiTft.cs" />
+    <Compile Include="ILI9341.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ILI9163.cs" />
     <Compile Include="S6D02A1.cs" />
