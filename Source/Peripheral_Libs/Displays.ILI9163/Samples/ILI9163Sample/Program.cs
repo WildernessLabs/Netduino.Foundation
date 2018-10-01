@@ -7,6 +7,7 @@ using Netduino.Foundation;
 using ILI9163Sample.Properties;
 using Netduino.Foundation.Sensors.Buttons;
 using Netduino.Foundation.LEDs;
+using KeyJ;
 
 namespace ILI9163Test
 {
@@ -50,13 +51,12 @@ namespace ILI9163Test
         static void UITest()
         {
             display.CurrentFont = new Font8x12();
-            //display.DrawText(4, 10, "Meadow 3 WiFi", Color.SkyBlue);
             
             display.DrawText(4, 5, "abcdefghijklm", Color.SkyBlue);
             display.DrawText(4, 20, "nopqrstuvwxyz", Color.SkyBlue);
             display.DrawText(4, 35, "`1234567890-=", Color.SkyBlue);
             display.DrawText(4, 50, "~!@#$%^&*()_+", Color.SkyBlue);
-            display.DrawText(4, 65, "[]\\;',.//", Color.SkyBlue);
+            display.DrawText(4, 65, "[]\\;',./", Color.SkyBlue);
             display.DrawText(4, 80, "{}|:\"<>?", Color.SkyBlue);
             display.DrawText(4, 95, "ABCDEFGHIJKLM", Color.SkyBlue);
             display.DrawText(4, 110, "NOPQRSTUVWXYZ", Color.SkyBlue);

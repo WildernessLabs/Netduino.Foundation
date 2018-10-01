@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.SPOT.Hardware;
+﻿using Microsoft.SPOT.Hardware;
 using System.Threading;
 
 namespace Netduino.Foundation.Displays
@@ -13,7 +12,6 @@ namespace Netduino.Foundation.Displays
             SPI.SPI_module spiModule = SPI.SPI_module.SPI1,
             uint speedKHz = 9500) : base(chipSelectPin, dcPin, resetPin, width, height, spiModule, speedKHz)
         { }
-
         
         protected override void Initialize()
         {
