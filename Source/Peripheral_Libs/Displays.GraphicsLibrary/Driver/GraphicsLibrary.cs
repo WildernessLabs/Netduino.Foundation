@@ -313,19 +313,20 @@ namespace Netduino.Foundation.Displays
             DrawBitmap(x, y, text.Length, CurrentFont.Height, bitMap, DisplayBase.BitmapMode.And);
         }
 
-        public void DrawText(int x, int y, int spacing, string text, Color color, bool wrap = false)
+        public void DrawText(int x, int y, string text, Color color, bool wrap = false)
         {
             if (CurrentFont == null)
-            {
                 throw new Exception("CurrentFont must be set before calling DrawText.");
-            }
+
             byte[] bitMap = new byte[text.Length * CurrentFont.Height];
-            for (int index = 0; index < text.Length; index++)
+
+            for (int i = 0; i < text.Length; i++)
             {
-                byte[] characterMap = CurrentFont[text[index]];
-                for (int characterSegment = 0; characterSegment < CurrentFont.Height; characterSegment++)
+                var characterMap = CurrentFont[text[i]];
+
+                for (int segment = 0; segment < CurrentFont.Height; segment++)
                 {
-                    bitMap[index + (characterSegment * text.Length)] = characterMap[characterSegment];
+                    bitMap[i + (segment * text.Length)] = characterMap[segment];
                 }
             }
             DrawBitmap(x, y, text.Length, CurrentFont.Height, bitMap, color);
