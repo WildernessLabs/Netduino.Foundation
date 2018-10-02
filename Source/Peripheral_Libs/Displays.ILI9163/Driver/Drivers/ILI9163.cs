@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace Netduino.Foundation.Displays
 {
-    public class ILI9163 : DisplaySpiTft
+    public class ILI9163 : DisplayTFTSPI
     {
         private ILI9163() { }
 

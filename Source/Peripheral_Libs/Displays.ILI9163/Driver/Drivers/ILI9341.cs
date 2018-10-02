@@ -3,7 +3,7 @@ using Microsoft.SPOT.Hardware;
 
 namespace Netduino.Foundation.Displays
 {
-    public class ILI9341 : DisplaySpiTft
+    public class ILI9341 : DisplayTFTSPI
     {
         private ILI9341() { }
 

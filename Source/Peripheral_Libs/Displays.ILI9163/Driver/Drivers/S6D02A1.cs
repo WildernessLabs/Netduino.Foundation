@@ -6,7 +6,7 @@ using Microsoft.SPOT.Hardware;
 namespace Netduino.Foundation.Displays
 {
     //Samsung S6D02A1 controller
-    public class S6D02A1 : DisplaySpiTft
+    public class S6D02A1 : DisplayTFTSPI
     {
         private S6D02A1() { }
 
