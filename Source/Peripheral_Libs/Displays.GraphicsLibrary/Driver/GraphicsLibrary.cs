@@ -295,7 +295,7 @@ namespace Netduino.Foundation.Displays
         /// <param name="spacing">Number of pixels between characters.</param>
         /// <param name="text">Text to display.</param>
         /// <param name="wrap">Wrap the text at the end of the display?</param>
-        public void DrawText(int x, int y, int spacing, string text, bool wrap = false)
+        public void DrawText(int x, int y, string text, bool wrap = false)
         {
             if (CurrentFont == null)
             {
