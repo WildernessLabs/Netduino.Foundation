@@ -7,7 +7,6 @@ using Netduino.Foundation;
 using ILI9163Sample.Properties;
 using Netduino.Foundation.Sensors.Buttons;
 using Netduino.Foundation.LEDs;
-using KeyJ;
 
 namespace ILI9163Test
 {
@@ -44,7 +43,7 @@ namespace ILI9163Test
         private static void Button_Clicked(object sender, EventArgs e)
         {
             led.IsOn = !led.IsOn;
-            display.DrawText(4, 145, 0, ("LED is: " + (led.IsOn ? "On ":"Off")));
+            display.DrawText(4, 145, ("LED is: " + (led.IsOn ? "On ":"Off")));
             display.Show();
         }
 
