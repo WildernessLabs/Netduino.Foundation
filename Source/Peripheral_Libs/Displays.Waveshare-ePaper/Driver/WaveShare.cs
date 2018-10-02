@@ -1,12 +1,11 @@
 ﻿using System;
-using Netduino.Foundation.Communications;
 using Microsoft.SPOT.Hardware;
 using System.Threading;
 
 namespace Netduino.Foundation.Displays
 {
     /// <summary>
-    ///     Provide an interface to the SSD1306 family of OLED displays.
+    ///     Provide an interface to the WaveShare ePaper monochrome displays
     /// </summary>
     public class WaveShare : DisplayBase, IDisposable
     {

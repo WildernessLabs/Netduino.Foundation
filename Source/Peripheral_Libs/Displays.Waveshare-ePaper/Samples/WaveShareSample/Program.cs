@@ -11,45 +11,45 @@ namespace WaveShareEPaper
 {
     public class Program
     {
-        static WaveShare ePaper;
+        static WaveShareColor ePaper;
         static GraphicsLibrary display;
         static PushButton button;
         static Led led;
 
         public static void Main()
         {
-            ePaper = new WaveShare(chipSelectPin: Pins.GPIO_PIN_D4,
+            ePaper = new WaveShareColor(chipSelectPin: Pins.GPIO_PIN_D4,
                 dcPin: Pins.GPIO_PIN_D7,
                 resetPin: Pins.GPIO_PIN_D6,
                 busyPin: Pins.GPIO_PIN_D5,
                 spiModule: SPI.SPI_module.SPI1,
-                speedKHz: 10000);
+                speedKHz: 4000);
             
-            ePaper.Clear(true, true);
-            Thread.Sleep(500);
-            ePaper.Clear(false, true);
-            Thread.Sleep(500);
+       //     ePaper.Clear(false, true);
 
             display = new GraphicsLibrary(ePaper);
 
-            display.DrawLine(10, 10, 118, 150);
-            display.Show();
+            display.DrawLine(10, 10, 94, 202);
+         //   display.Show();
          //   Thread.Sleep(500);
 
-            display.DrawCircle(160, 160, 24);
-            display.Show();
+            display.DrawCircle(52, 60, 32);
+          //  display.Show();
          //   Thread.Sleep(500);
 
-            display.DrawRectangle(5, 5, 118, 150);
-            display.Show();
+            display.DrawRectangle(5, 40, 60, 60);
+          //  display.Show();
           //  Thread.Sleep(1000);
 
-            display.DrawFilledRectangle(10, 100, 108, 50);
-            display.Show();
+            display.DrawFilledRectangle(20, 100, 40, 25, Color.Red);
+         //   display.Show();
         //    Thread.Sleep(500);
 
+            display.CurrentFont = new Font8x12();
+            display.DrawText(2, 2, "Wilderness");
             display.CurrentFont = new Font8x8();
-            display.DrawText(2, 2, 0, "Netduino 3 WiFi");
+            display.DrawText(2, 16, "Netduino 3", Color.Red);
+
             display.Show();
 
             // tft.ClearScreen(31);
@@ -68,7 +68,7 @@ namespace WaveShareEPaper
         private static void Button_Clicked(object sender, EventArgs e)
         {
             led.IsOn = !led.IsOn;
-            display.DrawText(4, 145, 0, ("LED is: " + (led.IsOn ? "On ":"Off")));
+            display.DrawText(4, 145, ("LED is: " + (led.IsOn ? "On ":"Off")));
             display.Show();
         }
 
@@ -96,7 +96,7 @@ namespace WaveShareEPaper
         //    Thread.Sleep(1000);
 
             display.CurrentFont = new Font8x8();
-            display.DrawText(4, 10, 0, "NETDUINO 3 WiFi", Color.SkyBlue);
+            display.DrawText(4, 10, "NETDUINO 3 WiFi", Color.SkyBlue);
             display.Show();
             Thread.Sleep(Timeout.Infinite);
         }
