@@ -37,6 +37,7 @@
     <Compile Include="..\..\CommonFiles\RoslynHackFix.cs">
       <Link>RoslynHackFix.cs</Link>
     </Compile>
+    <Compile Include="Font4x8.cs" />
     <Compile Include="Font8x12.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GraphicsLibrary.cs" />

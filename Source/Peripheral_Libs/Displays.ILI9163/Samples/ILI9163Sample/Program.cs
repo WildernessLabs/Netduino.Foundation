@@ -51,14 +51,20 @@ namespace ILI9163Test
         {
             display.CurrentFont = new Font8x12();
             
-            display.DrawText(4, 5, "abcdefghijklm", Color.SkyBlue);
-            display.DrawText(4, 20, "nopqrstuvwxyz", Color.SkyBlue);
-            display.DrawText(4, 35, "`1234567890-=", Color.SkyBlue);
-            display.DrawText(4, 50, "~!@#$%^&*()_+", Color.SkyBlue);
-            display.DrawText(4, 65, "[]\\;',./", Color.SkyBlue);
-            display.DrawText(4, 80, "{}|:\"<>?", Color.SkyBlue);
-            display.DrawText(4, 95, "ABCDEFGHIJKLM", Color.SkyBlue);
-            display.DrawText(4, 110, "NOPQRSTUVWXYZ", Color.SkyBlue);
+            display.DrawText(4, 4, "abcdefghijklm", Color.SkyBlue);
+            display.DrawText(4, 18, "nopqrstuvwxyz", Color.SkyBlue);
+            display.DrawText(4, 32, "`1234567890-=", Color.SkyBlue);
+            display.DrawText(4, 46, "~!@#$%^&*()_+", Color.SkyBlue);
+            display.DrawText(4, 60, "[]\\;',./", Color.SkyBlue);
+            display.DrawText(4, 74, "{}|:\"<>?", Color.SkyBlue);
+            display.DrawText(4, 88, "ABCDEFGHIJKLM", Color.SkyBlue);
+            display.DrawText(4, 102, "NOPQRSTUVWXYZ", Color.SkyBlue);
+
+            display.CurrentFont = new Font4x8();
+            display.DrawText(4, 116, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", Color.White);
+            display.DrawText(4, 126, "abcdefghijklmnopqrstuvwxyz", Color.White);
+            display.DrawText(4, 136, "01234567890!@#$%^&*()_+-=", Color.White);
+            display.DrawText(4, 146, "\\|;:'\",<.>/?[]{}", Color.White);
             display.Show();
             Thread.Sleep(20000);
 
