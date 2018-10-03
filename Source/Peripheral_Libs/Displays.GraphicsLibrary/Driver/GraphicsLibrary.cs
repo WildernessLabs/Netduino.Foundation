@@ -298,19 +298,11 @@ namespace Netduino.Foundation.Displays
         public void DrawText(int x, int y, string text, bool wrap = false)
         {
             if (CurrentFont == null)
-            {
                 throw new Exception("CurrentFont must be set before calling DrawText.");
-            }
-            byte[] bitMap = new byte[text.Length * CurrentFont.Height];
-            for (int index = 0; index < text.Length; index++)
-            {
-                byte[] characterMap = CurrentFont[text[index]];
-                for (int characterSegment = 0; characterSegment < CurrentFont.Height; characterSegment++)
-                {
-                    bitMap[index + (characterSegment * text.Length)] = characterMap[characterSegment];
-                }
-            }
-            DrawBitmap(x, y, text.Length, CurrentFont.Height, bitMap, DisplayBase.BitmapMode.And);
+
+            byte[] bitMap = GetBytesForTextBitmap(text);
+
+            DrawBitmap(x, y, bitMap.Length / CurrentFont.Height, CurrentFont.Height, bitMap, DisplayBase.BitmapMode.And);
         }
 
         public void DrawText(int x, int y, string text, Color color, bool wrap = false)
@@ -318,18 +310,58 @@ namespace Netduino.Foundation.Displays
             if (CurrentFont == null)
                 throw new Exception("CurrentFont must be set before calling DrawText.");
 
-            byte[] bitMap = new byte[text.Length * CurrentFont.Height];
+            byte[] bitMap = GetBytesForTextBitmap(text);
+            
+            DrawBitmap(x, y, bitMap.Length / CurrentFont.Height, CurrentFont.Height, bitMap, color);
+        }
 
-            for (int i = 0; i < text.Length; i++)
+        private byte[] GetBytesForTextBitmap(string text)
+        {
+            byte[] bitMap;
+
+            if (CurrentFont.Width % 8 == 0) //just copy bytes
             {
-                var characterMap = CurrentFont[text[i]];
+                bitMap = new byte[text.Length * CurrentFont.Height * CurrentFont.Width / 8];
 
-                for (int segment = 0; segment < CurrentFont.Height; segment++)
+                for (int i = 0; i < text.Length; i++)
                 {
-                    bitMap[i + (segment * text.Length)] = characterMap[segment];
+                    var characterMap = CurrentFont[text[i]];
+
+                    for (int segment = 0; segment < CurrentFont.Height; segment++)
+                    {
+                        bitMap[i + (segment * text.Length)] = characterMap[segment];
+                    }
                 }
             }
-            DrawBitmap(x, y, text.Length, CurrentFont.Height, bitMap, color);
+            else if (CurrentFont.Width % 8 == 4)
+            {
+                var len = (text.Length + text.Length % 2)/2;
+                bitMap = new byte[len * CurrentFont.Height];
+                byte[] characterMap1, characterMap2;
+
+                for (int i = 0; i < len; i++)
+                {
+                    characterMap1 = CurrentFont[text[2*i]];
+                    characterMap2 = (i * 2 + 1 < text.Length) ? CurrentFont[text[2 * i + 1]] : CurrentFont[' '];
+
+                    for (int j = 0; j < characterMap1.Length; j++)
+                    {
+                        bitMap[i + (j * 2 + 0) * len] = (byte)((characterMap1[j] & 0x0F) | (characterMap2[j] << 4));
+                        bitMap[i + (j * 2 + 1) * len] = (byte)((characterMap1[j] >> 4)   | (characterMap2[j] & 0xF0));
+                    }
+                }
+            }
+            else
+            {
+                throw new Exception("Font width must be 4, or 8");
+            }
+            return bitMap;
+        }
+
+        byte SetBit(byte value, int position, bool high)
+        {
+            var compare = (byte)(1 << position);
+            return high ? (value |= compare) : (byte)(value & ~compare);
         }
 
         #endregion Methods
