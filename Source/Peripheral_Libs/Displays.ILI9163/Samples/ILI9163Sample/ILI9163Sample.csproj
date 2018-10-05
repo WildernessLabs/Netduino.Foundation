@@ -30,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Dither.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -76,6 +77,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\trees.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pool.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\meadow.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\$(TargetFrameworkVersion)\CSharp.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\$(TargetFrameworkVersion)\CSharp.targets')" />
   <Import Project="$([System.Environment]::GetFolderPath(SpecialFolder.LocalApplicationData))\.NETMicroFramework\xbuild\Microsoft\.NET Micro Framework\$(TargetFrameworkVersion)\CSharp.targets" Condition="!Exists('$(MSBuildExtensionsPath32)\Microsoft\.NET Micro Framework\$(TargetFrameworkVersion)\CSharp.targets')" />

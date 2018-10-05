@@ -33,6 +33,7 @@ namespace ILI9163Sample.Properties
         internal enum BinaryResources : short
         {
             trees = 801,
+            meadow = 22053,
         }
     }
 }

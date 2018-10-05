@@ -7,6 +7,7 @@ using Netduino.Foundation;
 using ILI9163Sample.Properties;
 using Netduino.Foundation.Sensors.Buttons;
 using Netduino.Foundation.LEDs;
+using ILI9163Sample;
 
 namespace ILI9163Test
 {
@@ -36,89 +37,145 @@ namespace ILI9163Test
             button = new PushButton(Pins.ONBOARD_BTN, CircuitTerminationType.CommonGround);
             button.Clicked += Button_Clicked;
 
-            UITest();
+            // UITest();
+            DitherTest(tft);
             Thread.Sleep(-1);
         }
 
         private static void Button_Clicked(object sender, EventArgs e)
         {
             led.IsOn = !led.IsOn;
-            display.DrawText(4, 145, ("LED is: " + (led.IsOn ? "On ":"Off")));
+            display.DrawText(4, 145, ("LED is: " + (led.IsOn ? "On " : "Off")));
             display.Show();
         }
 
         static void UITest()
         {
-            display.CurrentFont = new Font8x12();
-            
-            display.DrawText(4, 4, "abcdefghijklm", Color.SkyBlue);
-            display.DrawText(4, 18, "nopqrstuvwxyz", Color.SkyBlue);
-            display.DrawText(4, 32, "`1234567890-=", Color.SkyBlue);
-            display.DrawText(4, 46, "~!@#$%^&*()_+", Color.SkyBlue);
-            display.DrawText(4, 60, "[]\\;',./", Color.SkyBlue);
-            display.DrawText(4, 74, "{}|:\"<>?", Color.SkyBlue);
-            display.DrawText(4, 88, "ABCDEFGHIJKLM", Color.SkyBlue);
-            display.DrawText(4, 102, "NOPQRSTUVWXYZ", Color.SkyBlue);
+              display.CurrentFont = new Font8x12();
 
-            display.CurrentFont = new Font4x8();
-            display.DrawText(4, 116, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", Color.White);
-            display.DrawText(4, 126, "abcdefghijklmnopqrstuvwxyz", Color.White);
-            display.DrawText(4, 136, "01234567890!@#$%^&*()_+-=", Color.White);
-            display.DrawText(4, 146, "\\|;:'\",<.>/?[]{}", Color.White);
-            display.Show();
-            Thread.Sleep(20000);
+              display.DrawText(4, 4, "abcdefghijklm", Color.SkyBlue);
+              display.DrawText(4, 18, "nopqrstuvwxyz", Color.SkyBlue);
+              display.DrawText(4, 32, "`1234567890-=", Color.SkyBlue);
+              display.DrawText(4, 46, "~!@#$%^&*()_+", Color.SkyBlue);
+              display.DrawText(4, 60, "[]\\;',./", Color.SkyBlue);
+              display.DrawText(4, 74, "{}|:\"<>?", Color.SkyBlue);
+              display.DrawText(4, 88, "ABCDEFGHIJKLM", Color.SkyBlue);
+              display.DrawText(4, 102, "NOPQRSTUVWXYZ", Color.SkyBlue);
 
-            display.Clear();
+              display.CurrentFont = new Font4x8();
+              display.DrawText(4, 116, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", Color.White);
+              display.DrawText(4, 126, "abcdefghijklmnopqrstuvwxyz", Color.White);
+              display.DrawText(4, 136, "01234567890!@#$%^&*()_+-=", Color.White);
+              display.DrawText(4, 146, "\\|;:'\",<.>/?[]{}", Color.White);
+              display.Show();
+              Thread.Sleep(20000);
 
+              display.Clear();
+
+
+
+              display.DrawLine(10, 10, 118, 150, Color.OrangeRed);
+              display.Show();
+              Thread.Sleep(500);
+              display.DrawLine(118, 10, 10, 150, Color.OrangeRed);
+              display.Show();
+              Thread.Sleep(500);
+
+              display.DrawCircle(64, 64, 25, Color.Purple);
+              display.Show();
+              Thread.Sleep(1000);
+
+              display.DrawRectangle(5, 5, 118, 150, Color.Aquamarine);
+              display.Show();
+              Thread.Sleep(1000);
+
+              display.DrawFilledRectangle(10, 100, 108, 50, Color.Yellow);
+              display.Show();
+              Thread.Sleep(1000);
+
+      
             var bytes = Resources.GetBytes(Resources.BinaryResources.trees);
 
-            display.DrawLine(10, 10, 118, 150, Color.OrangeRed);
-            display.Show();
-            Thread.Sleep(500);
-            display.DrawLine(118, 10, 10, 150, Color.OrangeRed);
-            display.Show();
-            Thread.Sleep(500);
+        //    DrawBitmap(bytes, tft);
+         //   tft.Refresh();
+        }
 
-            display.DrawCircle(64, 64, 25, Color.Purple);
-            display.Show();
-            Thread.Sleep(1000);
+        static void DitherTest(ILI9163 tft)
+        {
+            var bytes = Resources.GetBytes(Resources.BinaryResources.meadow);
+            int width = bytes[18];
+            int height = bytes[22];
+            DrawBitmap(5, 65, bytes, tft);
 
-            display.DrawRectangle(5, 5, 118, 150, Color.Aquamarine);
-            display.Show();
-            Thread.Sleep(1000);
+            bytes = Get8bppGreyScale(bytes, tft);
+            Draw8bppGrayscaleBitmap(5, 110, bytes, width, height, tft);
 
-            display.DrawFilledRectangle(10, 100, 108, 50, Color.Yellow);
-            display.Show();
-            Thread.Sleep(1000);
+            bytes = Dither.Dither8bppto1bpp(bytes, width, height);
+            Draw8bppGrayscaleBitmap(5, 155, bytes, width, height, tft);
 
-            DrawBitmap(bytes, tft);
+
             tft.Refresh();
             Thread.Sleep(1000);
 
             display.CurrentFont = new Font8x12();
-            display.DrawText(4, 10, "abgjkyz", Color.SkyBlue);
+            display.DrawText(5, 5, "Dither test", Color.White);
             display.Show();
             Thread.Sleep(Timeout.Infinite);
         }
 
-        static void DrawBitmap(byte[] bytes, ILI9163 display)
+        //luminosity method
+        static byte[] Get8bppGreyScale(byte[] data, ILI9163 display)
+        {
+            int offset = 14 + data[14];
+            int width = data[18];
+            int height = data[22];
+
+            var dataLength = (data.Length - offset) / 3;
+            var greyScale = new byte[dataLength];
+
+            for (int i = 0; i < dataLength; i++)
+            {
+                greyScale[i] = (byte)(data[3 * i + offset] * 7 / 100 +
+                                      data[3 * i + 1 + offset] * 72 / 100 +
+                                      data[3 * i + 2 + offset] * 21 / 100);
+            }
+            return greyScale;
+        }
+
+        static void Draw8bppGrayscaleBitmap(int x, int y, byte[] data, int width, int height, ILI9163 display)
+        { 
+            byte c;
+
+            //test by drawing to screen
+            for (int j = 0; j < height; j++)
+            {
+                for (int k = 0; k < width; k++)
+                {
+                    c = data[k + j * width];
+
+                    display.DrawPixel(x + k, y - j, c, c, c);
+                }
+            }
+        }
+
+        static void DrawBitmap(int x, int y, byte[] data, ILI9163 display)
         {
             byte r, g, b;
 
-            int offset = 14 + bytes[14];
+            int offset = 14 + data[14];
 
-            int width = bytes[18];
-            int height = bytes[22];
+            int width = data[18];
+            int height = data[22];
 
             for(int j = 0; j < height; j++)
             {
                 for(int i = 0; i < width; i++)
                 {
-                    b = bytes[i * 3 + j * width * 3 + offset];
-                    g = bytes[i * 3 + j * width * 3 + offset + 1];
-                    r = bytes[i * 3 + j * width * 3 + offset + 2];
+                    b = data[i * 3 + j * width * 3 + offset];
+                    g = data[i * 3 + j * width * 3 + offset + 1];
+                    r = data[i * 3 + j * width * 3 + offset + 2];
 
-                    display.DrawPixel(20 + i, 145 - j, r, g, b);
+                    display.DrawPixel(x + i, y - j, r, g, b);
                 }
             }
         }
