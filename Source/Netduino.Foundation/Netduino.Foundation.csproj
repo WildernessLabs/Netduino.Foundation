@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ArrayEventArgs.cs" />
+    <Compile Include="BaseClasses\SPIDisplayBase.cs" />
     <Compile Include="BitHelpers.cs" />
     <Compile Include="Color.cs" />
     <Compile Include="Communications\I2CBus.cs" />
