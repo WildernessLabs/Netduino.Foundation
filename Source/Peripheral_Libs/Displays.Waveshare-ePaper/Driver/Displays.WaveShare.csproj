@@ -37,9 +37,18 @@
     <Compile Include="..\..\CommonFiles\RoslynHackFix.cs">
       <Link>RoslynHackFix.cs</Link>
     </Compile>
+    <Compile Include="Drivers\EPD1i54.cs" />
+    <Compile Include="Drivers\EPD1i54b.cs" />
+    <Compile Include="Drivers\EPD1i54c.cs" />
+    <Compile Include="Drivers\EPD2i13.cs" />
+    <Compile Include="Drivers\EPD2i13b.cs" />
+    <Compile Include="Drivers\EPD2i9.cs" />
+    <Compile Include="Drivers\EPD2i9b.cs" />
+    <Compile Include="Drivers\EPD4i2b.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WaveShare.cs" />
-    <Compile Include="WaveShareColor.cs" />
+    <Compile Include="EPDBase.cs" />
+    <Compile Include="EPDColorBase.cs" />
+    <Compile Include="SPIDisplayBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Netduino.Foundation\Netduino.Foundation.csproj">

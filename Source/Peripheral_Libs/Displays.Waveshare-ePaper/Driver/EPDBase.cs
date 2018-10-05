@@ -1,41 +1,23 @@
 ﻿using System;
 using Microsoft.SPOT.Hardware;
-using System.Threading;
 
 namespace Netduino.Foundation.Displays
 {
     /// <summary>
     ///     Provide an interface to the WaveShare ePaper monochrome displays
     /// </summary>
-    public class WaveShare : DisplayBase, IDisposable
+    public abstract class EPDBase : SPIDisplayBase
     {
-        #region Enums
-
-        #endregion
-
-        public override uint Width => 200;
-        public override uint Height => 200;
         public override DisplayColorMode ColorMode => DisplayColorMode.Format1bpp;
 
         protected readonly byte[] imageBuffer;
-        protected readonly byte[] spiBOneByteBuffer = new byte[1];
-
-        protected OutputPort dataCommandPort;
-        protected OutputPort resetPort;
-        protected InputPort busyPort;
-        protected SPI spi;
-
-        private const bool Data = true;
-        private const bool Command = false;
 
         int xRefreshStart, yRefreshStart, xRefreshEnd, yRefreshEnd;
 
-        private WaveShare()//1.54" display
-        {
+        private EPDBase()
+        { }
 
-        }
-
-        public WaveShare(Cpu.Pin chipSelectPin, Cpu.Pin dcPin, Cpu.Pin resetPin, Cpu.Pin busyPin, SPI.SPI_module spiModule = SPI.SPI_module.SPI1, uint speedKHz = (uint)9500)
+        public EPDBase(Cpu.Pin chipSelectPin, Cpu.Pin dcPin, Cpu.Pin resetPin, Cpu.Pin busyPin, SPI.SPI_module spiModule = SPI.SPI_module.SPI1, uint speedKHz = (uint)9500)
         {
             dataCommandPort = new OutputPort(dcPin, false);
             resetPort = new OutputPort(resetPin, true);
@@ -65,6 +47,8 @@ namespace Netduino.Foundation.Displays
 
             Initialize();
         }
+
+        protected abstract void Initialize();
 
         public override void Clear(bool updateDisplay = false)
         {
@@ -193,85 +177,6 @@ namespace Netduino.Foundation.Displays
             Refresh();
         }
 
-        protected void Write(byte value)
-        {
-            spiBOneByteBuffer[0] = value;
-            spi.Write(spiBOneByteBuffer);
-        }
-
-        private void Initialize()
-        {
-            Reset();
-
-            SendCommand(DRIVER_OUTPUT_CONTROL);
-            SendData(199);
-            SendData(199 >> 8);
-            SendData(0x00);                     // GD = 0; SM = 0; TB = 0;
-
-            SendCommand(BOOSTER_SOFT_START_CONTROL);
-            SendData(0xD7);
-            SendData(0xD6);
-            SendData(0x9D);
-
-            SendCommand(WRITE_VCOM_REGISTER);
-            SendData(0xA8);                     // VCOM 7C
-
-            SendCommand(SET_DUMMY_LINE_PERIOD);
-            SendData(0x1A);                     // 4 dummy lines per gate
-
-            SendCommand(SET_GATE_TIME);
-            SendData(0x08);                     // 2us per line
-
-            SendCommand(DATA_ENTRY_MODE_SETTING);
-            SendData(0x03);                     // X increment; Y increment
-
-            SendData(LUT_Full_Update);
-        }
-
-        void Reset()
-        {
-            resetPort.Write(false);
-            DelayMs(200);
-            resetPort.Write(true);
-            DelayMs(200);
-        }
-
-        public void DelayMs(int millseconds)
-        {
-            Thread.Sleep(millseconds);
-        }
-
-        void SendCommand(byte command)
-        {
-            dataCommandPort.Write(Command);
-            Write(command);
-        }
-
-        void SendData(int data)
-        {
-            SendData((byte)data);
-        }
-
-        void SendData(byte data)
-        {
-            dataCommandPort.Write(Data);
-            Write(data);
-        }
-
-        void SendData(byte[] data)
-        {
-            dataCommandPort.Write(Data);
-            spi.Write(data);
-        }
-
-        void WaitUntilIdle()
-        {
-            while (busyPort.Read() == true)
-            {
-                DelayMs(50);
-            }
-        }
-
         public void SetFrameMemory(byte[] image_buffer,
                                 int x,
                                 int y,
@@ -371,57 +276,33 @@ namespace Netduino.Foundation.Displays
             WaitUntilIdle();
         }
 
-        void Sleep()
+        protected void Sleep()
         {
             SendCommand(DEEP_SLEEP_MODE);
             WaitUntilIdle();
         }
 
-        public void Dispose()
-        {
-            spi.Dispose();
-            spi = null;
-            dataCommandPort = null;
-            resetPort = null;
-        }
-
         // EPD1IN54 commands
-        static byte DRIVER_OUTPUT_CONTROL = 0x01;
-        static byte BOOSTER_SOFT_START_CONTROL = 0x0C;
-        static byte GATE_SCAN_START_POSITION = 0x0F;
-        static byte DEEP_SLEEP_MODE = 0x10;
-        static byte DATA_ENTRY_MODE_SETTING = 0x11;
-        static byte SW_RESET = 0x12;
-        static byte TEMPERATURE_SENSOR_CONTROL = 0x1A;
-        static byte MASTER_ACTIVATION = 0x20;
-        static byte DISPLAY_UPDATE_CONTROL_1 = 0x21;
-        static byte DISPLAY_UPDATE_CONTROL_2 = 0x22;
-        static byte WRITE_RAM = 0x24;
-        static byte WRITE_VCOM_REGISTER = 0x2C;
-        static byte WRITE_LUT_REGISTER = 0x32;
-        static byte SET_DUMMY_LINE_PERIOD = 0x3A;
-        static byte SET_GATE_TIME = 0x3B;
-        static byte BORDER_WAVEFORM_CONTROL = 0x3C;
-        static byte SET_RAM_X_ADDRESS_START_END_POSITION = 0x44;
-        static byte SET_RAM_Y_ADDRESS_START_END_POSITION = 0x45;
-        static byte SET_RAM_X_ADDRESS_COUNTER = 0x4E;
-        static byte SET_RAM_Y_ADDRESS_COUNTER = 0x4F;
-        static byte TERMINATE_FRAME_READ_WRITE = 0xFF;
-
-        public static readonly byte[] LUT_Full_Update =
-        {
-            0x02, 0x02, 0x01, 0x11, 0x12, 0x12, 0x22, 0x22,
-            0x66, 0x69, 0x69, 0x59, 0x58, 0x99, 0x99, 0x88,
-            0x00, 0x00, 0x00, 0x00, 0xF8, 0xB4, 0x13, 0x51,
-            0x35, 0x51, 0x51, 0x19, 0x01, 0x00
-        };
-
-        public static readonly byte[] LUT_Partial_Update =
-        {
-            0x10, 0x18, 0x18, 0x08, 0x18, 0x18, 0x08, 0x00,
-            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-            0x00, 0x00, 0x00, 0x00, 0x13, 0x14, 0x44, 0x12,
-            0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-        };
+        protected static byte DRIVER_OUTPUT_CONTROL = 0x01;
+        protected static byte BOOSTER_SOFT_START_CONTROL = 0x0C;
+        protected static byte GATE_SCAN_START_POSITION = 0x0F;
+        protected static byte DEEP_SLEEP_MODE = 0x10;
+        protected static byte DATA_ENTRY_MODE_SETTING = 0x11;
+        protected static byte SW_RESET = 0x12;
+        protected static byte TEMPERATURE_SENSOR_CONTROL = 0x1A;
+        protected static byte MASTER_ACTIVATION = 0x20;
+        protected static byte DISPLAY_UPDATE_CONTROL_1 = 0x21;
+        protected static byte DISPLAY_UPDATE_CONTROL_2 = 0x22;
+        protected static byte WRITE_RAM = 0x24;
+        protected static byte WRITE_VCOM_REGISTER = 0x2C;
+        protected static byte WRITE_LUT_REGISTER = 0x32;
+        protected static byte SET_DUMMY_LINE_PERIOD = 0x3A;
+        protected static byte SET_GATE_TIME = 0x3B;
+        protected static byte BORDER_WAVEFORM_CONTROL = 0x3C;
+        protected static byte SET_RAM_X_ADDRESS_START_END_POSITION = 0x44;
+        protected static byte SET_RAM_Y_ADDRESS_START_END_POSITION = 0x45;
+        protected static byte SET_RAM_X_ADDRESS_COUNTER = 0x4E;
+        protected static byte SET_RAM_Y_ADDRESS_COUNTER = 0x4F;
+        protected static byte TERMINATE_FRAME_READ_WRITE = 0xFF;
     }
 }

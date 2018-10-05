@@ -11,14 +11,14 @@ namespace WaveShareEPaper
 {
     public class Program
     {
-        static WaveShareColor ePaper;
+        static EPDColorBase ePaper;
         static GraphicsLibrary display;
         static PushButton button;
         static Led led;
 
         public static void Main()
         {
-            ePaper = new WaveShareColor(chipSelectPin: Pins.GPIO_PIN_D4,
+            ePaper = new EPD2i13b(chipSelectPin: Pins.GPIO_PIN_D4,
                 dcPin: Pins.GPIO_PIN_D7,
                 resetPin: Pins.GPIO_PIN_D6,
                 busyPin: Pins.GPIO_PIN_D5,
