@@ -4,12 +4,11 @@ using System.Threading;
 using Netduino.Foundation.Displays;
 using SecretLabs.NETMF.Hardware.Netduino;
 using Netduino.Foundation;
-using ILI9163Sample.Properties;
+using TFTSPISample.Properties;
 using Netduino.Foundation.Sensors.Buttons;
 using Netduino.Foundation.LEDs;
-using ILI9163Sample;
 
-namespace ILI9163Test
+namespace TFTSPISample
 {
     public class Program
     {
@@ -37,8 +36,8 @@ namespace ILI9163Test
             button = new PushButton(Pins.ONBOARD_BTN, CircuitTerminationType.CommonGround);
             button.Clicked += Button_Clicked;
 
-            // UITest();
-            DitherTest(tft);
+            UITest();
+            //DitherTest(tft);
             Thread.Sleep(-1);
         }
 
@@ -72,8 +71,6 @@ namespace ILI9163Test
 
               display.Clear();
 
-
-
               display.DrawLine(10, 10, 118, 150, Color.OrangeRed);
               display.Show();
               Thread.Sleep(500);
@@ -93,11 +90,10 @@ namespace ILI9163Test
               display.Show();
               Thread.Sleep(1000);
 
-      
             var bytes = Resources.GetBytes(Resources.BinaryResources.trees);
 
-        //    DrawBitmap(bytes, tft);
-         //   tft.Refresh();
+            DrawBitmap(10, 120, bytes, tft);
+            tft.Refresh();
         }
 
         static void DitherTest(ILI9163 tft)
@@ -107,12 +103,11 @@ namespace ILI9163Test
             int height = bytes[22];
             DrawBitmap(5, 65, bytes, tft);
 
-            bytes = Get8bppGreyScale(bytes, tft);
+            bytes = NFBitmap.Get8bppGreyScale(bytes);
             Draw8bppGrayscaleBitmap(5, 110, bytes, width, height, tft);
 
-            bytes = Dither.Dither8bppto1bpp(bytes, width, height);
+            bytes = NFBitmap.Dither8bppto1bpp(bytes, width, height, true);
             Draw8bppGrayscaleBitmap(5, 155, bytes, width, height, tft);
-
 
             tft.Refresh();
             Thread.Sleep(1000);
@@ -124,20 +119,20 @@ namespace ILI9163Test
         }
 
         //luminosity method
-        static byte[] Get8bppGreyScale(byte[] data, ILI9163 display)
+        static byte[] Get8bppGreyScale(byte[] bitmap24bbp)
         {
-            int offset = 14 + data[14];
-            int width = data[18];
-            int height = data[22];
+            int offset = 14 + bitmap24bbp[14];
+            int width = bitmap24bbp[18];
+            int height = bitmap24bbp[22];
 
-            var dataLength = (data.Length - offset) / 3;
+            var dataLength = (bitmap24bbp.Length - offset) / 3;
             var greyScale = new byte[dataLength];
 
             for (int i = 0; i < dataLength; i++)
             {
-                greyScale[i] = (byte)(data[3 * i + offset] * 7 / 100 +
-                                      data[3 * i + 1 + offset] * 72 / 100 +
-                                      data[3 * i + 2 + offset] * 21 / 100);
+                greyScale[i] = (byte)(bitmap24bbp[3 * i + offset] * 7 / 100 +
+                                      bitmap24bbp[3 * i + 1 + offset] * 72 / 100 +
+                                      bitmap24bbp[3 * i + 2 + offset] * 21 / 100);
             }
             return greyScale;
         }
@@ -153,7 +148,7 @@ namespace ILI9163Test
                 {
                     c = data[k + j * width];
 
-                    display.DrawPixel(x + k, y - j, c, c, c);
+                    display.DrawPixel(x + k, y + height - j, c, c, c);
                 }
             }
         }
@@ -175,7 +170,7 @@ namespace ILI9163Test
                     g = data[i * 3 + j * width * 3 + offset + 1];
                     r = data[i * 3 + j * width * 3 + offset + 2];
 
-                    display.DrawPixel(x + i, y - j, r, g, b);
+                    display.DrawPixel(x + i, y + height - j, r, g, b);
                 }
             }
         }

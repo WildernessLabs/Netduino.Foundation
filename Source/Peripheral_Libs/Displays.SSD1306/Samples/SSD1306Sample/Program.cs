@@ -32,7 +32,7 @@ namespace SSD1306Test
 
             display.Clear(true);
             display.CurrentFont = new Font8x8();
-            display.DrawText(4, 10, 0, "NETDUINO 3 WiFi");
+            display.DrawText(4, 10, "NETDUINO 3 WiFi");
             display.Show();
             Thread.Sleep(Timeout.Infinite);
         }

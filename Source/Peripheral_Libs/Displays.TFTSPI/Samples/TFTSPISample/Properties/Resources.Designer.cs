@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ILI9163Sample.Properties
+namespace TFTSPISample.Properties
 {
     
     internal partial class Resources
@@ -20,7 +20,7 @@ namespace ILI9163Sample.Properties
             {
                 if ((Resources.manager == null))
                 {
-                    Resources.manager = new System.Resources.ResourceManager("ILI9163Sample.Properties.Resources", typeof(Resources).Assembly);
+                    Resources.manager = new System.Resources.ResourceManager("TFTSPISample.Properties.Resources", typeof(Resources).Assembly);
                 }
                 return Resources.manager;
             }
