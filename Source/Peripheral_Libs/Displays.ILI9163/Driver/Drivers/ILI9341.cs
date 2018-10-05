@@ -22,7 +22,6 @@ namespace Netduino.Foundation.Displays
             resetPort.Write(true);
             Thread.Sleep(50);
 
-
             SendCommand(0xEF, new byte[] { 0x03, 0x80, 0x02 });
             SendCommand(0xCF, new byte[] { 0x00, 0xC1, 0x30 });
             SendCommand(0xED, new byte[] { 0x64, 0x03, 0x12, 0x81 });
@@ -82,8 +81,7 @@ namespace Netduino.Foundation.Displays
             if (data != null)
             {
                 dataCommandPort.Write(Data);
-                for (int i = 0; i < data.Length; i++)
-                    Write(data[i]);
+                Write(data);
             }
         }
 

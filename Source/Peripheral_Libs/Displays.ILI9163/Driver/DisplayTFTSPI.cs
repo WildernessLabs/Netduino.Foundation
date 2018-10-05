@@ -27,8 +27,8 @@ namespace Netduino.Foundation.Displays
         protected readonly byte[] spiBuffer;
         protected readonly byte[] spiBOneByteBuffer = new byte[1];
 
-        protected uint _width = 128;
-        protected uint _height = 160;
+        protected uint _width;
+        protected uint _height;
 
         protected const bool Data = true;
         protected const bool Command = false;
@@ -200,6 +200,11 @@ namespace Netduino.Foundation.Displays
         {
             spiBOneByteBuffer[0] = value;
             spi.Write(spiBOneByteBuffer);
+        }
+
+        protected void Write(byte[] data)
+        {
+            spi.Write(data);
         }
 
         

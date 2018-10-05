@@ -31,7 +31,7 @@ namespace Netduino.Foundation.Displays
             dataCommandPort.Write(Command); //set pixel format
             Write(0x3A);
             dataCommandPort.Write(Data);
-            Write(0x05);
+            Write(0x05);//16 bit 565
 
             dataCommandPort.Write(Command);
             Write(0x26);
