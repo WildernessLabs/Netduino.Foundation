@@ -3,7 +3,7 @@ using Microsoft.SPOT.Hardware;
 
 namespace Netduino.Foundation.Displays
 {
-    public abstract class DisplayTFTSPI : DisplayBase, IDisposable
+    public abstract class DisplayTFTSPIBase : DisplayBase, IDisposable
     {
         #region Enums
         public enum LcdCommand
@@ -35,12 +35,12 @@ namespace Netduino.Foundation.Displays
 
         protected abstract void Initialize();
 
-        internal DisplayTFTSPI()
+        internal DisplayTFTSPIBase()
         {
 
         }
 
-        public DisplayTFTSPI(Cpu.Pin chipSelectPin, Cpu.Pin dcPin, Cpu.Pin resetPin,
+        public DisplayTFTSPIBase(Cpu.Pin chipSelectPin, Cpu.Pin dcPin, Cpu.Pin resetPin,
             uint width, uint height,
             SPI.SPI_module spiModule = SPI.SPI_module.SPI1,
             uint speedKHz = 9500)
@@ -206,9 +206,7 @@ namespace Netduino.Foundation.Displays
         {
             spi.Write(data);
         }
-
-        
-      
+              
         public void ClearScreen(ushort color = 0)
         {
             var high = (byte)(color >> 8);

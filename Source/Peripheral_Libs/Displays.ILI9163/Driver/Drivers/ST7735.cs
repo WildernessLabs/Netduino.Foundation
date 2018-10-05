@@ -5,7 +5,7 @@ using Microsoft.SPOT.Hardware;
 
 namespace Netduino.Foundation.Displays
 {
-    public class ST7735 : DisplayTFTSPI
+    public class ST7735 : DisplayTFTSPIBase
     {
         private ST7735() { }
 
