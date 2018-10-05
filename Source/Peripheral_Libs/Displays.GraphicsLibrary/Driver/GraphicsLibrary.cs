@@ -319,7 +319,7 @@ namespace Netduino.Foundation.Displays
         {
             byte[] bitMap;
 
-            if (CurrentFont.Width % 8 == 0) //just copy bytes
+            if (CurrentFont.Width == 8) //just copy bytes
             {
                 bitMap = new byte[text.Length * CurrentFont.Height * CurrentFont.Width / 8];
 
@@ -333,7 +333,7 @@ namespace Netduino.Foundation.Displays
                     }
                 }
             }
-            else if (CurrentFont.Width % 8 == 4)
+            else if (CurrentFont.Width == 4)
             {
                 var len = (text.Length + text.Length % 2)/2;
                 bitMap = new byte[len * CurrentFont.Height];
