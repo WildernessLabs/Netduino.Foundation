@@ -52,7 +52,7 @@ namespace Netduino.Foundation.LEDs
         {
             get { return _color; }
         } protected Color _color = new Color(0, 0, 0);
-        
+
         /// <summary>
         /// 
         /// Implementation notes: Architecturally, it would be much cleaner to construct this class
@@ -91,9 +91,9 @@ namespace Netduino.Foundation.LEDs
             GreenPin = greenPin;
             BluePin = bluePin;
 
-            RedPwm = new H.PWM(RedPin, 100, 0, false);
-            GreenPwm = new H.PWM(GreenPin, 100, 0, false);
-            BluePwm = new H.PWM(BluePin, 100, 0, false);
+            RedPwm = new H.PWM(RedPin, 100, 0, !isCommonCathode);
+            GreenPwm = new H.PWM(GreenPin, 100, 0, !isCommonCathode);
+            BluePwm = new H.PWM(BluePin, 100, 0, !isCommonCathode);
         }
 
         /// <summary>
@@ -124,17 +124,8 @@ namespace Netduino.Foundation.LEDs
             GreenPwm.DutyCycle = (_color.G * _maximumGreenPwmDuty);
             BluePwm.DutyCycle = (_color.B * _maximumBluePwmDuty);
 
-            if(IsCommonCathode == false)
-            {
-                RedPwm.DutyCycle = 1 - RedPwm.DutyCycle;
-                GreenPwm.DutyCycle = 1 - GreenPwm.DutyCycle;
-                BluePwm.DutyCycle = 1 - BluePwm.DutyCycle;
-            }
-
             // start our PWMs.
-            RedPwm.Start();
-            GreenPwm.Start();
-            BluePwm.Start();
+            TurnOn();
         }
 
         // HACK/TODO: this is the signature I want, but it's broken until 4.4. (https://github.com/NETMF/netmf-interpreter/issues/87)
@@ -340,6 +331,26 @@ namespace Netduino.Foundation.LEDs
         public void Stop()
         {
             _isRunning = false;
+        }
+
+        /// <summary>
+        /// Turns off the LED
+        /// </summary>
+        public void TurnOff()
+        {
+            RedPwm.Stop();
+            GreenPwm.Stop();
+            BluePwm.Stop();
+        }
+
+        /// <summary>
+        /// Turns on the LED
+        /// </summary>
+        public void TurnOn()
+        {
+            RedPwm.Start();
+            GreenPwm.Start();
+            BluePwm.Start();
         }
     }
 }
