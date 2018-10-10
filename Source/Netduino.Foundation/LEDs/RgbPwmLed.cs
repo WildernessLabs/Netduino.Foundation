@@ -53,18 +53,6 @@ namespace Netduino.Foundation.LEDs
             get { return _color; }
         } protected Color _color = new Color(0, 0, 0);
 
-        public RgbPwmLed(H.Cpu.PWMChannel redPin, H.Cpu.PWMChannel greenPin, H.Cpu.PWMChannel bluePin)
-           : this(redPin, greenPin, bluePin, TypicalForwardVoltage.ResistorLimited, TypicalForwardVoltage.ResistorLimited,
-                 TypicalForwardVoltage.ResistorLimited, true)
-        {
-        }
-
-        public RgbPwmLed(H.Cpu.PWMChannel redPin, H.Cpu.PWMChannel greenPin, H.Cpu.PWMChannel bluePin, bool isCommonCathode)
-            : this(redPin, greenPin, bluePin, TypicalForwardVoltage.ResistorLimited, TypicalForwardVoltage.ResistorLimited,
-                  TypicalForwardVoltage.ResistorLimited, isCommonCathode)
-        {
-        }
-
         /// <summary>
         /// 
         /// Implementation notes: Architecturally, it would be much cleaner to construct this class
