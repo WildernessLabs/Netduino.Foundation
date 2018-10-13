@@ -15,7 +15,7 @@ namespace Netduino.Foundation.Displays
 
         #endregion
 
-        //these displays typicalls supports 12, 16 & 18 bit but the current driver only supports 16
+        //these displays typically support 12, 16 & 18 bit but the current driver only supports 16
         public override DisplayColorMode ColorMode => DisplayColorMode.Format16bppRgb565;
         public override uint Width => _width;
         public override uint Height => _height;
@@ -68,6 +68,10 @@ namespace Netduino.Foundation.Displays
             Initialize();
         }
 
+        /// <summary>
+        ///     Clear the display.
+        /// </summary>
+        /// <param name="updateDisplay">Update the dipslay once the buffer has been cleared when true.</param>
         public override void Clear(bool updateDisplay = false)
         {
             Clear(0, updateDisplay);
@@ -86,6 +90,17 @@ namespace Netduino.Foundation.Displays
                 Refresh();
         }
 
+        /// <summary>
+        ///     Display a 1-bit bitmap
+        /// 
+        ///     This method simply calls a similar method in the display hardware.
+        /// </summary>
+        /// <param name="x">Abscissa of the top left corner of the bitmap.</param>
+        /// <param name="y">Ordinate of the top left corner of the bitmap.</param>
+        /// <param name="width">Width of the bitmap in bytes.</param>
+        /// <param name="height">Height of the bitmap in bytes.</param>
+        /// <param name="bitmap">Bitmap to display.</param>
+        /// <param name="bitmapMode">How should the bitmap be transferred to the display?</param>
         public override void DrawBitmap(int x, int y, int width, int height, byte[] bitmap, BitmapMode bitmapMode)
         {
             if ((width * height) != bitmap.Length)
@@ -109,6 +124,17 @@ namespace Netduino.Foundation.Displays
             }
         }
 
+        /// <summary>
+        ///     Display a 1-bit bitmap
+        /// 
+        ///     This method simply calls a similar method in the display hardware.
+        /// </summary>
+        /// <param name="x">Abscissa of the top left corner of the bitmap.</param>
+        /// <param name="y">Ordinate of the top left corner of the bitmap.</param>
+        /// <param name="width">Width of the bitmap in bytes.</param>
+        /// <param name="height">Height of the bitmap in bytes.</param>
+        /// <param name="bitmap">Bitmap to display.</param>
+        /// <param name="color">The color of the bitmap.</param>
         public override void DrawBitmap(int x, int y, int width, int height, byte[] bitmap, Color color)
         {
             if ((width * height) != bitmap.Length)
@@ -133,21 +159,47 @@ namespace Netduino.Foundation.Displays
             }
         }
 
+        /// <summary>
+        ///     Draw a single pixel 
+        /// </summary>
+        /// <param name="x">x location </param>
+        /// <param name="y">y location</param>
+        /// <param name="colored">Turn the pixel on (true) or off (false).</param>
         public override void DrawPixel(int x, int y, bool colored)
         {
             SetPixel(x, y, (colored ? (ushort)(0xFFFF) : (ushort)0));
         }
 
+        /// <summary>
+        ///     Draw a single pixel 
+        /// </summary>
+        /// <param name="x">x location </param>
+        /// <param name="y">y location</param>
+        /// <param name="color">Color of pixel.</param>
         public override void DrawPixel(int x, int y, Color color)
         {
             SetPixel(x, y, Get16BitColorFromColor(color));
         }
 
+        /// <summary>
+        ///     Draw a single pixel 
+        /// </summary>
+        /// <param name="x">x location </param>
+        /// <param name="y">y location</param>
+        /// <param name="r">8 bit red value</param>
+        /// <param name="g">8 bit green value</param>
+        /// <param name="b">8 bit blue value</param>
         public void DrawPixel(int x, int y, byte r, byte g, byte b)
         {
             SetPixel(x, y, Get16BitColorFromRGB(r, g, b));
         }
 
+        /// <summary>
+        ///     Draw a single pixel 
+        /// </summary>
+        /// <param name="x">x location </param>
+        /// <param name="y">y location</param>
+        /// <param name="color">16bpp (565) encoded color value</param>
         private void SetPixel(int x, int y, ushort color)
         {
             if (x < 0 || y < 0 || x >= _width || y >= _height)
@@ -159,6 +211,9 @@ namespace Netduino.Foundation.Displays
             spiBuffer[++index] = (byte)(color);
         }
 
+        /// <summary>
+        ///     Draw the display buffer to screen
+        /// </summary>
         public void Refresh()
         {
             spi.Write(spiBuffer);
@@ -206,7 +261,11 @@ namespace Netduino.Foundation.Displays
         {
             spi.Write(data);
         }
-              
+
+        /// <summary>
+        ///     Directly sets the display to a 16bpp color value
+        /// </summary>
+        /// <param name="color">16bpp color value (565)</param>
         public void ClearScreen(ushort color = 0)
         {
             var high = (byte)(color >> 8);

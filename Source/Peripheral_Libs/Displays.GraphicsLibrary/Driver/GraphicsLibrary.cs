@@ -39,12 +39,24 @@ namespace Netduino.Foundation.Displays
 
         #region Methods
 
+        /// <summary>
+        ///     Draw a single pixel 
+        /// </summary>
+        /// <param name="x">x location </param>
+        /// <param name="y">y location</param>
+        /// <param name="colored">Turn the pixel on (true) or off (false).</param>
         public void DrawPixel (int x, int y, bool colored = true)
         {
             _display.DrawPixel(x, y, colored);
         }
 
-        public void DrawPixle (int x, int y, Color color)
+        /// <summary>
+        ///     Draw a single pixel 
+        /// </summary>
+        /// <param name="x">x location </param>
+        /// <param name="y">y location</param>
+        /// <param name="color">Color of pixel.</param>
+        public void DrawPixel (int x, int y, Color color)
         {
             _display.DrawPixel(x, y, color);
         }

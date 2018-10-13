@@ -433,9 +433,7 @@ namespace Netduino.Foundation.Displays
         {
             SendCommand(0x2e);
         }
-
-
-
+        
         #endregion Methods
     }
 }
