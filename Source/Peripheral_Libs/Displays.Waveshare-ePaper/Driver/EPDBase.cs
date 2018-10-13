@@ -55,6 +55,11 @@ namespace Netduino.Foundation.Displays
             Clear(false, updateDisplay);
         }
 
+        /// <summary>
+        ///     Clear the display.
+        /// </summary>
+        /// <param name="color">Color to set the display (not used on ePaper displays)</param>
+        /// <param name="updateDisplay">Update the dipslay once the buffer has been cleared when true.</param>
         public void Clear(Color color, bool updateDisplay = false)
         {
             bool colored = false;
@@ -64,6 +69,11 @@ namespace Netduino.Foundation.Displays
             Clear(colored, updateDisplay);
         }
 
+        /// <summary>
+        ///     Clear the display.
+        /// </summary>
+        /// <param name="colored">Set the display dark when true</param>
+        /// <param name="updateDisplay">Update the dipslay once the buffer has been cleared when true.</param>
         public void Clear(bool colored, bool updateDisplay = false)
         {
             //   ClearFrameMemory((byte)(colored ? 0 : 0xFF));
@@ -78,6 +88,17 @@ namespace Netduino.Foundation.Displays
             }
         }
 
+        /// <summary>
+        ///     Display a 1-bit bitmap
+        /// 
+        ///     This method simply calls a similar method in the display hardware.
+        /// </summary>
+        /// <param name="x">Abscissa of the top left corner of the bitmap.</param>
+        /// <param name="y">Ordinate of the top left corner of the bitmap.</param>
+        /// <param name="width">Width of the bitmap in bytes.</param>
+        /// <param name="height">Height of the bitmap in bytes.</param>
+        /// <param name="bitmap">Bitmap to display.</param>
+        /// <param name="bitmapMode">How should the bitmap be transferred to the display?</param>
         public override void DrawBitmap(int x, int y, int width, int height, byte[] bitmap, BitmapMode bitmapMode)
         {
             if ((width * height) != bitmap.Length)
@@ -101,6 +122,17 @@ namespace Netduino.Foundation.Displays
             }
         }
 
+        /// <summary>
+        ///     Display a 1-bit bitmap
+        /// 
+        ///     This method simply calls a similar method in the display hardware.
+        /// </summary>
+        /// <param name="x">Abscissa of the top left corner of the bitmap.</param>
+        /// <param name="y">Ordinate of the top left corner of the bitmap.</param>
+        /// <param name="width">Width of the bitmap in bytes.</param>
+        /// <param name="height">Height of the bitmap in bytes.</param>
+        /// <param name="bitmap">Bitmap to display.</param>
+        /// <param name="color">The color of the bitmap (not used on ePaper displays).</param>
         public override void DrawBitmap(int x, int y, int width, int height, byte[] bitmap, Color color)
         {
             if ((width * height) != bitmap.Length)
@@ -125,6 +157,12 @@ namespace Netduino.Foundation.Displays
             }
         }
 
+        /// <summary>
+        ///     Draw a single pixel 
+        /// </summary>
+        /// <param name="x">x location </param>
+        /// <param name="y">y location</param>
+        /// <param name="colored">Turn the pixel on (true) or off (false).</param>
         public override void DrawPixel(int x, int y, bool colored)
         {
             xRefreshStart = Math.Min(x, xRefreshStart);
@@ -142,6 +180,12 @@ namespace Netduino.Foundation.Displays
             }
         }
 
+        /// <summary>
+        ///     Draw a single pixel 
+        /// </summary>
+        /// <param name="x">x location </param>
+        /// <param name="y">y location</param>
+        /// <param name="color">Color of pixel.</param>
         public override void DrawPixel(int x, int y, Color color)
         {
             bool colored = false;
@@ -151,6 +195,14 @@ namespace Netduino.Foundation.Displays
             DrawPixel(x, y, colored);
         }
 
+        /// <summary>
+        ///     Draw a single pixel 
+        /// </summary>
+        /// <param name="x">x location </param>
+        /// <param name="y">y location</param>
+        /// <param name="r">y location</param>
+        /// <param name="g">y location</param>
+        /// <param name="b">y location</param>
         public void DrawPixel(int x, int y, byte r, byte g, byte b)
         {
             bool colored = false;
@@ -160,6 +212,9 @@ namespace Netduino.Foundation.Displays
             DrawPixel(x, y, colored);
         }
 
+        /// <summary>
+        ///     Draw the display buffer to screen
+        /// </summary>
         public void Refresh()
         {
             if (xRefreshStart == -1)
@@ -172,6 +227,9 @@ namespace Netduino.Foundation.Displays
             xRefreshStart = yRefreshStart = xRefreshEnd = yRefreshEnd = -1;
         }
 
+        /// <summary>
+        ///     Draw the display buffer to screen
+        /// </summary>
         public override void Show()
         {
             Refresh();

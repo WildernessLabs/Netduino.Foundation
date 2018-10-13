@@ -240,7 +240,5 @@ namespace Netduino.Foundation.Displays
             dataCommandPort = null;
             resetPort = null;
         }
-
-
     }
 }
