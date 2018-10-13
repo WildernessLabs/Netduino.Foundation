@@ -36,7 +36,7 @@
         ///     Indicate of the hardware driver should ignore out of bounds pixels
         ///     or if the driver should generate an exception.
         /// </summary>
-        public bool IgnoreOutofBoundsPixels { get; set; }
+        public bool IgnoreOutOfBoundsPixels { get; set; }
 
         /// <summary>
         ///     Transfer the contents of the buffer to the display.

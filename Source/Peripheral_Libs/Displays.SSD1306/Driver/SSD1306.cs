@@ -144,12 +144,6 @@ namespace Netduino.Foundation.Displays
         }
 
         /// <summary>
-        ///     Indicate if the driver should throw away output bounds pixels or
-        ///     if the driver should generate an exception.
-        /// </summary>
-        public bool IgnoreOutOfBoundsPixels { get; set; }
-
-        /// <summary>
         ///     Backing variable for the Contrast property.
         /// </summary>
         private byte _contrast;
