@@ -1,26 +1,26 @@
 <?xml version="1.0"?>
 <package>
   <metadata>
-    <id>Netduino.Foundation.GraphicsLibrary</id>
-    <title>WildernessLabs.Netduino.Foundation.Displays.GraphicsLibrary</title>
+    <id>Netduino.Foundation.SSD1306</id>
+    <title>WildernessLabs.Netduino.Foundation.Displays.TFTSPI</title>
     <version>$version$</version>
-    <authors>Mark Stevens, Adrian Stevens</authors>
+    <authors>Adrian Stevens</authors>
     <owners>Wilderness Labs</owners>
     <licenseUrl>https://github.com/WildernessLabs/Netduino.Foundation/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/WildernessLabs/Netduino.Foundation</projectUrl>
     <!--    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Graphics Library for the display drivers in Netduino.Foundation</description>
+    <description>Color TFT SPI  display drivers for Netduino.Foundation (ILI9163, ILI9341, S6D02A1, ST7735)</description>
     <!--    <releaseNotes>First release on Nuget.</releaseNotes> -->
     <copyright>Copyright 2018 Wilderness Labs</copyright>
     <tags>NETMF Netduino</tags>
     <dependencies>
-      <dependency id="Netduino.Foundation" version="0.24" />
+      <dependency id="Netduino.Foundation" version="0.23" />
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Netduino.Foundation.Displays.GraphicsLibrary.*" target="lib\netmf43" />
-    <file src="bin\Release\le\Netduino.Foundation.Displays.GraphicsLibrary.*" target="lib\netmf43\le" />
-    <file src="bin\Release\be\Netduino.Foundation.Displays.GraphicsLibrary.*" target="lib\netmf43\be" />
+    <file src="bin\Release\Netduino.Foundation.Displays.SSD1306.*" target="lib\netmf43" />
+    <file src="bin\Release\le\Netduino.Foundation.Displays.SSD1306.*" target="lib\netmf43\le" />
+    <file src="bin\Release\be\Netduino.Foundation.Displays.SSD1306.*" target="lib\netmf43\be" />
   </files>
 </package>

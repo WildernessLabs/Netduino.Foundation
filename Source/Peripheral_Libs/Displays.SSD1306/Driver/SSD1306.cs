@@ -49,12 +49,23 @@ namespace Netduino.Foundation.Displays
             /// <summary>
             ///     0.91 128x32 pixel display.
             /// </summary>
-            OLED128x32
+            OLED128x32,
+
+            /// <summary>
+            ///     64x48 pixel display.
+            /// </summary>
+            //OLED64x48, (coming soon)
         }
 
         #endregion Enums
 
         #region Member variables / fields
+
+        public override DisplayColorMode ColorMode => DisplayColorMode.Format1bpp;
+
+        public override uint Width => _width;
+
+        public override uint Height => _height;
 
         /// <summary>
         ///     SSD1306 display.
@@ -64,12 +75,12 @@ namespace Netduino.Foundation.Displays
         /// <summary>
         ///     Width of the display in pixels.
         /// </summary>
-        private readonly int _width;
+        private readonly uint _width;
 
         /// <summary>
         ///     Height of the display in pixels.
         /// </summary>
-        private readonly int _height;
+        private readonly uint _height;
 
         /// <summary>
         ///     Buffer holding the pixels in the display.
@@ -77,7 +88,7 @@ namespace Netduino.Foundation.Displays
         private readonly byte[] _buffer;
 
         /// <summary>
-        ///     Sequence of commans bytes that must be set to the display before
+        ///     Sequence of command bytes that must be sent to the display before
         ///     the Show method can send the data buffer.
         /// </summary>
         private readonly byte[] _showPreamble;
@@ -96,8 +107,8 @@ namespace Netduino.Foundation.Displays
         /// </summary>
         private readonly byte[] _oled128x32SetupSequence =
         {
-            0xae, 0xd5, 0x80, 0xa8, 0x1f, 0xd3, 0x00, 0x40, 0x8d, 0x14, 0xa1, 0xc8, 0xda, 0x00, 0x81, 0xcf, 0xd9, 0x1f,
-            0xdb, 0x40, 0xa4, 0xaf
+            0xae, 0xd5, 0x80, 0xa8, 0x1f, 0xd3, 0x00, 0x40 | 0x0, 0x8d, 0x14, 0x20, 0x00, 0xa0 | 0x1, 0xc8,
+            0xda, 0x02, 0x81, 0x8f, 0xd9, 0x1f, 0xdb, 0x40, 0xa4, 0xa6, 0xaf
         };
 
         #endregion Member variables / fields
@@ -131,12 +142,6 @@ namespace Netduino.Foundation.Displays
                 }
             }
         }
-
-        /// <summary>
-        ///     Indicate if the driver should throw away output bounds pixels or
-        ///     if the driver should generate an exception.
-        /// </summary>
-        public bool IgnoreOutOfBoundsPixels { get; set; }
 
         /// <summary>
         ///     Backing variable for the Contrast property.
@@ -286,21 +291,16 @@ namespace Netduino.Foundation.Displays
         public override void Clear(bool updateDisplay = false)
         {
             Array.Clear(_buffer, 0, _buffer.Length);
+
             if (updateDisplay)
-            {
                 Show();
-            }
         }
 
-        /// <summary>
-        ///     Coordinates start with index 0
-        /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="colored">True = turn on pixel, false = turn off pixel</param>
-        public override void DrawPixel(int x, int y, bool colored)
+        public override void DrawPixel(int x, int y, Color color)
         {
-            DrawPixel((byte) x, (byte) y, colored);
+            var colored = (color == Color.Black) ? false : true;
+
+            DrawPixel(x, y, colored);
         }
 
         /// <summary>
@@ -309,7 +309,7 @@ namespace Netduino.Foundation.Displays
         /// <param name="x">Abscissa of the pixel to the set / reset.</param>
         /// <param name="y">Ordinate of the pixel to the set / reset.</param>
         /// <param name="colored">True = turn on pixel, false = turn off pixel</param>
-        public override void DrawPixel(byte x, byte y, bool colored)
+        public override void DrawPixel(int x, int y, bool colored)
         {
             if ((x >= _width) || (y >= _height))
             {
@@ -366,6 +366,12 @@ namespace Netduino.Foundation.Displays
                     }
                 }
             }
+        }
+
+        //needs dithering code
+        public override void DrawBitmap(int x, int y, int width, int height, byte[] bitmap, Color color)
+        {
+            DrawBitmap(x, y, width, height, bitmap, BitmapMode.And);
         }
 
         /// <summary>
@@ -427,7 +433,7 @@ namespace Netduino.Foundation.Displays
         {
             SendCommand(0x2e);
         }
-
+        
         #endregion Methods
     }
 }

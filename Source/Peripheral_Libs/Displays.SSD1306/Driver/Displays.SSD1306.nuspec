@@ -4,7 +4,7 @@
     <id>Netduino.Foundation.SSD1306</id>
     <title>WildernessLabs.Netduino.Foundation.Displays.SSD1306</title>
     <version>$version$</version>
-    <authors>Mark Stevens</authors>
+    <authors>Mark Stevens, Adrian Stevens</authors>
     <owners>Wilderness Labs</owners>
     <licenseUrl>https://github.com/WildernessLabs/Netduino.Foundation/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/WildernessLabs/Netduino.Foundation</projectUrl>

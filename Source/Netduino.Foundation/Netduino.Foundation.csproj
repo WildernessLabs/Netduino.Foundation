@@ -44,6 +44,7 @@
     <Compile Include="Controllers\PID\IPidController.cs" />
     <Compile Include="Controllers\PID\PidControllerBase.cs" />
     <Compile Include="Controllers\PID\StandardPidController.cs" />
+    <Compile Include="Displays\IDisplay.cs" />
     <Compile Include="Displays\TextDisplayConfig.cs" />
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="Generators\SoftPWM.cs" />
