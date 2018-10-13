@@ -16,7 +16,7 @@ namespace SSD1306Test
             Thread.Sleep(1000);
 
             display.Clear(true);
-            display.DrawFilledCircle(63, 31, 20, true);
+            display.DrawCircle(63, 31, 20, true, true);
             display.Show();
             Thread.Sleep(1000);
 
@@ -26,7 +26,7 @@ namespace SSD1306Test
             Thread.Sleep(1000);
 
             display.Clear(true);
-            display.DrawFilledRectangle(30, 10, 50, 40);
+            display.DrawRectangle(30, 10, 50, 40, true, true);
             display.Show();
             Thread.Sleep(1000);
 

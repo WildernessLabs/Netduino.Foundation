@@ -86,7 +86,7 @@ namespace TFTSPISample
               display.Show();
               Thread.Sleep(1000);
 
-              display.DrawFilledRectangle(10, 100, 108, 50, Color.Yellow);
+              display.DrawRectangle(10, 100, 108, 50, Color.Yellow, true);
               display.Show();
               Thread.Sleep(1000);
 

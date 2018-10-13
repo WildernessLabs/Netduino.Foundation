@@ -41,7 +41,7 @@ namespace WaveShareEPaper
           //  display.Show();
           //  Thread.Sleep(1000);
 
-            display.DrawFilledRectangle(20, 100, 40, 25, Color.Red);
+            display.DrawRectangle(20, 100, 40, 25, Color.Red, true);
          //   display.Show();
         //    Thread.Sleep(500);
 
@@ -91,7 +91,7 @@ namespace WaveShareEPaper
             display.Show();
        //     Thread.Sleep(1000);
 
-            display.DrawFilledRectangle(10, 125, 108, 25, Color.Yellow);
+            display.DrawRectangle(10, 125, 108, 25, Color.Yellow, true);
             display.Show();
         //    Thread.Sleep(1000);
 

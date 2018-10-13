@@ -68,6 +68,20 @@ namespace Netduino.Foundation.Displays
             DrawLine(x0, y0, x1, y1, (colored ? Color.White : Color.Black));
         }
 
+        /// <summary>
+        ///     Draw a line using Bresenhams line drawing algorithm.
+        /// </summary>
+        /// <remarks>
+        ///     Bresenhams line drawing algoritm:
+        ///     https://en.wikipedia.org/wiki/Bresenham's_line_algorithm
+        ///     C# Implementation:
+        ///     https://en.wikipedia.org/wiki/Bresenham's_line_algorithm
+        /// </remarks>
+        /// <param name="x0">Abscissa of the starting point of the line.</param>
+        /// <param name="y0">Ordinate of the starting point of the line</param>
+        /// <param name="x1">Abscissa of the end point of the line.</param>
+        /// <param name="y1">Ordinate of the end point of the line</param>
+        /// <param name="color">The color of the line.</param>
         public void DrawLine(int x0, int y0, int x1, int y1, Color color)
         {
             var steep = Math.Abs(y1 - y0) > Math.Abs(x1 - x0);
@@ -123,6 +137,13 @@ namespace Netduino.Foundation.Displays
             }
         }
 
+        /// <summary>
+        ///     Draw a horizontal line.
+        /// </summary>
+        /// <param name="x0">Abscissa of the starting point of the line.</param>
+        /// <param name="y0">Ordinate of the starting point of the line.</param>
+        /// <param name="length">Length of the line to draw.</param>
+        /// <param name="color">The color of the line.</param>
         public void DrawHorizontalLine(int x0, int y0, int length, Color color)
         {
             for (var x = x0; (x - x0) < length; x++)
@@ -146,6 +167,13 @@ namespace Netduino.Foundation.Displays
             }
         }
 
+        /// <summary>
+        ///     Draw a vertical line.
+        /// </summary>
+        /// <param name="x0">Abscissa of the starting point of the line.</param>
+        /// <param name="y0">Ordinate of the starting point of the line.</param>
+        /// <param name="length">Length of the line to draw.</param>
+        /// <param name="color">The color of the line.</param>
         public void DrawVerticalLine(int x0, int y0, int length, Color color)
         {
             for (var y = y0; (y - y0) < length; y++)
@@ -168,13 +196,29 @@ namespace Netduino.Foundation.Displays
         /// <param name="centerX">Abscissa of the centre point of the circle.</param>
         /// <param name="centerY">Ordinate of the centre point of the circle.</param>
         /// <param name="radius">Radius of the circle.</param>
-        /// <param name="colored">Show the circle when true, </param>
+        /// <param name="colored">Show the circle when true.</param>
         /// <param name="filled">Draw a filled circle?</param>
         public void DrawCircle(int centerX, int centerY, int radius, bool colored = true, bool filled = false)
         {
             DrawCircle(centerX, centerY, radius, (colored ? Color.White : Color.Black), filled);
         }
 
+        /// <summary>
+        ///     Draw a dircle.
+        /// </summary>
+        /// <remarks>
+        ///     This algorithm draws the circle by splitting the full circle into eight
+        ///     segments.
+        ///     This method uses the Midpoint algorithm:
+        ///     https://en.wikipedia.org/wiki/Midpoint_circle_algorithm
+        ///     A C# implementation can be found here:
+        ///     https://rosettacode.org/wiki/Bitmap/Midpoint_circle_algorithm#C.23
+        /// </remarks>
+        /// <param name="centerX">Abscissa of the centre point of the circle.</param>
+        /// <param name="centerY">Ordinate of the centre point of the circle.</param>
+        /// <param name="radius">Radius of the circle.</param>
+        /// <param name="color">The color of the circle.</param>
+        /// <param name="filled">Draw a filled circle?</param>
         public void DrawCircle(int centerX, int centerY, int radius, Color color, bool filled = false)
         {
             var d = (5 - (radius * 4)) / 4;
@@ -214,23 +258,6 @@ namespace Netduino.Foundation.Displays
         }
 
         /// <summary>
-        ///     Draw a filled dircle.
-        /// </summary>
-        /// <param name="centerX">Abscissa of the centre point of the circle.</param>
-        /// <param name="centerY">Ordinate of the centre point of the circle.</param>
-        /// <param name="radius">Radius of the circle.</param>
-        /// <param name="colored">Show the circle when true, </param>
-        public void DrawFilledCircle(int centerX, int centerY, int radius, bool colored = true)
-        {
-            DrawCircle(centerX, centerY, radius, colored, true);
-        }
-
-        public void DrawFilledCircle(int centerX, int centerY, int radius, Color color)
-        {
-            DrawCircle(centerX, centerY, radius, color, true);
-        }
-
-        /// <summary>
         ///     Draw a rectangle.
         /// </summary>
         /// <param name="xLeft">Abscissa of the top left corner.</param>
@@ -259,6 +286,15 @@ namespace Netduino.Foundation.Displays
             }
         }
 
+        /// <summary>
+        ///     Draw a rectangle.
+        /// </summary>
+        /// <param name="xLeft">Abscissa of the top left corner.</param>
+        /// <param name="yTop">Ordinate of the top left corner.</param>
+        /// <param name="width">Width of the rectangle.</param>
+        /// <param name="height">Height of the rectangle.</param>
+        /// <param name="color">The color of the rectangle.</param>
+        /// <param name="filled">Fill the rectangle (true) or draw the outline (false, default).</param>
         public void DrawRectangle(int xLeft, int yTop, int width, int height, Color color, bool filled = false)
         {
             width--;
@@ -280,32 +316,12 @@ namespace Netduino.Foundation.Displays
         }
 
         /// <summary>
-        ///     Draw a filled rectangle.
-        /// </summary>
-        /// <param name="xLeft">Abscissa of the top left corner.</param>
-        /// <param name="yTop">Ordinate of the top left corner.</param>
-        /// <param name="width">Width of the rectangle.</param>
-        /// <param name="height">Height of the rectangle.</param>
-        /// <param name="colored">Draw the pixel (true) or turn the pixel off (false).</param>
-        public void DrawFilledRectangle(int xLeft, int yTop, int width, int height, bool colored = true)
-        {
-            DrawRectangle(xLeft, yTop, width, height, colored, true);
-        }
-
-        public void DrawFilledRectangle(int xLeft, int yTop, int width, int height, Color color)
-        {
-            DrawRectangle(xLeft, yTop, width, height, color, true);
-        }
-
-        /// <summary>
         ///     Draw a text message on the display using the current font.
         /// </summary>
         /// <param name="x">Abscissa of the location of the text.</param>
         /// <param name="y">Ordinate of the location of the text.</param>
-        /// <param name="spacing">Number of pixels between characters.</param>
         /// <param name="text">Text to display.</param>
-        /// <param name="wrap">Wrap the text at the end of the display?</param>
-        public void DrawText(int x, int y, string text, bool wrap = false)
+        public void DrawText(int x, int y, string text)
         {
             if (CurrentFont == null)
                 throw new Exception("CurrentFont must be set before calling DrawText.");
@@ -315,7 +331,14 @@ namespace Netduino.Foundation.Displays
             DrawBitmap(x, y, bitMap.Length / CurrentFont.Height, CurrentFont.Height, bitMap, DisplayBase.BitmapMode.And);
         }
 
-        public void DrawText(int x, int y, string text, Color color, bool wrap = false)
+        /// <summary>
+        ///     Draw a text message on the display using the current font.
+        /// </summary>
+        /// <param name="x">Abscissa of the location of the text.</param>
+        /// <param name="y">Ordinate of the location of the text.</param>
+        /// <param name="text">Text to display.</param>
+        /// <param name="color">Color of the text.</param>
+        public void DrawText(int x, int y, string text, Color color)
         {
             if (CurrentFont == null)
                 throw new Exception("CurrentFont must be set before calling DrawText.");
@@ -396,7 +419,7 @@ namespace Netduino.Foundation.Displays
         }
 
         /// <summary>
-        ///     Display a bitmap on the display.
+        ///     Display a 1-bit bitmap
         /// 
         ///     This method simply calls a similar method in the display hardware.
         /// </summary>
@@ -411,11 +434,21 @@ namespace Netduino.Foundation.Displays
             _display.DrawBitmap(x, y, width, height, bitmap, bitmapMode);
         }
 
+        /// <summary>
+        ///     Display a 1-bit bitmap
+        /// 
+        ///     This method simply calls a similar method in the display hardware.
+        /// </summary>
+        /// <param name="x">Abscissa of the top left corner of the bitmap.</param>
+        /// <param name="y">Ordinate of the top left corner of the bitmap.</param>
+        /// <param name="width">Width of the bitmap in bytes.</param>
+        /// <param name="height">Height of the bitmap in bytes.</param>
+        /// <param name="bitmap">Bitmap to display.</param>
+        /// <param name="color">The color of the bitmap.</param>
         public void DrawBitmap(int x, int y, int width, int height, byte[] bitmap, Color color)
         {
             _display.DrawBitmap(x, y, width, height, bitmap, color);
         }
-
 
         #endregion Display
     }
