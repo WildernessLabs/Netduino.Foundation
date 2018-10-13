@@ -39,6 +39,16 @@ namespace Netduino.Foundation.Displays
 
         #region Methods
 
+        public void DrawPixel (int x, int y, bool colored = true)
+        {
+            _display.DrawPixel(x, y, colored);
+        }
+
+        public void DrawPixle (int x, int y, Color color)
+        {
+            _display.DrawPixel(x, y, color);
+        }
+
         /// <summary>
         ///     Draw a line using Bresenhams line drawing algorithm.
         /// </summary>
