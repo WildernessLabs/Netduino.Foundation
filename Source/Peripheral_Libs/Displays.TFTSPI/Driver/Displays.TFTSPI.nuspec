@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <metadata>
-    <id>Netduino.Foundation.SSD1306</id>
+    <id>Netduino.Foundation.TFTSPI</id>
     <title>WildernessLabs.Netduino.Foundation.Displays.TFTSPI</title>
     <version>$version$</version>
     <authors>Adrian Stevens</authors>
@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/WildernessLabs/Netduino.Foundation</projectUrl>
     <!--    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Color TFT SPI  display drivers for Netduino.Foundation (ILI9163, ILI9341, S6D02A1, ST7735)</description>
+    <description>Color TFT SPI display drivers for Netduino.Foundation (ILI9163, ILI9341, S6D02A1, ST7735)</description>
     <!--    <releaseNotes>First release on Nuget.</releaseNotes> -->
     <copyright>Copyright 2018 Wilderness Labs</copyright>
     <tags>NETMF Netduino</tags>
@@ -19,8 +19,8 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Netduino.Foundation.Displays.SSD1306.*" target="lib\netmf43" />
-    <file src="bin\Release\le\Netduino.Foundation.Displays.SSD1306.*" target="lib\netmf43\le" />
-    <file src="bin\Release\be\Netduino.Foundation.Displays.SSD1306.*" target="lib\netmf43\be" />
+    <file src="bin\Release\Netduino.Foundation.Displays.TFTSPI.*" target="lib\netmf43" />
+    <file src="bin\Release\le\Netduino.Foundation.Displays.TFTSPI.*" target="lib\netmf43\le" />
+    <file src="bin\Release\be\Netduino.Foundation.Displays.TFTSPI.*" target="lib\netmf43\be" />
   </files>
 </package>
