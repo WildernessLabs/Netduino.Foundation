@@ -19,8 +19,8 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\Netduino.Foundation.Displays.TFTSPI.*" target="lib\netmf43" />
-    <file src="bin\Release\le\Netduino.Foundation.Displays.TFTSPI.*" target="lib\netmf43\le" />
-    <file src="bin\Release\be\Netduino.Foundation.Displays.TFTSPI.*" target="lib\netmf43\be" />
+    <file src="bin\Release\Netduino.Foundation.Displays.*" target="lib\netmf43" />
+    <file src="bin\Release\le\Netduino.Foundation.Displays.*" target="lib\netmf43\le" />
+    <file src="bin\Release\be\Netduino.Foundation.Displays.*" target="lib\netmf43\be" />
   </files>
 </package>
