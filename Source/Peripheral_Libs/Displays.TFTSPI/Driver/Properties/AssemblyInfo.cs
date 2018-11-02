@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyDescription("Color TFT SPI display drivers for Netduino.Foundation (ILI9163, ILI9341, S6D02A1, ST7735).")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("WildernessLabs")]
-[assembly: AssemblyProduct("Netduino.Foundation.Displays.SSD1306")]
+[assembly: AssemblyProduct("Netduino.Foundation.Displays.TFTSPI")]
 [assembly: AssemblyCopyright("Copyright © 2018 WildernessLabs")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -17,7 +17,7 @@ using System.Runtime.CompilerServices;
 // The form "{Major}.{Minor}.*" will automatically update the build and revision,
 // and "{Major}.{Minor}.{Build}.*" will update just the revision.
 
-[assembly: AssemblyVersion("0.14.0.0")]
+[assembly: AssemblyVersion("0.15.0.0")]
 
 // The following attributes are used to specify the signing key for the assembly, 
 // if desired. See the Mono documentation for more information about signing.
