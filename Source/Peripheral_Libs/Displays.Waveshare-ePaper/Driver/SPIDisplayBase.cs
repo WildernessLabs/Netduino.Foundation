@@ -57,7 +57,7 @@ namespace Netduino.Foundation.Displays
             spi.Write(data);
         }
 
-        protected void WaitUntilIdle()
+        protected virtual void WaitUntilIdle()
         {
             while (busyPort.Read() == false)
             {
