@@ -112,8 +112,8 @@ namespace Netduino.Foundation.Displays
             //code expects the buffer to be the exact size we need
             x = 0;
             y = 0;
-            width = (int)this.Width;
-            height = (int)this.Height;
+            width = (int)Width;
+            height = (int)Height;
 
             if (buffer != null)
             {
@@ -126,23 +126,14 @@ namespace Netduino.Foundation.Displays
                 SendData(width & 0xf8);     // w (width) should be the multiple of 8, the last 3 bit will always be ignored
                 SendData(height >> 8);
                 SendData(height & 0xff);
+
                 DelayMs(2);
+
                 for (int i = 0; i < width / 8 * height; i++)
                 {
                     SendData(buffer[i]);
                 }
-
-                /* send the image data */
-             /*   for (int j = y; j < y + height; j++)
-                {
-                    for (int i = x; i < (x + width) / 8; i++)
-                    {
-                        SendData(buffer[i + j * (width / 8)]);
-                    }
-                }*/
-
-
-
+                    
                 DelayMs(2);
             }
         }
@@ -208,14 +199,6 @@ namespace Netduino.Foundation.Displays
             }
             DelayMs(2);
         }
-
-       /* protected override void WaitUntilIdle()
-        {
-            while (busyPort.Read() == true)
-            {
-                DelayMs(50);
-            }
-        }*/
 
         // EPD2IN7 commands
         protected static byte PANEL_SETTING                               = 0x00;
