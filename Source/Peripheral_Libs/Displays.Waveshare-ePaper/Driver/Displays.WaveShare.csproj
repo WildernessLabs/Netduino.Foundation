@@ -42,6 +42,7 @@
     <Compile Include="Drivers\EPD1i54c.cs" />
     <Compile Include="Drivers\EPD2i13.cs" />
     <Compile Include="Drivers\EPD2i13b.cs" />
+    <Compile Include="Drivers\EPD2i7.cs" />
     <Compile Include="Drivers\EPD2i9.cs" />
     <Compile Include="Drivers\EPD2i9b.cs" />
     <Compile Include="Drivers\EPD4i2b.cs" />

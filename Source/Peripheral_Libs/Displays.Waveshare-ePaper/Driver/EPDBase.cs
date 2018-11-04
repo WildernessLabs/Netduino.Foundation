@@ -37,13 +37,8 @@ namespace Netduino.Foundation.Displays
 
             imageBuffer = new byte[Width * Height / 8];
 
-            for(int x = 0; x < Width; x++)
-            {
-                for(int y = 0; y < Height; y++)
-                {
-                    DrawPixel(x, y, false);
-                }
-            }
+            for (int i = 0; i < Width * Height / 8; i++)
+                imageBuffer[i] = 0xff;
 
             Initialize();
         }
@@ -235,7 +230,7 @@ namespace Netduino.Foundation.Displays
             Refresh();
         }
 
-        public void SetFrameMemory(byte[] image_buffer,
+        public virtual void SetFrameMemory(byte[] image_buffer,
                                 int x,
                                 int y,
                                 int image_width,
@@ -277,7 +272,7 @@ namespace Netduino.Foundation.Displays
             }
         }
 
-        public void SetFrameMemory(byte[] image_buffer)
+        public virtual void SetFrameMemory(byte[] image_buffer)
         {
             SetMemoryArea(0, 0, (int)Width - 1, (int)Height - 1);
             SetMemoryPointer(0, 0);
@@ -289,7 +284,7 @@ namespace Netduino.Foundation.Displays
             }
         }
 
-        public void ClearFrameMemory(byte color)
+        public virtual void ClearFrameMemory(byte color)
         {
             SetMemoryArea(0, 0, (int)Width - 1, (int)Height - 1);
             SetMemoryPointer(0, 0);
@@ -301,7 +296,7 @@ namespace Netduino.Foundation.Displays
             }
         }
 
-        public void DisplayFrame()
+        public virtual void DisplayFrame()
         {
             SendCommand(DISPLAY_UPDATE_CONTROL_2);
             SendData(0xC4);

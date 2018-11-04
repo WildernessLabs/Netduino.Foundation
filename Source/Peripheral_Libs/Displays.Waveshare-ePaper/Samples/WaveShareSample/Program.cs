@@ -11,25 +11,31 @@ namespace WaveShareEPaper
 {
     public class Program
     {
-        static EPDColorBase ePaper;
+        static EPDBase ePaper;
         static GraphicsLibrary display;
         static PushButton button;
         static Led led;
 
         public static void Main()
         {
-            ePaper = new EPD2i13b(chipSelectPin: Pins.GPIO_PIN_D4,
+            ePaper = new EPD2i7(chipSelectPin: Pins.GPIO_PIN_D4,
                 dcPin: Pins.GPIO_PIN_D7,
                 resetPin: Pins.GPIO_PIN_D6,
                 busyPin: Pins.GPIO_PIN_D5,
                 spiModule: SPI.SPI_module.SPI1,
                 speedKHz: 4000);
-            
-       //     ePaper.Clear(false, true);
+
+       /*     var e27 = (EPD2i7)ePaper;
+
+            e27.ClearFrame();
+            e27.DisplayFrame();
+            e27.Show();*/
+
+            ePaper.Clear(false, true);
 
             display = new GraphicsLibrary(ePaper);
 
-            display.DrawLine(10, 10, 94, 202);
+            display.DrawLine(10, 10, 94, 100);
          //   display.Show();
          //   Thread.Sleep(500);
 
@@ -52,17 +58,10 @@ namespace WaveShareEPaper
 
             display.Show();
 
-            // tft.ClearScreen(31);
-            //    ePaper.Refresh();
 
-            /*  display = new GraphicsLibrary(tft);
 
-              led = new Led(Pins.ONBOARD_LED);
-              button = new PushButton(Pins.ONBOARD_BTN, CircuitTerminationType.CommonGround);
-              button.Clicked += Button_Clicked;
 
-              UITest();
-              Thread.Sleep(-1);*/
+              Thread.Sleep(-1);
         }
 
         private static void Button_Clicked(object sender, EventArgs e)
