@@ -39,6 +39,7 @@
     </Compile>
     <Compile Include="DisplayTFTSPIBase.cs" />
     <Compile Include="Drivers\ILI9341.cs" />
+    <Compile Include="Drivers\SSD1331.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Drivers\ILI9163.cs" />
     <Compile Include="Drivers\S6D02A1.cs" />
