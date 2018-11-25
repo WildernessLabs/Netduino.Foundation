@@ -14,6 +14,14 @@ namespace Netduino.Foundation.Displays
             RAMWR = 0x2C
         };
 
+        public enum Rotation
+        {
+            Normal, //zero
+            Rotate_90, //in degrees
+            Rotate_180,
+            Rotate_270,
+        }
+
         #endregion
 
         //these displays typically support 12, 16 & 18 bit but the current driver only supports 16
