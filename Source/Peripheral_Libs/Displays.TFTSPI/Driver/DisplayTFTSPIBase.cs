@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Microsoft.SPOT.Hardware;
 
 namespace Netduino.Foundation.Displays
@@ -262,6 +263,34 @@ namespace Netduino.Foundation.Displays
             spi.Write(data);
         }
 
+        protected void DelayMs(int millseconds)
+        {
+            Thread.Sleep(millseconds);
+        }
+
+        protected void SendCommand(byte command)
+        {
+            dataCommandPort.Write(Command);
+            Write(command);
+        }
+
+        protected void SendData(int data)
+        {
+            SendData((byte)data);
+        }
+
+        protected void SendData(byte data)
+        {
+            dataCommandPort.Write(Data);
+            Write(data);
+        }
+
+        protected void SendData(byte[] data)
+        {
+            dataCommandPort.Write(Data);
+            spi.Write(data);
+        }
+
         /// <summary>
         ///     Directly sets the display to a 16bpp color value
         /// </summary>
@@ -296,15 +325,19 @@ namespace Netduino.Foundation.Displays
             Array.Copy(spiBuffer, 0, spiBuffer, 256, 256);
 
             index = 512;
-            var line = 0;
             var Half = _height / 2;
-            while (++line < Half - 1)
+
+            while(index < spiBuffer.Length - 256)
             {
                 Array.Copy(spiBuffer, 0, spiBuffer, index, 256);
                 index += 256;
             }
 
-            Array.Copy(spiBuffer, 0, spiBuffer, index, spiBuffer.Length / 2);
+            while (index < spiBuffer.Length)
+            {
+                spiBuffer[index++] = high;
+                spiBuffer[index++] = low;
+            }
         }
 
         public void Dispose()
