@@ -14,7 +14,9 @@ namespace Netduino.Foundation.Displays
             uint width, uint height,
             SPI.SPI_module spiModule = SPI.SPI_module.SPI1,
             uint speedKHz = 9500) : base(chipSelectPin, dcPin, resetPin, width, height, spiModule, speedKHz)
-        { }
+        {
+            Initialize();
+        }
 
         protected override void Initialize()
         {

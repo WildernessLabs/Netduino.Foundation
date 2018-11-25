@@ -65,8 +65,6 @@ namespace Netduino.Foundation.Displays
                 Clock_RateKHz: speedKHz);
 
             spi = new SPI(spiConfig);
-
-            Initialize();
         }
 
         /// <summary>
