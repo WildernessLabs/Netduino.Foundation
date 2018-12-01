@@ -17,12 +17,12 @@ namespace Netduino.Foundation.ICs.IOExpanders.MCP23008
 
         protected DigitalInputPort() : base(false) { }
 
-        internal DigitalInputPort(MCP23008 mcp, byte pin, bool enableIntterupt) : base(enableIntterupt)
+        internal DigitalInputPort(MCP23008 mcp, byte pin, bool enableInterrupt) : base(enableInterrupt)
         {
             _mcp = mcp;
             _pin = pin;
 
-            if (enableIntterupt)
+            if (enableInterrupt)
             {
                 // enable the interrupt stuff on the MCP
             }
