@@ -10,7 +10,7 @@ namespace Netduino.Foundation.Displays
         public ST7789(Cpu.Pin chipSelectPin, Cpu.Pin dcPin, Cpu.Pin resetPin,
             uint width, uint height,
             SPI.SPI_module spiModule = SPI.SPI_module.SPI1,
-            uint speedKHz = 9500) : base(chipSelectPin, dcPin, resetPin, width, height, spiModule, speedKHz)
+            uint speedKHz = 9500) : base(chipSelectPin, dcPin, resetPin, width, height, spiModule, speedKHz, true)
         {
             Initialize();
         }
@@ -52,17 +52,6 @@ namespace Netduino.Foundation.Displays
             SetAddressWindow(0, 0, (byte)(_width - 1), (byte)(_height - 1));
 
             dataCommandPort.Write(Data);
-        }
-
-        public void ClearWithoutBuffer(ushort color)
-        {
-            for (int x = 0; x < _width; x++)
-            {
-                for (int y = 0; y < _height; y++)
-                {
-                    spi.Write(new ushort[] { color });
-                }
-            }
         }
 
         public void SetAddressWindow(uint x0, uint y0, uint x1, uint y1)

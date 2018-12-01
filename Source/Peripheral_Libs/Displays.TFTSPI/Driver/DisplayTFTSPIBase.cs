@@ -42,6 +42,8 @@ namespace Netduino.Foundation.Displays
         protected const bool Data = true;
         protected const bool Command = false;
 
+        protected bool clockIdleState = false;
+
         protected abstract void Initialize();
 
         internal DisplayTFTSPIBase()
@@ -52,7 +54,7 @@ namespace Netduino.Foundation.Displays
         public DisplayTFTSPIBase(Cpu.Pin chipSelectPin, Cpu.Pin dcPin, Cpu.Pin resetPin,
             uint width, uint height,
             SPI.SPI_module spiModule = SPI.SPI_module.SPI1,
-            uint speedKHz = 9500)
+            uint speedKHz = 9500, bool idleClockState = false)
         {
             _width = width;
             _height = height;
@@ -68,10 +70,10 @@ namespace Netduino.Foundation.Displays
                 ChipSelect_ActiveState: false,
                 ChipSelect_SetupTime: 0,
                 ChipSelect_HoldTime: 0,
-                Clock_IdleState: false,
+                Clock_IdleState: idleClockState,
                 Clock_Edge: true,
                 Clock_RateKHz: speedKHz);
-
+            
             spi = new SPI(spiConfig);
         }
 
@@ -343,6 +345,21 @@ namespace Netduino.Foundation.Displays
             {
                 spiBuffer[index++] = high;
                 spiBuffer[index++] = low;
+            }
+        }
+
+        public void ClearWithoutFullScreenBuffer(ushort color)
+        {
+            var buffer = new ushort[_width];
+
+            for (int x = 0; x < _width; x++)
+            {
+                buffer[x] = color;
+            }
+
+            for (int y = 0; y < _height; y++)
+            {
+                spi.Write(buffer);
             }
         }
 
