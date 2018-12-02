@@ -1,7 +1,7 @@
 using System;
 using Microsoft.SPOT;
 using System.Threading;
-using Netduino.Foundation.Sensors.Motion;
+using Netduino.Foundation.Sensors.Distance;
 using SecretLabs.NETMF.Hardware.Netduino;
 
 namespace HCSR04Sample
@@ -12,14 +12,20 @@ namespace HCSR04Sample
         {
             //OutputPort p = new OutputPort(Pins.ONBOARD_LED, true);
             HCSR04 mUS = new HCSR04(Pins.GPIO_PIN_D5, Pins.GPIO_PIN_D4);
+            //mUS.DistanceDetected += OnDistanceDetected;
 
             while (true)
             {
-                //  Debug.Print(mUS.MeasureDistance().ToString());
                 mUS.MeasureDistance();
                 Thread.Sleep(500);
-                Debug.Print(mUS.DistanceOutput.ToString());
             }
+
+            //Thread.Sleep(Timeout.Infinite);
+        }
+
+        private static void OnDistanceDetected(object sender, DistanceEventArgs e)
+        {
+            Debug.Print(e.DistanceMearurement.ToString());
         }
     }
 }

@@ -2,13 +2,17 @@ using System;
 using System.Threading;
 using Microsoft.SPOT.Hardware;
 using Netduino.Foundation.Sensors.Proximity;
+using Microsoft.SPOT;
 
-namespace Netduino.Foundation.Sensors.Motion
+namespace Netduino.Foundation.Sensors.Distance
 {
     public class HCSR04 : IRangeFinder
     {
         #region Properties
+
         public float DistanceOutput { get; private set; } = -1;
+
+        public event DistanceDetectedEventHandler DistanceDetected = delegate { };
 
         #endregion
 
@@ -26,7 +30,7 @@ namespace Netduino.Foundation.Sensors.Motion
         protected InterruptPort _echoPort;
 
         protected long _tickStart;
-   
+
         #endregion
 
         #region Constructors
@@ -49,11 +53,11 @@ namespace Netduino.Foundation.Sensors.Motion
             {
                 throw new Exception("Invalid pin for the HCSR04.");
             }
-            
+
             _triggerPort = new OutputPort(triggerPin, false);
 
             _echoPort = new InterruptPort(echoPin, false, Port.ResistorMode.Disabled, Port.InterruptMode.InterruptEdgeBoth);
-            _echoPort.OnInterrupt += _echoPort_OnInterrupt;
+            _echoPort.OnInterrupt += EchoPortOnInterrupt;
         }
 
         #endregion
@@ -72,9 +76,9 @@ namespace Netduino.Foundation.Sensors.Motion
             _triggerPort.Write(false);
         }
 
-        void _echoPort_OnInterrupt(uint data1, uint data2, DateTime time)
+        void EchoPortOnInterrupt(uint data1, uint data2, DateTime time)
         {
-            if(data2 == 1) //echo is high
+            if (data2 == 1) //echo is high
             {
                 _tickStart = time.Ticks;
                 return;
@@ -89,6 +93,14 @@ namespace Netduino.Foundation.Sensors.Motion
             // x10 for ticks to micro sec
             // divide by 58 for cm
             DistanceOutput = elapsed / 580f;
+
+            this.RaiseDistanceDetected();
+        }
+
+        protected virtual void RaiseDistanceDetected()
+        {
+            Debug.Print("RaiseDistanceDetected: " + DistanceOutput);
+            this.DistanceDetected(this, new DistanceEventArgs(DistanceOutput));
         }
     }
 }
