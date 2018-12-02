@@ -5,6 +5,8 @@ namespace Netduino.Foundation.Sensors.Proximity
 {
     public interface IRangeFinder
     {
-        float DistanceOutput { get; }
+        float CurrentDistance { get; }
+        float MinimumDistance { get; }
+        float MaximumDistance { get; }
     }
 }
