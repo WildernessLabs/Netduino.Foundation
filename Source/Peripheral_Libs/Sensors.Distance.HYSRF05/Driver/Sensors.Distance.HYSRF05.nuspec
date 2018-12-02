@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Netduino.Foundation.HYSRF05</id>
+    <title>WildernessLabs.Netduino.Foundation.Sensors.Distance.HYSRF05</title>
+    <version>$version$</version>
+    <authors>Jorge Ramirez, Adrian Stevens</authors>
+    <owners>Wilderness Labs</owners>
+    <licenseUrl>https://github.com/WildernessLabs/Netduino.Foundation/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/WildernessLabs/Netduino.Foundation</projectUrl>
+<!--    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>HYSRF05 distance sensor driver for Netduino.Foundation</description>
+<!--    <releaseNotes>First release on Nuget.</releaseNotes> -->
+    <copyright>Copyright 2018 Wilderness Labs</copyright>
+    <tags>NETMF Netduino HYSRF05</tags>
+    <dependencies>
+        <dependency id="Netduino.Foundation" version="0.25" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Netduino.Foundation.Sensors.Distance.HYSRF05.*" target="lib\netmf43" />
+    <file src="bin\Release\le\Netduino.Foundation.Sensors.Distance.HYSRF05.*" target="lib\netmf43\le" />
+    <file src="bin\Release\be\Netduino.Foundation.Sensors.Distance.HYSRF05.*" target="lib\netmf43\be" />
+  </files>
+</package>
