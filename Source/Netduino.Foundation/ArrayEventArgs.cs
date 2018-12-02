@@ -10,7 +10,7 @@ namespace Netduino.Foundation
 
         public ArrayEventArgs(int itemIndex, object item)
         {
-            this.ItemIndex = ItemIndex;
+            this.ItemIndex = itemIndex;
             this.Item = item;
         }        
     }
