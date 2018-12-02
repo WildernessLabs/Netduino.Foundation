@@ -2,7 +2,6 @@ using System;
 using System.Threading;
 using Microsoft.SPOT.Hardware;
 using Netduino.Foundation.Sensors.Proximity;
-using Microsoft.SPOT;
 
 namespace Netduino.Foundation.Sensors.Distance
 {
@@ -10,7 +9,10 @@ namespace Netduino.Foundation.Sensors.Distance
     {
         #region Properties
 
-        public float DistanceOutput { get; private set; } = -1;
+        public float CurrentDistance { get; private set; } = -1;
+
+        public float MinimumDistance => 2; //in cm
+        public float MaximumDistance => 400; //in cm
 
         public event DistanceDetectedEventHandler DistanceDetected = delegate { };
 
@@ -64,7 +66,7 @@ namespace Netduino.Foundation.Sensors.Distance
 
         public void MeasureDistance()
         {
-            DistanceOutput = -1;
+            CurrentDistance = -1;
 
             // Raise trigger port to high for 10+ micro-seconds
             _triggerPort.Write(true);
@@ -84,23 +86,18 @@ namespace Netduino.Foundation.Sensors.Distance
                 return;
             }
 
-            Microsoft.SPOT.Debug.Print("Echo interrupt = data1: " + data1 + " data2: " + data2);
-
             // Calculate Difference
             float elapsed = time.Ticks - _tickStart;
 
             // Return elapsed ticks
             // x10 for ticks to micro sec
-            // divide by 58 for cm
-            DistanceOutput = elapsed / 580f;
+            // divide by 58 for cm (assume speed of sound is 340m/s)
+            CurrentDistance = elapsed / 580f;
 
-            this.RaiseDistanceDetected();
-        }
+            if (CurrentDistance < MinimumDistance || CurrentDistance > MaximumDistance)
+                CurrentDistance = -1;
 
-        protected virtual void RaiseDistanceDetected()
-        {
-            Debug.Print("RaiseDistanceDetected: " + DistanceOutput);
-            this.DistanceDetected(this, new DistanceEventArgs(DistanceOutput));
+            this.DistanceDetected(this, new DistanceEventArgs(CurrentDistance));
         }
     }
 }
