@@ -349,6 +349,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HCSR04Sample", "Peripheral_
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Distance.HCSR04", "Peripheral_Libs\Sensors.Distance.HCSR04\Driver\Sensors.Distance.HCSR04\Sensors.Distance.HCSR04.csproj", "{6EC84832-B51D-46FA-998D-629D0FA7EBD6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Distance.HYSRF05", "Sensors.Distance.HYSRF05", "{CB33790F-55F6-40B6-946A-549C9C4A41C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Distance.HYSRF05", "Peripheral_Libs\Sensors.Distance.HYSRF05\Driver\Sensors.Distance.HYSRF05\Sensors.Distance.HYSRF05.csproj", "{F0908829-F872-409C-82DB-BE7C7D97B795}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -2363,6 +2367,18 @@ Global
 		{6EC84832-B51D-46FA-998D-629D0FA7EBD6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{6EC84832-B51D-46FA-998D-629D0FA7EBD6}.Release|x86.ActiveCfg = Release|Any CPU
 		{6EC84832-B51D-46FA-998D-629D0FA7EBD6}.Release|x86.Build.0 = Release|Any CPU
+		{F0908829-F872-409C-82DB-BE7C7D97B795}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0908829-F872-409C-82DB-BE7C7D97B795}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0908829-F872-409C-82DB-BE7C7D97B795}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F0908829-F872-409C-82DB-BE7C7D97B795}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F0908829-F872-409C-82DB-BE7C7D97B795}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F0908829-F872-409C-82DB-BE7C7D97B795}.Debug|x86.Build.0 = Debug|Any CPU
+		{F0908829-F872-409C-82DB-BE7C7D97B795}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0908829-F872-409C-82DB-BE7C7D97B795}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0908829-F872-409C-82DB-BE7C7D97B795}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F0908829-F872-409C-82DB-BE7C7D97B795}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F0908829-F872-409C-82DB-BE7C7D97B795}.Release|x86.ActiveCfg = Release|Any CPU
+		{F0908829-F872-409C-82DB-BE7C7D97B795}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -2495,5 +2511,6 @@ Global
 		{218A04C1-36A1-41DB-863A-CAD539CBD617} = {24A64804-C477-4F1D-9261-8DF856F0BC79}
 		{2ECC56CE-B798-49E8-BDB1-0736031806C4} = {DBA94AC2-4A5C-42B8-9A2E-AB6AF3868CBA}
 		{6EC84832-B51D-46FA-998D-629D0FA7EBD6} = {DBA94AC2-4A5C-42B8-9A2E-AB6AF3868CBA}
+		{F0908829-F872-409C-82DB-BE7C7D97B795} = {CB33790F-55F6-40B6-946A-549C9C4A41C1}
 	EndGlobalSection
 EndGlobal
