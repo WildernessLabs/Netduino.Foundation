@@ -70,6 +70,7 @@
     <Compile Include="LEDs\TypicalForwardVoltage.cs" />
     <Compile Include="Motors\HBridgeMotor.cs" />
     <Compile Include="Motors\IDCMotor.cs" />
+    <Compile Include="Sensors\Distance\DistanceEventArgs.cs" />
     <Compile Include="Sensors\Switches\SpdtSwitch.cs" />
     <Compile Include="Speakers\IToneGenerator.cs" />
     <Compile Include="Speakers\PiezoSpeaker.cs" />
@@ -97,7 +98,7 @@
     <Compile Include="Sensors\Light\GenericAmbientLightSensor.cs" />
     <Compile Include="Sensors\Light\IAmbientLightSensor.cs" />
     <Compile Include="Sensors\Motion\IAccelerometer.cs" />
-    <Compile Include="Sensors\Proximity\IRangeFinder.cs" />
+    <Compile Include="Sensors\Distance\IRangeFinder.cs" />
     <Compile Include="Sensors\SensorFloatEventArgs.cs" />
     <Compile Include="Sensors\SensorVectorEventArgs.cs" />
     <Compile Include="Sensors\Spatial\EulerAngles.cs" />
