@@ -5,11 +5,11 @@ namespace Netduino.Foundation.Sensors.Distance
 {
     public class DistanceEventArgs : EventArgs
     {
-        public float DistanceMearurement { get; set; }
+        public float Distance { get; set; }
 
-        public DistanceEventArgs(float distanceMearurement)
+        public DistanceEventArgs(float distance)
         {
-            DistanceMearurement = distanceMearurement;
+            Distance = distance;
         }
     }
 

@@ -1,7 +1,6 @@
 using System;
 using System.Threading;
 using Microsoft.SPOT.Hardware;
-using Netduino.Foundation.Sensors.Proximity;
 
 namespace Netduino.Foundation.Sensors.Distance
 {
@@ -19,7 +18,6 @@ namespace Netduino.Foundation.Sensors.Distance
         #endregion
 
         #region Member variables / fields
-
 
         /// <summary>
         ///     Trigger Pin.

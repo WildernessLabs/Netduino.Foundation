@@ -1,7 +1,7 @@
 using System;
 using Microsoft.SPOT;
 
-namespace Netduino.Foundation.Sensors.Proximity
+namespace Netduino.Foundation.Sensors.Distance
 {
     public interface IRangeFinder
     {
