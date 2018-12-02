@@ -15,14 +15,21 @@ namespace HCSR04Sample
 
             while (true)
             {
-                //p.Write(true);
-                //Thread.Sleep(300);
-                //p.Write(false);
-                //Thread.Sleep(300);
-
-              //  Debug.Print(mUS.MeasureDistance().ToString());
-                Thread.Sleep(1000);
+                //  Debug.Print(mUS.MeasureDistance().ToString());
+                mUS.MeasureDistance();
+                Thread.Sleep(500);
+                Debug.Print(mUS.DistanceOutput.ToString());
             }
         }
+    }
+}
+
+namespace System.Diagnostics
+{
+    public enum DebuggerBrowsableState
+    {
+        Never = 0,
+        Collapsed = 2,
+        RootHidden = 3
     }
 }
