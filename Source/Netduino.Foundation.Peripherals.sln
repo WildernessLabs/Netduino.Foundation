@@ -347,11 +347,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Distance.HCSR04", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HCSR04Sample", "Peripheral_Libs\Sensors.Distance.HCSR04\Samples\HCSR04Sample\HCSR04Sample.csproj", "{2ECC56CE-B798-49E8-BDB1-0736031806C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Distance.HCSR04", "Peripheral_Libs\Sensors.Distance.HCSR04\Driver\Sensors.Distance.HCSR04\Sensors.Distance.HCSR04.csproj", "{6EC84832-B51D-46FA-998D-629D0FA7EBD6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Distance.HCSR04", "Peripheral_Libs\Sensors.Distance.HCSR04\Driver\Sensors.Distance.HCSR04.csproj", "{6EC84832-B51D-46FA-998D-629D0FA7EBD6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Distance.HYSRF05", "Sensors.Distance.HYSRF05", "{CB33790F-55F6-40B6-946A-549C9C4A41C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Distance.HYSRF05", "Peripheral_Libs\Sensors.Distance.HYSRF05\Driver\Sensors.Distance.HYSRF05\Sensors.Distance.HYSRF05.csproj", "{F0908829-F872-409C-82DB-BE7C7D97B795}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Distance.HYSRF05", "Peripheral_Libs\Sensors.Distance.HYSRF05\Driver\Sensors.Distance.HYSRF05.csproj", "{F0908829-F872-409C-82DB-BE7C7D97B795}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

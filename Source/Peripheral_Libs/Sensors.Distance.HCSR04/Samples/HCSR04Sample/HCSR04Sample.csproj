@@ -48,7 +48,7 @@
       <Project>{BBF69390-4C62-43A3-8F2A-0EEC579F21F0}</Project>
       <Name>Netduino.Foundation</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Driver\Sensors.Distance.HCSR04\Sensors.Distance.HCSR04.csproj">
+    <ProjectReference Include="..\..\Driver\Sensors.Distance.HCSR04.csproj">
       <Project>{6EC84832-B51D-46FA-998D-629D0FA7EBD6}</Project>
       <Name>Sensors.Distance.HCSR04</Name>
     </ProjectReference>
