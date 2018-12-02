@@ -10,23 +10,20 @@ namespace HCSR04Sample
     {
         public static void Main()
         {
-            //OutputPort p = new OutputPort(Pins.ONBOARD_LED, true);
-            HCSR04 mUS = new HCSR04(Pins.GPIO_PIN_D5, Pins.GPIO_PIN_D4);
-            //mUS.DistanceDetected += OnDistanceDetected;
+            var  _HCSR04 = new HCSR04(Pins.GPIO_PIN_D5, Pins.GPIO_PIN_D4);
+            //_HCSR04.DistanceDetected += OnDistanceDetected; // <- Event sample
 
             while (true)
             {
-                mUS.MeasureDistance();
+                _HCSR04.MeasureDistance();
                 Thread.Sleep(500);
             }
-
-            //Thread.Sleep(Timeout.Infinite);
         }
 
-        private static void OnDistanceDetected(object sender, DistanceEventArgs e)
-        {
-            Debug.Print(e.DistanceMearurement.ToString());
-        }
+        //private static void OnDistanceDetected(object sender, DistanceEventArgs e) // <- Event sample
+        //{
+        //    Debug.Print(e.Distance.ToString());
+        //}
     }
 }
 
