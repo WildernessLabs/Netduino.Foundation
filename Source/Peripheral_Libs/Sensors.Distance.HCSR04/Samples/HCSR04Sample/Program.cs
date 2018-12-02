@@ -20,7 +20,7 @@ namespace HCSR04Sample
                 //p.Write(false);
                 //Thread.Sleep(300);
 
-                Debug.Print(mUS.Ping().ToString());
+              //  Debug.Print(mUS.MeasureDistance().ToString());
                 Thread.Sleep(1000);
             }
         }
