@@ -194,6 +194,32 @@ namespace Netduino.Foundation.Displays
             }
         }
 
+        /**************************************************************************/
+        //
+        //     Draw a triangle with no fill color
+        //     x0 - Vertex #0 x coordinate
+        //     y0 - Vertex #0 y coordinate
+        //     x1 - Vertex #1 x coordinate
+        //     y1 - Vertex #1 y coordinate
+        //     x2 - Vertex #2 x coordinate
+        //     y2 - Vertex #2 y coordinate
+        //     color - triangle color
+        //     filled - is the triangle solid 
+        /**************************************************************************/
+        public void DrawTriangle(int x0, int y0,
+                int x1, int y1, int x2, int y2, Color color)
+        {
+            DrawLine(x0, y0, x1, y1, color);
+            DrawLine(x1, y1, x2, y2, color);
+            DrawLine(x2, y2, x0, y0, color);
+        }
+
+        public void DrawTriangle(int x0, int y0,
+        int x1, int y1, int x2, int y2, bool colored)
+        {
+            DrawTriangle(x0, y0, x1, y1, x2, y2, colored ? Color.White : Color.Black);
+        }
+
         /// <summary>
         ///     Draw a dircle.
         /// </summary>
