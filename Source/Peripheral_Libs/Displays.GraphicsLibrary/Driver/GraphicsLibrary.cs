@@ -269,7 +269,7 @@ namespace Netduino.Foundation.Displays
                 else if (x1 > len) len = x1;
                 if (x2 < x) x = x2;
                 else if (x2 > len) len = x2;
-                DrawLine(x, y0, x, len - x + 1, color);
+                DrawHorizontalLine(x, y0, len - x + 1, color);
                 return;
             }
 
@@ -293,7 +293,7 @@ namespace Netduino.Foundation.Displays
 
                 if (a > b)
                     Swap(ref a, ref b);
-                DrawLine(a, y, a, b - a + 1, color);
+                DrawHorizontalLine(a, y, b - a + 1, color);
             }
 
             // For lower part of triangle, find scanline crossings for segments
@@ -308,7 +308,7 @@ namespace Netduino.Foundation.Displays
                 sb += dx02;
 
                 if (a > b) Swap(ref a, ref b);
-                DrawLine(a, y, a, b - a + 1, color);
+                DrawHorizontalLine(a, y, b - a + 1, color);
             }
         }
 
