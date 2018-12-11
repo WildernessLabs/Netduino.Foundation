@@ -22,7 +22,7 @@ namespace Netduino.Foundation.Displays
         protected OutputPort resetPort;
         protected SPI spi;
 
-        protected readonly byte[] spiBuffer;
+        protected byte[] spiBuffer;
 
         public PCD8544(Cpu.Pin chipSelectPin, Cpu.Pin dcPin, Cpu.Pin resetPin,
             SPI.SPI_module spiModule = SPI.SPI_module.SPI1,
@@ -32,17 +32,6 @@ namespace Netduino.Foundation.Displays
 
             dataCommandPort = new OutputPort(dcPin, true);
             resetPort = new OutputPort(resetPin, true);
-
-          /*  var spiConfig = new SPI.Configuration(
-                chipSelectPin,          // chip select port
-                false,                  // IC is accessed when chip select is low
-                0,                      // setup time 1 ms
-                0,                      // hold chip select 1 ms after transfer
-                false,                  // clock line is low if device is not selected
-                true,                   // data is sampled at leading edge of clock
-                speedKHz,               // clockrate is 4 kHz
-                spiModule               // use first SPI bus
-                );*/
 
             var spiConfig = new SPI.Configuration(
                 SPI_mod: spiModule,
@@ -59,7 +48,7 @@ namespace Netduino.Foundation.Displays
             Initialize();
         }
 
-        private void Initialize ()
+        private void Initialize()
         {
             resetPort.Write(false);
             resetPort.Write(true);
@@ -84,14 +73,13 @@ namespace Netduino.Foundation.Displays
             Clear();
             Show();
         }
-   
-
+        
         public override void Clear(bool updateDisplay = false)
         {
+            spiBuffer = new byte[Width * Height / 8];
+
             dataCommandPort.Write(false);
-
             spi.Write(new byte[] { 0x80, 0x40 });
-
             dataCommandPort.Write(true);
         }
 
