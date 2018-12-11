@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Displays.PCD8544")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Netduino.Foundation.Displays.PCD8544")]
+[assembly: AssemblyDescription("PCD8544 LCD display driver for the Netduino.Foundation library.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Displays.PCD8544")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCompany("WildernessLabs")]
+[assembly: AssemblyProduct("Netduino.Foundation.Displays.PCD8544")]
+[assembly: AssemblyCopyright("Copyright © 2018 Wilderness Labs")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
