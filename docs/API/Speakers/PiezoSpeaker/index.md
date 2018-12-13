@@ -8,6 +8,8 @@ subtitle: Simple piezo speaker.
 
 The PiezoSpeaker class represents a simple piezo speaker that can be used to generate tones across a range of frequencies. They typically perform well between 1-5kHz but may go as high as 100kHz. Implements [IToneGenerator](../IToneGenerator).
 
+The positive pin of the piezo speaker connects to a PWM capable pin on the Netduino and the negative pin connects to common/ground. A resistor can be placed in-line to reduce volume.
+
 ![](Piezo_Speakers.png)
 
 # API
@@ -16,7 +18,7 @@ The PiezoSpeaker class represents a simple piezo speaker that can be used to gen
 
 #### `public PiezoSpeaker(H.Cpu.PWMChannel pwmChannel)`
 
-Instantiates a new `PiezoSpeaker` on the specified `PWMChannel.
+Instantiates a new `PiezoSpeaker` on the specified `PWMChannel`.
 
 ## Public Methods
 
