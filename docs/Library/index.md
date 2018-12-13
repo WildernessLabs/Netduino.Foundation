@@ -94,6 +94,8 @@ Netduino.Foundation has two sets of peripheral drivers; the ones listed in the f
 
 | Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
+| [HCSR04](/Library/Sensors/Distance/HCSR04) | HCSR04 distance sensor. |
+| [HYSRF05](/Library/Sensors/Distance/HYSRF05) | HYSRF05 distance sensor. |
 | SharpGP2D12               | In Development |
 
 ### GPS Sensors & Libraries
