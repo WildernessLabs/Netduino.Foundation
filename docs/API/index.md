@@ -42,6 +42,7 @@ See full peripheral list on the [Library](/Library) page.
 
 | Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
+| [Led](/API/LEDs/Led)            | Simple LED. |
 | [PwmLed](/API/LEDs/PwmLed)            | Pulse-Width-Modulation powered LED. |
 | [RgbPwmLed](/API/LEDs/RgbPwmLed)      | Pulse-Width-Modulation powered RGB LED. |
 
