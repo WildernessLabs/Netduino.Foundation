@@ -22,6 +22,7 @@ Each core peripheral includes a sample illustrating its use.
 
 | Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
+| [Led](/API/LEDs/Led)            | Simple LED. |
 | [PwmLed](/API/LEDs/PwmLed)            | Pulse-Width-Modulation powered LED. |
 | [RgbPwmLed](/API/LEDs/RgbPwmLed)      | Pulse-Width-Modulation powered RGB LED. |
 

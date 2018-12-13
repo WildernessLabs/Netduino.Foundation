@@ -13,6 +13,7 @@ Netduino.Foundation has two sets of peripheral drivers; the ones listed in the f
 
 | Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
+| [Led](/API/LEDs/Led)            | Simple LED. |
 | [PwmLed](/API/LEDs/PwmLed)            | Pulse-Width-Modulation powered LED. |
 | [RgbPwmLed](/API/LEDs/RgbPwmLed)      | Pulse-Width-Modulation powered RGB LED. |
 
