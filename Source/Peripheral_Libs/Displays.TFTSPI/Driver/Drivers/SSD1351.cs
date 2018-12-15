@@ -35,10 +35,23 @@ namespace Netduino.Foundation.Displays
             SendData(0xF1);
 
             SendCommand(CMD_MUXRATIO);
-            SendData(127);
+            SendData(0x7F);
+
+            SendCommand(CMD_SETCOLUMN); //column address
+            SendData(new byte[] { 0x00, (byte)(_width - 1) });
+
+            SendCommand(CMD_SETROW); //row address
+            SendData(new byte[] { 0x00, (byte)(_height - 1) });
+
+            SendCommand(CMD_SETREMAP);
+            SendData(new byte[] { 0x70, 0x04 }); //change 2nd value to 0x04 for BGR
+
 
             SendCommand(CMD_DISPLAYOFFSET);
-            SendData(0x0);
+            if (Height == 96)
+                SendData(96);
+            else
+                SendData(0x0);
 
             SendCommand(CMD_SETGPIO);
             SendData(0x0);
@@ -86,6 +99,11 @@ namespace Netduino.Foundation.Displays
             SendCommand(CMD_WRITERAM);
         }
 
+        private void InvertDisplay (bool invert)
+        {
+            SendCommand(invert ? CMD_INVERTDISPLAY : CMD_NORMALDISPLAY);
+        }
+
         static byte CMD_SETCOLUMN      = 0x15; ///< See datasheet
         static byte CMD_SETROW         = 0x75; ///< See datasheet
         static byte CMD_WRITERAM       = 0x5C; ///< See datasheet
@@ -116,7 +134,7 @@ namespace Netduino.Foundation.Displays
         static byte CMD_COMMANDLOCK    = 0xFD; ///< See datasheet
         static byte CMD_HORIZSCROLL    = 0x96; ///< Not currently used
         static byte CMD_STOPSCROLL     = 0x9E; ///< Not currently used
-        static byte CMD_STARTSCROLL = 0x9F; ///< Not currently used
+        static byte CMD_STARTSCROLL    = 0x9F; ///< Not currently used
 
     }
 }
