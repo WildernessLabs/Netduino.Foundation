@@ -4,11 +4,11 @@ title: SSD1306
 subtitle: Hardware Driver for SSD1306 Family of Displays
 ---
 
-OLED displays based upon the SSD1306 chip set are small, high contract display.  These displays generate their own light and so no backlight is required.
+OLED displays based upon the SSD1306 chip set are small, high contrast, single color displays. These displays generate their own light; no backlight is required.
 
 ## Purchasing
 
-There are a number of breakout board available using these displays.  This driver has been tested with the following:
+There are a number of breakout board available using these displays. This driver has been tested with the following:
 
 * [Diymall 0.96" 128x64 pixel OLED Display](https://www.amazon.co.uk/gp/product/B0156CO67O/ref=oh_aui_detailpage_o01_s00?ie=UTF8&psc=1)
 * [HALJIA 0.91 128x32 pixel OLED Display](https://www.amazon.co.uk/gp/product/B071Z18R1M/ref=oh_aui_detailpage_o03_s00?ie=UTF8&psc=1)
@@ -17,7 +17,7 @@ Board are also available from [Adafruit](www.adafruit.com).
 
 ## Hardware
 
-The OLED displays are available with a SPI or I2C interfaces.  Wiring for the I2C interface is as follows:
+The OLED displays are available with a SPI or I2C interfaces. The driver currently only supports I2C displays. Wiring for the I2C interface is as follows:
 
 ![OLED Display on Breadboard](OLEDOnBreadboard.png)
 
@@ -90,14 +90,16 @@ Display types supported by this class.
 
 | Display Type | Description / Supported Displays |
 |--------------|----------------------------------|
-| OLED128x64   | 128x64 pixels (Diymall)          |
+| OLED128x64   | 128x64 pixels |
 | OLED128x32   | 128x32 pixels |
+| OLED96x64    |  96x64 pixels |
+| OLED96x16    |  96x16 pixels |
 
 ### Properties
 
 #### `byte Contrast`
 
-Change the contrast of the display.  A value of `0` will dim the display.
+Change the contrast of the display. A value of `0` will dim the display.
 
 #### `bool IgnoreOutOfBoundsPixels`
 
@@ -109,7 +111,7 @@ Setting this property to `true` will invert the display immediately.  A value of
 
 #### `bool Sleep`
 
-Put the display to sleep (`true`) or wake up the display (`true`).  This reduces the amount of power that the display consumes.
+Put the display to sleep (`true`) or wake up the display (`true`). This reduces the amount of power that the display consumes.
 
 ### Constructors
 

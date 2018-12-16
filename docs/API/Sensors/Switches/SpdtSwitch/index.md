@@ -6,7 +6,7 @@ subtitle: A single pole, double throw switch sensor.
 
 # Info
 
-Represents a simple, two position, Single-Throw-Dual-Throw (SPDT) switch that closes a circut to either ground/common or high depending on position.
+Represents a simple, two position, Single-Pole-Dual-Throw (SPDT) switch that closes a circut to either ground/common or high depending on position.
 
 ![](SPDT_Switch.png)
 
