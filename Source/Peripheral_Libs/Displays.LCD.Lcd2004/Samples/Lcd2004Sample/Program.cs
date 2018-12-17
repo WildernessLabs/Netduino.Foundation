@@ -1,5 +1,3 @@
-using System;
-using Microsoft.SPOT;
 using System.Threading;
 using Netduino.Foundation.Displays.LCD;
 using N = SecretLabs.NETMF.Hardware.Netduino;
@@ -12,7 +10,16 @@ namespace SunStar2004aSample
     {
         public static void Main()
         {
-            ITextDisplay lcd = new Lcd2004(N.Pins.GPIO_PIN_D13, N.Pins.GPIO_PIN_D12, N.Pins.GPIO_PIN_D11, N.Pins.GPIO_PIN_D10, N.Pins.GPIO_PIN_D9, N.Pins.GPIO_PIN_D8);
+            ITextDisplay lcd = new Lcd2004
+            (
+                V0: N.PWMChannels.PWM_PIN_D5,
+                RS: N.Pins.GPIO_PIN_D8,
+                E: N.Pins.GPIO_PIN_D9,
+                D4: N.Pins.GPIO_PIN_D10,
+                D5: N.Pins.GPIO_PIN_D11,
+                D6: N.Pins.GPIO_PIN_D12,
+                D7: N.Pins.GPIO_PIN_D13
+            );
             lcd.WriteLine("Wilderness Rabs", 0);
             lcd.WriteLine("Powering", 1);
             lcd.WriteLine("Connected", 2);
