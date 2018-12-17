@@ -18,7 +18,7 @@ The HCSR04 sensor is available from Sparkfun:
 
 The HCSR04 sensor requires only four connections: power, ground, echo and trigger:
 
-![HCSR04 and Netduino](ParallaxPIROnBreadboard.png)
+![HCSR04 and Netduino](HCSR04-Circuit.png)
 
 ## Software
 
@@ -36,7 +36,7 @@ namespace HCSR04Test
     {
         public static void Main()
         {
-            var  _HCSR04 = new HCSR04(Pins.GPIO_PIN_D12, Pins.GPIO_PIN_D11);
+            var  _HCSR04 = new HCSR04(Pins.GPIO_PIN_D10, Pins.GPIO_PIN_D9);
             _HCSR04.DistanceDetected += OnDistanceDetected;
 
             while (true)
@@ -66,7 +66,7 @@ Create a new `HCSR04` object with the sensor connected to the trigger `OutputPor
 
 #### `public float CurrentDistance { get; private set; }`
 
-Returns the distance after calling MeasureDistance method
+Returns the distance after calling `MeasureDistance` method
 
 ### Methods
 
@@ -78,4 +78,4 @@ Makes the HCSR04 sensor to send a ultrasonic distance, and if detects a rebound 
 
 #### `public event DistanceDetectedEventHandler DistanceDetected`
 
-This is raised when the sensor picks up an obstacle within its maximum distance range.
+The event raised when the sensor picks up an obstacle within its maximum distance range.

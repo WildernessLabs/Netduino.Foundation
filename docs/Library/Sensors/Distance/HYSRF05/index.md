@@ -6,19 +6,19 @@ subtitle: Distance Sensor.
 
 # HYSRF05
 
-The HYSRF05 ultrasonic sensor uses sonar to determine distance to an object like bats do. It offers excellent non-contact range detection with high accuracy and stable readings in an easy-to-use package.
+The HY-SRF05 ultrasonic sensor uses sonar to determine distance to an object like bats do. It offers excellent non-contact range detection with high accuracy and stable readings in an easy-to-use package.
 
 ## Purchasing
 
 The HYSRF05 sensor is available from Sparkfun:
 
-* [Ultrasonic Sensor - HC-SR04](https://www.sparkfun.com/products/13959)
+* [Ultrasonic Sensor - HY-SRF05](https://www.banggood.com/5Pcs-HY-SRF05-Ultrasonic-Distance-Sensor-Module-Measuring-Sensor-Module-p-1052102.html?gmcCountry=CA&currency=CAD&createTmp=1&utm_source=googleshopping&utm_medium=cpc_elc&utm_content=frank&utm_campaign=pla-mix-ca-pc-0630&gclid=CjwKCAiAjNjgBRAgEiwAGLlf2gWlxvQ8KUuy24vjU37IDVTcLQTqFRpcEy3KyXbeOhK8cPH2UP9SjRoCIdYQAvD_BwE&cur_warehouse=CN)
 
 ## Hardware
 
 The HYSRF05 sensor has 5 connections, but you will only need to connect: power, ground, echo and trigger:
 
-![HYSRF05 and Netduino](ParallaxPIROnBreadboard.png)
+![HYSRF05 and Netduino](HYSRF05-Circuit.png)
 
 ## Software
 
@@ -66,7 +66,7 @@ Create a new `HYSRF05` object with the sensor connected to the trigger `OutputPo
 
 #### `public float CurrentDistance { get; private set; }`
 
-Returns the distance after calling MeasureDistance method
+Returns the distance after calling `MeasureDistance` method
 
 ### Methods
 
@@ -78,4 +78,4 @@ Makes the HYSRF05 sensor to send a ultrasonic distance, and if detects a rebound
 
 #### `public event DistanceDetectedEventHandler DistanceDetected`
 
-This is raised when the sensor picks up an obstacle within its maximum distance range.
+The event is raised when the sensor picks up an obstacle within its maximum distance range.
