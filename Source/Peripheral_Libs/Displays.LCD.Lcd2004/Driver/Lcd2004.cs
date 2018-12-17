@@ -17,6 +17,8 @@ namespace Netduino.Foundation.Displays.LCD
 {
     public class Lcd2004 : ITextDisplay
     {
+        #region Member variables / fields
+
         private byte LCD_LINE_1 = 0x80; // # LCD RAM address for the 1st line
         private byte LCD_LINE_2 = 0xC0; // # LCD RAM address for the 2nd line
         private byte LCD_LINE_3 = 0x94; // # LCD RAM address for the 3rd line
@@ -32,14 +34,38 @@ namespace Netduino.Foundation.Displays.LCD
         protected IDigitalOutputPort LCD_D6;
         protected IDigitalOutputPort LCD_D7;
         protected IDigitalOutputPort LED_ON;
+        protected H.PWM LCD_V0 = null;
 
         private bool LCD_INSTRUCTION = false;
         private bool LCD_DATA = true;
         private static object _lock = new object();
 
+        #endregion
+
+        #region Properties
+
         public TextDisplayConfig DisplayConfig { get; protected set; }
 
-        public Lcd2004(H.Cpu.Pin RS, H.Cpu.Pin E, H.Cpu.Pin D4, H.Cpu.Pin D5, H.Cpu.Pin D6, H.Cpu.Pin D7)
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Default constructor is private to prevent it being used.
+        /// </summary>
+        private Lcd2004() { }
+
+        /// <summary>
+        /// Creates a new Lcd2004 object connected directly to the Netduino
+        /// </summary>
+        /// <param name="V0">Contrast voltage</param>
+        /// <param name="RS">Register Select</param>
+        /// <param name="E">Enable</param>
+        /// <param name="D4">Data 4</param>
+        /// <param name="D5">Data 5</param>
+        /// <param name="D6">Data 6</param>
+        /// <param name="D7">Data 7</param>
+        public Lcd2004(H.Cpu.PWMChannel V0, H.Cpu.Pin RS, H.Cpu.Pin E, H.Cpu.Pin D4, H.Cpu.Pin D5, H.Cpu.Pin D6, H.Cpu.Pin D7)
         {
             DisplayConfig = new TextDisplayConfig { Height = 4, Width = 20 };
 
@@ -50,10 +76,18 @@ namespace Netduino.Foundation.Displays.LCD
             LCD_D6 = new GPIO.SPOT.DigitalOutputPort(D6);
             LCD_D7 = new GPIO.SPOT.DigitalOutputPort(D7);
 
+            LCD_V0 = new H.PWM(V0, 1000, 0.5, false);
+            LCD_V0.Start();
+
             Initialize();
         }
 
-        public Lcd2004(MCP23008 mcp)
+        /// <summary>
+        /// Creates a new Lcd2004 object connected of a MCP23008
+        /// </summary>
+        /// <param name="V0">Contrast voltage</param>
+        /// <param name="mcp">MCP23008 object</param>
+        public Lcd2004(H.Cpu.PWMChannel V0, MCP23008 mcp)
         {
             DisplayConfig = new TextDisplayConfig { Height = 4, Width = 20 };
 
@@ -66,8 +100,15 @@ namespace Netduino.Foundation.Displays.LCD
 
             var lite = mcp.CreateOutputPort(7, true);
 
+            LCD_V0 = new H.PWM(V0, 1000, 0.5, false);
+            LCD_V0.Start();
+
             Initialize();
         }
+
+        #endregion
+
+        #region Methods
 
         private void Initialize()
         {
@@ -134,6 +175,11 @@ namespace Netduino.Foundation.Displays.LCD
             SendByte(GetLineAddress(line), LCD_INSTRUCTION);
         }
 
+        /// <summary>
+        /// Displays a string into the specific line
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="lineNumber"></param>
         public void WriteLine(string text, byte lineNumber)
         {
             ClearLine(lineNumber);
@@ -155,6 +201,11 @@ namespace Netduino.Foundation.Displays.LCD
             }
         }
 
+        /// <summary>
+        /// Move the cursor into an specific line and column
+        /// </summary>
+        /// <param name="column"></param>
+        /// <param name="line"></param>
         public void SetCursorPosition(byte column, byte line)
         {
             byte lineAddress = GetLineAddress(line);
@@ -162,6 +213,9 @@ namespace Netduino.Foundation.Displays.LCD
             SendByte(((byte)(LCD_SETDDRAMADDR | address)), LCD_INSTRUCTION);
         }
 
+        /// <summary>
+        /// Clears the screen
+        /// </summary>
         public void Clear()
         {
             SendByte(0x01, LCD_INSTRUCTION);
@@ -169,6 +223,10 @@ namespace Netduino.Foundation.Displays.LCD
             Thread.Sleep(5);
         }
 
+        /// <summary>
+        /// Clears the specific line
+        /// </summary>
+        /// <param name="lineNumber"></param>
         public void ClearLine(byte lineNumber)
         {
             SetLineAddress(lineNumber);
@@ -179,11 +237,31 @@ namespace Netduino.Foundation.Displays.LCD
             }
         }
 
+        /// <summary>
+        /// Adjust the screen's brightness
+        /// </summary>
+        /// <param name="brightness"></param>
         public void SetBrightness(float brightness = 0.75F)
         {
             Debug.Print("Set brightness not enabled");
         }
 
+        /// <summary>
+        /// Adjusts the screen's contrast
+        /// </summary>
+        /// <param name="contrast"></param>
+        public void SetContrast(float contrast = 0.6F)
+        {
+            LCD_V0.Stop();
+            LCD_V0.DutyCycle = contrast;
+            LCD_V0.Start();
+        }
+
+        /// <summary>
+        /// Saves a custom character
+        /// </summary>
+        /// <param name="characterMap"></param>
+        /// <param name="address"></param>
         public void SaveCustomCharacter(byte[] characterMap, byte address)
         {
             address &= 0x7; // we only have 8 locations 0-7
@@ -194,5 +272,7 @@ namespace Netduino.Foundation.Displays.LCD
                 SendByte(characterMap[i], LCD_DATA);
             }
         }
+
+        #endregion
     }
 }

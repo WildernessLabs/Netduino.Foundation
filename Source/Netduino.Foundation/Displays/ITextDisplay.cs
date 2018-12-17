@@ -17,6 +17,8 @@ namespace Netduino.Foundation.Displays
 
         void SetBrightness(float brightness = 0.75f);
 
+        void SetContrast(float contrast = 0.6f);
+
         /// <summary>
         ///  is this going to be supported by all text displays?
         /// </summary>
