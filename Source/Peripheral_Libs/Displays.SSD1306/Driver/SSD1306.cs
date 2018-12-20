@@ -1,5 +1,6 @@
 ﻿using System;
 using Netduino.Foundation.Communications;
+using Microsoft.SPOT.Hardware;
 
 namespace Netduino.Foundation.Displays
 {
@@ -56,6 +57,12 @@ namespace Netduino.Foundation.Displays
             OLED96x16,
         }
 
+        public enum ConnectionType
+        {
+            SPI,
+            I2C,
+        }
+
         #endregion Enums
 
         #region Member variables / fields
@@ -67,6 +74,17 @@ namespace Netduino.Foundation.Displays
         public override uint Height => _height;
 
         /// <summary>
+        ///     SPI object
+        /// </summary>
+        protected SPI spi;
+
+        protected OutputPort dataCommandPort;
+        protected OutputPort resetPort;
+        protected ConnectionType connectionType;
+        protected const bool Data = true;
+        protected const bool Command = false;
+
+        /// <summary>
         ///     SSD1306 display.
         /// </summary>
         private readonly ICommunicationBus _ssd1306;
@@ -74,23 +92,23 @@ namespace Netduino.Foundation.Displays
         /// <summary>
         ///     Width of the display in pixels.
         /// </summary>
-        private readonly uint _width;
+        private uint _width;
 
         /// <summary>
         ///     Height of the display in pixels.
         /// </summary>
-        private readonly uint _height;
+        private uint _height;
 
         /// <summary>
         ///     Buffer holding the pixels in the display.
         /// </summary>
-        private readonly byte[] _buffer;
+        private byte[] _buffer;
 
         /// <summary>
         ///     Sequence of command bytes that must be sent to the display before
         ///     the Show method can send the data buffer.
         /// </summary>
-        private readonly byte[] _showPreamble;
+        private byte[] _showPreamble;
 
         /// <summary>
         ///     Sequence of bytes that should be sent to a 128x64 OLED display to setup the device.
@@ -207,6 +225,41 @@ namespace Netduino.Foundation.Displays
         ///     property to true.
         /// </remarks>
         /// <param name="address">Address of the bus on the I2C display.</param>
+        /// <param name="speedKHz">Speed of the SPI bus.</param>
+        /// <param name="displayType">Type of SSD1306 display (default = 128x64 pixel display).</param>
+        public SSD1306(Cpu.Pin chipSelectPin, Cpu.Pin dcPin, Cpu.Pin resetPin,
+            SPI.SPI_module spiModule = SPI.SPI_module.SPI1,
+            uint speedKHz = 9500, DisplayType displayType = DisplayType.OLED128x64)
+        {
+            dataCommandPort = new OutputPort(dcPin, false);
+            resetPort = new OutputPort(resetPin, true);
+
+            var spiConfig = new SPI.Configuration(
+                SPI_mod: spiModule,
+                ChipSelect_Port: chipSelectPin,
+                ChipSelect_ActiveState: false,
+                ChipSelect_SetupTime: 0,
+                ChipSelect_HoldTime: 0,
+                Clock_IdleState: false,
+                Clock_Edge: true,
+                Clock_RateKHz: speedKHz);
+
+            spi = new SPI(spiConfig);
+
+            connectionType = ConnectionType.SPI;
+
+            InitSSD1306(displayType);
+        }
+
+        /// <summary>
+        ///     Create a new SSD1306 object using the default parameters for
+        /// </summary>
+        /// <remarks>
+        ///     Note that by default, any pixels out of bounds will throw and exception.
+        ///     This can be changed by setting the <seealso cref="IgnoreOutOfBoundsPixels" />
+        ///     property to true.
+        /// </remarks>
+        /// <param name="address">Address of the bus on the I2C display.</param>
         /// <param name="speed">Speed of the I2C bus.</param>
         /// <param name="displayType">Type of SSD1306 display (default = 128x64 pixel display).</param>
         public SSD1306(byte address = 0x3c, ushort speed = 400, DisplayType displayType = DisplayType.OLED128x64)
@@ -215,6 +268,13 @@ namespace Netduino.Foundation.Displays
 
             _ssd1306 = new I2CBus(address, speed);
 
+            connectionType = ConnectionType.I2C;
+
+            InitSSD1306(displayType);
+        }
+
+        private void InitSSD1306 (DisplayType displayType)
+        { 
             switch (displayType)
             {
                 case DisplayType.OLED128x64:
@@ -259,7 +319,15 @@ namespace Netduino.Foundation.Displays
         /// <param name="command">Command byte to send to the display.</param>
         private void SendCommand(byte command)
         {
-            _ssd1306.WriteBytes(new byte[] { 0x00, command });
+            if (connectionType == ConnectionType.SPI)
+            {
+                dataCommandPort.Write(Command);
+                spi.Write(new byte[] { command });
+            }
+            else
+            {
+                _ssd1306.WriteBytes(new byte[] { 0x00, command });
+            }
         }
 
         /// <summary>
@@ -271,7 +339,16 @@ namespace Netduino.Foundation.Displays
             var data = new byte[commands.Length + 1];
             data[0] = 0x00;
             Array.Copy(commands, 0, data, 1, commands.Length);
-            _ssd1306.WriteBytes(data);
+
+            if (connectionType == ConnectionType.SPI)
+            {
+                dataCommandPort.Write(Command);
+                spi.Write(commands);
+            }
+            else
+            {
+                _ssd1306.WriteBytes(data);
+            }
         }
 
         /// <summary>
@@ -287,11 +364,19 @@ namespace Netduino.Foundation.Displays
             var data = new byte[PAGE_SIZE + 1];
             data[0] = 0x40;
 
-            for (ushort index = 0; index < _buffer.Length; index += PAGE_SIZE)
+            if (connectionType == ConnectionType.SPI)
             {
-                Array.Copy(_buffer, index, data, 1, PAGE_SIZE);
-                SendCommand(0x40);
-                _ssd1306.WriteBytes(data);
+                dataCommandPort.Write(Data);
+                spi.Write(_buffer);
+            }
+            else
+            {
+                for (ushort index = 0; index < _buffer.Length; index += PAGE_SIZE)
+                {
+                    Array.Copy(_buffer, index, data, 1, PAGE_SIZE);
+                    SendCommand(0x40);
+                    _ssd1306.WriteBytes(data);
+                }
             }
         }
 
