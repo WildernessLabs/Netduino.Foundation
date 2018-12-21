@@ -97,6 +97,13 @@ All external peripherals also include sample code.
 | [SiI7021](/Library/Sensors/Atmospheric/SI7021)     | Combined I2C temperature and humidity sensor. |
 | [TMP102](/Library/Sensors/Temperature/TMP102)      | I2C temperature sensor. |
 
+### Distance Sensors
+
+| Peripheral                | Description                         |
+|---------------------------|-------------------------------------|
+| [HCSR04](/Library/Sensors/Distance/HCSR04) | HCSR04 distance sensor. |
+| [HYSRF05](/Library/Sensors/Distance/HYSRF05) | HYSRF05 distance sensor. |
+
 ### GPS Sensors & Libraries
 
 | Peripheral                | Description                         |
@@ -122,7 +129,7 @@ All external peripherals also include sample code.
 | [MAG3110](/Library/Sensors/Motion/MAG3110)         | I2C three axis magnetometer. |
 | [Parallax PIR](/Library/Sensors/Motion/ParallaxPIR)| Parallax PIR Rev B digital motion detector. |
 
-## Servos
+### Servos
 
 | Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
