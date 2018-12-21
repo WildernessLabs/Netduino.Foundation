@@ -1,10 +1,8 @@
-using System;
 using Microsoft.SPOT;
 using Netduino.Foundation.Displays;
 using Microsoft.SPOT.Hardware;
 using SecretLabs.NETMF.Hardware.Netduino;
 using System.Threading;
-using PCD844_GPS;
 using Netduino.Foundation.Sensors.GPS;
 using System.IO.Ports;
 

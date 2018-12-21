@@ -359,7 +359,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Displays.PCD8544", "Periphe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PCD8544Sample", "Peripheral_Libs\Displays.PCD8544\Samples\PCD8544Sample\PCD8544Sample.csproj", "{9CA701BD-EF26-43C9-960E-DFE54FB7263A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PCD844GpsSample", "Peripheral_Libs\Displays.PCD8544\Samples\PCD844_GPS\PCD844GpsSample.csproj", "{5157DA8E-92E6-4DEC-AA67-3C30B2C98B63}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PCD8544GpsSample", "Peripheral_Libs\Displays.PCD8544\Samples\PCD8544GpsSample\PCD8544GpsSample.csproj", "{5157DA8E-92E6-4DEC-AA67-3C30B2C98B63}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

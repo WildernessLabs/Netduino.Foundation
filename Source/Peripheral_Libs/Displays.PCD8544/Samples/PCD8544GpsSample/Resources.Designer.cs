@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PCD844_GPS
+namespace PCD8544_GPS
 {
     
     internal partial class Resources
@@ -20,7 +20,7 @@ namespace PCD844_GPS
             {
                 if ((Resources.manager == null))
                 {
-                    Resources.manager = new System.Resources.ResourceManager("PCD844_GPS.Resources", typeof(Resources).Assembly);
+                    Resources.manager = new System.Resources.ResourceManager("PCD8544_GPS.Resources", typeof(Resources).Assembly);
                 }
                 return Resources.manager;
             }
