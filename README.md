@@ -68,7 +68,7 @@ The Netduino.Foundation project is broken into the following source folders:
 * **`/Design`** - Design files for the website, logo, etc.
 
 # License
-Copyright 2017, Wilderness Labs Inc.
+Copyright 2017-2019, Wilderness Labs Inc.
     
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -84,5 +84,5 @@ Copyright 2017, Wilderness Labs Inc.
  
 ## Author Credits
 
-Authors: Bryan Costanich, Frank Krueger, Craig Dunn, Mark Stevens
+Authors: Bryan Costanich, Frank Krueger, Craig Dunn, Mark Stevens, Jorge Ramirez, Adrian Stevens
 
