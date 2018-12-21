@@ -87,7 +87,7 @@ namespace Netduino.Foundation.Displays
         /// <summary>
         ///     SSD1306 display.
         /// </summary>
-        private readonly ICommunicationBus _ssd1306;
+        private readonly ICommunicationBus _I2CBus;
 
         /// <summary>
         ///     Width of the display in pixels.
@@ -266,7 +266,7 @@ namespace Netduino.Foundation.Displays
         {
             _displayType = displayType;
 
-            _ssd1306 = new I2CBus(address, speed);
+            _I2CBus = new I2CBus(address, speed);
 
             connectionType = ConnectionType.I2C;
 
@@ -326,7 +326,7 @@ namespace Netduino.Foundation.Displays
             }
             else
             {
-                _ssd1306.WriteBytes(new byte[] { 0x00, command });
+                _I2CBus.WriteBytes(new byte[] { 0x00, command });
             }
         }
 
@@ -347,7 +347,7 @@ namespace Netduino.Foundation.Displays
             }
             else
             {
-                _ssd1306.WriteBytes(data);
+                _I2CBus.WriteBytes(data);
             }
         }
 
@@ -375,7 +375,7 @@ namespace Netduino.Foundation.Displays
                 {
                     Array.Copy(_buffer, index, data, 1, PAGE_SIZE);
                     SendCommand(0x40);
-                    _ssd1306.WriteBytes(data);
+                    _I2CBus.WriteBytes(data);
                 }
             }
         }
