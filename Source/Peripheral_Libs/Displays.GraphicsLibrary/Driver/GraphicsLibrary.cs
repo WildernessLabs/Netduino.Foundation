@@ -194,26 +194,45 @@ namespace Netduino.Foundation.Displays
             }
         }
 
-        /**************************************************************************/
-        //
-        //     Draw a triangle with no fill color
-        //     x0 - Vertex #0 x coordinate
-        //     y0 - Vertex #0 y coordinate
-        //     x1 - Vertex #1 x coordinate
-        //     y1 - Vertex #1 y coordinate
-        //     x2 - Vertex #2 x coordinate
-        //     y2 - Vertex #2 y coordinate
-        //     color - triangle color
-        //     filled - is the triangle solid 
-        /**************************************************************************/
-        public void DrawTriangle(int x0, int y0,
-                int x1, int y1, int x2, int y2, Color color)
+        /// <summary>
+        ///  Draw a  triangle
+        /// </summary>
+        ///  <param name="x0">Vertex #0 x coordinate</param>
+        ///  <param name="y0">Vertex #0 y coordinate</param>
+        ///  <param name="x1">Vertex #1 x coordinate</param>
+        ///  <param name="y1">Vertex #1 y coordinate</param>
+        ///  <param name="x2">Vertex #2 x coordinate</param>
+        ///  <param name="y2">Vertex #2 y coordinate</param>
+        ///  <param name="color">Color of triangle</param>
+        ///  <param name="filled">Draw a filled triangle?</param>
+        public void DrawTriangle(int x0, int y0, int x1, int y1, int x2, int y2, Color color, bool filled = false)
         {
-            DrawLine(x0, y0, x1, y1, color);
-            DrawLine(x1, y1, x2, y2, color);
-            DrawLine(x2, y2, x0, y0, color);
+            if(filled)
+            {
+                DrawTriangleFilled(x0, y0, x1, y1, x2, y2, color);
+            }
+            else
+            {
+                DrawLine(x0, y0, x1, y1, color);
+                DrawLine(x1, y1, x2, y2, color);
+                DrawLine(x2, y2, x0, y0, color);
+            }
         }
 
+        /// <summary>
+        ///  Draw a  triangle
+        /// </summary>
+        /// <remarks>
+        /// Draw triangle method for 1 bit displays
+        /// </remarks>
+        /// <param name="x0">Vertex #0 x coordinate</param>
+        /// <param name="y0">Vertex #0 y coordinate</param>
+        /// <param name="x1">Vertex #1 x coordinate</param>
+        /// <param name="y1">Vertex #1 y coordinate</param>
+        /// <param name="x2">Vertex #2 x coordinate</param>
+        /// <param name="y2">Vertex #2 y coordinate</param>
+        /// <param name="colored">Should the triangle add (true) or remove (false)</param>
+        /// <param name="filled">Draw a filled triangle?</param>
         public void DrawTriangle(int x0, int y0, int x1, int y1, int x2, int y2, bool colored, bool filled = false)
         {
             if (filled)
@@ -229,20 +248,17 @@ namespace Netduino.Foundation.Displays
             value2 = temp;
         }
 
-        /**************************************************************************/
-        //
-        //  Draw a triangle with color-fill
-        //  x0  Vertex #0 x coordinate
-        //  y0  Vertex #0 y coordinate
-        //  x1  Vertex #1 x coordinate
-        //  y1  Vertex #1 y coordinate
-        //  x2  Vertex #2 x coordinate
-        //  y2  Vertex #2 y coordinate
-        //  color Color to fill/draw with
-        //
-        /**************************************************************************/
-        void DrawTriangleFilled(int x0, int y0,
-                int x1, int y1, int x2, int y2, Color color)
+        /// <summary>
+        /// Draw a filled triangle
+        /// </summary>
+        /// <param name="x0">Vertex #0 x coordinate</param>
+        /// <param name="y0">Vertex #0 y coordinate</param>
+        /// <param name="x1">Vertex #1 x coordinate</param>
+        /// <param name="y1">Vertex #1 y coordinate</param>
+        /// <param name="x2">Vertex #2 x coordinate</param>
+        /// <param name="y2">Vertex #2 y coordinate</param>
+        /// <param name="color">Color to fill/draw with</param>
+        void DrawTriangleFilled(int x0, int y0, int x1, int y1, int x2, int y2, Color color)
         {
             // Sort coordinates by Y order (y2 >= y1 >= y0)
             if (y0 > y1)
