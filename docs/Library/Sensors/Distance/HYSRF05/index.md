@@ -6,7 +6,7 @@ subtitle: Distance Sensor.
 
 # HYSRF05
 
-The HY-SRF05 ultrasonic sensor uses sonar to determine distance to an object like bats do. It offers excellent non-contact range detection with high accuracy and stable readings in an easy-to-use package.
+The HY-SRF05 ultrasonic sensor uses sonar to determine distance to an object (like bats). It offers excellent non-contact range detection with high accuracy and stable readings in an easy-to-use package.
 
 ## Purchasing
 
@@ -16,7 +16,7 @@ The HYSRF05 sensor is available from Sparkfun:
 
 ## Hardware
 
-The HYSRF05 sensor has 5 connections, but you will only need to connect: power, ground, echo and trigger:
+The HYSRF05 sensor has 5 pins, but you'll only connect 4: power, ground, echo and trigger (out isn't used).
 
 ![HYSRF05 and Netduino](HYSRF05-Circuit.png)
 

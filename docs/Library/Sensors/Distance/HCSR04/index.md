@@ -6,7 +6,7 @@ subtitle: Distance Sensor.
 
 # HCSR04
 
-The HC-SR04 ultrasonic sensor uses sonar to determine distance to an object like bats do. It offers excellent non-contact range detection with high accuracy and stable readings in an easy-to-use package.
+The HC-SR04 ultrasonic sensor uses sonar to determine distance to an object (like bats). It offers excellent non-contact range detection with high accuracy and stable readings in an easy-to-use package.
 
 ## Purchasing
 
@@ -16,7 +16,7 @@ The HCSR04 sensor is available from Sparkfun:
 
 ## Hardware
 
-The HCSR04 sensor requires only four connections: power, ground, echo and trigger:
+The HCSR04 sensor requires four connections: power, ground, echo and trigger.
 
 ![HCSR04 and Netduino](HCSR04-Circuit.png)
 
