@@ -22,6 +22,7 @@ Each core peripheral includes a sample illustrating its use.
 
 | Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
+| [Led](/API/LEDs/Led)            | Simple LED. |
 | [PwmLed](/API/LEDs/PwmLed)            | Pulse-Width-Modulation powered LED. |
 | [RgbPwmLed](/API/LEDs/RgbPwmLed)      | Pulse-Width-Modulation powered RGB LED. |
 
@@ -52,6 +53,7 @@ Each core peripheral includes a sample illustrating its use.
 | Peripheral                | Description                         |
 |---------------------------|-------------------------------------|
 | [SpstSwitch](/API/Sensors/Switches/SpstSwitch)      | A simple single-pole, single-throw (SPST), switch. |
+| [SpdtSwitch](/API/Sensors/Switches/SpdtSwitch)        | A two position single-pole, dual-throw (SPDT), switch. |
 | [DipSwitch](/API/Sensors/Switches/DipSwitch)        | A multi-pole dip switch. |
 
 ### Temperature

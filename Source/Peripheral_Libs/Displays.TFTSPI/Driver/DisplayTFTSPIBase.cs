@@ -42,13 +42,10 @@ namespace Netduino.Foundation.Displays
         protected const bool Data = true;
         protected const bool Command = false;
 
-        protected bool clockIdleState = false;
-
         protected abstract void Initialize();
 
         internal DisplayTFTSPIBase()
         {
-
         }
 
         public DisplayTFTSPIBase(Cpu.Pin chipSelectPin, Cpu.Pin dcPin, Cpu.Pin resetPin,

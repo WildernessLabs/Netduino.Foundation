@@ -10,20 +10,22 @@ namespace HCSR04Sample
     {
         public static void Main()
         {
-            var  _HCSR04 = new HCSR04(Pins.GPIO_PIN_D5, Pins.GPIO_PIN_D4);
-            //_HCSR04.DistanceDetected += OnDistanceDetected; // <- Event sample
+            var  _HCSR04 = new HCSR04(Pins.GPIO_PIN_D12, Pins.GPIO_PIN_D11);
+            _HCSR04.DistanceDetected += OnDistanceDetected;
 
             while (true)
             {
+                // Send a echo
                 _HCSR04.MeasureDistance();
                 Thread.Sleep(500);
             }
         }
 
-        //private static void OnDistanceDetected(object sender, DistanceEventArgs e) // <- Event sample
-        //{
-        //    Debug.Print(e.Distance.ToString());
-        //}
+        // Fired when detecting an obstacle
+        private static void OnDistanceDetected(object sender, DistanceEventArgs e) 
+        {
+            Debug.Print(e.Distance.ToString());
+        }
     }
 }
 

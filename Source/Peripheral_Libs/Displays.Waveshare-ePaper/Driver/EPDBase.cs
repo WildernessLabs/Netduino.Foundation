@@ -193,7 +193,7 @@ namespace Netduino.Foundation.Displays
         /// <summary>
         ///     Draw a single pixel 
         /// </summary>
-        /// <param name="x">x location </param>
+        /// <param name="x">x location</param>
         /// <param name="y">y location</param>
         /// <param name="r">y location</param>
         /// <param name="g">y location</param>
