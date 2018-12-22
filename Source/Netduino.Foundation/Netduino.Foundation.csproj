@@ -71,6 +71,7 @@
     <Compile Include="Motors\HBridgeMotor.cs" />
     <Compile Include="Motors\IDCMotor.cs" />
     <Compile Include="Sensors\Distance\DistanceEventArgs.cs" />
+    <Compile Include="Sensors\Motion\IGyroscope.cs" />
     <Compile Include="Sensors\Switches\SpdtSwitch.cs" />
     <Compile Include="Speakers\IToneGenerator.cs" />
     <Compile Include="Speakers\PiezoSpeaker.cs" />
@@ -128,9 +129,7 @@
     <Reference Include="Microsoft.SPOT.IO" />
     <Reference Include="System.IO" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Devices\Netduino\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
