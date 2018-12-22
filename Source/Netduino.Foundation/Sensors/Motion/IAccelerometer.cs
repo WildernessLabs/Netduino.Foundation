@@ -1,5 +1,3 @@
-using System;
-
 namespace Netduino.Foundation.Sensors.Motion
 {
 	public interface IAccelerometer
