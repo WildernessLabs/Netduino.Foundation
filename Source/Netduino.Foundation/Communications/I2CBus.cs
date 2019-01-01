@@ -89,6 +89,7 @@ namespace Netduino.Foundation.Communications
             {
                 I2CDevice.CreateWriteTransaction(values)
             };
+
             var retryCount = 0;
             while (_device.Execute(transaction, _transactionTimeout) != values.Length)
             {
