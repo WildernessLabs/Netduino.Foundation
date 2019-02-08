@@ -361,6 +361,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PCD8544Sample", "Peripheral
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PCD8544GpsSample", "Peripheral_Libs\Displays.PCD8544\Samples\PCD8544GpsSample\PCD8544GpsSample.csproj", "{5157DA8E-92E6-4DEC-AA67-3C30B2C98B63}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Moisture.Capacitive", "Sensors.Moisture.Capacitive", "{D2277A0E-7E11-41B9-A3C9-8799E5F3EEA1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sensors.Moisture.FC28", "Sensors.Moisture.FC28", "{C67FA545-3301-41FE-9CA8-BCA8A694AE83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Moisture.FC28", "Peripheral_Libs\Sensors.Moisture.FC28\Sensors.Moisture.FC28\Sensors.Moisture.FC28.csproj", "{E93B131F-3798-46CF-A574-D3422FD8DB0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sensors.Moisture.Capacitive", "Peripheral_Libs\Sensors.Moisture.Capacitive\Sensors.Moisture.Capacitive\Sensors.Moisture.Capacitive.csproj", "{CECB3279-170B-4AD8-9F6D-D40D5E801F88}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -2435,6 +2443,30 @@ Global
 		{5157DA8E-92E6-4DEC-AA67-3C30B2C98B63}.Release|x86.ActiveCfg = Release|Any CPU
 		{5157DA8E-92E6-4DEC-AA67-3C30B2C98B63}.Release|x86.Build.0 = Release|Any CPU
 		{5157DA8E-92E6-4DEC-AA67-3C30B2C98B63}.Release|x86.Deploy.0 = Release|Any CPU
+		{E93B131F-3798-46CF-A574-D3422FD8DB0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E93B131F-3798-46CF-A574-D3422FD8DB0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E93B131F-3798-46CF-A574-D3422FD8DB0C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E93B131F-3798-46CF-A574-D3422FD8DB0C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{E93B131F-3798-46CF-A574-D3422FD8DB0C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E93B131F-3798-46CF-A574-D3422FD8DB0C}.Debug|x86.Build.0 = Debug|Any CPU
+		{E93B131F-3798-46CF-A574-D3422FD8DB0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E93B131F-3798-46CF-A574-D3422FD8DB0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E93B131F-3798-46CF-A574-D3422FD8DB0C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E93B131F-3798-46CF-A574-D3422FD8DB0C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{E93B131F-3798-46CF-A574-D3422FD8DB0C}.Release|x86.ActiveCfg = Release|Any CPU
+		{E93B131F-3798-46CF-A574-D3422FD8DB0C}.Release|x86.Build.0 = Release|Any CPU
+		{CECB3279-170B-4AD8-9F6D-D40D5E801F88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CECB3279-170B-4AD8-9F6D-D40D5E801F88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CECB3279-170B-4AD8-9F6D-D40D5E801F88}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{CECB3279-170B-4AD8-9F6D-D40D5E801F88}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{CECB3279-170B-4AD8-9F6D-D40D5E801F88}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CECB3279-170B-4AD8-9F6D-D40D5E801F88}.Debug|x86.Build.0 = Debug|Any CPU
+		{CECB3279-170B-4AD8-9F6D-D40D5E801F88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CECB3279-170B-4AD8-9F6D-D40D5E801F88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CECB3279-170B-4AD8-9F6D-D40D5E801F88}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{CECB3279-170B-4AD8-9F6D-D40D5E801F88}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{CECB3279-170B-4AD8-9F6D-D40D5E801F88}.Release|x86.ActiveCfg = Release|Any CPU
+		{CECB3279-170B-4AD8-9F6D-D40D5E801F88}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -2571,5 +2603,7 @@ Global
 		{C107CDA7-943B-4E05-B5AB-FBE752E481D7} = {0035217A-1F50-4ECA-BFFC-6DEB1F93BB4A}
 		{9CA701BD-EF26-43C9-960E-DFE54FB7263A} = {0035217A-1F50-4ECA-BFFC-6DEB1F93BB4A}
 		{5157DA8E-92E6-4DEC-AA67-3C30B2C98B63} = {0035217A-1F50-4ECA-BFFC-6DEB1F93BB4A}
+		{E93B131F-3798-46CF-A574-D3422FD8DB0C} = {C67FA545-3301-41FE-9CA8-BCA8A694AE83}
+		{CECB3279-170B-4AD8-9F6D-D40D5E801F88} = {D2277A0E-7E11-41B9-A3C9-8799E5F3EEA1}
 	EndGlobalSection
 EndGlobal
