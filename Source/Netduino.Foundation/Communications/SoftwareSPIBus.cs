@@ -223,22 +223,20 @@ namespace Netduino.Foundation.Communications
             for (var index = 0; index < 8; index++)
             {
                 _mosi.Write((value & mask) > 0);
-                _clock.Write(!clock);
-                bool data;
-                if (_phase)
-                {
-                    _clock.Write(clock);
-                    data = _miso.Read();
-                }
-                else
+                bool data = false;
+                if (!_phase)
                 {
                     data = _miso.Read();
-                    _clock.Write(clock);
                 }
-                result <<= 1;
+				_clock.Write(!clock);
+				if(_phase)
+				{
+					data = _miso.Read();
+				}
+                _clock.Write(clock);
                 if (data)
                 {
-                    result |= 0x01;
+                    result |= mask;
                 }
                 mask >>= 1;
             }
