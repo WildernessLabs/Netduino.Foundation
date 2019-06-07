@@ -180,5 +180,14 @@ namespace Netduino.Foundation.Sensors.Motion
         }
 
         #endregion Constructors
+
+        #region methods
+
+        public void Enable(bool enable)
+        {
+          //  _apds9960.WriteRegister(Registers.ENABLE, 
+        }
+
+        #endregion
     }
 }
