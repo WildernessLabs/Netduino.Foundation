@@ -9,15 +9,24 @@ namespace ST7565Test
     {
         public static void Main()
         {
-            // I2C constructor
-            // var oled = new ST7565(Cpu.Pin.GPIO_Pin9, Cpu.Pin.GPIO_Pin10, Cpu.Pin.GPIO_Pin7, SPI.SPI_module.SPI1, 4000, ST7565.DisplayType.OLED128x32);
-
             // SPI constructor
-            var oled = new ST7565(chipSelectPin: Pins.GPIO_PIN_D9,
-                dcPin: Pins.GPIO_PIN_D10,
-                resetPin: Pins.GPIO_PIN_D7,
+            var oled = new ST7565(chipSelectPin: Pins.GPIO_PIN_D10,
+                dcPin: Pins.GPIO_PIN_D8,
+                resetPin: Pins.GPIO_PIN_D9,
                 spiModule: SPI.SPI_module.SPI1,
-                speedKHz: 400000);
+                speedKHz: 10000);
+
+            oled.SetContrast(24);
+            oled.SetContrast(12);
+            oled.SetContrast(0);
+
+
+            oled.Clear(true);
+            oled.InvertDisplay(true);
+
+
+            oled.Clear(true);
+            oled.InvertDisplay(false);
 
             oled.IgnoreOutOfBoundsPixels = true;
 
@@ -45,7 +54,8 @@ namespace ST7565Test
 
             display.Clear(true);
             display.CurrentFont = new Font8x8();
-            display.DrawText(4, 10, "NETDUINO 3 WiFi");
+            display.DrawText(4, 0, "NETDUINO 3 WiFi");
+            display.DrawCircle(64, 32, 16, true, true);
             display.Show();
             Thread.Sleep(Timeout.Infinite);
         }

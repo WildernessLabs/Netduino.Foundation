@@ -158,7 +158,7 @@ namespace Netduino.Foundation.Displays
             uint speedKHz = 9500)
         {
             dataCommandPort = new OutputPort(dcPin, false);
-            resetPort = new OutputPort(resetPin, true);
+            resetPort = new OutputPort(resetPin, false);
 
             var spiConfig = new SPI.Configuration(
                 SPI_mod: spiModule,
@@ -262,7 +262,7 @@ namespace Netduino.Foundation.Displays
         {
             for (int page = 0; page < 8; page++)
             {
-                SendCommand((byte)((int)(DisplayCommand.PageAddress) | pageReference[page]));
+                SendCommand((byte)((int)(DisplayCommand.PageAddress) | page));
                 SendCommand((int)(DisplayCommand.ColumnAddressLow) | (StartColumnOffset & 0x0F));
                 SendCommand((int)(DisplayCommand.ColumnAddressHigh) | 0);
                 SendCommand(DisplayCommand.EnterReadModifyWriteMode);
