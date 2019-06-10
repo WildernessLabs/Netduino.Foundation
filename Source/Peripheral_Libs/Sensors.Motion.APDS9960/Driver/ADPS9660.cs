@@ -1,6 +1,8 @@
 using System;
 using Netduino.Foundation.Communications;
 using System.Threading;
+using Microsoft.SPOT.Hardware;
+using Microsoft.SPOT;
 
 namespace Netduino.Foundation.Sensors.Motion
 {
@@ -170,6 +172,8 @@ namespace Netduino.Foundation.Sensors.Motion
         static byte APDS9960_LEFT = 0x03;  /**< Gesture Left */
         static byte APDS9960_RIGHT = 0x04; /**< Gesture Right */
 
+        InputPort interruptPort;
+
         #endregion
 
         #region Constructors
@@ -186,12 +190,23 @@ namespace Netduino.Foundation.Sensors.Motion
         /// </summary>
         /// <param name="address">Address of the I2C sensor</param>
         /// <param name="speed">Speed of the I2C bus in KHz</param>
-        public APDS9960(byte address = 0x39, ushort speed = 100)
+        public APDS9960(Cpu.Pin interruptPin, byte address = 0x39, ushort speed = 100)
         {
             var device = new I2CBus(address, speed);
             _apds9960 = device;
 
+            if(interruptPin != Cpu.Pin.GPIO_NONE)
+            {
+                interruptPort = new InputPort(interruptPin, true, Port.ResistorMode.PullDown);
+                interruptPort.OnInterrupt += InterruptPort_OnInterrupt;
+            }
+
             Apds9960Init();
+        }
+
+        private void InterruptPort_OnInterrupt(uint data1, uint data2, DateTime time)
+        {
+            Debug.Print("Interrupt received");
         }
 
         #endregion Constructors
@@ -254,14 +269,14 @@ namespace Netduino.Foundation.Sensors.Motion
             return (ProximityGain)(_apds9960.ReadRegister(APDS9960_CONTROL) & 0x0C);
         }
 
-        void EnableProximity(bool enableProximity)
+        public void EnableProximity(bool enableProximity)
         {
             enable.PEN = enableProximity ? (byte)1 : (byte)0;
 
             _apds9960.WriteRegister(APDS9960_ENABLE, enable.Get());
         }
 
-        void EnableProximityInterrupt(bool enableInterrupt)
+        public void EnableProximityInterrupt(bool enableInterrupt)
         {
             enable.PIEN = enableInterrupt ? (byte)1 : (byte)0;
 
@@ -273,7 +288,7 @@ namespace Netduino.Foundation.Sensors.Motion
             }
         }
 
-        void SetProximityInterruptThreshhold(byte low, byte high, byte persistance)
+        public void SetProximityInterruptThreshhold(byte low, byte high, byte persistance = 4)
         {
             _apds9960.WriteRegister(APDS9960_PILT, high);
             _apds9960.WriteRegister(APDS9960_PIHT, low);
@@ -347,7 +362,7 @@ namespace Netduino.Foundation.Sensors.Motion
             _apds9960.WriteRegister(APDS9960_GOFFSET_R, offsetRight);
         }
 
-        void EnableGesture(bool enable)
+        public void EnableGestures(bool enable)
         {
             if(enable == false)
             {
@@ -467,7 +482,7 @@ namespace Netduino.Foundation.Sensors.Motion
             _apds9960.WriteRegister(APDS9960_CONTROL, control.Get());
         }
 
-        void EnableColor(bool colorEnabled)
+        public void EnableColorSensor(bool colorEnabled)
         {
             enable.AEN = colorEnabled ? (byte)1 : (byte)0;
             _apds9960.WriteRegister(APDS9960_ENABLE, enable.Get());

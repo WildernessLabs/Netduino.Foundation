@@ -4,8 +4,7 @@ using System.Net.Sockets;
 using System.Threading;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
-using SecretLabs.NETMF.Hardware;
-using SecretLabs.NETMF.Hardware.Netduino;
+using Netduino.Foundation.Sensors.Motion;
 
 namespace APDS9960GestureSample
 {
@@ -14,6 +13,10 @@ namespace APDS9960GestureSample
         public static void Main()
         {
             // write your code here
+            var apds = new APDS9960(Cpu.Pin.GPIO_Pin10);
+
+            apds.EnableProximity(true);
+            apds.EnableGestures(true);
 
 
         }

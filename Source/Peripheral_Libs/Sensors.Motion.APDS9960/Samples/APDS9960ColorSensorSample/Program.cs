@@ -6,6 +6,7 @@ using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
 using SecretLabs.NETMF.Hardware;
 using SecretLabs.NETMF.Hardware.Netduino;
+using Netduino.Foundation.Sensors.Motion;
 
 namespace APDS9960ColorSensorSample
 {
@@ -14,7 +15,9 @@ namespace APDS9960ColorSensorSample
         public static void Main()
         {
             // write your code here
-
+            //https://github.com/adafruit/Adafruit_APDS9960/tree/master/examples/color_sensor
+            var apds = new APDS9960(Cpu.Pin.GPIO_Pin10);
+            apds.EnableColorSensor(true);
 
         }
 
