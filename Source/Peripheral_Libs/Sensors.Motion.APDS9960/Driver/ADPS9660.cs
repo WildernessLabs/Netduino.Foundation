@@ -1,6 +1,6 @@
 using System;
-using Microsoft.SPOT;
 using Netduino.Foundation.Communications;
+using System.Threading;
 
 namespace Netduino.Foundation.Sensors.Motion
 {
@@ -18,13 +18,16 @@ namespace Netduino.Foundation.Sensors.Motion
         private APDS9960Persistance persistance = new APDS9960Persistance();
         private APDS9960Pulse pulse = new APDS9960Pulse();
         private APDS9960GestureStatus gestureStatus = new APDS9960GestureStatus();
+        private APDS9960Status status = new APDS9960Status();
 
-        private APDS9960GConfig1 config1 = new APDS9960GConfig1();
-        private APDS9960GConfig2 config2 = new APDS9960GConfig2();
-        private APDS9960GConfig3 config3 = new APDS9960GConfig3();
-        private APDS9960GConfig4 config4 = new APDS9960GConfig4();
+        private APDS9960Config2 config2 = new APDS9960Config2();
 
-        private byte gestureCount, upCount, downCount, leftCount, rightCount;   
+        private APDS9960GConfig1 gconfig1 = new APDS9960GConfig1();
+        private APDS9960GConfig2 gconfig2 = new APDS9960GConfig2();
+        private APDS9960GConfig3 gconfig3 = new APDS9960GConfig3();
+        private APDS9960GConfig4 gconfig4 = new APDS9960GConfig4();
+
+        private byte upCount, downCount, leftCount, rightCount;   
 
         #endregion
 
@@ -109,7 +112,7 @@ namespace Netduino.Foundation.Sensors.Motion
         }
 
         /** LED drive settings */
-        enum LedDrive
+        enum LedDrive : byte
         {
             DRIVE_100MA = 0x00, /**< 100mA */
             DRIVE_50MA = 0x40,  /**< 50mA */
@@ -118,7 +121,7 @@ namespace Netduino.Foundation.Sensors.Motion
         }
 
         /** LED boost settings */
-        enum LedBoost
+        enum LedBoost : byte
         {
             BOOST_100PCNT = 0x00, /**< 100% */
             BOOST_150PCNT = 0x10, /**< 150% */
@@ -161,10 +164,10 @@ namespace Netduino.Foundation.Sensors.Motion
             GPL_32US = 0x03, // Pulse 32us
         };
 
-        static int APDS9960_UP = 0x01;    /**< Gesture Up */
-        static int APDS9960_DOWN = 0x02;  /**< Gesture Down */
-        static int APDS9960_LEFT = 0x03;  /**< Gesture Left */
-        static int APDS9960_RIGHT = 0x04; /**< Gesture Right */
+        static byte APDS9960_UP = 0x01;    /**< Gesture Up */
+        static byte APDS9960_DOWN = 0x02;  /**< Gesture Down */
+        static byte APDS9960_LEFT = 0x03;  /**< Gesture Left */
+        static byte APDS9960_RIGHT = 0x04; /**< Gesture Right */
 
 
         #endregion
@@ -314,21 +317,21 @@ namespace Netduino.Foundation.Sensors.Motion
          */
         void SetGestureDimentions(byte dimensions)
         {
-            config3.GDIMS = dimensions;
-            _apds9960.WriteRegister(APDS9960_GCONF3, config3.Get());
+            gconfig3.GDIMS = dimensions;
+            _apds9960.WriteRegister(APDS9960_GCONF3, gconfig3.Get());
         }
 
         //Sets gesture FIFO Threshold
         void SetGestureFIFOThreshold(byte threshhold)
         {
-            config1.GFIFOTH = threshhold;
-            _apds9960.WriteRegister(APDS9960_GCONF1, config1.Get());
+            gconfig1.GFIFOTH = threshhold;
+            _apds9960.WriteRegister(APDS9960_GCONF1, gconfig1.Get());
         }
 
         void SetGestureGain(byte gain)
         {
-            config2.GGAIN = gain;
-            _apds9960.WriteRegister(APDS9960_GCONF2, config2.Get());
+            gconfig2.GGAIN = gain;
+            _apds9960.WriteRegister(APDS9960_GCONF2, gconfig2.Get());
         }
 
         void SetGestureProximityThreshold(byte threshhold)
@@ -348,8 +351,8 @@ namespace Netduino.Foundation.Sensors.Motion
         {
             if(enable == false)
             {
-                config4.GMODE = 0;
-                _apds9960.WriteRegister(APDS9960_GCONF4, config4.Get());
+                gconfig4.GMODE = 0;
+                _apds9960.WriteRegister(APDS9960_GCONF4, gconfig4.Get());
             }
 
             this.enable.GEN = enable ? (byte)1 : (byte)0;
@@ -360,21 +363,20 @@ namespace Netduino.Foundation.Sensors.Motion
 
         void ResetCounts()
         {
-            gestureCount = 0;
             upCount = 0;
             downCount = 0;
             leftCount = 0;
             rightCount = 0;
         }
 
-        void ReadGesture()
+        byte ReadGesture()
         {
             byte toRead, bytesRead;
             byte[] buf = new byte[256];
 
-            int t = 0;
-
             byte gestureReceived;
+
+            DateTime gestureDetected = DateTime.Now;
 
             while (true)
             {
@@ -383,22 +385,22 @@ namespace Netduino.Foundation.Sensors.Motion
 
                 gestureReceived = 0;
 
-                if (!gestureValid())
+                if (!IsGestureValid())
                     return 0;
 
-                delay(30);
+                Thread.Sleep(30);
 
-                toRead = this->read8(APDS9960_GFLVL);
+                toRead = _apds9960.ReadRegister(APDS9960_GFLVL);
 
                 // bytesRead is unused but produces sideffects needed for readGesture to work
-                bytesRead = this->read(APDS9960_GFIFO_U, buf, toRead);
+                // ToDo - check on this bytesRead = this->read(APDS9960_GFIFO_U, buf, toRead);
 
-                if (abs((int)buf[0] - (int)buf[1]) > 13)
+                if (System.Math.Abs((int)buf[0] - (int)buf[1]) > 13)
                 {
                     up_down_diff += (int)buf[0] - (int)buf[1];
                 }
 
-                if (abs((int)buf[2] - (int)buf[3]) > 13)
+                if (System.Math.Abs((int)buf[2] - (int)buf[3]) > 13)
                 {
                     left_right_diff += (int)buf[2] - (int)buf[3];
                 }
@@ -408,24 +410,16 @@ namespace Netduino.Foundation.Sensors.Motion
                     if (up_down_diff < 0)
                     {
                         if (downCount > 0)
-                        {
                             gestureReceived = APDS9960_UP;
-                        }
                         else
-                        {
                             upCount++;
-                        }
                     }
                     else if (up_down_diff > 0)
                     {
                         if (upCount > 0)
-                        {
                             gestureReceived = APDS9960_DOWN;
-                        }
                         else
-                        {
                             downCount++;
-                        }
                     }
                 }
 
@@ -434,39 +428,85 @@ namespace Netduino.Foundation.Sensors.Motion
                     if (left_right_diff < 0)
                     {
                         if (rightCount > 0)
-                        {
                             gestureReceived = APDS9960_LEFT;
-                        }
                         else
-                        {
                             leftCount++;
-                        }
                     }
                     else if (left_right_diff > 0)
                     {
                         if (leftCount > 0)
-                        {
                             gestureReceived = APDS9960_RIGHT;
-                        }
                         else
-                        {
                             rightCount++;
-                        }
                     }
                 }
 
                 if (up_down_diff != 0 || left_right_diff != 0)
                 {
-                    t = millis();
+                    gestureDetected = DateTime.Now;
                 }
 
-                if (gestureReceived || millis() - t > 300)
+                if (gestureReceived > 0 || 
+                    (DateTime.Now - gestureDetected) > new TimeSpan(0, 0, 0, 0, 3000))
                 {
                     ResetCounts();
 
                     return gestureReceived;
                 }
             }
+        }
+
+        void SetLed(LedDrive drive, LedBoost boost)
+        {
+            config2.LED_BOOST = (byte)boost;
+
+            _apds9960.WriteRegister(APDS9960_CONFIG2, config2.Get());
+
+            control.LDRIVE = (byte)drive;
+
+            _apds9960.WriteRegister(APDS9960_CONTROL, control.Get());
+        }
+
+        void EnableColor(bool colorEnabled)
+        {
+            enable.AEN = colorEnabled ? (byte)1 : (byte)0;
+            _apds9960.WriteRegister(APDS9960_ENABLE, enable.Get());
+        }
+
+        bool IsColorDataReady()
+        {
+            status.Set(_apds9960.ReadRegister(APDS9960_STATUS));
+            return status.AVALID == 1;
+        }
+
+        //Red, green, blue, clear
+        //ToDo - check byte order ... Arduino driver doesn't specify 
+        void GetColorData(out int R, out int G, out int B, out int C)
+        {
+            R = _apds9960.ReadUShort(APDS9960_RDATAL, ByteOrder.BigEndian);
+            G = _apds9960.ReadUShort(APDS9960_GDATAL, ByteOrder.BigEndian);
+            B = _apds9960.ReadUShort(APDS9960_BDATAL, ByteOrder.BigEndian);
+            C = _apds9960.ReadUShort(APDS9960_CDATAL, ByteOrder.BigEndian);
+        }
+
+        void EnableColorInterrupt(bool enableInterrupt)
+        {
+            enable.AIEN = enableInterrupt ? (byte)1 : (byte)0;
+            _apds9960.WriteRegister(APDS9960_ENABLE, enable.Get());   
+        }
+
+        void ClearInterrupt()
+        {
+            //ToDo - Arduino driver call here includes a null in the param list 
+            _apds9960.WriteRegister(APDS9960_AICLEAR, 0);
+        }
+
+        void SetInteruptLimits(int low, int high)
+        {
+            _apds9960.WriteRegister(APDS9960_AILTIL, (byte)(low & 0xFF));
+            _apds9960.WriteRegister(APDS9960_AILTH, (byte)(low >> 8));
+            _apds9960.WriteRegister(APDS9960_AIHTL, (byte)(high & 0xFF));
+            _apds9960.WriteRegister(APDS9960_AIHTH, (byte)(high >> 8));
         }
 
         public void Enable(bool enable)
@@ -543,6 +583,18 @@ namespace Netduino.Foundation.Sensors.Motion
             }
         }
 
+        class APDS9960Config2
+        {
+            public byte LED_BOOST { get; set; }
+            public byte CPSIEN { get; set; }
+            public byte PSIEN { get; set; }
+
+            public byte Get ()
+            {
+                return (byte)((PSIEN << 7) | (CPSIEN << 6) | (LED_BOOST << 4) | 1);
+            }
+        }
+
         class APDS9960GConfig1
         {
             public byte GEXPERS { get; set; }
@@ -604,6 +656,28 @@ namespace Netduino.Foundation.Sensors.Motion
                 GFOV = (byte)((value >> 1) & 0x01);
 
                 GVALID = (byte)(value & 0x01);
+            }
+        }
+
+        class APDS9960Status
+        {
+            public byte AVALID { get; set; }
+            public byte PVALID { get; set; }
+            public byte GINT { get; set; }
+            public byte AINT { get; set; }
+            public byte PINT { get; set; }
+            public byte PGSAT { get; set; }
+            public byte CPSAT { get; set; }
+
+            public void Set(byte data)
+            {
+                AVALID = (byte)(data & 0x01);
+                PVALID = (byte)((data >> 1) & 0x01);
+                GINT = (byte)((data >> 2) & 0x01);
+                AINT = (byte)((data >> 4) & 0x01);
+                PINT = (byte)((data >> 5) & 0x01);
+                PGSAT = (byte)((data >> 6) & 0x01);
+                CPSAT = (byte)((data >> 7) & 0x01);
             }
         }
 
