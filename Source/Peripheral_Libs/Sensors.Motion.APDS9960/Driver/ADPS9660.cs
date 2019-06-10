@@ -29,9 +29,6 @@ namespace Netduino.Foundation.Sensors.Motion
 
         private byte upCount, downCount, leftCount, rightCount;   
 
-        #endregion
-
-        #region enums
         /** I2C Registers */
         static byte APDS9960_RAM = 0x00;
         static byte APDS9960_ENABLE = 0x80;
@@ -84,8 +81,12 @@ namespace Netduino.Foundation.Sensors.Motion
         static byte APDS9960_GFIFO_L = 0xFE;
         static byte APDS9960_GFIFO_R = 0xFF;
 
+        #endregion
+
+        #region enums
+
         /** ADC gain settings */
-        enum ADCGain
+        enum ADCGain : byte
         {
             GAIN_1X = 0x00,  /**< No gain */
             GAIN_4X = 0x01,  /**< 2x gain */
@@ -94,7 +95,7 @@ namespace Netduino.Foundation.Sensors.Motion
         }
 
         /** Proximity gain settings */
-        enum ProximityGain
+        enum ProximityGain : byte
         {
             PGAIN_1X = 0x00, /**< 1x gain */
             PGAIN_2X = 0x04, /**< 2x gain */
@@ -103,7 +104,7 @@ namespace Netduino.Foundation.Sensors.Motion
         }
 
         /** Pulse length settings */
-        enum PulseLength
+        enum PulseLength : byte
         {
             PL_4US = 0x00,  /**< 4uS */
             PL_8US = 0x40,  /**< 8uS */
@@ -130,7 +131,7 @@ namespace Netduino.Foundation.Sensors.Motion
         }
 
         /** Dimensions */
-        enum Dimensions
+        enum Dimensions : byte
         {
             ALL = 0x00,        // All dimensions
             UP_DOWN = 0x01,    // Up/Down dimensions
@@ -168,7 +169,6 @@ namespace Netduino.Foundation.Sensors.Motion
         static byte APDS9960_DOWN = 0x02;  /**< Gesture Down */
         static byte APDS9960_LEFT = 0x03;  /**< Gesture Left */
         static byte APDS9960_RIGHT = 0x04; /**< Gesture Right */
-
 
         #endregion
 
@@ -501,7 +501,7 @@ namespace Netduino.Foundation.Sensors.Motion
             _apds9960.WriteRegister(APDS9960_AICLEAR, 0);
         }
 
-        void SetInteruptLimits(int low, int high)
+        public void SetInteruptLimits(int low, int high)
         {
             _apds9960.WriteRegister(APDS9960_AILTIL, (byte)(low & 0xFF));
             _apds9960.WriteRegister(APDS9960_AILTH, (byte)(low >> 8));
@@ -509,6 +509,7 @@ namespace Netduino.Foundation.Sensors.Motion
             _apds9960.WriteRegister(APDS9960_AIHTH, (byte)(high >> 8));
         }
 
+        //enable sensor
         public void Enable(bool enable)
         {
             _apds9960.WriteRegister(APDS9960_ENABLE, (byte)(enable ? 1 : 0));
