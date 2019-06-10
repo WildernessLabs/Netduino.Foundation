@@ -16,6 +16,15 @@ namespace Netduino.Foundation.Sensors.Motion
         private APDS9960Control control = new APDS9960Control();
         private APDS9960Enable enable = new APDS9960Enable();
         private APDS9960Persistance persistance = new APDS9960Persistance();
+        private APDS9960Pulse pulse = new APDS9960Pulse();
+        private APDS9960GestureStatus gestureStatus = new APDS9960GestureStatus();
+
+        private APDS9960GConfig1 config1 = new APDS9960GConfig1();
+        private APDS9960GConfig2 config2 = new APDS9960GConfig2();
+        private APDS9960GConfig3 config3 = new APDS9960GConfig3();
+        private APDS9960GConfig4 config4 = new APDS9960GConfig4();
+
+        private byte gestureCount, upCount, downCount, leftCount, rightCount;   
 
         #endregion
 
@@ -273,8 +282,192 @@ namespace Netduino.Foundation.Sensors.Motion
             _apds9960.WriteRegister(APDS9960_PERS, this.persistance.Get());
         }
 
+        //Sets number of proxmity pulses
+        void SetProximityPulse(PulseLength length, byte count)
+        {
+            if (count < 1 || count > 64)
+                throw new ArgumentOutOfRangeException();
+
+            pulse.PPULSE = count;
+            pulse.PPLEN = (byte)length;
+
+            _apds9960.WriteRegister(APDS9960_PPULSE, pulse.Get());
+        }
+
+        byte ReadProximity()
+        {
+            return _apds9960.ReadRegister(APDS9960_PDATA);
+        }
+
+        bool IsGestureValid ()
+        {
+            gestureStatus.Set(_apds9960.ReadRegister(APDS9960_GSTATUS));
+            return gestureStatus.GVALID == 1;
+        }
 
 
+        /*!
+         *  @brief  Sets gesture dimensions
+         *  @param  dims
+         *          Dimensions (APDS9960_DIMENSIONS_ALL, APDS9960_DIMENSIONS_UP_DOWM,
+         *          APDS9960_DIMENSIONS_UP_DOWN, APGS9960_DIMENSIONS_LEFT_RIGHT)
+         */
+        void SetGestureDimentions(byte dimensions)
+        {
+            config3.GDIMS = dimensions;
+            _apds9960.WriteRegister(APDS9960_GCONF3, config3.Get());
+        }
+
+        //Sets gesture FIFO Threshold
+        void SetGestureFIFOThreshold(byte threshhold)
+        {
+            config1.GFIFOTH = threshhold;
+            _apds9960.WriteRegister(APDS9960_GCONF1, config1.Get());
+        }
+
+        void SetGestureGain(byte gain)
+        {
+            config2.GGAIN = gain;
+            _apds9960.WriteRegister(APDS9960_GCONF2, config2.Get());
+        }
+
+        void SetGestureProximityThreshold(byte threshhold)
+        {
+            _apds9960.WriteRegister(APDS9960_GPENTH, threshhold);
+        }
+
+        void SetGestureOffset(byte offsetUp, byte offsetDown, byte offsetLeft, byte offsetRight)
+        {
+            _apds9960.WriteRegister(APDS9960_GOFFSET_U, offsetUp);
+            _apds9960.WriteRegister(APDS9960_GOFFSET_D, offsetDown);
+            _apds9960.WriteRegister(APDS9960_GOFFSET_L, offsetLeft);
+            _apds9960.WriteRegister(APDS9960_GOFFSET_R, offsetRight);
+        }
+
+        void EnableGesture(bool enable)
+        {
+            if(enable == false)
+            {
+                config4.GMODE = 0;
+                _apds9960.WriteRegister(APDS9960_GCONF4, config4.Get());
+            }
+
+            this.enable.GEN = enable ? (byte)1 : (byte)0;
+            _apds9960.WriteRegister(APDS9960_ENABLE, this.enable.Get());
+
+            ResetCounts();
+        }
+
+        void ResetCounts()
+        {
+            gestureCount = 0;
+            upCount = 0;
+            downCount = 0;
+            leftCount = 0;
+            rightCount = 0;
+        }
+
+        void ReadGesture()
+        {
+            byte toRead, bytesRead;
+            byte[] buf = new byte[256];
+
+            int t = 0;
+
+            byte gestureReceived;
+
+            while (true)
+            {
+                int up_down_diff = 0;
+                int left_right_diff = 0;
+
+                gestureReceived = 0;
+
+                if (!gestureValid())
+                    return 0;
+
+                delay(30);
+
+                toRead = this->read8(APDS9960_GFLVL);
+
+                // bytesRead is unused but produces sideffects needed for readGesture to work
+                bytesRead = this->read(APDS9960_GFIFO_U, buf, toRead);
+
+                if (abs((int)buf[0] - (int)buf[1]) > 13)
+                {
+                    up_down_diff += (int)buf[0] - (int)buf[1];
+                }
+
+                if (abs((int)buf[2] - (int)buf[3]) > 13)
+                {
+                    left_right_diff += (int)buf[2] - (int)buf[3];
+                }
+
+                if (up_down_diff != 0)
+                {
+                    if (up_down_diff < 0)
+                    {
+                        if (downCount > 0)
+                        {
+                            gestureReceived = APDS9960_UP;
+                        }
+                        else
+                        {
+                            upCount++;
+                        }
+                    }
+                    else if (up_down_diff > 0)
+                    {
+                        if (upCount > 0)
+                        {
+                            gestureReceived = APDS9960_DOWN;
+                        }
+                        else
+                        {
+                            downCount++;
+                        }
+                    }
+                }
+
+                if (left_right_diff != 0)
+                {
+                    if (left_right_diff < 0)
+                    {
+                        if (rightCount > 0)
+                        {
+                            gestureReceived = APDS9960_LEFT;
+                        }
+                        else
+                        {
+                            leftCount++;
+                        }
+                    }
+                    else if (left_right_diff > 0)
+                    {
+                        if (leftCount > 0)
+                        {
+                            gestureReceived = APDS9960_RIGHT;
+                        }
+                        else
+                        {
+                            rightCount++;
+                        }
+                    }
+                }
+
+                if (up_down_diff != 0 || left_right_diff != 0)
+                {
+                    t = millis();
+                }
+
+                if (gestureReceived || millis() - t > 300)
+                {
+                    ResetCounts();
+
+                    return gestureReceived;
+                }
+            }
+        }
 
         public void Enable(bool enable)
         {
@@ -329,9 +522,9 @@ namespace Netduino.Foundation.Sensors.Motion
 
         class APDS9960Control
         {
-            public byte AGAIN { get; set; } = 2;
-            public byte PGAIN { get; set; } = 2;
-            public byte LDRIVE { get; set; } = 2;
+            public byte AGAIN { get; set; }
+            public byte PGAIN { get; set; }
+            public byte LDRIVE { get; set; }
 
             public byte Get()
             {
@@ -339,7 +532,18 @@ namespace Netduino.Foundation.Sensors.Motion
             }
         }
 
-        class ADPS9960GConfig1
+        class APDS9960Pulse
+        {
+            public byte PPULSE { get; set; }
+            public byte PPLEN { get; set; }
+
+            public byte Get()
+            {
+                return (byte)((PPLEN << 6) | PPULSE);
+            }
+        }
+
+        class APDS9960GConfig1
         {
             public byte GEXPERS { get; set; }
             public byte GEXMSK { get; set; }
@@ -351,7 +555,7 @@ namespace Netduino.Foundation.Sensors.Motion
             }
         }
 
-        class ADPS9960GConfig2
+        class APDS9960GConfig2
         {
             public byte GWTIME { get; set; }
             public byte GLDRIVE { get; set; }
@@ -363,7 +567,7 @@ namespace Netduino.Foundation.Sensors.Motion
             }
         }
 
-        class ADPS9960GConfig3
+        class APDS9960GConfig3
         {
             public byte GDIMS { get; set; }
 
@@ -373,6 +577,35 @@ namespace Netduino.Foundation.Sensors.Motion
             }
         }
 
+        class APDS9960GConfig4
+        {
+            public byte GMODE { get; set; }
+            public byte GIEN { get; set; }
+
+            public byte Get()
+            {
+                return (byte)((GIEN << 1) | GMODE);
+            }
+
+            public void Set(byte data)
+            {
+                GIEN = (byte)((data >> 1) & 0x01);
+                GMODE = (byte)(data & 0x01);
+            }
+        }
+
+        class APDS9960GestureStatus
+        {
+            public byte GVALID { get; set; }
+            public byte GFOV { get; set; }
+
+            public void Set(byte value)
+            {
+                GFOV = (byte)((value >> 1) & 0x01);
+
+                GVALID = (byte)(value & 0x01);
+            }
+        }
 
         #endregion
     }
