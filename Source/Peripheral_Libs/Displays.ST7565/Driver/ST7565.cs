@@ -155,7 +155,7 @@ namespace Netduino.Foundation.Displays
         /// <param name="displayType">Type of ST7565 display (default = 128x64 pixel display).</param>
         public ST7565(Cpu.Pin chipSelectPin, Cpu.Pin dcPin, Cpu.Pin resetPin,
             SPI.SPI_module spiModule = SPI.SPI_module.SPI1,
-            uint speedKHz = 9500)
+            uint speedKHz = 9500, uint width = 128, uint height = 64)
         {
             dataCommandPort = new OutputPort(dcPin, false);
             resetPort = new OutputPort(resetPin, false);
@@ -172,6 +172,9 @@ namespace Netduino.Foundation.Displays
 
             spi = new SPI(spiConfig);
 
+            _width = width;
+            _height = height;
+
             InitST7565();
         }
 
@@ -182,8 +185,7 @@ namespace Netduino.Foundation.Displays
 
         private void InitST7565 ()
         { 
-            _width = 128;
-            _height = 64;
+ 
 
             _buffer = new byte[_width * _height / 8];
 
@@ -250,7 +252,7 @@ namespace Netduino.Foundation.Displays
             spi.Write(commands);
         }
 
-        protected const int StartColumnOffset = 1;
+        protected const int StartColumnOffset = 0; // 1;
         protected const int pageSize = 128;
         protected int[] pageReference = new int[] { 4, 5, 6, 7, 0, 1, 2, 3 };
         protected byte[] pageBuffer = new byte[pageSize];
@@ -263,7 +265,7 @@ namespace Netduino.Foundation.Displays
             for (int page = 0; page < 8; page++)
             {
                 SendCommand((byte)((int)(DisplayCommand.PageAddress) | page));
-                SendCommand((int)(DisplayCommand.ColumnAddressLow) | (StartColumnOffset & 0x0F));
+                SendCommand((DisplayCommand.ColumnAddressLow) | (StartColumnOffset & 0x0F));
                 SendCommand((int)(DisplayCommand.ColumnAddressHigh) | 0);
                 SendCommand(DisplayCommand.EnterReadModifyWriteMode);
 
@@ -318,34 +320,6 @@ namespace Netduino.Foundation.Displays
             else
             {
                 _buffer[index] = (byte) (_buffer[index] & ~(byte) (1 << (y % 8)));
-            }
-        }
-
-        private void DrawPixel64x48(int x, int y, bool colored)
-        {
-            if ((x >= 64) || (y >= 48))
-            {
-                if (!IgnoreOutOfBoundsPixels)
-                {
-                    throw new ArgumentException("DisplayPixel: co-ordinates out of bounds");
-                }
-                //  pixels to be thrown away if out of bounds of the display
-                return;
-            }
-
-            //offsets for landscape
-            x += 32;
-            y += 16;
-
-            var index = (y / 8 * _width) + x;
-
-            if (colored)
-            {
-                _buffer[index] = (byte)(_buffer[index] | (byte)(1 << (y % 8)));
-            }
-            else
-            {
-                _buffer[index] = (byte)(_buffer[index] & ~(byte)(1 << (y % 8)));
             }
         }
 

@@ -190,16 +190,16 @@ namespace Netduino.Foundation.Sensors.Motion
         /// </summary>
         /// <param name="address">Address of the I2C sensor</param>
         /// <param name="speed">Speed of the I2C bus in KHz</param>
-        public APDS9960(Cpu.Pin interruptPin, byte address = 0x39, ushort speed = 100)
+        public APDS9960(Cpu.Pin interruptPin, byte address = 0x39, ushort speed = 10)
         {
             var device = new I2CBus(address, speed);
             _apds9960 = device;
 
-            if(interruptPin != Cpu.Pin.GPIO_NONE)
+       /*     if(interruptPin != Cpu.Pin.GPIO_NONE)
             {
                 interruptPort = new InputPort(interruptPin, true, Port.ResistorMode.PullDown);
                 interruptPort.OnInterrupt += InterruptPort_OnInterrupt;
-            }
+            }*/
 
             Apds9960Init();
         }
@@ -214,7 +214,9 @@ namespace Netduino.Foundation.Sensors.Motion
         #region methods
         void Apds9960Init()
         {
-            if (_apds9960.ReadRegister(APDS9960_ID) != 0xAB)
+            var result = _apds9960.ReadRegister(0);// APDS9960_ID);
+
+            if (result != 0xAB)
                 throw new Exception("APDS9960 isn't connected");
         }
 

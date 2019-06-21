@@ -1,8 +1,7 @@
-﻿using System;
-using Netduino.Foundation.Communications;
+﻿using Netduino.Foundation.Communications;
 using System.Threading;
 
-namespace TEA5767
+namespace Netduino.Foundation.Audio.Radio
 {
     public class TEA5767
     {
@@ -24,7 +23,7 @@ namespace TEA5767
         static byte LOW_STOP_LEVEL                = 1;
         static byte MID_STOP_LEVEL                = 2;
         static byte HIGH_STOP_LEVEL               = 3;
-        static byte HIGH_SIDE_INJECTION           = 1;
+    /*    static byte HIGH_SIDE_INJECTION           = 1;
         static byte LOW_SIDE_INJECTION            = 0;
         static byte STEREO_ON                     = 0;
         static byte STEREO_OFF                    = 1;
@@ -47,12 +46,10 @@ namespace TEA5767
         static byte STEREO_NOISE_CANCELLING_ON = 1;
         static byte STEREO_NOISE_CANCELLING_OFF = 0;
         static byte SEARCH_INDICATOR_ON = 1;
-        static byte SEARCH_INDICATOR_OFF          = 0;
+        static byte SEARCH_INDICATOR_OFF = 0;*/
 
         float frequency;
         byte hiInjection;
-        byte frequencyH;
-        byte frequencyL;
         byte[] transmissionData = new byte[5];
         byte[] reception_data = new byte[5];
 
@@ -120,21 +117,21 @@ namespace TEA5767
             byte signalLow;
 
             SetHighSideLOInjection();
-            TransmitFrequency((float)(freq + 0.45));
+            SetFrequency((float)(freq + 0.45));
 
-            signalHigh = getSignalLevel();
+            signalHigh = GetSignalLevel();
 
-            setLowSideLOInjection();
-            TransmitFrequency((float)(freq - 0.45));
+            SetLowSideLOInjection();
+            SetFrequency((float)(freq - 0.45));
 
-            signalLow = getSignalLevel();
+            signalLow = GetSignalLevel();
 
             hiInjection = (signalHigh < signalLow) ? (byte)1 : (byte)0;
         }
 
-        void SetFrequency(float _frequency)
+        public void SetFrequency(float frequency)
         {
-            frequency = _frequency;
+            this.frequency = frequency;
             uint frequencyW;
 
             if (hiInjection > 0)
@@ -144,12 +141,14 @@ namespace TEA5767
             }
             else
             {
-                setLowSideLOInjection();
+                SetLowSideLOInjection();
                 frequencyW = (uint)(4 * ((frequency * 1000000) - 225000) / 32768);
             }
 
             transmissionData[FIRST_DATA] = (byte)((transmissionData[FIRST_DATA] & 0xC0) | ((frequencyW >> 8) & 0x3F));
             transmissionData[SECOND_DATA] = (byte)(frequencyW & 0xFF);
+
+            TransmitData();
         }
 
         void TransmitData()
@@ -159,7 +158,7 @@ namespace TEA5767
             Thread.Sleep(100);
         }
 
-        void Mute()
+        public void Mute()
         {
             IsMuted = true;
             SetSoundOff();
@@ -183,52 +182,32 @@ namespace TEA5767
             transmissionData[FIRST_DATA] &= 127;
         }
 
-        void TransmitFrequency(float frequency)
-        {
-            SetFrequency(frequency);
-            TransmitData();
-        }
-
-        void SelectFrequency(float frequency)
+        public void SelectFrequency(float frequency)
         {
             CalculateOptimalHiLoInjection(frequency);
-            TransmitFrequency(frequency);
+            SetFrequency(frequency);
         }
 
-        void selectFrequencyMuting(float frequency)
+        void SelectFrequencyMuting(float frequency)
         {
             Mute();
             CalculateOptimalHiLoInjection(frequency);
-            TransmitFrequency(frequency);
+            SetFrequency(frequency);
             SetSoundBackOn();
         }
 
-        void readStatus()
+        void ReadStatus()
         {
             reception_data = _I2CBus.ReadBytes(5);
             Thread.Sleep(100);
         }
 
-        double ReadFrequencyMHz()
+        public double GetFrequency()
         {
             LoadFrequency();
 
             uint frequencyW = (uint)(((reception_data[FIRST_DATA] & 0x3F) * 256) + reception_data[SECOND_DATA]);
-            return GetFrequencyInMHz(frequencyW);
-        }
 
-        void LoadFrequency()
-        {
-            readStatus();
-
-            //Stores the read frequency that can be the result of a search and it�s not yet in transmission data
-            //and is necessary to subsequent calls to search.
-            transmissionData[FIRST_DATA] = (byte)((transmissionData[FIRST_DATA] & 0xC0) | (reception_data[FIRST_DATA] & 0x3F));
-            transmissionData[SECOND_DATA] = reception_data[SECOND_DATA];
-        }
-
-        double GetFrequencyInMHz(uint frequencyW)
-        {
             if (hiInjection > 0)
             {
                 return (frequencyW / 4.0 * 32768.0 - 225000.0) / 1000000.0;
@@ -239,12 +218,22 @@ namespace TEA5767
             }
         }
 
-        void setSearchUp()
+        void LoadFrequency()
+        {
+            ReadStatus();
+
+            //Stores the read frequency that can be the result of a search and it�s not yet in transmission data
+            //and is necessary to subsequent calls to search.
+            transmissionData[FIRST_DATA] = (byte)((transmissionData[FIRST_DATA] & 0xC0) | (reception_data[FIRST_DATA] & 0x3F));
+            transmissionData[SECOND_DATA] = reception_data[SECOND_DATA];
+        }
+
+        void SetSearchUp()
         {
             transmissionData[THIRD_DATA] |= 128;
         }
 
-        void setSearchDown()
+        void SetSearchDown()
         {
             transmissionData[THIRD_DATA] &= 127;
         }
@@ -272,12 +261,12 @@ namespace TEA5767
             transmissionData[THIRD_DATA] |= 16;
         }
 
-        void setLowSideLOInjection()
+        void SetLowSideLOInjection()
         {
             transmissionData[THIRD_DATA] &= 239;
         }
 
-        byte SearchNextMuting()
+        public byte SearchNextSilent()
         {
             byte bandLimitReached;
 
@@ -288,24 +277,24 @@ namespace TEA5767
             return bandLimitReached;
         }
 
-        byte SearchNext()
+        public byte SearchNext()
         {
             byte bandLimitReached;
 
             if (IsSearchUp())
             {
-                SelectFrequency((float)ReadFrequencyMHz() + 0.1f);
+                SelectFrequency((float)GetFrequency() + 0.1f);
             }
             else
             {
-                SelectFrequency((float)ReadFrequencyMHz() - 0.1f);
+                SelectFrequency((float)GetFrequency() - 0.1f);
             }
 
             //Turns the search on
             transmissionData[FIRST_DATA] |= 64;
             TransmitData();
 
-            while (IsReady() == 0)
+            while (IsReady())
             {
                 Thread.Sleep(50);
             }
@@ -346,13 +335,13 @@ namespace TEA5767
 
         byte startsSearchFromBeginning()
         {
-            setSearchUp();
+            SetSearchUp();
             return startsSearchFrom(87.0f);
         }
 
         byte startsSearchFromEnd()
         {
-            setSearchDown();
+            SetSearchDown();
             return startsSearchFrom(108.0f);
         }
 
@@ -362,30 +351,30 @@ namespace TEA5767
             return SearchNext();
         }
 
-        byte getSignalLevel()
+        public byte GetSignalLevel()
         {
             //Necessary before read status
             TransmitData();
             //Read updated status
-            readStatus();
+            ReadStatus();
             return (byte)(reception_data[FOURTH_DATA] >> 4);
         }
 
-        byte IsStereo()
+        public bool IsStereo()
         {
-            readStatus();
-            return (byte)(reception_data[THIRD_DATA] >> 7);
+            ReadStatus();
+            return (reception_data[THIRD_DATA] >> 7) > 0;
         }
 
-        byte IsReady()
+        public bool IsReady()
         {
-            readStatus();
-            return (byte)(reception_data[FIRST_DATA] >> 7);
+            ReadStatus();
+            return (reception_data[FIRST_DATA] >> 7) > 0;
         }
 
         byte IsBandLimitReached()
         {
-            readStatus();
+            ReadStatus();
             return (byte)((reception_data[FIRST_DATA] >> 6) & 1);
         }
 
@@ -401,19 +390,20 @@ namespace TEA5767
 
         bool IsStandby()
         {
-            readStatus();
+            ReadStatus();
             return (transmissionData[FOURTH_DATA] & 64) != 0;
         }
 
-        void setStereoReception()
+        public void EnableStereo(bool enable)
         {
-            transmissionData[THIRD_DATA] &= 247;
-            TransmitData();
-        }
-
-        void SetMonoReception()
-        {
-            transmissionData[THIRD_DATA] |= 8;
+            if (enable)
+            {
+                transmissionData[THIRD_DATA] &= 247;
+            }
+            else
+            {
+                transmissionData[THIRD_DATA] |= 8;
+            }
             TransmitData();
         }
 
@@ -423,49 +413,46 @@ namespace TEA5767
             TransmitData();
         }
 
-        void setSoftMuteOff()
+        void SetSoftMuteOff()
         {
             transmissionData[FOURTH_DATA] &= 247;
             TransmitData();
         }
 
-        void muteRight()
+        void MuteRight()
         {
             transmissionData[THIRD_DATA] |= 4;
             TransmitData();
         }
 
-        void turnTheRightSoundBackOn()
+        void TurnTheRightSoundBackOn()
         {
             transmissionData[THIRD_DATA] &= 251;
             TransmitData();
         }
 
-        void muteLeft()
+        void MuteLeft()
         {
             transmissionData[THIRD_DATA] |= 2;
             TransmitData();
         }
 
-        void turnTheLeftSoundBackOn()
+        void TurnTheLeftSoundBackOn()
         {
             transmissionData[THIRD_DATA] &= 253;
             TransmitData();
         }
 
-        void setStandByOn()
+        void EnableStandby(bool enable)
         {
-            transmissionData[FOURTH_DATA] |= 64;
+            if(enable)
+                transmissionData[FOURTH_DATA] |= 64;
+            else
+                transmissionData[FOURTH_DATA] &= 191;
             TransmitData();
         }
 
-        void setStandByOff()
-        {
-            transmissionData[FOURTH_DATA] &= 191;
-            TransmitData();
-        }
-
-        void setHighCutControlOn()
+        void SetHighCutControlOn()
         {
             transmissionData[FOURTH_DATA] |= 4;
             TransmitData();
@@ -488,7 +475,6 @@ namespace TEA5767
             transmissionData[FOURTH_DATA] &= 253;
             TransmitData();
         }
-
 
         #endregion Methods
     }

@@ -13,7 +13,7 @@ namespace APDS9960GestureSample
         public static void Main()
         {
             // write your code here
-            var apds = new APDS9960(Cpu.Pin.GPIO_Pin10);
+            var apds = new APDS9960(Cpu.Pin.GPIO_Pin4);
 
             apds.EnableProximity(true);
             apds.EnableGestures(true);
