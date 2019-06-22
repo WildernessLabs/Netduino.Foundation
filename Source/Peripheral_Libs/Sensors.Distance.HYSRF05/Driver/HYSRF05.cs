@@ -4,6 +4,7 @@ using Microsoft.SPOT.Hardware;
 
 namespace Netduino.Foundation.Sensors.Distance
 {
+    //also works for US-100
     public class HYSRF05 : IRangeFinder
     {
         #region Properties
