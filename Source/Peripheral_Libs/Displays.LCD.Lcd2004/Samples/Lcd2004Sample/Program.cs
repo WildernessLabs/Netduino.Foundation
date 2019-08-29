@@ -13,7 +13,7 @@ namespace SunStar2004aSample
         public static void Main()
         {
             ITextDisplay lcd = new Lcd2004(N.Pins.GPIO_PIN_D13, N.Pins.GPIO_PIN_D12, N.Pins.GPIO_PIN_D11, N.Pins.GPIO_PIN_D10, N.Pins.GPIO_PIN_D9, N.Pins.GPIO_PIN_D8);
-            lcd.WriteLine("Wilderness Rabs", 0);
+            lcd.WriteLine("Wilderness Labs", 0);
             lcd.WriteLine("Powering", 1);
             lcd.WriteLine("Connected", 2);
             lcd.WriteLine("Things", 3);
