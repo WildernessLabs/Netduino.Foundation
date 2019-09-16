@@ -289,8 +289,8 @@ namespace Netduino.Foundation.Displays
                     SendCommands(_oled128x32SetupSequence);
                     break;
                 case DisplayType.OLED96x16:
-                    _width = 64;
-                    _height = 48;
+                    _width =  96;
+                    _height = 16;
                     SendCommands(_oled96x16SetupSequence);
                     break;
             }
